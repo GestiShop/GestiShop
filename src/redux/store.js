@@ -1,6 +1,6 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import ReduxThunk from 'redux-thunk'
-import configurationReducer from "./configuration";
+import configurationReducer from "./configuration"
 
 const rootReducer = combineReducers({
     configuration: configurationReducer

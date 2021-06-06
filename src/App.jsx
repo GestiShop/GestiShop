@@ -5,6 +5,9 @@ import generateStore from './redux/store'
 import './App.css'
 
 import Home from './components/Home'
+import Onboarding from './components/Onboarding'
+import Settings from './components/Settings'
+import NotFound from './components/NotFound'
 
 const App = () => {
     const store = generateStore()
@@ -16,11 +19,20 @@ const App = () => {
                         <Route exact path='/'>
                             <Home />
                         </Route>
+                        <Route exact path='/onboarding'>
+                            <Onboarding />
+                        </Route>
+                        <Route exact path='/settings'>
+                            <Settings />
+                        </Route>
+                        <Route>
+                            <NotFound />
+                        </Route>
                     </Switch>
                 </MemoryRouter>
             </Provider>
         </React.StrictMode>
-    );
+    )
 }
 
 export default App
