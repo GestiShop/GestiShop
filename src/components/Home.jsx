@@ -18,9 +18,9 @@ const Home = () => {
     }, [])
 
     return (
-        <div className="float-center">
-            <img className="logo" src={logo} alt="GestiShop"/>
-            <p>Loading, please wait...</p>
+        <div className='float-center'>
+            <img className='logo' src={logo} alt='GestiShop'/>
+            <p>Starting, please wait...</p>
         </div>
     )
 }
