@@ -1,5 +1,5 @@
 const {app, BrowserWindow} = require('electron')
-import installExtension, {REDUX_DEVTOOLS} from 'electron-devtools-installer'
+import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer'
 
 app.whenReady().then(() => {
     installExtension(REDUX_DEVTOOLS)

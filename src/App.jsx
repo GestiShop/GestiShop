@@ -1,6 +1,6 @@
 import React from 'react'
-import {Provider} from 'react-redux'
-import {MemoryRouter, Route, Switch} from 'react-router'
+import { Provider } from 'react-redux'
+import { MemoryRouter, Route, Switch } from 'react-router'
 import generateStore from './redux/store'
 import './App.css'
 
@@ -17,16 +17,16 @@ const App = () => {
                 <MemoryRouter>
                     <Switch>
                         <Route exact path='/'>
-                            <Home />
+                            <Home/>
                         </Route>
                         <Route exact path='/onboarding'>
-                            <Onboarding />
+                            <Onboarding/>
                         </Route>
                         <Route exact path='/settings'>
-                            <Settings />
+                            <Settings/>
                         </Route>
                         <Route>
-                            <NotFound />
+                            <NotFound/>
                         </Route>
                     </Switch>
                 </MemoryRouter>

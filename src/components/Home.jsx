@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import './Home.css'
 import logo from '../assets/gestishop_logo.png'
 
 const Home = (props) => {
@@ -11,11 +12,12 @@ const Home = (props) => {
     }, [])
 
     return (
-        <>
-            <img src={logo} alt='GestiShop'/>
-            <h1>👋 Hello {props.test}!</h1>
+        <div className='float-center'>
+            <img className='logo' src={logo} alt='GestiShop'/>
+            <p>Loading, please wait...</p>
+            <Link to='/onboarding'>Onboarding</Link>
             <Link to='/settings'>Settings</Link>
-        </>
+        </div>
     )
 }
 
