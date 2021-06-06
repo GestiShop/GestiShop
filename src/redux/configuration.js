@@ -1,5 +1,5 @@
 import LocalConfiguration from '../utils/localConfiguration'
-import {LANGUAGE_LIST, CURRENCY_LIST, DECIMAL_MODES, FLOATING_POINT_OPTIONS} from '../assets/config/config'
+import { CURRENCY_LIST, DECIMAL_MODES, FLOATING_POINT_OPTIONS, LANGUAGE_LIST } from '../assets/config/config'
 
 const initialState = {
     lang: LocalConfiguration.getDefaultLang() || LANGUAGE_LIST[0],

@@ -4,15 +4,9 @@ const schema = {
     lang: {
         type: 'string'
     },
-    currencyInfo: {
-
-    },
-    databaseInfo: {
-
-    },
-    businessInfo: {
-
-    }
+    currencyInfo: {},
+    databaseInfo: {},
+    businessInfo: {}
 }
 
 const store = new Store({schema})
