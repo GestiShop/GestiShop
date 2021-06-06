@@ -1,0 +1,56 @@
+{
+  "buttons": {
+    "back": "Enrere",
+    "accept": "Acceptar",
+    "finish": "Acabar",
+    "next": "Següent",
+    "cancel": "Cancel·lar",
+    "edit": "Editar"
+  },
+  "settings": {
+    "language_config": {
+      "title": "Selecció de l'idioma",
+      "language": "Idioma"
+    },
+    "currency_config": {
+      "title": "Selecció de la divisa",
+      "currency": "Divisa",
+      "decimal_mode": "Mode de decimals",
+      "floating_positions": "Nombre de decimals"
+    },
+    "business_config": {
+      "title": "Informació sobre la seva empresa",
+      "business": "Empresa",
+      "name": "Nom de l'empresa",
+      "enter_name": "Introdueixi el nom de l'empresa",
+      "nif": "NIF",
+      "enter_nif": "Introdueixi el NIF"
+    },
+    "database_config": {
+      "title": "Configuració de la base de dades",
+      "database": "Base de dades",
+      "url": "URL",
+      "enter_url": "Introdueixi la URL",
+      "port": "Port",
+      "enter_port": "Introdueixi el port",
+      "name": "Nom",
+      "enter_name": "Introdueixi el nom de la base de dades",
+      "user": "Usuari",
+      "enter_user": "Introdueixi el nombre d'usuari",
+      "password": "Contrasenya",
+      "enter_password": "Introdueixi la contrasenya"
+    },
+    "users_config": {
+      "users": "Usuaris"
+    },
+    "input_mode_config": {
+      "input_mode": "Mode d'entrada"
+    },
+    "modules_config": {
+      "modules": "Mòduls"
+    },
+    "advanced_config": {
+      "advanced": "Avançat"
+    }
+  }
+}

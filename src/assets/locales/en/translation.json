@@ -1,0 +1,56 @@
+{
+  "buttons": {
+    "back": "Back",
+    "accept": "Accept",
+    "finish": "Finish",
+    "next": "Next",
+    "cancel": "Cancel",
+    "edit": "Edit"
+  },
+  "settings": {
+    "language_config": {
+      "title": "Language selection",
+      "language": "Language"
+    },
+    "currency_config": {
+      "title": "Currency selection",
+      "currency": "Currency",
+      "decimal_mode": "Decimal mode",
+      "floating_positions": "Number of decimals"
+    },
+    "business_config": {
+      "title": "Information about your company",
+      "business": "Company",
+      "name": "Company name",
+      "enter_name": "Enter the name of your company",
+      "nif": "NIF",
+      "enter_nif": "Enter NIF"
+    },
+    "database_config": {
+      "title": "Database configuration",
+      "database": "Database",
+      "url": "URL",
+      "enter_url": "Enter URL",
+      "port": "Port",
+      "enter_port": "Enter port",
+      "name": "Name",
+      "enter_name": "Enter the name of the database",
+      "user": "User",
+      "enter_user": "Enter user name",
+      "password": "Password",
+      "enter_password": "Enter password"
+    },
+    "users_config": {
+      "users": "Users"
+    },
+    "input_mode_config": {
+      "input_mode": "Input mode"
+    },
+    "modules_config": {
+      "modules": "Modules"
+    },
+    "advanced_config": {
+      "advanced": "Advanced"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import logo from '../assets/gestishop_logo.png'
 
@@ -7,7 +7,7 @@ const Home = (props) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-
+        require('../db')
     }, [])
 
     return (

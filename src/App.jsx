@@ -1,6 +1,6 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import { MemoryRouter, Route, Switch } from 'react-router'
+import {Provider} from 'react-redux'
+import {MemoryRouter, Route, Switch} from 'react-router'
 import generateStore from './redux/store'
 import './App.css'
 
