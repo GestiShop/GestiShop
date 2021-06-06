@@ -6,6 +6,7 @@ import './App.css'
 
 import Home from './components/Home'
 import Onboarding from './components/Onboarding'
+import Dashboard from './components/Dashboard'
 import Settings from './components/Settings'
 import NotFound from './components/NotFound'
 
@@ -21,6 +22,9 @@ const App = () => {
                         </Route>
                         <Route exact path='/onboarding'>
                             <Onboarding/>
+                        </Route>
+                        <Route exact path='/dashboard'>
+                            <Dashboard />
                         </Route>
                         <Route exact path='/settings'>
                             <Settings/>

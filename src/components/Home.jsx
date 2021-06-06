@@ -21,8 +21,6 @@ const Home = () => {
         <div className='float-center'>
             <img className='logo' src={logo} alt='GestiShop'/>
             <p>Loading, please wait...</p>
-            <Link to='/onboarding'>Onboarding</Link>
-            <Link to='/settings'>Settings</Link>
         </div>
     )
 }
