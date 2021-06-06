@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { connect as connectDb } from '../db'
 import './Home.css'
 import logo from '../assets/gestishop_logo.png'
 
-const Home = (props) => {
-    const [loading, setLoading] = useState(true)
+const Home = () => {
+    const history = useHistory()
 
     useEffect(() => {
-        require('../db')
+        console.log('Starting db connection')
+        connectDb().then(() => {
+            console.log('Mongoose connected!')
+            history.replace('/dashboard')
+        }).catch(err => {
+            console.log('Failed to connect to db', err)
+        })
     }, [])
 
     return (
@@ -19,14 +25,6 @@ const Home = (props) => {
             <Link to='/settings'>Settings</Link>
         </div>
     )
-}
-
-Home.defaultProps = {
-    test: 'IscleGaming'
-}
-
-Home.propTypes = {
-    test: PropTypes.string.isRequired
 }
 
 export default Home
