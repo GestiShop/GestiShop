@@ -1,31 +1,24 @@
-//import ConfigService from '../service/config-service'
-//import * as currencyList from '../../assets/config/currencies.json'
-//import * as languageList from '../../assets/config/languages.json'
-//import * as decimalsInfo from '../../assets/config/decimals-config.json'
+import LocalConfiguration from '../utils/localConfiguration'
+import {LANGUAGE_LIST, CURRENCY_LIST, DECIMAL_MODES, FLOATING_POINT_OPTIONS} from '../assets/config/config'
 
-// Constants
-/*
 const initialState = {
-    lang: ConfigService.getDefaultLang() || (languageList as any).default[0],
-    currencyInfo: ConfigService.getDefaultCurrency() || {
-        currency: (currencyList as any).default[0],
-        decimalMode: (decimalsInfo as any).default.decimalModes[0],
-        floatingPositions: (decimalsInfo as any).default.floatingPositions[0]
+    lang: LocalConfiguration.getDefaultLang() || LANGUAGE_LIST[0],
+    currencyInfo: LocalConfiguration.getDefaultCurrency() || {
+        currency: CURRENCY_LIST[0],
+        decimalMode: DECIMAL_MODES[0],
+        floatingPositions: FLOATING_POINT_OPTIONS[0]
     },
-    databaseInfo: ConfigService.getDefaultDatabaseInfo() || {
+    databaseInfo: LocalConfiguration.getDefaultDatabaseInfo() || {
         url: 'localhost',
         port: '27017',
         name: 'gestishop',
         user: 'root',
         password: ''
     },
-    businessInfo: ConfigService.getDefaultBusinessInfo() || {
+    businessInfo: LocalConfiguration.getDefaultBusinessInfo() || {
         name: '',
         nif: ''
     }
-}*/
-const initialState = {
-    lang: 'en'
 }
 
 // Types
@@ -90,42 +83,42 @@ export default function configurationReducer(state = initialState, action) {
 }
 
 // Actions
-export const setDefaultLang = (lang) => (dispatch, getState) => {
+export const setDefaultLang = (lang) => (dispatch) => {
     dispatch({
         type: SET_LANG,
         payload: lang
     })
 }
 
-export const setDefaultCurrency = (currency) => (dispatch, getState) => {
+export const setDefaultCurrency = (currency) => (dispatch) => {
     dispatch({
         type: SET_CURRENCY,
         payload: currency
     })
 }
 
-export const setDefaultDatabaseInfo = (databaseInfo) => (dispatch, getState) => {
+export const setDefaultDatabaseInfo = (databaseInfo) => (dispatch) => {
     dispatch({
         type: SET_DATABASE,
         payload: databaseInfo
     })
 }
 
-export const setDefaultBusinessInfo = (businessInfo) => (dispatch, getState) => {
+export const setDefaultBusinessInfo = (businessInfo) => (dispatch) => {
     dispatch({
         type: SET_BUSINESS,
         payload: businessInfo
     })
 }
 
-export const setDefaultDecimalMode = (decimalMode) => (dispatch, getState) => {
+export const setDefaultDecimalMode = (decimalMode) => (dispatch) => {
     dispatch({
         type: SET_DECIMAL_MODE,
         payload: decimalMode
     })
 }
 
-export const setDefaultFloatingPositions = (floatingPositions) => (dispatch, getState) => {
+export const setDefaultFloatingPositions = (floatingPositions) => (dispatch) => {
     dispatch({
         type: SET_FLOATING_POSITIONS,
         payload: floatingPositions
