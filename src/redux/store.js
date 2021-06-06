@@ -7,7 +7,13 @@ const rootReducer = combineReducers({
 })
 
 const generateStore = () => {
-    return createStore(rootReducer, compose(applyMiddleware(ReduxThunk)))
+    return createStore(
+        rootReducer,
+        compose(
+            applyMiddleware(ReduxThunk),
+            window.devToolsExtension ? window.devToolsExtension() : f => f
+        )
+    )
 }
 
 export default generateStore

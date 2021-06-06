@@ -17,16 +17,16 @@ const App = () => {
             <Provider store={store}>
                 <MemoryRouter>
                     <Switch>
-                        <Route exact path='/'>
+                        <Route exact path="/">
                             <Home/>
                         </Route>
-                        <Route exact path='/onboarding'>
+                        <Route exact path="/onboarding">
                             <Onboarding/>
                         </Route>
-                        <Route exact path='/dashboard'>
-                            <Dashboard />
+                        <Route exact path="/dashboard">
+                            <Dashboard/>
                         </Route>
-                        <Route exact path='/settings'>
+                        <Route exact path="/settings">
                             <Settings/>
                         </Route>
                         <Route>

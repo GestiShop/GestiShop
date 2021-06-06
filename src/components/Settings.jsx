@@ -5,13 +5,13 @@ import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
 import { useTranslation } from 'react-i18next'
 import ConfigLanguage from './settings-module/ConfigLanguage'
-import ConfigCurrencyInfo from "./settings-module/ConfigCurrencyInfo"
-import ConfigBusinessInfo from "./settings-module/ConfigBusinessInfo"
-import ConfigDbInfo from "./settings-module/ConfigDbInfo"
-import ConfigUsers from "./settings-module/ConfigUsers"
-import ConfigInputMode from "./settings-module/ConfigInputMode"
-import ConfigModules from "./settings-module/ConfigModules"
-import ConfigAdvanced from "./settings-module/ConfigAdvanced"
+import ConfigCurrencyInfo from './settings-module/ConfigCurrencyInfo'
+import ConfigBusinessInfo from './settings-module/ConfigBusinessInfo'
+import ConfigDbInfo from './settings-module/ConfigDbInfo'
+import ConfigUsers from './settings-module/ConfigUsers'
+import ConfigInputMode from './settings-module/ConfigInputMode'
+import ConfigModules from './settings-module/ConfigModules'
+import ConfigAdvanced from './settings-module/ConfigAdvanced'
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props
@@ -30,14 +30,14 @@ function TabPanel(props) {
                 </Box>
             )}
         </div>
-    );
+    )
 }
 
 function a11yProps(index) {
     return {
         id: `vertical-tab-${index}`,
         'aria-controls': `vertical-tabpanel-${index}`,
-    };
+    }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -50,17 +50,17 @@ const useStyles = makeStyles((theme) => ({
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
     },
-}));
+}))
 
 export default function Settings() {
     const {t} = useTranslation()
 
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const classes = useStyles()
+    const [value, setValue] = React.useState(0)
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+        setValue(newValue)
+    }
 
     return (
         <div className={classes.root}>
@@ -114,5 +114,5 @@ export default function Settings() {
                 <ConfigAdvanced/>
             </TabPanel>
         </div>
-    );
+    )
 }

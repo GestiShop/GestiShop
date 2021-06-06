@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 
-import { LANGUAGE_LIST } from "../../assets/config/config";
+import { LANGUAGE_LIST } from '../../assets/config/config'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setDefaultLang } from '../../redux/configuration'
