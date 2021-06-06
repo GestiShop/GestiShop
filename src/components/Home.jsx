@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { connect as connectDb } from '../db'
 import './Home.css'
 import logo from '../assets/gestishop_logo.png'
@@ -20,7 +20,7 @@ const Home = () => {
     return (
         <div className='float-center'>
             <img className='logo' src={logo} alt='GestiShop'/>
-            <p>Loading, please wait...</p>
+            <p>Starting, please wait...</p>
         </div>
     )
 }
