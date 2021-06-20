@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { MemoryRouter, Route, Switch } from 'react-router'
 import generateStore from './redux/store'
-import './App.css'
+import './styles/App.css'
 
 import Home from './components/Home'
 import Onboarding from './components/Onboarding'

@@ -1,4 +1,5 @@
-@import './fonts.css';
+@import 'fonts.css';
+@import 'colors.css';
 
 body {
     font-family: 'Roboto', sans-serif;
