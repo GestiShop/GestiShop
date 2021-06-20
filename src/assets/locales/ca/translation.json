@@ -61,5 +61,10 @@
       "invalid_email": "Si us plau, introdueixi un correu vàlid.",
       "invalid_phone": "Si us plau, introdueixi un número de telèfon vàlid."
     }
+  },
+  "accounting_module": {
+    "menu": {
+      "products": "Productes"
+    }
   }
 }

@@ -61,5 +61,10 @@
       "invalid_email": "Por favor, ingrese un correo valido.",
       "invalid_phone": "Por favor, ingrese un número de teléfono valido."
     }
+  },
+  "accounting_module": {
+    "menu": {
+      "products": "Productos"
+    }
   }
 }

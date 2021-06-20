@@ -61,5 +61,10 @@
       "invalid_email": "Please enter a valid email.",
       "invalid_phone": "Please enter a valid phone number."
     }
+  },
+  "accounting_module": {
+    "menu": {
+      "products": "Products"
+    }
   }
 }

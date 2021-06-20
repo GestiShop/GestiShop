@@ -17,7 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import { useTranslation } from 'react-i18next'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import CreateProduct from './create/CreateProduct'
 
 const DRAWER_WIDTH = 240
@@ -88,7 +88,7 @@ const AccountingModuleDashboard = () => {
 
     const DRAWER_ITEMS = [
         {
-            text: 'Products',
+            text: t('accounting_module.menu.products'),
             icon: <ShoppingBasketIcon/>,
             linkTo: '/create/product'
         }
@@ -164,8 +164,8 @@ const AccountingModuleDashboard = () => {
                 <main className={classes.content}>
                     <div className={classes.toolbar}/>
                     <Switch>
-                        <Route exact path="/" render={() => <div>Home Page</div>} />
-                        <Route path="/create/product" render={() => <CreateProduct />} />
+                        <Route exact path="/" render={() => <div>Home Page</div>}/>
+                        <Route path="/create/product" render={() => <CreateProduct/>}/>
                     </Switch>
                 </main>
             </BrowserRouter>
