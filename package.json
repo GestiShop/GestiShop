@@ -92,6 +92,7 @@
     "dotenv": "^10.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.0",
+    "formik": "^2.2.9",
     "i18next": "^20.3.1",
     "i18next-browser-languagedetector": "^6.1.1",
     "i18next-xhr-backend": "^3.2.2",
@@ -104,6 +105,7 @@
     "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
     "redux": "^4.1.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.32.9"
   }
 }
