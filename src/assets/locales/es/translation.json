@@ -5,7 +5,8 @@
     "finish": "Terminar",
     "next": "Siguiente",
     "cancel": "Cancelar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "create": "Crear"
   },
   "settings": {
     "language_config": {
@@ -51,6 +52,14 @@
     },
     "advanced_config": {
       "advanced": "Avanzado"
+    }
+  },
+  "form": {
+    "errors": {
+      "required": "Este campo es obligatorio.",
+      "invalid_number": "Por favor, ingrese un número valido.",
+      "invalid_email": "Por favor, ingrese un correo valido.",
+      "invalid_phone": "Por favor, ingrese un número de teléfono valido."
     }
   }
 }

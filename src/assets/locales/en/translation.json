@@ -5,7 +5,8 @@
     "finish": "Finish",
     "next": "Next",
     "cancel": "Cancel",
-    "edit": "Edit"
+    "edit": "Edit",
+    "create": "Create"
   },
   "settings": {
     "language_config": {
@@ -51,6 +52,14 @@
     },
     "advanced_config": {
       "advanced": "Advanced"
+    }
+  },
+  "form":{
+    "errors": {
+      "required": "This field is required.",
+      "invalid_number": "Please enter a valid number.",
+      "invalid_email": "Please enter a valid email.",
+      "invalid_phone": "Please enter a valid phone number."
     }
   }
 }

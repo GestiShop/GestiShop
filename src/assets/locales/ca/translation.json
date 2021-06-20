@@ -5,7 +5,8 @@
     "finish": "Acabar",
     "next": "Següent",
     "cancel": "Cancel·lar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "create": "Crear"
   },
   "settings": {
     "language_config": {
@@ -51,6 +52,14 @@
     },
     "advanced_config": {
       "advanced": "Avançat"
+    }
+  },
+  "form": {
+    "errors": {
+      "required": "Aquest camp és obligatori.",
+      "invalid_number": "Si us plau, introdueixi un número vàlid.",
+      "invalid_email": "Si us plau, introdueixi un correu vàlid.",
+      "invalid_phone": "Si us plau, introdueixi un número de telèfon vàlid."
     }
   }
 }
