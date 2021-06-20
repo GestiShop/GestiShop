@@ -65,6 +65,9 @@
   "accounting_module": {
     "menu": {
       "products": "Productes"
+    },
+    "product": {
+      "create_product": "Afegir un producte"
     }
   }
 }

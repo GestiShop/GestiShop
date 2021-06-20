@@ -44,7 +44,7 @@ const CreateProduct = () => {
     })
 
     return (
-        <Grid container spacing={3}>
+        <Grid container>
             <Grid item xs={12}>
                 <Container maxWidth="md">
                     <Formik
