@@ -9,6 +9,7 @@ import Onboarding from './components/Onboarding'
 import Dashboard from './components/Dashboard'
 import Settings from './components/Settings'
 import NotFound from './components/NotFound'
+import CreateProduct from './components/accounting-module/create/CreateProduct'
 
 const App = () => {
     const store = generateStore()
@@ -28,6 +29,9 @@ const App = () => {
                         </Route>
                         <Route exact path="/settings">
                             <Settings/>
+                        </Route>
+                        <Route exact path="/createProduct">
+                            <CreateProduct/>
                         </Route>
                         <Route>
                             <NotFound/>
