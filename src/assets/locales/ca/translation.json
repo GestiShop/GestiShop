@@ -68,6 +68,9 @@
     },
     "product": {
       "create_product": "Afegir un producte"
+    },
+    "placeholders": {
+      "search": "Introdueixi text per cercar..."
     }
   }
 }

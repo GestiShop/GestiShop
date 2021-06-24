@@ -2,9 +2,9 @@ import React from 'react'
 import * as Yup from 'yup'
 import { Form, Formik } from 'formik'
 import { Container, Grid, Typography } from '@material-ui/core'
-import TextField from '../../forms-ui/TextField'
+import TextField from '../../ui/forms/TextField'
 import { useTranslation } from 'react-i18next'
-import SubmitButton from '../../forms-ui/SubmitButton'
+import SubmitButton from '../../ui/forms/SubmitButton'
 
 
 const CreateProduct = () => {

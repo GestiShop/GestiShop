@@ -68,6 +68,9 @@
     },
     "product": {
       "create_product": "Añadir un producto"
+    },
+    "placeholders": {
+      "search": "Ingrese texto para buscar..."
     }
   }
 }
