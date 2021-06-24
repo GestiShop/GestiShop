@@ -26,10 +26,27 @@
  * ```
  */
 
-window.require('dotenv').config()
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core'
 import * as ReactDOM from 'react-dom'
 import * as React from 'react'
 import App from './App'
 import './i18n'
 
-ReactDOM.render(<App/>, document.getElementById('root'))
+window.require('dotenv').config()
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#5941A9'
+        },
+        secondary: {
+            main: '#6D72C3'
+        }
+    }
+})
+
+ReactDOM.render(
+    <MuiThemeProvider theme={theme}>
+        <App/>
+    </MuiThemeProvider>,
+    document.getElementById('root'))
