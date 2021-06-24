@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik'
 import { Container, Grid, Typography } from '@material-ui/core'
 import TextField from '../../forms-ui/TextField'
 import { useTranslation } from 'react-i18next'
-import Button from '../../forms-ui/Button'
+import SubmitButton from '../../forms-ui/SubmitButton'
 
 
 const CreateProduct = () => {
@@ -121,9 +121,9 @@ const CreateProduct = () => {
                                 </Grid>
 
                                 <Grid item xs={12}>
-                                    <Button>
+                                    <SubmitButton>
                                         {t('buttons.create')}
-                                    </Button>
+                                    </SubmitButton>
                                 </Grid>
                             </Grid>
                         </Form>
