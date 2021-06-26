@@ -7,6 +7,7 @@ import SearchIcon from '@material-ui/icons/Search'
 const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
+        paddingRight: '8px'
     },
 }))
 

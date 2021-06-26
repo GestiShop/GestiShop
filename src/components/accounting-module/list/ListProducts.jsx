@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Button from '../../ui/forms/Button'
 import SearchBar from '../../ui/SearchBar'
-
+import Table from '../../ui/table'
 
 const ListProducts = () => {
     const {t} = useTranslation()
@@ -30,7 +30,7 @@ const ListProducts = () => {
                         </Grid>
 
                         <Grid item xs={12}>
-
+                            <Table/>
                         </Grid>
                     </Grid>
                 </Container>
