@@ -89,7 +89,9 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/data-grid": "4.0.0-alpha.32",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "clsx": "^1.1.1",
     "dotenv": "^10.0.0",
     "electron-squirrel-startup": "^1.0.0",

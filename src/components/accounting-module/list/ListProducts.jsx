@@ -28,6 +28,10 @@ const ListProducts = () => {
                         <Grid item xs={3}>
                             <SearchBar onSubmit={handleSearch}/>
                         </Grid>
+
+                        <Grid item xs={12}>
+
+                        </Grid>
                     </Grid>
                 </Container>
             </Grid>
