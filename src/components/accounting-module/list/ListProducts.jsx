@@ -4,7 +4,35 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Button from '../../ui/forms/Button'
 import SearchBar from '../../ui/SearchBar'
-import Table from '../../ui/table'
+import Table from '../../ui/Table'
+
+const rows = [
+    {
+        reference: 'PROD000',
+        name: 'Product 000',
+        stock: 12,
+        price: 26.98,
+        state: 'Available',
+        date: '26-10-1999'
+    },
+    {
+        reference: 'PROD001',
+        name: 'Product 001',
+        stock: 24,
+        price: 28.99,
+        state: 'Not available',
+        date: '28-10-1999'
+    }
+]
+
+const headers = [
+    {id: 'reference', numeric: false, disablePadding: false, label: 'Reference'},
+    {id: 'name', numeric: false, disablePadding: false, label: 'Name'},
+    {id: 'stock', numeric: true, disablePadding: false, label: 'Stock'},
+    {id: 'price', numeric: true, disablePadding: false, label: 'Price (€)'},
+    {id: 'state', numeric: false, disablePadding: false, label: 'State'},
+    {id: 'date', numeric: false, disablePadding: false, label: 'Date'},
+]
 
 const ListProducts = () => {
     const {t} = useTranslation()
@@ -30,7 +58,7 @@ const ListProducts = () => {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <Table/>
+                            <Table rows={rows} headers={headers} title='Products'/>
                         </Grid>
                     </Grid>
                 </Container>
