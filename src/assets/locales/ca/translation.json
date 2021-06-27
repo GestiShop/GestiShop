@@ -64,6 +64,7 @@
     }
   },
   "accounting_module": {
+    "accounting_module": "Mòdul de comptabilitat",
     "menu": {
       "products": "Productes"
     },

@@ -129,7 +129,7 @@ const AccountingModuleDashboard = () => {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Accounting module
+                        {t('accounting_module.accounting_module')}
                     </Typography>
                 </Toolbar>
             </AppBar>

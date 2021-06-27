@@ -64,6 +64,7 @@
     }
   },
   "accounting_module": {
+    "accounting_module": "Accounting module",
     "menu": {
       "products": "Products"
     },
