@@ -5,7 +5,8 @@
     "finish": "Acabar",
     "next": "Següent",
     "cancel": "Cancel·lar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "create": "Crear"
   },
   "settings": {
     "language_config": {
@@ -51,6 +52,39 @@
     },
     "advanced_config": {
       "advanced": "Avançat"
+    }
+  },
+  "form": {
+    "errors": {
+      "required": "Aquest camp és obligatori.",
+      "invalid_number": "Si us plau, introdueixi un número vàlid.",
+      "invalid_email": "Si us plau, introdueixi un correu vàlid.",
+      "invalid_phone": "Si us plau, introdueixi un número de telèfon vàlid."
+    }
+  },
+  "accounting_module": {
+    "menu": {
+      "products": "Productes"
+    },
+    "product": {
+      "create_product": "Afegir un producte",
+      "state": {
+        "available": "Disponible",
+        "hidden": "Amagat"
+      }
+    },
+    "placeholders": {
+      "search": "Introdueixi text per cercar..."
+    },
+    "table": {
+      "sorted_asc": "Ordenat ascendentment",
+      "sorted_desc": "Ordenat descendentment",
+      "select_all": "Seleccionar tots",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "filter_list": "Filtrar llista",
+      "selected_rows": "{{num}} seleccionats",
+      "actions": "Accions"
     }
   }
 }
