@@ -1,13 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Container, Grid } from '@material-ui/core'
+import Button from './ui/forms/Button'
 
 const Dashboard = () => {
     return (
         <div>
-            <p>This is the dashboard</p>
-            <Link to='/onboarding'>Onboarding</Link>
-            <Link to='/settings'>Settings</Link>
-            <Link to='/accounting_module_dashboard'>Accounting Module</Link>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Container maxWidth="md">
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} className="d-flex">
+                                <Button component={Link}
+                                        to="/onboarding"
+                                        className="m-auto">OnBoarding</Button>
+                            </Grid>
+                            <Grid item xs={12} className="d-flex">
+                                <Button component={Link}
+                                        to="/settings"
+                                        className="m-auto">Settings</Button>
+                            </Grid>
+                            <Grid item xs={12} className="d-flex">
+                                <Button component={Link}
+                                        to="/accounting_module_dashboard"
+                                        className="m-auto">Accounting Module</Button>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </Grid>
+            </Grid>
         </div>
     )
 }
