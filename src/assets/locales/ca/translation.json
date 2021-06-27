@@ -67,7 +67,11 @@
       "products": "Productes"
     },
     "product": {
-      "create_product": "Afegir un producte"
+      "create_product": "Afegir un producte",
+      "state": {
+        "available": "Disponible",
+        "hidden": "Amagat"
+      }
     },
     "placeholders": {
       "search": "Introdueixi text per cercar..."

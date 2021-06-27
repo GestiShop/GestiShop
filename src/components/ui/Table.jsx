@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
 import {
     Checkbox,
+    Chip,
     IconButton,
     Paper,
     Table,
@@ -21,6 +22,8 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
+import VisibilityIcon from '@material-ui/icons/Visibility'
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { useTranslation } from 'react-i18next'
 
 
@@ -298,16 +301,59 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
 
                                     let headerCells = []
                                     for (const header of headers) {
-                                        if (header.id == 'reference') {
-                                            headerCells.push(<TableCell key="reference"
-                                                                        component="th"
-                                                                        id={labelId}
-                                                                        scope="row"
-                                                                        align="left">{row.reference}</TableCell>)
-                                        } else {
-                                            headerCells.push(<TableCell key={header.id}
-                                                                        align={header.align}
-                                                                        padding="default">{row[header.id]}</TableCell>)
+                                        switch (header.id) {
+                                            case 'reference':
+                                                headerCells.push(<TableCell key="reference"
+                                                                            component="th"
+                                                                            id={labelId}
+                                                                            scope="row"
+                                                                            align="left">{row.reference}</TableCell>)
+                                                break
+                                            case 'state':
+                                                switch (row.state) {
+                                                    case 'available':
+                                                        headerCells.push(
+                                                            <TableCell key={header.id}
+                                                                       align={header.align}
+                                                                       padding="default"
+                                                            >
+                                                                <Chip
+                                                                    label={t('accounting_module.product.state.available').toUpperCase()}
+                                                                    icon={<VisibilityIcon/>}
+                                                                    color="primary"
+                                                                />
+                                                            </TableCell>)
+                                                        break
+                                                    case 'hidden':
+                                                        headerCells.push(
+                                                            <TableCell key={header.id}
+                                                                       align={header.align}
+                                                                       padding="default"
+                                                            >
+                                                                <Chip
+                                                                    label={t('accounting_module.product.state.hidden').toUpperCase()}
+                                                                    icon={<VisibilityOffIcon/>}
+                                                                    color="secondary"
+                                                                />
+                                                            </TableCell>)
+                                                        break
+                                                    default:
+                                                        headerCells.push(
+                                                            <TableCell key={header.id}
+                                                                       align={header.align}
+                                                                       padding="default">
+                                                                <Chip
+                                                                    label="lol"
+                                                                />
+                                                            </TableCell>)
+                                                        break
+                                                }
+                                                break
+                                            default:
+                                                headerCells.push(<TableCell key={header.id}
+                                                                            align={header.align}
+                                                                            padding="default">{row[header.id]}</TableCell>)
+                                                break
                                         }
                                     }
                                     if (editCallback) {

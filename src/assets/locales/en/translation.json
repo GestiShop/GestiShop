@@ -67,7 +67,11 @@
       "products": "Products"
     },
     "product": {
-      "create_product": "Add new product"
+      "create_product": "Add new product",
+      "state": {
+        "available": "Available",
+        "hidden": "Hidden"
+      }
     },
     "placeholders": {
       "search": "Input text to search..."

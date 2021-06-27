@@ -67,7 +67,11 @@
       "products": "Productos"
     },
     "product": {
-      "create_product": "Añadir un producto"
+      "create_product": "Añadir un producto",
+      "state": {
+        "available": "Disponible",
+        "hidden": "Escondido"
+      }
     },
     "placeholders": {
       "search": "Ingrese texto para buscar..."

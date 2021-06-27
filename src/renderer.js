@@ -37,10 +37,16 @@ window.require('dotenv').config()
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#5941A9'
+            light: '#6D72C3',
+            main: '#5941A9',
+            dark: '#1D1128',
+            contrastText: '#FFFFFF'
         },
         secondary: {
-            main: '#6D72C3'
+            light: '#FF7961',
+            main: '#F44336',
+            dark: '#BA000D',
+            contrastText: '#000000'
         }
     }
 })

@@ -13,7 +13,7 @@ const rows = [
         name: 'Product 000',
         stock: 12,
         price: 26.98,
-        state: 'Available',
+        state: 'available',
         date: '26-10-1999'
     },
     {
@@ -21,7 +21,7 @@ const rows = [
         name: 'Product 001',
         stock: 24,
         price: 28.99,
-        state: 'Not available',
+        state: 'hidden',
         date: '28-10-1999'
     }
 ]
