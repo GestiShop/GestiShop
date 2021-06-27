@@ -31,6 +31,8 @@ import * as ReactDOM from 'react-dom'
 import * as React from 'react'
 import App from './App'
 import './i18n'
+import './styles/App.css'
+import '@fontsource/roboto'
 
 window.require('dotenv').config()
 
