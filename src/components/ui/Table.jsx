@@ -2,22 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import Checkbox from '@material-ui/core/Checkbox'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
+import {
+    Checkbox,
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
+    TableSortLabel,
+    Toolbar,
+    Tooltip,
+    Typography
+} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
+import EditIcon from '@material-ui/icons/Edit'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -110,8 +113,8 @@ const EnhancedTableHead = (props) => {
                 {headers.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'default'}
+                        align={headCell.align}
+                        padding="default"
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -122,12 +125,13 @@ const EnhancedTableHead = (props) => {
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
+                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                </span>
                             ) : null}
                         </TableSortLabel>
                     </TableCell>
                 ))}
+                <TableCell align="right" padding="default">Actions</TableCell>
             </TableRow>
         </TableHead>
     )
@@ -184,7 +188,7 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 }
 
-const EnhancedTable = ({headers, rows, title}) => {
+const EnhancedTable = ({headers, rows, title, editCallback}) => {
     const classes = useStyles()
     const [order, setOrder] = React.useState('asc')
     const [orderBy, setOrderBy] = React.useState('calories')
@@ -240,6 +244,11 @@ const EnhancedTable = ({headers, rows, title}) => {
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
+    const handleEditClick = (event, index) => {
+        event.stopPropagation()
+        editCallback(index)
+    }
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -278,9 +287,18 @@ const EnhancedTable = ({headers, rows, title}) => {
                                                                         align="left">{row.reference}</TableCell>)
                                         } else {
                                             headerCells.push(<TableCell key={header.id}
-                                                                        align={header.numeric ? 'right' : 'left'}
-                                                                        padding={header.disablePadding ? 'none' : 'default'}>{row[header.id]}</TableCell>)
+                                                                        align={header.align}
+                                                                        padding="default">{row[header.id]}</TableCell>)
                                         }
+                                    }
+                                    if (editCallback) {
+                                        headerCells.push(<TableCell key="actions" align="right" padding="default">
+                                            <Tooltip title="Edit">
+                                                <IconButton aria-label="edit" onClick={(event) => handleEditClick(event, index)}>
+                                                    <EditIcon/>
+                                                </IconButton>
+                                            </Tooltip>
+                                        </TableCell>)
                                     }
 
                                     return (

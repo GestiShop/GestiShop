@@ -26,12 +26,12 @@ const rows = [
 ]
 
 const headers = [
-    {id: 'reference', numeric: false, disablePadding: false, label: 'Reference'},
-    {id: 'name', numeric: false, disablePadding: false, label: 'Name'},
-    {id: 'stock', numeric: true, disablePadding: false, label: 'Stock'},
-    {id: 'price', numeric: true, disablePadding: false, label: 'Price (€)'},
-    {id: 'state', numeric: false, disablePadding: false, label: 'State'},
-    {id: 'date', numeric: false, disablePadding: false, label: 'Date'},
+    {id: 'reference', label: 'Reference', align: 'left'},
+    {id: 'name', label: 'Name', align: 'left'},
+    {id: 'stock', label: 'Stock', align: 'right'},
+    {id: 'price', label: 'Price (€)', align: 'right'},
+    {id: 'state', label: 'State', align: 'left'},
+    {id: 'date', label: 'Date', align: 'left'}
 ]
 
 const ListProducts = () => {
@@ -39,6 +39,10 @@ const ListProducts = () => {
 
     const handleSearch = (textToSearch) => {
         console.log('Searching: \'' + textToSearch + '\'')
+    }
+
+    const handleEdit = (index) => {
+        console.log('Edit row: ' + index)
     }
 
     return (
@@ -58,7 +62,7 @@ const ListProducts = () => {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <Table rows={rows} headers={headers} title='Products'/>
+                            <Table rows={rows} headers={headers} title="Products" editCallback={handleEdit}/>
                         </Grid>
                     </Grid>
                 </Container>
