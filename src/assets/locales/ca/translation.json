@@ -6,7 +6,8 @@
     "next": "Següent",
     "cancel": "Cancel·lar",
     "edit": "Editar",
-    "create": "Crear"
+    "create": "Crear",
+    "delete": "Esborrar"
   },
   "settings": {
     "language_config": {
@@ -85,6 +86,12 @@
       "filter_list": "Filtrar llista",
       "selected_rows": "{{num}} seleccionats",
       "actions": "Accions"
+    },
+    "dialog": {
+      "delete": {
+        "title": "Esteu segur que voleu suprimir aquests elements?",
+        "description": "Aquesta acció és permanent. Si els esborreu, no els podreu recuperar més endavant."
+      }
     }
   }
 }

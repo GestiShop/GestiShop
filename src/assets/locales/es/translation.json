@@ -6,7 +6,8 @@
     "next": "Siguiente",
     "cancel": "Cancelar",
     "edit": "Editar",
-    "create": "Crear"
+    "create": "Crear",
+    "delete": "Eliminar"
   },
   "settings": {
     "language_config": {
@@ -85,6 +86,12 @@
       "filter_list": "Filtrar lista",
       "selected_rows": "{{num}} seleccionados",
       "actions": "Acciones"
+    },
+    "dialog": {
+      "delete": {
+        "title": "¿Está seguro de que desea eliminar estos elementos?",
+        "description": "Esta acción es permanente. Si los borra, no podrá recuperarlos más tarde."
+      }
     }
   }
 }

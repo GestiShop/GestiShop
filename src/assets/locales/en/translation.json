@@ -6,7 +6,8 @@
     "next": "Next",
     "cancel": "Cancel",
     "edit": "Edit",
-    "create": "Create"
+    "create": "Create",
+    "delete": "Delete"
   },
   "settings": {
     "language_config": {
@@ -85,6 +86,12 @@
       "filter_list": "Filter list",
       "selected_rows": "{{num}} selected",
       "actions": "Actions"
+    },
+    "dialog": {
+      "delete": {
+        "title": "Are you sure you want to delete these items?",
+        "description": "This action is permanent. If you delete them, you will not be able to recover them later."
+      }
     }
   }
 }

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
 import {
+    Button,
     Checkbox,
-    Chip,
+    Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     IconButton,
     Paper,
     Table,
@@ -168,7 +169,7 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles()
-    const {numSelected, title, t} = props
+    const {numSelected, title, t, deleteCallback} = props
 
     return (
         <Toolbar
@@ -188,7 +189,7 @@ const EnhancedTableToolbar = (props) => {
 
             {numSelected > 0 ? (
                 <Tooltip title={t('accounting_module.table.delete')}>
-                    <IconButton aria-label={t('accounting_module.table.delete')}>
+                    <IconButton aria-label={t('accounting_module.table.delete')} onClick={deleteCallback}>
                         <DeleteIcon/>
                     </IconButton>
                 </Tooltip>
@@ -206,7 +207,8 @@ const EnhancedTableToolbar = (props) => {
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    t: PropTypes.any.isRequired
+    t: PropTypes.any.isRequired,
+    deleteCallback: PropTypes.func.isRequired
 }
 
 const EnhancedTable = ({headers, rows, title, editCallback}) => {
@@ -217,6 +219,7 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
     const [selected, setSelected] = React.useState([])
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
+    const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false)
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc'
@@ -271,10 +274,23 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
         editCallback(index)
     }
 
+    const handleClickOpen = () => {
+        setOpenDeleteDialog(true);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        setOpenDeleteDialog(false);
+    };
+
+    const deleteItemsAndClose = () => {
+        console.log("Deleting selected rows: ", selected)
+        handleCloseDeleteDialog()
+    }
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} title={title} t={t}/>
+                <EnhancedTableToolbar numSelected={selected.length} title={title} t={t} deleteCallback={handleClickOpen}/>
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -405,6 +421,30 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
+
+            <Dialog
+                open={openDeleteDialog}
+                onClose={handleCloseDeleteDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {t('accounting_module.dialog.delete.title')}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {t('accounting_module.dialog.delete.description')}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDeleteDialog} color="primary">
+                        {t('buttons.cancel')}
+                    </Button>
+                    <Button onClick={deleteItemsAndClose} color="primary" autoFocus>
+                        {t('buttons.delete')}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }
