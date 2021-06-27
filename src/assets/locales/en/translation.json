@@ -71,6 +71,16 @@
     },
     "placeholders": {
       "search": "Input text to search..."
+    },
+    "table": {
+      "sorted_asc": "Sorted ascending",
+      "sorted_desc": "Sorted descending",
+      "select_all": "Select all",
+      "edit": "Edit",
+      "delete": "Delete",
+      "filter_list": "Filter list",
+      "selected_rows": "{{num}} selected",
+      "actions": "Actions"
     }
   }
 }

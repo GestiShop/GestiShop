@@ -21,6 +21,7 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import EditIcon from '@material-ui/icons/Edit'
+import { useTranslation } from 'react-i18next'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -94,7 +95,18 @@ const stableSort = (array, comparator) => {
 }
 
 const EnhancedTableHead = (props) => {
-    const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headers} = props
+    const {
+        classes,
+        onSelectAllClick,
+        order,
+        orderBy,
+        numSelected,
+        rowCount,
+        onRequestSort,
+        headers,
+        t,
+        hasActions
+    } = props
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property)
     }
@@ -107,7 +119,7 @@ const EnhancedTableHead = (props) => {
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
-                        inputProps={{'aria-label': 'select all'}}
+                        inputProps={{'aria-label': t('accounting_module.table.select_all')}}
                     />
                 </TableCell>
                 {headers.map((headCell) => (
@@ -125,13 +137,14 @@ const EnhancedTableHead = (props) => {
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <span className={classes.visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                    {order === 'desc' ? t('accounting_module.table.sorted_desc') : t('accounting_module.table.sorted_asc')}
                                 </span>
                             ) : null}
                         </TableSortLabel>
                     </TableCell>
                 ))}
-                <TableCell align="right" padding="default">Actions</TableCell>
+                {hasActions ? <TableCell align="right"
+                                         padding="default">{t('accounting_module.table.actions')}</TableCell> : null}
             </TableRow>
         </TableHead>
     )
@@ -145,11 +158,14 @@ EnhancedTableHead.propTypes = {
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
+    headers: PropTypes.array.isRequired,
+    t: PropTypes.any.isRequired,
+    hasActions: PropTypes.bool.isRequired
 }
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles()
-    const {numSelected, title} = props
+    const {numSelected, title, t} = props
 
     return (
         <Toolbar
@@ -159,7 +175,7 @@ const EnhancedTableToolbar = (props) => {
         >
             {numSelected > 0 ? (
                 <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} selected
+                    {t('accounting_module.table.selected_rows', {num: numSelected})}
                 </Typography>
             ) : (
                 <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
@@ -168,14 +184,14 @@ const EnhancedTableToolbar = (props) => {
             )}
 
             {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
+                <Tooltip title={t('accounting_module.table.delete')}>
+                    <IconButton aria-label={t('accounting_module.table.delete')}>
                         <DeleteIcon/>
                     </IconButton>
                 </Tooltip>
             ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
+                <Tooltip title={t('accounting_module.table.filter_list')}>
+                    <IconButton aria-label={t('accounting_module.table.filter_list')}>
                         <FilterListIcon/>
                     </IconButton>
                 </Tooltip>
@@ -186,12 +202,15 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    t: PropTypes.any.isRequired
 }
 
 const EnhancedTable = ({headers, rows, title, editCallback}) => {
+    const {t} = useTranslation()
     const classes = useStyles()
     const [order, setOrder] = React.useState('asc')
-    const [orderBy, setOrderBy] = React.useState('calories')
+    const [orderBy, setOrderBy] = React.useState(headers[0].id)
     const [selected, setSelected] = React.useState([])
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
@@ -252,13 +271,11 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} title={title}/>
+                <EnhancedTableToolbar numSelected={selected.length} title={title} t={t}/>
                 <TableContainer>
                     <Table
                         className={classes.table}
-                        aria-labelledby="tableTitle"
                         size="medium"
-                        aria-label="enhanced table"
                     >
                         <EnhancedTableHead
                             classes={classes}
@@ -269,6 +286,8 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                             headers={headers}
+                            t={t}
+                            hasActions={editCallback != null}
                         />
                         <TableBody>
                             {stableSort(rows, getComparator(order, orderBy))
@@ -293,8 +312,9 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
                                     }
                                     if (editCallback) {
                                         headerCells.push(<TableCell key="actions" align="right" padding="default">
-                                            <Tooltip title="Edit">
-                                                <IconButton aria-label="edit" onClick={(event) => handleEditClick(event, index)}>
+                                            <Tooltip title={t('accounting_module.table.edit')}>
+                                                <IconButton aria-label={t('accounting_module.table.edit')}
+                                                            onClick={(event) => handleEditClick(event, index)}>
                                                     <EditIcon/>
                                                 </IconButton>
                                             </Tooltip>

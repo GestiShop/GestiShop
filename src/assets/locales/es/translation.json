@@ -71,6 +71,16 @@
     },
     "placeholders": {
       "search": "Ingrese texto para buscar..."
+    },
+    "table": {
+      "sorted_asc": "Ordenado ascendentemente",
+      "sorted_desc": "Ordenado descendentemente",
+      "select_all": "Seleccionar todos",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "filter_list": "Filtrar lista",
+      "selected_rows": "{{num}} seleccionados",
+      "actions": "Acciones"
     }
   }
 }

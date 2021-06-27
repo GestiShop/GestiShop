@@ -71,6 +71,16 @@
     },
     "placeholders": {
       "search": "Introdueixi text per cercar..."
+    },
+    "table": {
+      "sorted_asc": "Ordenat ascendentment",
+      "sorted_desc": "Ordenat descendentment",
+      "select_all": "Seleccionar tots",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "filter_list": "Filtrar llista",
+      "selected_rows": "{{num}} seleccionats",
+      "actions": "Accions"
     }
   }
 }
