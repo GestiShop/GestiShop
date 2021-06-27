@@ -6,6 +6,7 @@ import Button from '../../ui/forms/Button'
 import SearchBar from '../../ui/SearchBar'
 import Table from '../../ui/Table'
 
+
 const rows = [
     {
         reference: 'PROD000',
@@ -50,9 +51,10 @@ const ListProducts = () => {
             <Grid item xs={12}>
                 <Container maxWidth={false}>
                     <Grid container spacing={2}>
-                        <Grid item xs={3}>
+                        <Grid item xs={3} className="d-flex">
                             <Button component={Link}
-                                    to="/create/product">{t('accounting_module.product.create_product')}</Button>
+                                    to="/create/product"
+                                    className="m-auto">{t('accounting_module.product.create_product')}</Button>
                         </Grid>
                         <Grid item xs={6}>
 

@@ -1,6 +1,7 @@
 @import 'fonts.css';
 @import 'colors.css';
 
+/* ----- ----- GENERIC ----- ----- */
 body {
     font-family: 'Roboto', sans-serif;
     margin: auto;
@@ -11,4 +12,16 @@ body {
 #root {
     width: 100%;
     height: 100%;
+}
+
+
+/* ----- ----- MARGIN ----- ----- */
+.m-auto {
+    margin: auto !important;
+}
+
+
+/* ----- ----- DISPLAY ----- ----- */
+.d-flex {
+    display: flex !important;
 }
