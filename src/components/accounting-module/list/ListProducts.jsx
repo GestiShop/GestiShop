@@ -1,10 +1,11 @@
 import React from 'react'
 import { Container, Grid } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Button from '../../ui/forms/Button'
 import SearchBar from '../../ui/SearchBar'
 import Table from '../../ui/Table'
+import FullScreenDialog from '../../ui/FullscreenDialog'
+import CreateProduct from '../create/CreateProduct'
 
 
 const rows = [
@@ -37,6 +38,19 @@ const headers = [
 
 const ListProducts = () => {
     const {t} = useTranslation()
+    const [openCreationDialog, setOpenCreationDialog] = React.useState(false)
+
+    const handleClickCreateProduct = () => {
+        setOpenCreationDialog(true)
+    }
+
+    const handleCloseCreateProduct = (newProductAdded) => {
+        setOpenCreationDialog(false)
+        if (newProductAdded) {
+            // TODO: UPDATE TABLE
+        }
+        console.log('Should create new product: ' + newProductAdded)
+    }
 
     const handleSearch = (textToSearch) => {
         console.log('Searching: \'' + textToSearch + '\'')
@@ -47,29 +61,37 @@ const ListProducts = () => {
     }
 
     return (
-        <Grid container>
-            <Grid item xs={12}>
-                <Container maxWidth={false}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={3} className="d-flex">
-                            <Button component={Link}
-                                    to="/create/product"
-                                    className="m-auto">{t('accounting_module.product.create_product')}</Button>
-                        </Grid>
-                        <Grid item xs={6}>
+        <>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Container maxWidth={false}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={3} className="d-flex">
+                                <Button onClick={handleClickCreateProduct} className="m-auto">
+                                    {t('accounting_module.product.create_product')}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
 
-                        </Grid>
-                        <Grid item xs={3}>
-                            <SearchBar onSubmit={handleSearch}/>
-                        </Grid>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <SearchBar onSubmit={handleSearch}/>
+                            </Grid>
 
-                        <Grid item xs={12}>
-                            <Table rows={rows} headers={headers} title="Products" editCallback={handleEdit}/>
+                            <Grid item xs={12}>
+                                <Table rows={rows} headers={headers} title="Products" editCallback={handleEdit}/>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Container>
+                    </Container>
+                </Grid>
             </Grid>
-        </Grid>
+            <FullScreenDialog
+                open={openCreationDialog}
+                closeCallback={handleCloseCreateProduct}
+                title={t('accounting_module.product.create_product')}
+                childComponent={<CreateProduct/>}
+            />
+        </>
     )
 }
 
