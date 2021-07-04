@@ -12,28 +12,35 @@ const rows = [
     {
         reference: 'PROD000',
         name: 'Product 000',
-        stock: 12,
-        price: 26.98,
-        state: 'available',
-        date: '26-10-1999'
+        basePrice: 26.98,
+        stock: 10,
+        unitType: 'kg',
+        discountPercentage: 0.0,
+        taxPercentage: 21.0,
+        minStock: 12,
+        stockAlert: true,
+        visible: true
     },
     {
         reference: 'PROD001',
         name: 'Product 001',
-        stock: 24,
-        price: 28.99,
-        state: 'hidden',
-        date: '28-10-1999'
+        basePrice: 22.98,
+        stock: 18,
+        unitType: 'units',
+        discountPercentage: 0.0,
+        taxPercentage: 21.0,
+        minStock: 50,
+        stockAlert: false,
+        visible: true
     }
 ]
 
 const headers = [
     {id: 'reference', label: 'Reference', align: 'left'},
     {id: 'name', label: 'Name', align: 'left'},
+    {id: 'basePrice', label: 'Price (€)', align: 'right'},
     {id: 'stock', label: 'Stock', align: 'right'},
-    {id: 'price', label: 'Price (€)', align: 'right'},
-    {id: 'state', label: 'State', align: 'left'},
-    {id: 'date', label: 'Date', align: 'left'}
+    {id: 'visible', label: 'State', align: 'left'}
 ]
 
 const ListProducts = () => {

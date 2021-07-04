@@ -1,0 +1,8 @@
+/* ----- ----- TABLE ----- ----- */
+.no-stock {
+    background-color: rgba(205, 92, 92, 0.45) !important;
+}
+
+.no-stock:hover {
+    background-color: rgba(205, 92, 92, 0.65) !important;
+}

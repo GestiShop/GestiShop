@@ -5,7 +5,12 @@ import { lighten, makeStyles } from '@material-ui/core/styles'
 import {
     Button,
     Checkbox,
-    Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    Chip,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
     IconButton,
     Paper,
     Table,
@@ -26,6 +31,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { useTranslation } from 'react-i18next'
+import '../../styles/Table.css'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -275,22 +281,23 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
     }
 
     const handleClickOpen = () => {
-        setOpenDeleteDialog(true);
-    };
+        setOpenDeleteDialog(true)
+    }
 
     const handleCloseDeleteDialog = () => {
-        setOpenDeleteDialog(false);
-    };
+        setOpenDeleteDialog(false)
+    }
 
     const deleteItemsAndClose = () => {
-        console.log("Deleting selected rows: ", selected)
+        console.log('Deleting selected rows: ', selected)
         handleCloseDeleteDialog()
     }
 
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} title={title} t={t} deleteCallback={handleClickOpen}/>
+                <EnhancedTableToolbar numSelected={selected.length} title={title} t={t}
+                                      deleteCallback={handleClickOpen}/>
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -319,50 +326,39 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
                                     for (const header of headers) {
                                         switch (header.id) {
                                             case 'reference':
-                                                headerCells.push(<TableCell key="reference"
-                                                                            component="th"
-                                                                            id={labelId}
-                                                                            scope="row"
-                                                                            align="left">{row.reference}</TableCell>)
+                                                headerCells.push(
+                                                    <TableCell key="reference"
+                                                               component="th"
+                                                               id={labelId}
+                                                               scope="row"
+                                                               align="left"
+                                                    >{row.reference}</TableCell>)
                                                 break
-                                            case 'state':
-                                                switch (row.state) {
-                                                    case 'available':
-                                                        headerCells.push(
-                                                            <TableCell key={header.id}
-                                                                       align={header.align}
-                                                                       padding="default"
-                                                            >
-                                                                <Chip
-                                                                    label={t('accounting_module.product.state.available').toUpperCase()}
-                                                                    icon={<VisibilityIcon/>}
-                                                                    color="primary"
-                                                                />
-                                                            </TableCell>)
-                                                        break
-                                                    case 'hidden':
-                                                        headerCells.push(
-                                                            <TableCell key={header.id}
-                                                                       align={header.align}
-                                                                       padding="default"
-                                                            >
-                                                                <Chip
-                                                                    label={t('accounting_module.product.state.hidden').toUpperCase()}
-                                                                    icon={<VisibilityOffIcon/>}
-                                                                    color="secondary"
-                                                                />
-                                                            </TableCell>)
-                                                        break
-                                                    default:
-                                                        headerCells.push(
-                                                            <TableCell key={header.id}
-                                                                       align={header.align}
-                                                                       padding="default">
-                                                                <Chip
-                                                                    label="lol"
-                                                                />
-                                                            </TableCell>)
-                                                        break
+                                            case 'visible':
+                                                if (row.visible === true) {
+                                                    headerCells.push(
+                                                        <TableCell key={header.id}
+                                                                   align={header.align}
+                                                                   padding="default"
+                                                        >
+                                                            <Chip
+                                                                label={t('accounting_module.product.state.available').toUpperCase()}
+                                                                icon={<VisibilityIcon/>}
+                                                                color="primary"
+                                                            />
+                                                        </TableCell>)
+                                                } else {
+                                                    headerCells.push(
+                                                        <TableCell key={header.id}
+                                                                   align={header.align}
+                                                                   padding="default"
+                                                        >
+                                                            <Chip
+                                                                label={t('accounting_module.product.state.hidden').toUpperCase()}
+                                                                icon={<VisibilityOffIcon/>}
+                                                                color="secondary"
+                                                            />
+                                                        </TableCell>)
                                                 }
                                                 break
                                             default:
@@ -392,6 +388,7 @@ const EnhancedTable = ({headers, rows, title, editCallback}) => {
                                             tabIndex={-1}
                                             key={row.name}
                                             selected={isItemSelected}
+                                            className={row.stockAlert && row.stock <= row.minStock ? 'no-stock' : null}
                                         >
                                             <TableCell padding="checkbox">
                                                 <Checkbox
