@@ -3,7 +3,6 @@ import mongoose, { Schema } from 'mongoose'
 const productSchema = new Schema({
     reference: String,
     name: String,
-    attributes: [{type: mongoose.Types.ObjectId, ref: 'Attribute'}],
     basePrice: Number,
     unitType: {type: mongoose.Types.ObjectId, ref: 'UnitType'},
     discountPercentage: Number,
