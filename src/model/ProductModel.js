@@ -8,7 +8,7 @@ const productSchema = new Schema({
     unitType: {type: mongoose.Types.ObjectId, ref: 'UnitType'},
     discountPercentage: Number,
     taxPercentage: {type: mongoose.Types.ObjectId, ref: 'TaxPercentage'},
-    quantity: Number,
+    stock: Number,
     warehouse: {type: mongoose.Types.ObjectId, ref: 'Warehouse'},
     categories: [{type: mongoose.Types.ObjectId, ref: 'Category'}],
     minStock: Number,
