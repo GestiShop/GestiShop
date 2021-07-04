@@ -6,9 +6,8 @@ const SelectWrapper = ({name, options, ...otherProps}) => {
     const {setFieldValue} = useFormikContext()
     const [field, meta] = useField(name)
 
-    const handleChange = evt => {
-        const {value} = evt.target
-        setFieldValue(name, value)
+    const handleChange = (event) => {
+        setFieldValue(name, event.target.value)
     }
 
     const configSelect = {

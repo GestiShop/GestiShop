@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container, Grid } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import Button from '../../ui/forms/Button'
@@ -45,7 +45,7 @@ const headers = [
 
 const ListProducts = () => {
     const {t} = useTranslation()
-    const [openCreationDialog, setOpenCreationDialog] = React.useState(false)
+    const [openCreationDialog, setOpenCreationDialog] = useState(false)
 
     const handleClickCreateProduct = () => {
         setOpenCreationDialog(true)
