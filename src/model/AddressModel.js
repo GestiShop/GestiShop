@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const {Schema} = mongoose
+import { Schema } from 'mongoose'
 
 const addressSchema = new Schema({
     roadType: String,
@@ -12,7 +10,8 @@ const addressSchema = new Schema({
     zipCode: String,
     city: String,
     province: String,
+    state: String,
     country: String
 })
 
-module.exports = addressSchema
+export { addressSchema }

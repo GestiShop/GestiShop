@@ -1,8 +1,5 @@
-import addressSchema from './addressModel'
-
-import mongoose from 'mongoose'
-
-const {Schema} = mongoose
+import mongoose, { Schema } from 'mongoose'
+import { addressSchema } from './AddressModel'
 
 const warehouseSchema = new Schema({
     reference: String,
@@ -12,4 +9,4 @@ const warehouseSchema = new Schema({
 
 const Warehouse = mongoose.model('Warehouse', warehouseSchema)
 
-module.exports = {warehouseSchema, Warehouse}
+export { warehouseSchema, Warehouse }

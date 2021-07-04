@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const {Schema} = mongoose
+import mongoose, { Schema } from 'mongoose'
 
 const taxPercentageSchema = new Schema({
     reference: String,
@@ -9,4 +7,4 @@ const taxPercentageSchema = new Schema({
 
 const TaxPercentage = mongoose.model('TaxPercentage', taxPercentageSchema)
 
-module.exports = {taxPercentageSchema, TaxPercentage}
+export { taxPercentageSchema, TaxPercentage }

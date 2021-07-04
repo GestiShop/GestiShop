@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const {Schema} = mongoose
+import mongoose, { Schema } from 'mongoose'
 
 const categorySchema = new Schema({
     reference: String,
@@ -10,4 +8,4 @@ const categorySchema = new Schema({
 
 const Category = mongoose.model('Category', categorySchema)
 
-module.exports = {categorySchema, Category}
+export { categorySchema, Category }
