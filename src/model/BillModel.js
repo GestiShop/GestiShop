@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
+const mongoose = window.require('mongoose')
+const {Schema} = mongoose
 import { addressSchema } from './AddressModel'
 import { paymentMethodSchema } from './PaymentMethodModel'
 
@@ -34,7 +35,7 @@ const billSchema = new Schema({
     isPaid: Boolean
 })
 
-const ClientBill = mongoose.model('ClientBill', billSchema)
-const ProviderBill = mongoose.model('ProviderBill', billSchema)
+const ClientBill = mongoose.model('ClientBill', billSchema, 'clientBills')
+const ProviderBill = mongoose.model('ProviderBill', billSchema, 'providerBills')
 
 export { billSchema, ClientBill, ProviderBill }

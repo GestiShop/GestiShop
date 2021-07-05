@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
+const mongoose = window.require('mongoose')
+const {Schema} = mongoose
 
 const productSchema = new Schema({
     reference: String,
@@ -15,6 +16,6 @@ const productSchema = new Schema({
     visible: Boolean
 })
 
-const Product = mongoose.model('Product', productSchema)
+const Product = mongoose.model('Product', productSchema, 'products')
 
 export { productSchema, Product }

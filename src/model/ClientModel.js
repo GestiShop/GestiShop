@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
+const mongoose = window.require('mongoose')
+const {Schema} = mongoose
 import { phoneSchema } from './PhoneModel'
 import { emailSchema } from './EmailModel'
 import { addressSchema } from './AddressModel'
@@ -31,6 +32,6 @@ const clientSchema = new Schema({
     bills: [{type: mongoose.Types.ObjectId, ref: 'ClientBill'}]
 })
 
-const Client = mongoose.model('Client', clientSchema)
+const Client = mongoose.model('Client', clientSchema, 'clients')
 
 export { clientSchema, Client }

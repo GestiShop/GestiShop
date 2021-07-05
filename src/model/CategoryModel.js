@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
+const mongoose = window.require('mongoose')
+const {Schema} = mongoose
 
 const categorySchema = new Schema({
     reference: String,
@@ -6,6 +7,6 @@ const categorySchema = new Schema({
     parent: {type: mongoose.Types.ObjectId, ref: 'Category'}
 })
 
-const Category = mongoose.model('Category', categorySchema)
+const Category = mongoose.model('Category', categorySchema, 'categories')
 
 export { categorySchema, Category }

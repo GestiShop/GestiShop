@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
+const mongoose = window.require('mongoose')
+const {Schema} = mongoose
 import { addressSchema } from './AddressModel'
 
 const warehouseSchema = new Schema({
@@ -7,6 +8,6 @@ const warehouseSchema = new Schema({
     address: addressSchema
 })
 
-const Warehouse = mongoose.model('Warehouse', warehouseSchema)
+const Warehouse = mongoose.model('Warehouse', warehouseSchema, 'warehouses')
 
 export { warehouseSchema, Warehouse }

@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
+const mongoose = window.require('mongoose')
+const {Schema} = mongoose
 import { addressSchema } from './AddressModel'
 
 const budgetSchema = new Schema({
@@ -29,7 +30,7 @@ const budgetSchema = new Schema({
     associatedBill: {type: mongoose.Types.ObjectId}
 })
 
-const ClientBudget = mongoose.model('ClientBudget', budgetSchema)
-const ProviderBudget = mongoose.model('ProviderBudget', budgetSchema)
+const ClientBudget = mongoose.model('ClientBudget', budgetSchema, 'clientBudgets')
+const ProviderBudget = mongoose.model('ProviderBudget', budgetSchema, 'providerBudgets')
 
 export { budgetSchema, ClientBudget, ProviderBudget }

@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
+const mongoose = window.require('mongoose')
+const {Schema} = mongoose
 import { addressSchema } from './AddressModel'
 
 const deliveryNoteSchema = new Schema({
@@ -29,7 +30,7 @@ const deliveryNoteSchema = new Schema({
     associatedBill: {type: mongoose.Types.ObjectId}
 })
 
-const ClientDeliveryNote = mongoose.model('ClientDeliveryNote', deliveryNoteSchema)
-const ProviderDeliveryNote = mongoose.model('ProviderDeliveryNote', deliveryNoteSchema)
+const ClientDeliveryNote = mongoose.model('ClientDeliveryNote', deliveryNoteSchema, 'clientDeliveryNotes')
+const ProviderDeliveryNote = mongoose.model('ProviderDeliveryNote', deliveryNoteSchema, 'providerDeliveryNotes')
 
 export { deliveryNoteSchema, ClientDeliveryNote, ProviderDeliveryNote }

@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+const {Schema} = window.require('mongoose')
 
 const emailSchema = new Schema({
     description: String,
