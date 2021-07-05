@@ -8,6 +8,7 @@ import SubmitButton from '../../ui/forms/SubmitButton'
 import Select from '../../ui/forms/Select'
 import MultiSelect from '../../ui/forms/MultiSelect'
 import Switch from '../../ui/forms/Switch'
+import { addProduct } from '../../../db/ProductHelper'
 
 
 const CreateProduct = () => {
@@ -58,6 +59,12 @@ const CreateProduct = () => {
             .required(t('form.errors.required'))
     })
 
+    const handleSubmit = (data) => {
+        addProduct(data, (error) => {
+            console.log("error", error)
+        })
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -68,7 +75,7 @@ const CreateProduct = () => {
                         }}
                         validationSchema={FORM_VALIDATION}
                         onSubmit={values => {
-                            console.log(values)
+                            handleSubmit(values)
                         }}
                     >
                         <Form>

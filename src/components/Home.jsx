@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { connect as connectDb } from '../db'
+import { connect as connectDb } from '../db/db'
 import './Home.css'
 import logo from '../assets/gestishop_logo.png'
 
