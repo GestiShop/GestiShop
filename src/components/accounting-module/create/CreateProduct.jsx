@@ -61,7 +61,7 @@ const CreateProduct = () => {
 
     const handleSubmit = (data) => {
         addProduct(data, (error) => {
-            console.log("error", error)
+            console.log('error', error)
         })
     }
 
@@ -74,9 +74,7 @@ const CreateProduct = () => {
                             ...INITIAL_STATE
                         }}
                         validationSchema={FORM_VALIDATION}
-                        onSubmit={values => {
-                            handleSubmit(values)
-                        }}
+                        onSubmit={values => handleSubmit(values)}
                     >
                         <Form>
                             <Grid container spacing={2}>

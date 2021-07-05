@@ -5,49 +5,25 @@ import Button from '../../ui/forms/Button'
 import SearchBar from '../../ui/SearchBar'
 import Table from '../../ui/Table'
 import FullScreenDialog from '../../ui/FullscreenDialog'
-import CreateProduct from '../create/CreateProduct'
+import CreateTaxPercentage from '../create/CreateTaxPercentage'
+import { fetchTaxPercentages } from '../../../db/TaxPercentageHelper'
 
-
-const rows = [
-    {
-        _id: 'ID0',
-        reference: 'PROD000',
-        name: 'Product 000',
-        basePrice: 26.98,
-        stock: 10,
-        unitType: 'kg',
-        discountPercentage: 0.0,
-        taxPercentage: 21.0,
-        minStock: 12,
-        stockAlert: true,
-        visible: true
-    },
-    {
-        _id: 'ID1',
-        reference: 'PROD001',
-        name: 'Product 001',
-        basePrice: 22.98,
-        stock: 18,
-        unitType: 'units',
-        discountPercentage: 0.0,
-        taxPercentage: 21.0,
-        minStock: 50,
-        stockAlert: false,
-        visible: true
-    }
-]
 
 const headers = [
     {id: 'reference', label: 'Reference', align: 'left'},
-    {id: 'name', label: 'Name', align: 'left'},
-    {id: 'basePrice', label: 'Price (€)', align: 'right'},
-    {id: 'stock', label: 'Stock', align: 'right'},
-    {id: 'visible', label: 'State', align: 'left'}
+    {id: 'percentage', label: 'Percentage (%)', align: 'right'},
 ]
 
-const ListProducts = () => {
+const ListTaxPercentages = () => {
     const {t} = useTranslation()
     const [openCreationDialog, setOpenCreationDialog] = useState(false)
+    const [rows, setRows] = useState([])
+
+    fetchTaxPercentages((error) => {
+        console.log('error', error)
+    }, (data) => {
+        setRows(data)
+    })
 
     const handleSearch = (textToSearch) => {
         console.log('Searching: \'' + textToSearch + '\'')
@@ -65,7 +41,7 @@ const ListProducts = () => {
                         <Grid container spacing={2}>
                             <Grid item xs={3} className="d-flex">
                                 <Button onClick={() => setOpenCreationDialog(true)} className="m-auto">
-                                    {t('accounting_module.product.create_product')}
+                                    {t('accounting_module.tax_percentage.create_tax_percentage')}
                                 </Button>
                             </Grid>
                             <Grid item xs={6}>
@@ -76,7 +52,7 @@ const ListProducts = () => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <Table rows={rows} headers={headers} title="Products" editCallback={handleEdit}/>
+                                <Table rows={rows} headers={headers} title="Tax percentages" editCallback={handleEdit}/>
                             </Grid>
                         </Grid>
                     </Container>
@@ -85,11 +61,11 @@ const ListProducts = () => {
             <FullScreenDialog
                 open={openCreationDialog}
                 closeCallback={() => setOpenCreationDialog(false)}
-                title={t('accounting_module.product.create_product')}
-                childComponent={<CreateProduct/>}
+                title={t('accounting_module.tax_percentage.create_tax_percentage')}
+                childComponent={<CreateTaxPercentage/>}
             />
         </>
     )
 }
 
-export default ListProducts
+export default ListTaxPercentages

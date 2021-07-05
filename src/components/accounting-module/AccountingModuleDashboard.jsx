@@ -16,10 +16,13 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import CreateProduct from './create/CreateProduct'
 import ListProducts from './list/ListProducts'
+import ListTaxPercentages from './list/ListTaxPercentages'
+import CreateTaxPercentatge from './create/CreateTaxPercentage'
 
 const DRAWER_WIDTH = 240
 
@@ -92,6 +95,11 @@ const AccountingModuleDashboard = () => {
             text: t('accounting_module.menu.products'),
             icon: <ShoppingBasketIcon/>,
             linkTo: '/list/products'
+        },
+        {
+            text: t('accounting_module.menu.tax_percentages'),
+            icon: <AccountBalanceIcon/>,
+            linkTo: '/list/tax_percentages'
         }
     ]
 
@@ -166,8 +174,12 @@ const AccountingModuleDashboard = () => {
                     <div className={classes.toolbar}/>
                     <Switch>
                         <Route exact path="/" render={() => <div>Home Page</div>}/>
+
                         <Route path="/list/products" render={() => <ListProducts/>}/>
                         <Route path="/create/product" render={() => <CreateProduct/>}/>
+
+                        <Route path="/list/tax_percentages" render={() => <ListTaxPercentages/>}/>
+                        <Route path="/create/tax_percentage" render={() => <CreateTaxPercentatge/>}/>
                     </Switch>
                 </main>
             </BrowserRouter>

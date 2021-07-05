@@ -66,7 +66,8 @@
   "accounting_module": {
     "accounting_module": "Módulo de contabilidad",
     "menu": {
-      "products": "Productos"
+      "products": "Productos",
+      "tax_percentages": "Impuestos"
     },
     "product": {
       "create_product": "Añadir un producto",
@@ -74,6 +75,9 @@
         "available": "Disponible",
         "hidden": "Escondido"
       }
+    },
+    "tax_percentage": {
+      "create_tax_percentage": "Añadir un impuesto"
     },
     "placeholders": {
       "search": "Ingrese texto para buscar..."
