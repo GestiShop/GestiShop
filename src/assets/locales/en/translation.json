@@ -67,17 +67,25 @@
     "accounting_module": "Accounting module",
     "menu": {
       "products": "Products",
-      "tax_percentages": "Taxes"
+      "taxes": "Taxes"
     },
     "product": {
-      "create_product": "Add new product",
+      "create": "Add new product",
+      "list": "Product list",
       "state": {
         "available": "Available",
         "hidden": "Hidden"
       }
     },
-    "tax_percentage": {
-      "create_tax_percentage": "Add new tax"
+    "tax": {
+      "create": "Add new tax",
+      "list": {
+        "title": "Taxes list",
+        "headers": {
+          "reference": "Reference",
+          "percentage": "Percentage (%)"
+        }
+      }
     },
     "placeholders": {
       "search": "Input text to search..."

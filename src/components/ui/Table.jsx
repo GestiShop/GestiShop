@@ -217,7 +217,7 @@ EnhancedTableToolbar.propTypes = {
     deleteCallback: PropTypes.func.isRequired
 }
 
-const EnhancedTable = ({headers, rows, title, editCallback}) => {
+const EnhancedTable = ({headers, rows, title, editCallback, deleteCallback}) => {
     const {t} = useTranslation()
     const classes = useStyles()
     const [order, setOrder] = React.useState('asc')

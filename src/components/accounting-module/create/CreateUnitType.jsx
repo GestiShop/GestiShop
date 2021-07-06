@@ -5,27 +5,27 @@ import { Container, Grid } from '@material-ui/core'
 import TextField from '../../ui/forms/TextField'
 import { useTranslation } from 'react-i18next'
 import SubmitButton from '../../ui/forms/SubmitButton'
-import { addTaxPercentage } from '../../../db/TaxPercentageHelper'
+import { addTax } from '../../../db/TaxHelper'
+import { addUnitType } from '../../../db/UnitTypeHelper'
 
 
-const CreateTaxPercentage = () => {
+const CreateUnitType = () => {
     const {t} = useTranslation()
 
     const INITIAL_STATE = {
         reference: '',
-        percentage: 0.00
+        unit: ''
     }
 
     const FORM_VALIDATION = Yup.object().shape({
         reference: Yup.string()
             .required(t('form.errors.required')),
-        percentage: Yup.number()
-            .typeError(t('form.errors.invalid_number'))
-            .required(t('form.errors.required'))
+        unit: Yup.string()
+            .required(t('form.errors.required')),
     })
 
     const handleSubmit = (data) => {
-        addTaxPercentage(data, (error) => {
+        addUnitType(data, (error) => {
             console.log('error', error)
         }, () => {
             console.log('NO ERROR')
@@ -54,8 +54,8 @@ const CreateTaxPercentage = () => {
 
                                 <Grid item xs={6}>
                                     <TextField
-                                        name="percentage"
-                                        label="Tax percentage (%)"
+                                        name="unit"
+                                        label="Unit"
                                     />
                                 </Grid>
 
@@ -73,4 +73,4 @@ const CreateTaxPercentage = () => {
     )
 }
 
-export default CreateTaxPercentage
+export default CreateUnitType

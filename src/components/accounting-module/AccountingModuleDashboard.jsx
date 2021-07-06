@@ -21,8 +21,10 @@ import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import CreateProduct from './create/CreateProduct'
 import ListProducts from './list/ListProducts'
-import ListTaxPercentages from './list/ListTaxPercentages'
-import CreateTaxPercentatge from './create/CreateTaxPercentage'
+import ListTaxes from './list/ListTaxes'
+import CreateTax from './create/CreateTax'
+import ListUnitTypes from './list/ListUnitTypes'
+import CreateUnitType from './create/CreateUnitType'
 
 const DRAWER_WIDTH = 240
 
@@ -97,9 +99,14 @@ const AccountingModuleDashboard = () => {
             linkTo: '/list/products'
         },
         {
-            text: t('accounting_module.menu.tax_percentages'),
+            text: t('accounting_module.menu.taxes'),
             icon: <AccountBalanceIcon/>,
-            linkTo: '/list/tax_percentages'
+            linkTo: '/list/taxes'
+        },
+        {
+            text: t('accounting_module.menu.unit_types'),
+            icon: <AccountBalanceIcon/>,
+            linkTo: '/list/unit_types'
         }
     ]
 
@@ -178,8 +185,11 @@ const AccountingModuleDashboard = () => {
                         <Route path="/list/products" render={() => <ListProducts/>}/>
                         <Route path="/create/product" render={() => <CreateProduct/>}/>
 
-                        <Route path="/list/tax_percentages" render={() => <ListTaxPercentages/>}/>
-                        <Route path="/create/tax_percentage" render={() => <CreateTaxPercentatge/>}/>
+                        <Route path="/list/taxes" render={() => <ListTaxes/>}/>
+                        <Route path="/create/tax" render={() => <CreateTax/>}/>
+
+                        <Route path="/list/unit_types" render={() => <ListUnitTypes/>}/>
+                        <Route path="/create/unit_type" render={() => <CreateUnitType/>}/>
                     </Switch>
                 </main>
             </BrowserRouter>
