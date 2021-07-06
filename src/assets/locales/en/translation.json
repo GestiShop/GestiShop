@@ -67,7 +67,8 @@
     "accounting_module": "Accounting module",
     "menu": {
       "products": "Products",
-      "taxes": "Taxes"
+      "taxes": "Taxes",
+      "unit_types": "Unit types"
     },
     "product": {
       "create": "Add new product",
@@ -84,6 +85,16 @@
         "headers": {
           "reference": "Reference",
           "percentage": "Percentage (%)"
+        }
+      }
+    },
+    "unit_type": {
+      "create": "Add a unit type",
+      "list": {
+        "title": "Unit types list",
+        "headers": {
+          "reference": "Reference",
+          "unit": "Unit"
         }
       }
     },

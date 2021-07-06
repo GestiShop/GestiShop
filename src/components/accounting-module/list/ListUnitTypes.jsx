@@ -10,8 +10,8 @@ const ListUnitTypes = () => {
     const [rows, setRows] = useState([])
 
     const headers = [
-        {id: 'reference', label: t('accounting_module.unit_model.list.headers.reference'), align: 'left'},
-        {id: 'unit', label: t('accounting_module.unit_model.list.headers.unit'), align: 'left'},
+        {id: 'reference', label: t('accounting_module.unit_type.list.headers.reference'), align: 'left'},
+        {id: 'unit', label: t('accounting_module.unit_type.list.headers.unit'), align: 'left'},
     ]
 
     fetchUnitTypes((error) => {

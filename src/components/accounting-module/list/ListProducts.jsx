@@ -37,17 +37,17 @@ const rows = [
     }
 ]
 
-const headers = [
-    {id: 'reference', label: 'Reference', align: 'left'},
-    {id: 'name', label: 'Name', align: 'left'},
-    {id: 'basePrice', label: 'Price (€)', align: 'right'},
-    {id: 'stock', label: 'Stock', align: 'right'},
-    {id: 'visible', label: 'State', align: 'left'}
-]
-
 const ListProducts = () => {
     const {t} = useTranslation()
     const [openCreationDialog, setOpenCreationDialog] = useState(false)
+
+    const headers = [
+        {id: 'reference', label: t('accounting_module.product.list.headers.reference'), align: 'left'},
+        {id: 'name', label: t('accounting_module.product.list.headers.name'), align: 'left'},
+        {id: 'basePrice', label: t('accounting_module.product.list.headers.price'), align: 'right'},
+        {id: 'stock', label: t('accounting_module.product.list.headers.stock'), align: 'right'},
+        {id: 'visible', label: t('accounting_module.product.list.headers.state'), align: 'left'}
+    ]
 
     const handleSearch = (textToSearch) => {
         console.log('Searching: \'' + textToSearch + '\'')

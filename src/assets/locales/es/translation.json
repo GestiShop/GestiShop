@@ -67,17 +67,36 @@
     "accounting_module": "Módulo de contabilidad",
     "menu": {
       "products": "Productos",
-      "tax_percentages": "Impuestos"
+      "taxes": "Impuestos",
+      "unit_types": "Tipos de unidades"
     },
     "product": {
-      "create_product": "Añadir un producto",
+      "create": "Añadir un producto",
+      "list": "Listado de productos",
       "state": {
         "available": "Disponible",
         "hidden": "Escondido"
       }
     },
-    "tax_percentage": {
-      "create_tax_percentage": "Añadir un impuesto"
+    "tax": {
+      "create": "Añadir un impuesto",
+      "list": {
+        "title": "Listado de impuestos",
+        "headers": {
+          "reference": "Referencia",
+          "percentage": "Porcentaje (%)"
+        }
+      }
+    },
+    "unit_type": {
+      "create": "Añadir un tipo de unidad",
+      "list": {
+        "title": "Listado de tipos de unidad",
+        "headers": {
+          "reference": "Referencia",
+          "unit": "Unidad"
+        }
+      }
     },
     "placeholders": {
       "search": "Ingrese texto para buscar..."

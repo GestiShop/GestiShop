@@ -5,7 +5,6 @@ import { Container, Grid } from '@material-ui/core'
 import TextField from '../../ui/forms/TextField'
 import { useTranslation } from 'react-i18next'
 import SubmitButton from '../../ui/forms/SubmitButton'
-import { addTax } from '../../../db/TaxHelper'
 import { addUnitType } from '../../../db/UnitTypeHelper'
 
 
@@ -48,14 +47,14 @@ const CreateUnitType = () => {
                                 <Grid item xs={6}>
                                     <TextField
                                         name="reference"
-                                        label="Tax percentage reference"
+                                        label={t('accounting_module.unit_type.list.headers.reference')}
                                     />
                                 </Grid>
 
                                 <Grid item xs={6}>
                                     <TextField
                                         name="unit"
-                                        label="Unit"
+                                        label={t('accounting_module.unit_type.list.headers.unit')}
                                     />
                                 </Grid>
 

@@ -67,17 +67,36 @@
     "accounting_module": "Mòdul de comptabilitat",
     "menu": {
       "products": "Productes",
-      "tax_percentages": "Impostos"
+      "taxes": "Impostos",
+      "unit_types": "Tipus d'unitats"
     },
     "product": {
-      "create_product": "Afegir un producte",
+      "create": "Afegir un producte",
+      "list": "Llistat de productes",
       "state": {
         "available": "Disponible",
         "hidden": "Amagat"
       }
     },
-    "tax_percentage": {
-      "create_tax_percentage": "Afegir un impost"
+    "tax": {
+      "create": "Afegir un impost",
+      "list": {
+        "title": "Llistat d'impostos",
+        "headers": {
+          "reference": "Referència",
+          "percentage": "Percentatge (%)"
+        }
+      }
+    },
+    "unit_type": {
+      "create": "Afegir un tipus d'unitat",
+      "list": {
+        "title": "Llistat de tipus d'unitat",
+        "headers": {
+          "reference": "Referència",
+          "unit": "Unitat"
+        }
+      }
     },
     "placeholders": {
       "search": "Introdueixi text per cercar..."

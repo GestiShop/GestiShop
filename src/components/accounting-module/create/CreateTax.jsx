@@ -48,14 +48,14 @@ const CreateTax = () => {
                                 <Grid item xs={6}>
                                     <TextField
                                         name="reference"
-                                        label="Tax percentage reference"
+                                        label={t('accounting_module.tax.list.headers.reference')}
                                     />
                                 </Grid>
 
                                 <Grid item xs={6}>
                                     <TextField
                                         name="percentage"
-                                        label="Tax percentage (%)"
+                                        label={t('accounting_module.tax.list.headers.percentage')}
                                     />
                                 </Grid>
 

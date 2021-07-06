@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import CreateProduct from './create/CreateProduct'
@@ -105,7 +106,7 @@ const AccountingModuleDashboard = () => {
         },
         {
             text: t('accounting_module.menu.unit_types'),
-            icon: <AccountBalanceIcon/>,
+            icon: <MoneyOffIcon/>,
             linkTo: '/list/unit_types'
         }
     ]
