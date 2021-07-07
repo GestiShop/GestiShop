@@ -41,7 +41,7 @@ const FullScreenDialog = ({open, closeCallback, title, childComponent}) => {
                 </Toolbar>
             </AppBar>
             <div className={classes.contentContainer}>
-                {childComponent}
+                {React.cloneElement(childComponent, {closeCallback: closeCallback})}
             </div>
         </Dialog>
     )

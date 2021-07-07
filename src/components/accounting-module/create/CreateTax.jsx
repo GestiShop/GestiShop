@@ -8,7 +8,7 @@ import SubmitButton from '../../ui/forms/SubmitButton'
 import { addTax } from '../../../db/TaxHelper'
 
 
-const CreateTax = () => {
+const CreateTax = ({closeCallback}) => {
     const {t} = useTranslation()
 
     const INITIAL_STATE = {
@@ -27,8 +27,10 @@ const CreateTax = () => {
     const handleSubmit = (data) => {
         addTax(data, (error) => {
             console.log('error', error)
+            closeCallback()
         }, () => {
             console.log('NO ERROR')
+            closeCallback()
         })
     }
 

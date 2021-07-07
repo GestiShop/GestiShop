@@ -1,10 +1,12 @@
 import { Product } from '../model/ProductModel'
 
-const addProduct = (product, errorCallback) => {
+const addProduct = (product, errorCallback, resultCallback) => {
     const dbProduct = new Product(product)
     dbProduct.save((err) => {
         if (err) {
             errorCallback(err)
+        } else {
+            resultCallback()
         }
     })
 }

@@ -11,7 +11,7 @@ import Switch from '../../ui/forms/Switch'
 import { addProduct } from '../../../db/ProductHelper'
 
 
-const CreateProduct = () => {
+const CreateProduct = ({closeCallback}) => {
     const {t} = useTranslation()
     const [stockAlert, setStockAlert] = useState(false)
 
@@ -62,6 +62,10 @@ const CreateProduct = () => {
     const handleSubmit = (data) => {
         addProduct(data, (error) => {
             console.log('error', error)
+            closeCallback()
+        }, () => {
+            console.log('NO ERROR')
+            closeCallback()
         })
     }
 

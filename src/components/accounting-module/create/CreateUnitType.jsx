@@ -8,7 +8,7 @@ import SubmitButton from '../../ui/forms/SubmitButton'
 import { addUnitType } from '../../../db/UnitTypeHelper'
 
 
-const CreateUnitType = () => {
+const CreateUnitType = ({closeCallback}) => {
     const {t} = useTranslation()
 
     const INITIAL_STATE = {
@@ -26,8 +26,10 @@ const CreateUnitType = () => {
     const handleSubmit = (data) => {
         addUnitType(data, (error) => {
             console.log('error', error)
+            closeCallback()
         }, () => {
             console.log('NO ERROR')
+            closeCallback()
         })
     }
 
