@@ -29,7 +29,11 @@ const GenericListComponent = ({
                     <Container maxWidth={false}>
                         <Grid container spacing={2}>
                             <Grid item xs={3} className="d-flex">
-                                <Button onClick={() => setOpenCreationDialog(true)} className="m-auto">
+                                <Button onClick={() => {
+                                    setInitialState(null)
+                                    setOpenCreationDialog(true)
+                                }} className="m-auto"
+                                >
                                     {texts.create}
                                 </Button>
                             </Grid>
@@ -55,7 +59,7 @@ const GenericListComponent = ({
             <FullScreenDialog
                 open={openCreationDialog}
                 closeCallback={() => setOpenCreationDialog(false)}
-                title={texts.create}
+                title={initialState ? texts.edit : texts.create}
                 childComponent={creationComponent}
                 initialState={initialState}
             />

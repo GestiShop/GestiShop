@@ -5,7 +5,7 @@ import { Container, Grid, Typography } from '@material-ui/core'
 import TextField from '../../ui/forms/TextField'
 import { useTranslation } from 'react-i18next'
 import SubmitButton from '../../ui/forms/SubmitButton'
-import { addWarehouse } from '../../../db/WarehouseHelper'
+import { addWarehouse, updateWarehouse } from '../../../db/WarehouseHelper'
 
 
 const CreateWarehouse = ({closeCallback, initialState}) => {
@@ -29,7 +29,7 @@ const CreateWarehouse = ({closeCallback, initialState}) => {
         }
     }
 
-    if (initialState != null) {
+    if (initialState) {
         INITIAL_STATE = {
             reference: initialState.reference,
             description: initialState.description,
@@ -79,13 +79,23 @@ const CreateWarehouse = ({closeCallback, initialState}) => {
     })
 
     const handleSubmit = (data) => {
-        addWarehouse(data, (error) => {
-            console.log('error', error)
-            closeCallback()
-        }, () => {
-            console.log('NO ERROR')
-            closeCallback()
-        })
+        if (!initialState) {
+            addWarehouse(data, (error) => {
+                console.log('error', error)
+                closeCallback()
+            }, () => {
+                console.log('NO ERROR')
+                closeCallback()
+            })
+        } else {
+            updateWarehouse({...data, _id: initialState._id}, (error) => {
+                console.log('error', error)
+                closeCallback()
+            }, () => {
+                console.log('NO ERROR')
+                closeCallback()
+            })
+        }
     }
 
     return (
@@ -196,7 +206,7 @@ const CreateWarehouse = ({closeCallback, initialState}) => {
 
                                 <Grid item xs={12}>
                                     <SubmitButton>
-                                        {t('buttons.create')}
+                                        {initialState ? t('buttons.save'): t('buttons.create')}
                                     </SubmitButton>
                                 </Grid>
                             </Grid>

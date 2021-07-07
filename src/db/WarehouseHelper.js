@@ -21,4 +21,15 @@ const fetchWarehouses = (errorCallback, resultCallback) => {
     })
 }
 
-export { addWarehouse, fetchWarehouses }
+const updateWarehouse = (warehouse, errorCallback, resultCallback) => {
+    const query = {'_id': warehouse._id}
+    return Warehouse.findOneAndUpdate(query, warehouse, (err, docs) => {
+        if (err) {
+            errorCallback(err)
+        } else {
+            resultCallback(docs)
+        }
+    })
+}
+
+export { addWarehouse, fetchWarehouses, updateWarehouse }

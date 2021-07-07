@@ -36,7 +36,8 @@ const ListWarehouses = () => {
             deleteCallback={handleDelete}
             texts={{
                 create: t('accounting_module.warehouse.create'),
-                title: t('accounting_module.warehouse.list.title')
+                title: t('accounting_module.warehouse.list.title'),
+                edit: t('accounting_module.warehouse.edit')
             }}
             creationComponent={<CreateWarehouse/>}
         />
