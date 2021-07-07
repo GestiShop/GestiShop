@@ -18,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
+import StoreIcon from '@material-ui/icons/Store';
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import CreateProduct from './create/CreateProduct'
@@ -26,6 +27,8 @@ import ListTaxes from './list/ListTaxes'
 import CreateTax from './create/CreateTax'
 import ListUnitTypes from './list/ListUnitTypes'
 import CreateUnitType from './create/CreateUnitType'
+import ListWarehouses from './list/ListWarehouses'
+import CreateWarehouse from './create/CreateWarehouse'
 
 const DRAWER_WIDTH = 240
 
@@ -108,6 +111,11 @@ const AccountingModuleDashboard = () => {
             text: t('accounting_module.menu.unit_types'),
             icon: <MoneyOffIcon/>,
             linkTo: '/list/unit_types'
+        },
+        {
+            text: t('accounting_module.menu.warehouses'),
+            icon: <StoreIcon/>,
+            linkTo: '/list/warehouses'
         }
     ]
 
@@ -191,6 +199,9 @@ const AccountingModuleDashboard = () => {
 
                         <Route path="/list/unit_types" render={() => <ListUnitTypes/>}/>
                         <Route path="/create/unit_type" render={() => <CreateUnitType/>}/>
+
+                        <Route path="/list/warehouses" render={() => <ListWarehouses/>}/>
+                        <Route path="/create/warehouse" render={() => <CreateWarehouse/>}/>
                     </Switch>
                 </main>
             </BrowserRouter>

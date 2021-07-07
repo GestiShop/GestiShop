@@ -25,8 +25,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />
 })
 
-const FullScreenDialog = ({open, closeCallback, title, childComponent}) => {
+const FullScreenDialog = ({open, closeCallback, title, childComponent, initialState}) => {
     const classes = useStyles()
+
+    const componentToRender = React.cloneElement(childComponent, {initialState: initialState, closeCallback: closeCallback})
 
     return (
         <Dialog fullScreen open={open} onClose={closeCallback} TransitionComponent={Transition}>
@@ -41,7 +43,7 @@ const FullScreenDialog = ({open, closeCallback, title, childComponent}) => {
                 </Toolbar>
             </AppBar>
             <div className={classes.contentContainer}>
-                {React.cloneElement(childComponent, {closeCallback: closeCallback})}
+                {componentToRender}
             </div>
         </Dialog>
     )

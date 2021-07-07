@@ -10,12 +10,17 @@ const GenericListComponent = ({
                                   rows,
                                   headers,
                                   searchCallback,
-                                  editCallback,
                                   deleteCallback,
                                   texts,
                                   creationComponent
                               }) => {
     const [openCreationDialog, setOpenCreationDialog] = useState(false)
+    const [initialState, setInitialState] = useState(false)
+
+    const editCallback = (index) => {
+        setInitialState(rows[index])
+        setOpenCreationDialog(true)
+    }
 
     return (
         <>
@@ -52,6 +57,7 @@ const GenericListComponent = ({
                 closeCallback={() => setOpenCreationDialog(false)}
                 title={texts.create}
                 childComponent={creationComponent}
+                initialState={initialState}
             />
         </>
     )
