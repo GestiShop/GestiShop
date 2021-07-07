@@ -235,19 +235,18 @@ const EnhancedTable = ({headers, rows, title, editCallback, deleteCallback}) => 
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name)
-            setSelected(newSelecteds)
-            return
+            setSelected(rows.map((n) => n.reference))
+        } else {
+            setSelected([])
         }
-        setSelected([])
     }
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name)
+    const handleClick = (event, id) => {
+        const selectedIndex = selected.indexOf(id)
         let newSelected = []
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name)
+            newSelected = newSelected.concat(selected, id)
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1))
         } else if (selectedIndex === selected.length - 1) {
@@ -271,7 +270,7 @@ const EnhancedTable = ({headers, rows, title, editCallback, deleteCallback}) => 
         setPage(0)
     }
 
-    const isSelected = (name) => selected.indexOf(name) !== -1
+    const isSelected = (id) => selected.indexOf(id) !== -1
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
@@ -319,7 +318,7 @@ const EnhancedTable = ({headers, rows, title, editCallback, deleteCallback}) => 
                             {stableSort(rows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name)
+                                    const isItemSelected = isSelected(row.reference)
                                     const labelId = `enhanced-table-checkbox-${index}`
 
                                     let headerCells = []
@@ -332,7 +331,10 @@ const EnhancedTable = ({headers, rows, title, editCallback, deleteCallback}) => 
                                                                id={labelId}
                                                                scope="row"
                                                                align="left"
-                                                    >{row.reference}</TableCell>)
+                                                    >
+                                                        {row.reference}
+                                                    </TableCell>
+                                                )
                                                 break
                                             case 'visible':
                                                 if (row.visible === true) {
@@ -382,11 +384,11 @@ const EnhancedTable = ({headers, rows, title, editCallback, deleteCallback}) => 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row.reference)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row._id}
+                                            key={row.reference}
                                             selected={isItemSelected}
                                             className={row.stockAlert && row.stock <= row.minStock ? 'no-stock' : null}
                                         >
