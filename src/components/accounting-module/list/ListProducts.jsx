@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Container, Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from '../../ui/forms/Button';
-import SearchBar from '../../ui/SearchBar';
-import Table from '../../ui/Table';
-import FullScreenDialog from '../../ui/FullscreenDialog';
+import GenericListComponent from './GenericListComponent';
+import { fetchProducts } from '../../../db/ProductHelper';
 import CreateProduct from '../create/CreateProduct';
+import useIsMounted from '../../../utils/useIsMounted';
 
-const rows = [
+const INIT_ROWS = [
   {
     _id: 'ID0',
     reference: 'PROD000',
@@ -38,7 +36,8 @@ const rows = [
 
 const ListProducts = () => {
   const { t } = useTranslation();
-  const [openCreationDialog, setOpenCreationDialog] = useState(false);
+  const [rows, setRows] = useState(INIT_ROWS);
+  const isMounted = useIsMounted();
 
   const headers = [
     {
@@ -68,54 +67,48 @@ const ListProducts = () => {
     },
   ];
 
-  const handleSearch = (textToSearch) => {
-    console.log(`Searching: '${textToSearch}'`);
+  const fetchData = () => {
+    fetchProducts(
+      (error) => {
+        console.log('error', error);
+      },
+      (data) => {
+        // if (isMounted.current) setRows(data);
+      }
+    );
   };
 
-  const handleEdit = (index) => {
-    console.log(`Edit row: ${index}`);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleEdit = () => {
+    fetchData();
+  };
+
+  const handleSearch = (textToSearch) => {
+    console.log('Searching text:', textToSearch);
+  };
+
+  const handleDelete = (indexes) => {
+    console.log('Delete rows:', indexes);
+    fetchData();
   };
 
   return (
-    <>
-      <Grid container>
-        <Grid item xs={12}>
-          <Container maxWidth={false}>
-            <Grid container spacing={2}>
-              <Grid item xs={3} className="d-flex">
-                <Button
-                  onClick={() => setOpenCreationDialog(true)}
-                  className="m-auto"
-                >
-                  {t('accounting_module.product.create_product')}
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <p>Filters go here</p>
-              </Grid>
-              <Grid item xs={3}>
-                <SearchBar onSubmit={handleSearch} />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Table
-                  rows={rows}
-                  headers={headers}
-                  title="Products"
-                  editCallback={handleEdit}
-                />
-              </Grid>
-            </Grid>
-          </Container>
-        </Grid>
-      </Grid>
-      <FullScreenDialog
-        open={openCreationDialog}
-        closeCallback={() => setOpenCreationDialog(false)}
-        title={t('accounting_module.product.create_product')}
-        childComponent={<CreateProduct />}
-      />
-    </>
+    <GenericListComponent
+      rows={rows}
+      headers={headers}
+      editCallback={handleEdit}
+      searchCallback={handleSearch}
+      deleteCallback={handleDelete}
+      texts={{
+        create: t('accounting_module.product.create'),
+        title: t('accounting_module.product.list.title'),
+        edit: t('accounting_module.product.edit'),
+      }}
+      creationComponent={<CreateProduct />}
+    />
   );
 };
 

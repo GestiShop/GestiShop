@@ -20,7 +20,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import StoreIcon from '@material-ui/icons/Store';
 import { useTranslation } from 'react-i18next';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom';
 import CreateProduct from './create/CreateProduct';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
@@ -198,22 +198,43 @@ const AccountingModuleDashboard = () => {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
-            <Route exact path="/" render={() => <div>Home Page</div>} />
-
-            <Route path="/list/products" render={() => <ListProducts />} />
-            <Route path="/create/product" render={() => <CreateProduct />} />
-
-            <Route path="/list/taxes" render={() => <ListTaxes />} />
-            <Route path="/create/tax" render={() => <CreateTax />} />
-
-            <Route path="/list/unit_types" render={() => <ListUnitTypes />} />
-            <Route path="/create/unit_type" render={() => <CreateUnitType />} />
-
-            <Route path="/list/warehouses" render={() => <ListWarehouses />} />
             <Route
+              exact
+              path="/list/products"
+              render={() => <ListProducts />}
+            />
+            <Route
+              exact
+              path="/create/product"
+              render={() => <CreateProduct />}
+            />
+
+            <Route exact path="/list/taxes" render={() => <ListTaxes />} />
+            <Route exact path="/create/tax" render={() => <CreateTax />} />
+
+            <Route
+              exact
+              path="/list/unit_types"
+              render={() => <ListUnitTypes />}
+            />
+            <Route
+              exact
+              path="/create/unit_type"
+              render={() => <CreateUnitType />}
+            />
+
+            <Route
+              exact
+              path="/list/warehouses"
+              render={() => <ListWarehouses />}
+            />
+            <Route
+              exact
               path="/create/warehouse"
               render={() => <CreateWarehouse />}
             />
+
+            <Route render={() => <Redirect to="/list/products" />} />
           </Switch>
         </main>
       </BrowserRouter>
