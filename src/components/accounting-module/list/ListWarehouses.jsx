@@ -5,7 +5,6 @@ import { fetchWarehouses } from '../../../db/WarehouseHelper';
 import CreateWarehouse from '../create/CreateWarehouse';
 
 const ListWarehouses = () => {
-  console.log('Component');
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
 
@@ -28,7 +27,6 @@ const ListWarehouses = () => {
         console.log('error', error);
       },
       (data) => {
-        console.log('Response');
         setRows(data);
       }
     );

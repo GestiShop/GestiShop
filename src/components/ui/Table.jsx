@@ -140,7 +140,7 @@ const EnhancedTableHead = (props) => {
           <TableCell
             key={headCell.id}
             align={headCell.align}
-            padding="default"
+            padding="normal"
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -160,7 +160,7 @@ const EnhancedTableHead = (props) => {
           </TableCell>
         ))}
         {hasActions ? (
-          <TableCell align="right" padding="default">
+          <TableCell align="right" padding="normal">
             {t('accounting_module.table.actions')}
           </TableCell>
         ) : null}
@@ -373,7 +373,7 @@ const EnhancedTable = ({
                             <TableCell
                               key={header.id}
                               align={header.align}
-                              padding="default"
+                              padding="normal"
                             >
                               <Chip
                                 label={t(
@@ -389,7 +389,7 @@ const EnhancedTable = ({
                             <TableCell
                               key={header.id}
                               align={header.align}
-                              padding="default"
+                              padding="normal"
                             >
                               <Chip
                                 label={t(
@@ -407,7 +407,7 @@ const EnhancedTable = ({
                           <TableCell
                             key={header.id}
                             align={header.align}
-                            padding="default"
+                            padding="normal"
                           >
                             {row[header.id]}
                           </TableCell>
@@ -417,7 +417,7 @@ const EnhancedTable = ({
                   }
                   if (editCallback) {
                     headerCells.push(
-                      <TableCell key="actions" align="right" padding="default">
+                      <TableCell key="actions" align="right" padding="normal">
                         <Tooltip title={t('accounting_module.table.edit')}>
                           <IconButton
                             aria-label={t('accounting_module.table.edit')}
@@ -469,8 +469,8 @@ const EnhancedTable = ({
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
 
