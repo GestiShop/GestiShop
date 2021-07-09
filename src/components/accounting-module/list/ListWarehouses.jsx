@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import GenericListComponent from './GenericListComponent';
 import { fetchWarehouses } from '../../../db/WarehouseHelper';
 import CreateWarehouse from '../create/CreateWarehouse';
+import useIsMounted from '../../../utils/useIsMounted';
 
 const ListWarehouses = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
+  const isMounted = useIsMounted();
 
   const headers = [
     {
@@ -27,7 +29,7 @@ const ListWarehouses = () => {
         console.log('error', error);
       },
       (data) => {
-        setRows(data);
+        if (isMounted.current) setRows(data);
       }
     );
   };
