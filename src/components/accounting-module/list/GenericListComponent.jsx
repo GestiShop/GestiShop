@@ -9,6 +9,7 @@ import FullScreenDialog from '../../ui/FullscreenDialog';
 const GenericListComponent = ({
   rows,
   headers,
+  editCallback,
   searchCallback,
   deleteCallback,
   texts,
@@ -17,9 +18,14 @@ const GenericListComponent = ({
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
   const [initialState, setInitialState] = useState(false);
 
-  const editCallback = (index) => {
+  const handleEdit = (index) => {
     setInitialState(rows[index]);
     setOpenCreationDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenCreationDialog(false);
+    editCallback();
   };
 
   return (
@@ -51,7 +57,7 @@ const GenericListComponent = ({
                   rows={rows}
                   headers={headers}
                   title={texts.title}
-                  editCallback={(index) => editCallback(index)}
+                  editCallback={(index) => handleEdit(index)}
                   deleteCallback={deleteCallback}
                 />
               </Grid>
@@ -61,7 +67,7 @@ const GenericListComponent = ({
       </Grid>
       <FullScreenDialog
         open={openCreationDialog}
-        closeCallback={() => setOpenCreationDialog(false)}
+        closeCallback={handleDialogClose}
         title={initialState ? texts.edit : texts.create}
         childComponent={creationComponent}
         initialState={initialState}

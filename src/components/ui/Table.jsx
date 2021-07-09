@@ -317,8 +317,8 @@ const EnhancedTable = ({
   };
 
   const deleteItemsAndClose = () => {
-    console.log('Deleting selected rows: ', selected);
     handleCloseDeleteDialog();
+    deleteCallback(selected);
   };
 
   return (
@@ -433,7 +433,7 @@ const EnhancedTable = ({
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.reference)}
+                      onClick={(event) => handleClick(event, index)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
