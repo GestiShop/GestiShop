@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect as connectDb } from '../db/db';
-import './Home.css';
+import styles from './Home.css';
 import logo from '../../assets/gestishop_logo.png';
 
 const Home = () => {
@@ -21,8 +21,8 @@ const Home = () => {
   }, [history]);
 
   return (
-    <div className="float-center">
-      <img className="logo" src={logo} alt="GestiShop" />
+    <div className={styles['float-center']}>
+      <img className={styles.logo} src={logo} alt="GestiShop" />
       <p>Starting, please wait...</p>
     </div>
   );

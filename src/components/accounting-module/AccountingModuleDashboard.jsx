@@ -15,6 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import EventIcon from '@material-ui/icons/Event';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
@@ -29,6 +30,7 @@ import ListUnitTypes from './list/ListUnitTypes';
 import CreateUnitType from './create/CreateUnitType';
 import ListWarehouses from './list/ListWarehouses';
 import CreateWarehouse from './create/CreateWarehouse';
+import Calendar from './calendar/Calendar';
 
 const DRAWER_WIDTH = 240;
 
@@ -97,6 +99,11 @@ const AccountingModuleDashboard = () => {
   const { t } = useTranslation();
 
   const DRAWER_ITEMS = [
+    {
+      text: t('accounting_module.menu.agenda'),
+      icon: <EventIcon />,
+      linkTo: '/calendar',
+    },
     {
       text: t('accounting_module.menu.products'),
       icon: <ShoppingBasketIcon />,
@@ -198,43 +205,24 @@ const AccountingModuleDashboard = () => {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
-            <Route
-              exact
-              path="/list/products"
-              render={() => <ListProducts />}
-            />
-            <Route
-              exact
-              path="/create/product"
-              render={() => <CreateProduct />}
-            />
+            <Route path="/calendar" render={() => <Calendar />} />
 
-            <Route exact path="/list/taxes" render={() => <ListTaxes />} />
-            <Route exact path="/create/tax" render={() => <CreateTax />} />
+            <Route path="/list/products" render={() => <ListProducts />} />
+            <Route path="/create/product" render={() => <CreateProduct />} />
 
-            <Route
-              exact
-              path="/list/unit_types"
-              render={() => <ListUnitTypes />}
-            />
-            <Route
-              exact
-              path="/create/unit_type"
-              render={() => <CreateUnitType />}
-            />
+            <Route path="/list/taxes" render={() => <ListTaxes />} />
+            <Route path="/create/tax" render={() => <CreateTax />} />
 
+            <Route path="/list/unit_types" render={() => <ListUnitTypes />} />
+            <Route path="/create/unit_type" render={() => <CreateUnitType />} />
+
+            <Route path="/list/warehouses" render={() => <ListWarehouses />} />
             <Route
-              exact
-              path="/list/warehouses"
-              render={() => <ListWarehouses />}
-            />
-            <Route
-              exact
               path="/create/warehouse"
               render={() => <CreateWarehouse />}
             />
 
-            <Route render={() => <Redirect to="/list/products" />} />
+            <Route render={() => <Redirect to="/calendar" />} />
           </Switch>
         </main>
       </BrowserRouter>
