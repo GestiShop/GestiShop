@@ -267,8 +267,10 @@
     "react-i18next": "^11.11.1",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
+    "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "yup": "^0.32.9"
   },
   "devEngines": {
     "node": ">=10.x",
