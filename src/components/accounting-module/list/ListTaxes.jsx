@@ -1,51 +1,71 @@
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import CreateTax from '../create/CreateTax'
-import { fetchTaxes } from '../../../db/TaxHelper'
-import GenericListComponent from './GenericListComponent'
-
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import CreateTax from '../create/CreateTax';
+import { fetchTaxes } from '../../../db/TaxHelper';
+import GenericListComponent from './GenericListComponent';
+import useIsMounted from '../../../utils/useIsMounted';
 
 const ListTaxes = () => {
-    const {t} = useTranslation()
-    const [rows, setRows] = useState([])
+  const { t } = useTranslation();
+  const [rows, setRows] = useState([]);
+  const isMounted = useIsMounted();
 
-    const headers = [
-        {id: 'reference', label: t('accounting_module.tax.list.headers.reference'), align: 'left'},
-        {id: 'percentage', label: t('accounting_module.tax.list.headers.percentage'), align: 'right'},
-    ]
+  const headers = [
+    {
+      id: 'reference',
+      label: t('accounting_module.tax.list.headers.reference'),
+      align: 'left',
+    },
+    {
+      id: 'percentage',
+      label: t('accounting_module.tax.list.headers.percentage'),
+      align: 'right',
+    },
+  ];
 
-    fetchTaxes((error) => {
-        console.log('error', error)
-    }, (data) => {
-        setRows(data)
-    })
+  const fetchData = () => {
+    fetchTaxes(
+      (error) => {
+        console.log('error', error);
+      },
+      (data) => {
+        if (isMounted.current) setRows(data);
+      }
+    );
+  };
 
-    const handleSearch = (textToSearch) => {
-        console.log('Searching text:', textToSearch)
-    }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const handleEdit = (index) => {
-        console.log('Edit row:', index)
-    }
+  const handleEdit = () => {
+    fetchData();
+  };
 
-    const handleDelete = (indexes) => {
-        console.log('Delete rows:', indexes)
-    }
+  const handleSearch = (textToSearch) => {
+    console.log('Searching text:', textToSearch);
+  };
 
-    return (
-        <GenericListComponent
-            rows={rows}
-            headers={headers}
-            searchCallback={handleSearch}
-            editCallback={handleEdit}
-            deleteCallback={handleDelete}
-            texts={{
-                create: t('accounting_module.tax.create'),
-                title: t('accounting_module.tax.list.title')
-            }}
-            creationComponent={<CreateTax/>}
-        />
-    )
-}
+  const handleDelete = (indexes) => {
+    console.log('Delete rows:', indexes);
+    fetchData();
+  };
 
-export default ListTaxes
+  return (
+    <GenericListComponent
+      rows={rows}
+      headers={headers}
+      editCallback={handleEdit}
+      searchCallback={handleSearch}
+      deleteCallback={handleDelete}
+      texts={{
+        create: t('accounting_module.tax.create'),
+        title: t('accounting_module.tax.list.title'),
+        edit: t('accounting_module.tax.edit'),
+      }}
+      creationComponent={<CreateTax />}
+    />
+  );
+};
+
+export default ListTaxes;

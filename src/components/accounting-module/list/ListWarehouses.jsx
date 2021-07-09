@@ -1,47 +1,71 @@
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import GenericListComponent from './GenericListComponent'
-import { fetchWarehouses } from '../../../db/WarehouseHelper'
-import CreateWarehouse from '../create/CreateWarehouse'
-
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import GenericListComponent from './GenericListComponent';
+import { fetchWarehouses } from '../../../db/WarehouseHelper';
+import CreateWarehouse from '../create/CreateWarehouse';
+import useIsMounted from '../../../utils/useIsMounted';
 
 const ListWarehouses = () => {
-    const {t} = useTranslation()
-    const [rows, setRows] = useState([])
+  const { t } = useTranslation();
+  const [rows, setRows] = useState([]);
+  const isMounted = useIsMounted();
 
-    const headers = [
-        {id: 'reference', label: t('accounting_module.warehouse.list.headers.reference'), align: 'left'},
-        {id: 'description', label: t('accounting_module.warehouse.list.headers.description'), align: 'left'},
-    ]
+  const headers = [
+    {
+      id: 'reference',
+      label: t('accounting_module.warehouse.list.headers.reference'),
+      align: 'left',
+    },
+    {
+      id: 'description',
+      label: t('accounting_module.warehouse.list.headers.description'),
+      align: 'left',
+    },
+  ];
 
-    fetchWarehouses((error) => {
-        console.log('error', error)
-    }, (data) => {
-        setRows(data)
-    })
+  const fetchData = () => {
+    fetchWarehouses(
+      (error) => {
+        console.log('error', error);
+      },
+      (data) => {
+        if (isMounted.current) setRows(data);
+      }
+    );
+  };
 
-    const handleSearch = (textToSearch) => {
-        console.log('Searching text:', textToSearch)
-    }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const handleDelete = (indexes) => {
-        console.log('Delete rows:', indexes)
-    }
+  const handleEdit = () => {
+    fetchData();
+  };
 
-    return (
-        <GenericListComponent
-            rows={rows}
-            headers={headers}
-            searchCallback={handleSearch}
-            deleteCallback={handleDelete}
-            texts={{
-                create: t('accounting_module.warehouse.create'),
-                title: t('accounting_module.warehouse.list.title'),
-                edit: t('accounting_module.warehouse.edit')
-            }}
-            creationComponent={<CreateWarehouse/>}
-        />
-    )
-}
+  const handleSearch = (textToSearch) => {
+    console.log('Searching text:', textToSearch);
+  };
 
-export default ListWarehouses
+  const handleDelete = (indexes) => {
+    console.log('Delete rows:', indexes);
+    fetchData();
+  };
+
+  return (
+    <GenericListComponent
+      rows={rows}
+      headers={headers}
+      editCallback={handleEdit}
+      searchCallback={handleSearch}
+      deleteCallback={handleDelete}
+      texts={{
+        create: t('accounting_module.warehouse.create'),
+        title: t('accounting_module.warehouse.list.title'),
+        edit: t('accounting_module.warehouse.edit'),
+      }}
+      creationComponent={<CreateWarehouse />}
+    />
+  );
+};
+
+export default ListWarehouses;

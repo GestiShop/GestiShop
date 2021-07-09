@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Onboarding = () => {
-    return (
-        <p>Not done yet :)</p>
-    )
-}
+  return <p>Not done yet :)</p>;
+};
 
-export default Onboarding
+export default Onboarding;

@@ -1,24 +1,22 @@
-import React from 'react'
-import Button from './Button'
-import { useFormikContext } from 'formik'
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import { useFormikContext } from 'formik';
+import Button from './Button';
 
-const SubmitButtonWrapper = ({children, ...otherProps}) => {
-    const {submitForm} = useFormikContext()
+const SubmitButtonWrapper = ({ children, ...otherProps }) => {
+  const { submitForm } = useFormikContext();
 
-    const handleSubmit = () => {
-        submitForm()
-    }
+  const handleSubmit = () => {
+    submitForm();
+  };
 
-    const configButton = {
-        ...otherProps,
-        onClick: handleSubmit
-    }
+  const configButton = {
+    ...otherProps,
+    onClick: handleSubmit,
+  };
 
-    return (
-        <Button {...configButton}>
-            {children}
-        </Button>
-    )
-}
+  return <Button {...configButton}>{children}</Button>;
+};
 
-export default SubmitButtonWrapper
+export default SubmitButtonWrapper;

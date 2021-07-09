@@ -1,24 +1,22 @@
 /* ----- ----- GENERIC ----- ----- */
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: auto;
-    height: 100vh;
-    width: 100vw;
+  font-family: 'Roboto', sans-serif;
+  margin: auto;
+  height: 100vh;
+  width: 100vw;
 }
 
 #root {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
-
 
 /* ----- ----- MARGIN ----- ----- */
 .m-auto {
-    margin: auto !important;
+  margin: auto !important;
 }
-
 
 /* ----- ----- DISPLAY ----- ----- */
 .d-flex {
-    display: flex !important;
+  display: flex !important;
 }

@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function ConfigInputMode() {
-    return (
-        <p>Config input mode</p>
-    )
+  return <p>Config input mode</p>;
 }

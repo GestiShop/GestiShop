@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function ConfigAdvanced() {
-    return (
-        <p>Config advanced</p>
-    )
+  return <p>Config advanced</p>;
 }
