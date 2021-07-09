@@ -1,0 +1,121 @@
+{
+  "buttons": {
+    "back": "Back",
+    "accept": "Accept",
+    "finish": "Finish",
+    "next": "Next",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "create": "Create",
+    "delete": "Delete"
+  },
+  "settings": {
+    "language_config": {
+      "title": "Language selection",
+      "language": "Language"
+    },
+    "currency_config": {
+      "title": "Currency selection",
+      "currency": "Currency",
+      "decimal_mode": "Decimal mode",
+      "floating_positions": "Number of decimals"
+    },
+    "business_config": {
+      "title": "Information about your company",
+      "business": "Company",
+      "name": "Company name",
+      "enter_name": "Enter the name of your company",
+      "nif": "NIF",
+      "enter_nif": "Enter NIF"
+    },
+    "database_config": {
+      "title": "Database configuration",
+      "database": "Database",
+      "url": "URL",
+      "enter_url": "Enter URL",
+      "port": "Port",
+      "enter_port": "Enter port",
+      "name": "Name",
+      "enter_name": "Enter the name of the database",
+      "user": "User",
+      "enter_user": "Enter user name",
+      "password": "Password",
+      "enter_password": "Enter password"
+    },
+    "users_config": {
+      "users": "Users"
+    },
+    "input_mode_config": {
+      "input_mode": "Input mode"
+    },
+    "modules_config": {
+      "modules": "Modules"
+    },
+    "advanced_config": {
+      "advanced": "Advanced"
+    }
+  },
+  "form":{
+    "errors": {
+      "required": "This field is required.",
+      "invalid_number": "Please enter a valid number.",
+      "invalid_email": "Please enter a valid email.",
+      "invalid_phone": "Please enter a valid phone number."
+    }
+  },
+  "accounting_module": {
+    "accounting_module": "Accounting module",
+    "menu": {
+      "products": "Products",
+      "taxes": "Taxes",
+      "unit_types": "Unit types"
+    },
+    "product": {
+      "create": "Add new product",
+      "list": "Product list",
+      "state": {
+        "available": "Available",
+        "hidden": "Hidden"
+      }
+    },
+    "tax": {
+      "create": "Add new tax",
+      "list": {
+        "title": "Taxes list",
+        "headers": {
+          "reference": "Reference",
+          "percentage": "Percentage (%)"
+        }
+      }
+    },
+    "unit_type": {
+      "create": "Add a unit type",
+      "list": {
+        "title": "Unit types list",
+        "headers": {
+          "reference": "Reference",
+          "unit": "Unit"
+        }
+      }
+    },
+    "placeholders": {
+      "search": "Input text to search..."
+    },
+    "table": {
+      "sorted_asc": "Sorted ascending",
+      "sorted_desc": "Sorted descending",
+      "select_all": "Select all",
+      "edit": "Edit",
+      "delete": "Delete",
+      "filter_list": "Filter list",
+      "selected_rows": "{{num}} selected",
+      "actions": "Actions"
+    },
+    "dialog": {
+      "delete": {
+        "title": "Are you sure you want to delete these items?",
+        "description": "This action is permanent. If you delete them, you will not be able to recover them later."
+      }
+    }
+  }
+}

@@ -1,76 +1,115 @@
-import React from 'react'
-import { Container, Grid } from '@material-ui/core'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import Button from '../../ui/forms/Button'
-import SearchBar from '../../ui/SearchBar'
-import Table from '../../ui/Table'
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import GenericListComponent from './GenericListComponent';
+import { fetchProducts } from '../../../db/ProductHelper';
+import CreateProduct from '../create/CreateProduct';
+import useIsMounted from '../../../utils/useIsMounted';
 
-
-const rows = [
-    {
-        reference: 'PROD000',
-        name: 'Product 000',
-        stock: 12,
-        price: 26.98,
-        state: 'available',
-        date: '26-10-1999'
-    },
-    {
-        reference: 'PROD001',
-        name: 'Product 001',
-        stock: 24,
-        price: 28.99,
-        state: 'hidden',
-        date: '28-10-1999'
-    }
-]
-
-const headers = [
-    {id: 'reference', label: 'Reference', align: 'left'},
-    {id: 'name', label: 'Name', align: 'left'},
-    {id: 'stock', label: 'Stock', align: 'right'},
-    {id: 'price', label: 'Price (€)', align: 'right'},
-    {id: 'state', label: 'State', align: 'left'},
-    {id: 'date', label: 'Date', align: 'left'}
-]
+const INIT_ROWS = [
+  {
+    _id: 'ID0',
+    reference: 'PROD000',
+    name: 'Product 000',
+    basePrice: 26.98,
+    stock: 10,
+    unitType: 'kg',
+    discountPercentage: 0.0,
+    taxPercentage: 21.0,
+    minStock: 12,
+    stockAlert: true,
+    visible: true,
+  },
+  {
+    _id: 'ID1',
+    reference: 'PROD001',
+    name: 'Product 001',
+    basePrice: 22.98,
+    stock: 18,
+    unitType: 'units',
+    discountPercentage: 0.0,
+    taxPercentage: 21.0,
+    minStock: 50,
+    stockAlert: false,
+    visible: true,
+  },
+];
 
 const ListProducts = () => {
-    const {t} = useTranslation()
+  const { t } = useTranslation();
+  const [rows, setRows] = useState(INIT_ROWS);
+  const isMounted = useIsMounted();
 
-    const handleSearch = (textToSearch) => {
-        console.log('Searching: \'' + textToSearch + '\'')
-    }
+  const headers = [
+    {
+      id: 'reference',
+      label: t('accounting_module.product.list.headers.reference'),
+      align: 'left',
+    },
+    {
+      id: 'name',
+      label: t('accounting_module.product.list.headers.name'),
+      align: 'left',
+    },
+    {
+      id: 'basePrice',
+      label: t('accounting_module.product.list.headers.price'),
+      align: 'right',
+    },
+    {
+      id: 'stock',
+      label: t('accounting_module.product.list.headers.stock'),
+      align: 'right',
+    },
+    {
+      id: 'visible',
+      label: t('accounting_module.product.list.headers.state'),
+      align: 'left',
+    },
+  ];
 
-    const handleEdit = (index) => {
-        console.log('Edit row: ' + index)
-    }
+  const fetchData = () => {
+    fetchProducts(
+      (error) => {
+        console.log('error', error);
+      },
+      (data) => {
+        // if (isMounted.current) setRows(data);
+      }
+    );
+  };
 
-    return (
-        <Grid container>
-            <Grid item xs={12}>
-                <Container maxWidth={false}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={3} className="d-flex">
-                            <Button component={Link}
-                                    to="/create/product"
-                                    className="m-auto">{t('accounting_module.product.create_product')}</Button>
-                        </Grid>
-                        <Grid item xs={6}>
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-                        </Grid>
-                        <Grid item xs={3}>
-                            <SearchBar onSubmit={handleSearch}/>
-                        </Grid>
+  const handleEdit = () => {
+    fetchData();
+  };
 
-                        <Grid item xs={12}>
-                            <Table rows={rows} headers={headers} title="Products" editCallback={handleEdit}/>
-                        </Grid>
-                    </Grid>
-                </Container>
-            </Grid>
-        </Grid>
-    )
-}
+  const handleSearch = (textToSearch) => {
+    console.log('Searching text:', textToSearch);
+  };
 
-export default ListProducts
+  const handleDelete = (indexes) => {
+    console.log('Delete rows:', indexes);
+    fetchData();
+  };
+
+  return (
+    <GenericListComponent
+      rows={rows}
+      headers={headers}
+      editCallback={handleEdit}
+      searchCallback={handleSearch}
+      deleteCallback={handleDelete}
+      texts={{
+        create: t('accounting_module.product.create'),
+        title: t('accounting_module.product.list.title'),
+        edit: t('accounting_module.product.edit'),
+      }}
+      creationComponent={<CreateProduct />}
+    />
+  );
+};
+
+export default ListProducts;
