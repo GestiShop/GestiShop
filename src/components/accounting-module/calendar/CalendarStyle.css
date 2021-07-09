@@ -1,0 +1,15 @@
+.rbc-agenda-view {
+  overflow: inherit !important;
+}
+
+main {
+  height: 100%;
+}
+
+main > div:first-child {
+  display: none !important;
+}
+
+main > div {
+  padding-top: 64px !important;
+}

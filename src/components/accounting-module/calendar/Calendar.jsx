@@ -7,6 +7,7 @@ import moment from 'moment';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import events from './events';
+import './CalendarStyle.css';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
@@ -76,22 +77,22 @@ const EventCalendar = () => {
       events: nextEvents,
     });
 
-    // alert(`${event.title} was resized to ${start}-${end}`)
+    alert(`${event.title} was resized to ${start}-${end}`);
   };
 
   const newEvent = (_event) => {
-    // let idList = this.state.events.map(a => a.id)
-    // let newId = Math.max(...idList) + 1
-    // let hour = {
-    //   id: newId,
-    //   title: 'New Event',
-    //   allDay: event.slots.length == 1,
-    //   start: event.start,
-    //   end: event.end,
-    // }
-    // this.setState({
-    //   events: this.state.events.concat([hour]),
-    // })
+    const idList = state.events.map((a) => a.id);
+    const newId = Math.max(...idList) + 1;
+    const hour = {
+      id: newId,
+      title: 'New Event',
+      allDay: _event.slots.length === 1,
+      start: _event.start,
+      end: _event.end,
+    };
+    setState({
+      events: state.events.concat([hour]),
+    });
   };
 
   return (

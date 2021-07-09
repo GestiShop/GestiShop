@@ -11,6 +11,11 @@ body > div {
   height: 100%;
 }
 
+body > div > div {
+  width: 100%;
+  height: 100%;
+}
+
 /* ----- ----- MARGIN ----- ----- */
 .m-auto {
   margin: auto !important;
