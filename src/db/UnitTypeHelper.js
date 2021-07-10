@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { UnitType } from '../model/UnitTypeModel';
 
 const addUnitType = (unitType, errorCallback, resultCallback) => {
@@ -21,4 +22,15 @@ const fetchUnitTypes = (errorCallback, resultCallback) => {
   });
 };
 
-export { addUnitType, fetchUnitTypes };
+const updateUnitType = (unitType, errorCallback, resultCallback) => {
+  const query = { _id: unitType._id };
+  return UnitType.findOneAndUpdate(query, unitType, (err, docs) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback(docs);
+    }
+  });
+};
+
+export { addUnitType, fetchUnitTypes, updateUnitType };

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
@@ -10,13 +11,13 @@ import SubmitButton from '../../ui/forms/SubmitButton';
 import Select from '../../ui/forms/Select';
 import MultiSelect from '../../ui/forms/MultiSelect';
 import Switch from '../../ui/forms/Switch';
-import { addProduct } from '../../../db/ProductHelper';
+import { addProduct, updateProduct } from '../../../db/ProductHelper';
 
-const CreateProduct = ({ closeCallback }) => {
+const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const [stockAlert, setStockAlert] = useState(false);
 
-  const INITIAL_STATE = {
+  let INITIAL_STATE = {
     reference: '',
     name: '',
     basePrice: 0.0,
@@ -30,6 +31,23 @@ const CreateProduct = ({ closeCallback }) => {
     stockAlert: false,
     minStock: 0.0,
   };
+
+  if (initialState) {
+    INITIAL_STATE = {
+      reference: initialState.reference,
+      name: initialState.name,
+      basePrice: initialState.basePrice,
+      discountPercentage: initialState.discountPercentage,
+      taxPercentage: initialState.taxPercentage,
+      stock: initialState.stock,
+      unitType: initialState.unitType,
+      warehouse: initialState.warehouse,
+      categories: initialState.categories,
+      visible: initialState.visible,
+      stockAlert: initialState.stockAlert,
+      minStock: initialState.minStock,
+    };
+  }
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -57,17 +75,31 @@ const CreateProduct = ({ closeCallback }) => {
   });
 
   const handleSubmit = (data) => {
-    addProduct(
-      data,
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      () => {
-        console.log('NO ERROR');
-        closeCallback();
-      }
-    );
+    if (!initialState) {
+      addProduct(
+        data,
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    } else {
+      updateProduct(
+        { ...data, _id: initialState._id },
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    }
   };
 
   return (

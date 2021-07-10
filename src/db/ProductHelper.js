@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Product } from '../model/ProductModel';
 
 const addProduct = (product, errorCallback, resultCallback) => {
@@ -21,4 +22,15 @@ const fetchProducts = (errorCallback, resultCallback) => {
   });
 };
 
-export { addProduct, fetchProducts };
+const updateProduct = (product, errorCallback, resultCallback) => {
+  const query = { _id: product._id };
+  return Product.findOneAndUpdate(query, product, (err, docs) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback(docs);
+    }
+  });
+};
+
+export { addProduct, fetchProducts, updateProduct };

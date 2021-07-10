@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import * as Yup from 'yup';
@@ -6,15 +7,22 @@ import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import { addTax } from '../../../db/TaxHelper';
+import { addTax, updateTax } from '../../../db/TaxHelper';
 
-const CreateTax = ({ closeCallback }) => {
+const CreateTax = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
 
-  const INITIAL_STATE = {
+  let INITIAL_STATE = {
     reference: '',
     percentage: 0.0,
   };
+
+  if (initialState) {
+    INITIAL_STATE = {
+      reference: initialState.reference,
+      percentage: initialState.percentage,
+    };
+  }
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -24,17 +32,31 @@ const CreateTax = ({ closeCallback }) => {
   });
 
   const handleSubmit = (data) => {
-    addTax(
-      data,
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      () => {
-        console.log('NO ERROR');
-        closeCallback();
-      }
-    );
+    if (!initialState) {
+      addTax(
+        data,
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    } else {
+      updateTax(
+        { ...data, _id: initialState._id },
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    }
   };
 
   return (
