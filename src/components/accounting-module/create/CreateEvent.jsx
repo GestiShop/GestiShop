@@ -98,6 +98,8 @@ const CreateEvent = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={12}>
                   <TextField
+                    multiline
+                    rows={10}
                     name="description"
                     label={t('accounting_module.event.description')}
                   />
@@ -106,7 +108,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <Switch
                     name="allDay"
-                    label={t('accounting_module.event.title')}
+                    label={t('accounting_module.event.all_day')}
                     initialState={INITIAL_STATE.allDay}
                   />
                 </Grid>

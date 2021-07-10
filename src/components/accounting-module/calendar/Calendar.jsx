@@ -152,7 +152,7 @@ const EventCalendar = () => {
       <FullScreenDialog
         open={openEditDialog}
         closeCallback={handleCloseEditDialog}
-        title="EDIT"
+        title="EDIT EVENT"
         childComponent={<CreateEvent />}
         initialState={state.selectedEvent}
       />
