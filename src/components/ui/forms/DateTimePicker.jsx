@@ -10,7 +10,7 @@ const DateTimePicker = ({ name, ...otherProps }) => {
   const configDateTimePicker = {
     ...field,
     ...otherProps,
-    type: 'date',
+    type: 'datetime-local',
     variant: 'outlined',
     fullWidth: true,
     InputLabelProps: {

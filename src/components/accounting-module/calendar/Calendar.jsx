@@ -30,7 +30,6 @@ const EventCalendar = () => {
         console.log('error', error);
       },
       (events) => {
-        console.log(events);
         if (isMounted.current) setState({ ...state, events });
       }
     );

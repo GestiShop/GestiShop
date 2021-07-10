@@ -33,4 +33,14 @@ const updateEvent = (event, errorCallback, resultCallback) => {
   });
 };
 
-export { addEvent, fetchEvents, updateEvent };
+const deleteEvent = (id, errorCallback, resultCallback) => {
+  return Event.findByIdAndDelete(id, (err, docs) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback(docs);
+    }
+  });
+};
+
+export { addEvent, fetchEvents, updateEvent, deleteEvent };
