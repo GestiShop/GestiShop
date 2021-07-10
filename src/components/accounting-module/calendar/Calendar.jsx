@@ -17,7 +17,7 @@ const EventCalendar = () => {
   });
 
   const handleDragStart = (event) => {
-    setState({ draggedEvent: event });
+    setState({ ...state, draggedEvent: event });
   };
 
   const dragFromOutsideItem = () => {
@@ -42,6 +42,7 @@ const EventCalendar = () => {
     });
 
     setState({
+      ...state,
       events: nextEvents,
     });
 
@@ -59,7 +60,7 @@ const EventCalendar = () => {
       allDay,
     };
 
-    setState({ draggedEvent: null });
+    setState({ ...state, draggedEvent: null });
     moveEvent({ event, start, end });
   };
 
@@ -73,6 +74,7 @@ const EventCalendar = () => {
     });
 
     setState({
+      ...state,
       events: nextEvents,
     });
 
@@ -90,6 +92,7 @@ const EventCalendar = () => {
       end: _event.end,
     };
     setState({
+      ...state,
       events: state.events.concat([hour]),
     });
   };
