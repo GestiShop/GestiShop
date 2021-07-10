@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
@@ -263,7 +264,7 @@ const EnhancedTable = ({
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      setSelected(rows.map((n) => n.reference));
+      setSelected(rows.map((n) => n._id));
     } else {
       setSelected([]);
     }
@@ -303,9 +304,9 @@ const EnhancedTable = ({
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const handleEditClick = (event, index) => {
+  const handleEditClick = (event, id) => {
     event.stopPropagation();
-    editCallback(index);
+    editCallback(id);
   };
 
   const handleClickOpen = () => {
@@ -348,7 +349,7 @@ const EnhancedTable = ({
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.reference);
+                  const isItemSelected = isSelected(row._id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   const headerCells = [];
@@ -402,6 +403,21 @@ const EnhancedTable = ({
                           );
                         }
                         break;
+                      case 'parent':
+                        headerCells.push(
+                          <TableCell
+                            key={header.id}
+                            align={header.align}
+                            padding="normal"
+                          >
+                            {row[header.id]
+                              ? `[${row[header.id].reference}] ${
+                                  row[header.id].name
+                                }`
+                              : '-'}
+                          </TableCell>
+                        );
+                        break;
                       default:
                         headerCells.push(
                           <TableCell
@@ -421,7 +437,7 @@ const EnhancedTable = ({
                         <Tooltip title={t('accounting_module.table.edit')}>
                           <IconButton
                             aria-label={t('accounting_module.table.edit')}
-                            onClick={(event) => handleEditClick(event, index)}
+                            onClick={(event) => handleEditClick(event, row._id)}
                           >
                             <EditIcon />
                           </IconButton>
@@ -433,7 +449,7 @@ const EnhancedTable = ({
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, index)}
+                      onClick={(event) => handleClick(event, row._id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}

@@ -20,6 +20,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import StoreIcon from '@material-ui/icons/Store';
+import CategoryIcon from '@material-ui/icons/Category';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom';
 import CreateProduct from './create/CreateProduct';
@@ -31,6 +32,8 @@ import CreateUnitType from './create/CreateUnitType';
 import ListWarehouses from './list/ListWarehouses';
 import CreateWarehouse from './create/CreateWarehouse';
 import Calendar from './calendar/Calendar';
+import CreateCategory from './create/CreateCategory';
+import ListCategories from './list/ListCategory';
 
 const DRAWER_WIDTH = 240;
 
@@ -130,6 +133,11 @@ const AccountingModuleDashboard = () => {
       icon: <StoreIcon />,
       linkTo: '/list/warehouses',
     },
+    {
+      text: t('accounting_module.menu.categories'),
+      icon: <CategoryIcon />,
+      linkTo: '/list/categories',
+    },
   ];
 
   const classes = useStyles();
@@ -227,6 +235,9 @@ const AccountingModuleDashboard = () => {
               path="/create/warehouse"
               render={() => <CreateWarehouse />}
             />
+
+            <Route path="/list/categories" render={() => <ListCategories />} />
+            <Route path="/create/category" render={() => <CreateCategory />} />
 
             <Route render={() => <Redirect to="/calendar" />} />
           </Switch>

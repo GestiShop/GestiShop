@@ -16,6 +16,7 @@ import { fetchTaxes } from '../../../db/TaxHelper';
 import useIsMounted from '../../../utils/useIsMounted';
 import { fetchUnitTypes } from '../../../db/UnitTypeHelper';
 import { fetchWarehouses } from '../../../db/WarehouseHelper';
+import { fetchCategories } from '../../../db/CategoryHelper';
 
 const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -142,6 +143,17 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       (options) => {
         if (isMounted.current)
           setWarehousesOptions(options.map((x) => x.reference));
+      }
+    );
+
+    fetchCategories(
+      (error) => {
+        console.log('error', error);
+        closeCallback();
+      },
+      (options) => {
+        if (isMounted.current)
+          setCategoriesOptions(options.map((x) => x.reference));
       }
     );
   };

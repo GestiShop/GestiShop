@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable eqeqeq */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
@@ -18,8 +20,8 @@ const GenericListComponent = ({
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
   const [initialState, setInitialState] = useState(false);
 
-  const handleEdit = (index) => {
-    setInitialState(rows[index]);
+  const handleEdit = (id) => {
+    setInitialState(rows.find((row) => row._id == id));
     setOpenCreationDialog(true);
   };
 
@@ -57,7 +59,7 @@ const GenericListComponent = ({
                   rows={rows}
                   headers={headers}
                   title={texts.title}
-                  editCallback={(index) => handleEdit(index)}
+                  editCallback={handleEdit}
                   deleteCallback={deleteCallback}
                 />
               </Grid>
