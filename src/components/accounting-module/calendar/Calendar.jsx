@@ -1,23 +1,75 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable import/no-webpack-loader-syntax */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
-import events from './events';
+import { addEvent, fetchEvents, updateEvent } from '../../../db/EventHelper';
+import useIsMounted from '../../../utils/useIsMounted';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const EventCalendar = () => {
   const [state, setState] = useState({
-    events,
+    events: [],
     displayDragItemInCell: true,
   });
+  const isMounted = useIsMounted();
+
+  const fetchData = () => {
+    fetchEvents(
+      (error) => {
+        console.log('error', error);
+      },
+      (events) => {
+        console.log(events);
+        if (isMounted.current) setState({ ...state, events });
+      }
+    );
+  };
+
+  const updateData = (updatedEvent) => {
+    updateEvent(
+      updatedEvent,
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        if (isMounted.current) {
+          fetchData();
+        }
+      }
+    );
+  };
+
+  const addData = (newEvent) => {
+    addEvent(
+      newEvent,
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        if (isMounted.current) {
+          fetchData();
+        }
+      }
+    );
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleDragStart = (event) => {
     setState({ ...state, draggedEvent: event });
+  };
+
+  const handleOnSelectEvent = (event) => {
+    console.log(event);
+    // TODO: OPEN DIALOG TO DISPLAY/CHANGE INFO OF THE EVENT
   };
 
   const dragFromOutsideItem = () => {
@@ -35,18 +87,7 @@ const EventCalendar = () => {
       allDay = false;
     }
 
-    const nextEvents = events.map((existingEvent) => {
-      return existingEvent.id === event.id
-        ? { ...existingEvent, start, end, allDay }
-        : existingEvent;
-    });
-
-    setState({
-      ...state,
-      events: nextEvents,
-    });
-
-    // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
+    updateData({ ...event._doc, start, end, allDay });
   };
 
   const onDropFromOutside = ({ start, end, allDay }) => {
@@ -65,51 +106,34 @@ const EventCalendar = () => {
   };
 
   const resizeEvent = ({ event, start, end }) => {
-    const { events } = state;
-
-    const nextEvents = events.map((existingEvent) => {
-      return existingEvent.id === event.id
-        ? { ...existingEvent, start, end }
-        : existingEvent;
-    });
-
-    setState({
-      ...state,
-      events: nextEvents,
-    });
-
-    alert(`${event.title} was resized to ${start}-${end}`);
+    updateData({ ...event._doc, start, end });
   };
 
   const newEvent = (_event) => {
-    const idList = state.events.map((a) => a.id);
-    const newId = Math.max(...idList) + 1;
-    const hour = {
-      id: newId,
+    const newEvent = {
       title: 'New Event',
       allDay: _event.slots.length === 1,
       start: _event.start,
       end: _event.end,
     };
-    setState({
-      ...state,
-      events: state.events.concat([hour]),
-    });
+
+    addData(newEvent);
   };
 
   return (
     <DragAndDropCalendar
       selectable
+      popup
+      toolbar
+      resizable
       localizer={momentLocalizer(moment)}
       events={state.events}
       onEventDrop={moveEvent}
-      resizable
       onEventResize={resizeEvent}
       onSelectSlot={newEvent}
-      onDragStart={console.log}
+      onSelectEvent={handleOnSelectEvent}
       defaultView={Views.MONTH}
-      defaultDate={new Date(2015, 3, 12)}
-      popup
+      defaultDate={new Date()}
       dragFromOutsideItem={
         state.displayDragItemInCell ? dragFromOutsideItem : null
       }
