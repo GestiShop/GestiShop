@@ -7,16 +7,21 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import { useTranslation } from 'react-i18next';
+import FullScreenDialog from '../../ui/FullscreenDialog';
 import { addEvent, fetchEvents, updateEvent } from '../../../db/EventHelper';
 import useIsMounted from '../../../utils/useIsMounted';
+import CreateEvent from '../create/CreateEvent';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 const EventCalendar = () => {
+  const { t } = useTranslation();
   const [state, setState] = useState({
     events: [],
     displayDragItemInCell: true,
   });
+  const [openEditDialog, setOpenEditDialog] = useState(false);
   const isMounted = useIsMounted();
 
   const fetchData = () => {
@@ -68,8 +73,8 @@ const EventCalendar = () => {
   };
 
   const handleOnSelectEvent = (event) => {
-    console.log(event);
-    // TODO: OPEN DIALOG TO DISPLAY/CHANGE INFO OF THE EVENT
+    setState({ ...state, selectedEvent: event });
+    setOpenEditDialog(true);
   };
 
   const dragFromOutsideItem = () => {
@@ -120,26 +125,39 @@ const EventCalendar = () => {
     addData(newEvent);
   };
 
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+    fetchData();
+  };
+
   return (
-    <DragAndDropCalendar
-      selectable
-      popup
-      toolbar
-      resizable
-      localizer={momentLocalizer(moment)}
-      events={state.events}
-      onEventDrop={moveEvent}
-      onEventResize={resizeEvent}
-      onSelectSlot={newEvent}
-      onSelectEvent={handleOnSelectEvent}
-      defaultView={Views.MONTH}
-      defaultDate={new Date()}
-      dragFromOutsideItem={
-        state.displayDragItemInCell ? dragFromOutsideItem : null
-      }
-      onDropFromOutside={onDropFromOutside}
-      handleDragStart={handleDragStart}
-    />
+    <>
+      <DragAndDropCalendar
+        selectable
+        popup
+        toolbar
+        resizable
+        localizer={momentLocalizer(moment)}
+        events={state.events}
+        onEventDrop={moveEvent}
+        onEventResize={resizeEvent}
+        onSelectSlot={newEvent}
+        onSelectEvent={handleOnSelectEvent}
+        defaultView={Views.MONTH}
+        dragFromOutsideItem={
+          state.displayDragItemInCell ? dragFromOutsideItem : null
+        }
+        onDropFromOutside={onDropFromOutside}
+        handleDragStart={handleDragStart}
+      />
+      <FullScreenDialog
+        open={openEditDialog}
+        closeCallback={handleCloseEditDialog}
+        title="EDIT"
+        childComponent={<CreateEvent />}
+        initialState={state.selectedEvent}
+      />
+    </>
   );
 };
 
