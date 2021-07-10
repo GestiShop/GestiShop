@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@material-ui/core';
@@ -12,17 +12,27 @@ import Select from '../../ui/forms/Select';
 import MultiSelect from '../../ui/forms/MultiSelect';
 import Switch from '../../ui/forms/Switch';
 import { addProduct, updateProduct } from '../../../db/ProductHelper';
+import { fetchTaxes } from '../../../db/TaxHelper';
+import useIsMounted from '../../../utils/useIsMounted';
+import { fetchUnitTypes } from '../../../db/UnitTypeHelper';
+import { fetchWarehouses } from '../../../db/WarehouseHelper';
 
 const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const [stockAlert, setStockAlert] = useState(false);
+  const [taxesOptions, setTaxesOptions] = useState([]);
+  const [unitTypesOptions, setUnitTypesOptions] = useState([]);
+  const [warehousesOptions, setWarehousesOptions] = useState([]);
+  const [categoriesOptions, setCategoriesOptions] = useState([]);
+
+  const isMounted = useIsMounted();
 
   let INITIAL_STATE = {
     reference: '',
     name: '',
     basePrice: 0.0,
     discountPercentage: 0.0,
-    taxPercentage: 0.0,
+    taxPercentage: '',
     stock: 0.0,
     unitType: '',
     warehouse: '',
@@ -102,6 +112,44 @@ const CreateProduct = ({ closeCallback, initialState }) => {
     }
   };
 
+  const fetchData = () => {
+    fetchTaxes(
+      (error) => {
+        console.log('error', error);
+        closeCallback();
+      },
+      (options) => {
+        if (isMounted.current) setTaxesOptions(options.map((x) => x.reference));
+      }
+    );
+
+    fetchUnitTypes(
+      (error) => {
+        console.log('error', error);
+        closeCallback();
+      },
+      (options) => {
+        if (isMounted.current)
+          setUnitTypesOptions(options.map((x) => x.reference));
+      }
+    );
+
+    fetchWarehouses(
+      (error) => {
+        console.log('error', error);
+        closeCallback();
+      },
+      (options) => {
+        if (isMounted.current)
+          setWarehousesOptions(options.map((x) => x.reference));
+      }
+    );
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -138,7 +186,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Select
                     name="taxPercentage"
                     label="Tax percentage (%)"
-                    options={['21.00', '10.00', '0.00']}
+                    options={taxesOptions}
                   />
                 </Grid>
 
@@ -150,7 +198,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Select
                     name="unitType"
                     label="Unit type"
-                    options={['units', 'm', 'kg']}
+                    options={unitTypesOptions}
                   />
                 </Grid>
 
@@ -158,7 +206,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Select
                     name="warehouse"
                     label="Warehouse"
-                    options={['default warehouse', 'another warehouse']}
+                    options={warehousesOptions}
                   />
                 </Grid>
 
@@ -166,7 +214,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <MultiSelect
                     name="categories"
                     label="Categories"
-                    options={['test', 'wow', 'lol', 'category', 'random']}
+                    options={categoriesOptions}
                   />
                 </Grid>
 
