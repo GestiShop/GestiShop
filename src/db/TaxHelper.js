@@ -33,4 +33,15 @@ const updateTax = (tax, errorCallback, resultCallback) => {
   });
 };
 
-export { addTax, fetchTaxes, updateTax };
+const deleteTaxes = (taxes, errorCallback, resultCallback) => {
+  const query = { _id: taxes.map((x) => x._id) };
+  return Tax.deleteMany(query, (err) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback();
+    }
+  });
+};
+
+export { addTax, fetchTaxes, updateTax, deleteTaxes };

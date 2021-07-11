@@ -33,4 +33,15 @@ const updateProduct = (product, errorCallback, resultCallback) => {
   });
 };
 
-export { addProduct, fetchProducts, updateProduct };
+const deleteProducts = (products, errorCallback, resultCallback) => {
+  const query = { _id: products.map((x) => x._id) };
+  return Product.deleteMany(query, (err) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback();
+    }
+  });
+};
+
+export { addProduct, fetchProducts, updateProduct, deleteProducts };

@@ -33,7 +33,7 @@ import ListWarehouses from './list/ListWarehouses';
 import CreateWarehouse from './create/CreateWarehouse';
 import Calendar from './calendar/Calendar';
 import CreateCategory from './create/CreateCategory';
-import ListCategories from './list/ListCategory';
+import ListCategories from './list/ListCategories';
 
 const DRAWER_WIDTH = 240;
 

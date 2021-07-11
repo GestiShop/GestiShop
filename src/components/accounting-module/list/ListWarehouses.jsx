@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import GenericListComponent from './GenericListComponent';
-import { fetchWarehouses } from '../../../db/WarehouseHelper';
+import { deleteWarehouses, fetchWarehouses } from '../../../db/WarehouseHelper';
 import CreateWarehouse from '../create/CreateWarehouse';
 import useIsMounted from '../../../utils/useIsMounted';
 
@@ -34,6 +34,18 @@ const ListWarehouses = () => {
     );
   };
 
+  const deleteData = (ids) => {
+    deleteWarehouses(
+      ids,
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        fetchData();
+      }
+    );
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -46,9 +58,9 @@ const ListWarehouses = () => {
     console.log('Searching text:', textToSearch);
   };
 
-  const handleDelete = (indexes) => {
-    console.log('Delete rows:', indexes);
-    fetchData();
+  const handleDelete = (ids) => {
+    console.log('Delete rows:', ids);
+    deleteData(ids);
   };
 
   return (

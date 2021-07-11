@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CreateTax from '../create/CreateTax';
-import { fetchTaxes } from '../../../db/TaxHelper';
+import { deleteTaxes, fetchTaxes } from '../../../db/TaxHelper';
 import GenericListComponent from './GenericListComponent';
 import useIsMounted from '../../../utils/useIsMounted';
 
@@ -34,6 +34,18 @@ const ListTaxes = () => {
     );
   };
 
+  const deleteData = (ids) => {
+    deleteTaxes(
+      ids,
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        fetchData();
+      }
+    );
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -46,9 +58,9 @@ const ListTaxes = () => {
     console.log('Searching text:', textToSearch);
   };
 
-  const handleDelete = (indexes) => {
-    console.log('Delete rows:', indexes);
-    fetchData();
+  const handleDelete = (ids) => {
+    console.log('Delete rows:', ids);
+    deleteData(ids);
   };
 
   return (

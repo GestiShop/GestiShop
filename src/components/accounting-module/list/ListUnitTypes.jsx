@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import GenericListComponent from './GenericListComponent';
-import { fetchUnitTypes } from '../../../db/UnitTypeHelper';
+import { deleteUnitTypes, fetchUnitTypes } from '../../../db/UnitTypeHelper';
 import CreateUnitType from '../create/CreateUnitType';
 import useIsMounted from '../../../utils/useIsMounted';
 
@@ -34,6 +34,18 @@ const ListUnitTypes = () => {
     );
   };
 
+  const deleteData = (ids) => {
+    deleteUnitTypes(
+      ids,
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        fetchData();
+      }
+    );
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -46,9 +58,9 @@ const ListUnitTypes = () => {
     console.log('Searching text:', textToSearch);
   };
 
-  const handleDelete = (indexes) => {
-    console.log('Delete rows:', indexes);
-    fetchData();
+  const handleDelete = (ids) => {
+    console.log('Delete rows:', ids);
+    deleteData(ids);
   };
 
   return (

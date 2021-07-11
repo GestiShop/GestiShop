@@ -29,6 +29,9 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
 
   return (
     <TextField {...configSelect}>
+      <MenuItem key={-1} value="">
+        -
+      </MenuItem>
       {Object.keys(options).map((item, pos) => {
         return (
           <MenuItem key={pos} value={item}>
