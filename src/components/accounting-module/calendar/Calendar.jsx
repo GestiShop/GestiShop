@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable import/no-webpack-loader-syntax */
@@ -12,6 +13,7 @@ import FullScreenDialog from '../../ui/FullscreenDialog';
 import { addEvent, fetchEvents, updateEvent } from '../../../db/EventHelper';
 import useIsMounted from '../../../utils/useIsMounted';
 import CreateEvent from '../create/CreateEvent';
+import EVENT_COLOR_LIST from '../../../../assets/event_colors';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
@@ -129,6 +131,19 @@ const EventCalendar = () => {
     fetchData();
   };
 
+  const eventStyleGetter = (event, start, end, isSelected) => {
+    const style = {
+      backgroundColor: event.colorCode ? event.colorCode : EVENT_COLOR_LIST[0],
+      color:
+        !event.colorCode || event.colorCode == 'lightseagreen'
+          ? 'white'
+          : 'darkslategray',
+    };
+    return {
+      style,
+    };
+  };
+
   return (
     <>
       <DragAndDropCalendar
@@ -148,6 +163,7 @@ const EventCalendar = () => {
         }
         onDropFromOutside={onDropFromOutside}
         handleDragStart={handleDragStart}
+        eventPropGetter={eventStyleGetter}
       />
       <FullScreenDialog
         open={openEditDialog}

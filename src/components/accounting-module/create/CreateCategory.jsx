@@ -32,7 +32,7 @@ const CreateCategory = ({ closeCallback, initialState }) => {
     INITIAL_STATE = {
       reference: initialState.reference,
       name: initialState.name,
-      parent: initialState.parent ? initialState.parent : '',
+      parent: initialState.parent || '',
     };
   }
 

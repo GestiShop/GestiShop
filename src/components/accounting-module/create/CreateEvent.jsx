@@ -12,6 +12,8 @@ import { deleteEvent, updateEvent } from '../../../db/EventHelper';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import Switch from '../../ui/forms/Switch';
 import Button from '../../ui/forms/Button';
+import Select from '../../ui/forms/Select';
+import EVENT_COLOR_LIST from '../../../../assets/event_colors';
 
 const CreateEvent = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -21,12 +23,17 @@ const CreateEvent = ({ closeCallback, initialState }) => {
     start: moment(initialState.start).format('YYYY-MM-DDTHH:MM:SS'),
     end: moment(initialState.end).format('YYYY-MM-DDTHH:MM:SS'),
     description: initialState.description || '',
+    colorCode: initialState.color || '',
     allDay: initialState.allDay || false,
   };
 
   const handleSubmit = (data) => {
     updateEvent(
-      { ...data, _id: initialState._id },
+      {
+        ...data,
+        colorCode: EVENT_COLOR_LIST[data.colorCode],
+        _id: initialState._id,
+      },
       (error) => {
         console.log('error', error);
         closeCallback();
@@ -59,6 +66,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
       .required(t('form.errors.required'))
       .min(Yup.ref('start'), t('form.errors.end-date-before-start-date')),
     description: Yup.string(),
+    colorCode: Yup.string(),
     allDay: Yup.bool(),
   });
 
@@ -102,6 +110,14 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                     rows={10}
                     name="description"
                     label={t('accounting_module.event.description')}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Select
+                    name="colorCode"
+                    label="color"
+                    options={EVENT_COLOR_LIST}
                   />
                 </Grid>
 

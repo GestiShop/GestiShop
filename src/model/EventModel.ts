@@ -7,6 +7,7 @@ const eventSchema = new Schema({
   title: { type: String, required: true },
   description: String,
   allDay: Boolean,
+  colorCode: String,
 });
 
 const Event = mongoose.model('Event', eventSchema, 'events');
