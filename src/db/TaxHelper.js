@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Tax } from '../model/TaxModel';
 
 const addTax = (tax, errorCallback, resultCallback) => {
@@ -21,4 +22,26 @@ const fetchTaxes = (errorCallback, resultCallback) => {
   });
 };
 
-export { addTax, fetchTaxes };
+const updateTax = (tax, errorCallback, resultCallback) => {
+  const query = { _id: tax._id };
+  return Tax.findOneAndUpdate(query, tax, (err, docs) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback(docs);
+    }
+  });
+};
+
+const deleteTaxes = (taxes, errorCallback, resultCallback) => {
+  const query = { _id: taxes.map((x) => x._id) };
+  return Tax.deleteMany(query, (err) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback();
+    }
+  });
+};
+
+export { addTax, fetchTaxes, updateTax, deleteTaxes };

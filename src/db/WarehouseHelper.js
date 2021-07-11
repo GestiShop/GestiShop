@@ -33,4 +33,15 @@ const updateWarehouse = (warehouse, errorCallback, resultCallback) => {
   });
 };
 
-export { addWarehouse, fetchWarehouses, updateWarehouse };
+const deleteWarehouses = (warehouses, errorCallback, resultCallback) => {
+  const query = { _id: warehouses.map((x) => x._id) };
+  return Warehouse.deleteMany(query, (err) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback();
+    }
+  });
+};
+
+export { addWarehouse, fetchWarehouses, updateWarehouse, deleteWarehouses };

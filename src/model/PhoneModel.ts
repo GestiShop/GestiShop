@@ -3,7 +3,7 @@ const { Schema } = window.require('mongoose');
 
 const phoneSchema = new Schema({
   description: String,
-  number: String,
+  number: { type: String, required: true },
 });
 
 export { phoneSchema };

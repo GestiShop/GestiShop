@@ -3,11 +3,11 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 
-const ButtonWrapper = ({ children, ...otherProps }) => {
+const ButtonWrapper = ({ children, color, ...otherProps }) => {
   const configButton = {
     ...otherProps,
     variant: 'contained',
-    color: 'primary',
+    color: color || 'primary',
     fullWidth: true,
   };
 

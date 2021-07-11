@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import GenericListComponent from './GenericListComponent';
-import { deleteUnitTypes, fetchUnitTypes } from '../../../db/UnitTypeHelper';
-import CreateUnitType from '../create/CreateUnitType';
+import { deleteCategories, fetchCategories } from '../../../db/CategoryHelper';
+import CreateCategory from '../create/CreateCategory';
 import useIsMounted from '../../../utils/useIsMounted';
 
-const ListUnitTypes = () => {
+const ListCategories = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const isMounted = useIsMounted();
@@ -13,29 +13,35 @@ const ListUnitTypes = () => {
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.unit_type.list.headers.reference'),
+      label: t('accounting_module.category.list.headers.reference'),
       align: 'left',
     },
     {
-      id: 'unit',
-      label: t('accounting_module.unit_type.list.headers.unit'),
+      id: 'name',
+      label: t('accounting_module.category.list.headers.name'),
+      align: 'left',
+    },
+    {
+      id: 'parent',
+      label: t('accounting_module.category.list.headers.parent'),
       align: 'left',
     },
   ];
 
   const fetchData = () => {
-    fetchUnitTypes(
+    fetchCategories(
       (error) => {
         console.log('error', error);
       },
       (data) => {
+        console.log(data);
         if (isMounted.current) setRows(data);
       }
     );
   };
 
   const deleteData = (ids) => {
-    deleteUnitTypes(
+    deleteCategories(
       ids,
       (error) => {
         console.log('error', error);
@@ -71,13 +77,13 @@ const ListUnitTypes = () => {
       searchCallback={handleSearch}
       deleteCallback={handleDelete}
       texts={{
-        create: t('accounting_module.unit_type.create'),
-        title: t('accounting_module.unit_type.list.title'),
-        edit: t('accounting_module.unit_type.edit'),
+        create: t('accounting_module.category.create'),
+        title: t('accounting_module.category.list.title'),
+        edit: t('accounting_module.category.edit'),
       }}
-      creationComponent={<CreateUnitType />}
+      creationComponent={<CreateCategory />}
     />
   );
 };
 
-export default ListUnitTypes;
+export default ListCategories;

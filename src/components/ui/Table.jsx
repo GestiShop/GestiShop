@@ -1,7 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -248,12 +249,12 @@ const EnhancedTable = ({
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState(headers[0].id);
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState(headers[0].id);
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -263,7 +264,7 @@ const EnhancedTable = ({
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      setSelected(rows.map((n) => n.reference));
+      setSelected(rows.map((n) => n._id));
     } else {
       setSelected([]);
     }
@@ -303,9 +304,9 @@ const EnhancedTable = ({
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const handleEditClick = (event, index) => {
+  const handleEditClick = (event, id) => {
     event.stopPropagation();
-    editCallback(index);
+    editCallback(id);
   };
 
   const handleClickOpen = () => {
@@ -319,6 +320,7 @@ const EnhancedTable = ({
   const deleteItemsAndClose = () => {
     handleCloseDeleteDialog();
     deleteCallback(selected);
+    setSelected([]);
   };
 
   return (
@@ -348,7 +350,7 @@ const EnhancedTable = ({
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.reference);
+                  const isItemSelected = isSelected(row._id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   const headerCells = [];
@@ -402,6 +404,21 @@ const EnhancedTable = ({
                           );
                         }
                         break;
+                      case 'parent':
+                        headerCells.push(
+                          <TableCell
+                            key={header.id}
+                            align={header.align}
+                            padding="normal"
+                          >
+                            {row[header.id]
+                              ? `[${row[header.id].reference}] ${
+                                  row[header.id].name
+                                }`
+                              : '-'}
+                          </TableCell>
+                        );
+                        break;
                       default:
                         headerCells.push(
                           <TableCell
@@ -421,7 +438,7 @@ const EnhancedTable = ({
                         <Tooltip title={t('accounting_module.table.edit')}>
                           <IconButton
                             aria-label={t('accounting_module.table.edit')}
-                            onClick={(event) => handleEditClick(event, index)}
+                            onClick={(event) => handleEditClick(event, row._id)}
                           >
                             <EditIcon />
                           </IconButton>
@@ -433,7 +450,7 @@ const EnhancedTable = ({
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, index)}
+                      onClick={(event) => handleClick(event, row._id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}

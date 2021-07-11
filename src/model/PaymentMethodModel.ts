@@ -2,8 +2,8 @@ const mongoose = window.require('mongoose');
 const { Schema } = mongoose;
 
 const paymentMethodSchema = new Schema({
-  reference: String,
-  name: String,
+  reference: { type: String, unique: true, required: true, dropDups: true },
+  name: { type: String, required: true },
 });
 
 const PaymentMethod = mongoose.model(

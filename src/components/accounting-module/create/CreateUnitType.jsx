@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import * as Yup from 'yup';
@@ -6,15 +7,22 @@ import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import { addUnitType } from '../../../db/UnitTypeHelper';
+import { addUnitType, updateUnitType } from '../../../db/UnitTypeHelper';
 
-const CreateUnitType = ({ closeCallback }) => {
+const CreateUnitType = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
 
-  const INITIAL_STATE = {
+  let INITIAL_STATE = {
     reference: '',
     unit: '',
   };
+
+  if (initialState) {
+    INITIAL_STATE = {
+      reference: initialState.reference,
+      unit: initialState.unit,
+    };
+  }
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -22,17 +30,31 @@ const CreateUnitType = ({ closeCallback }) => {
   });
 
   const handleSubmit = (data) => {
-    addUnitType(
-      data,
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      () => {
-        console.log('NO ERROR');
-        closeCallback();
-      }
-    );
+    if (!initialState) {
+      addUnitType(
+        data,
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    } else {
+      updateUnitType(
+        { ...data, _id: initialState._id },
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    }
   };
 
   return (

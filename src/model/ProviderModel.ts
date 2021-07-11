@@ -7,7 +7,7 @@ const mongoose = window.require('mongoose');
 const { Schema } = mongoose;
 
 const providerSchema = new Schema({
-  reference: String,
+  reference: { type: String, unique: true, required: true, dropDups: true },
   contactData: {
     name: String,
     mainPhone: { type: mongoose.Types.ObjectId, ref: 'Provider.phones' },

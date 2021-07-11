@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import GenericListComponent from './GenericListComponent';
-import { fetchProducts } from '../../../db/ProductHelper';
+import { deleteProducts, fetchProducts } from '../../../db/ProductHelper';
 import CreateProduct from '../create/CreateProduct';
 import useIsMounted from '../../../utils/useIsMounted';
 
@@ -78,6 +78,18 @@ const ListProducts = () => {
     );
   };
 
+  const deleteData = (ids) => {
+    deleteProducts(
+      ids,
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        fetchData();
+      }
+    );
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -90,9 +102,9 @@ const ListProducts = () => {
     console.log('Searching text:', textToSearch);
   };
 
-  const handleDelete = (indexes) => {
-    console.log('Delete rows:', indexes);
-    fetchData();
+  const handleDelete = (ids) => {
+    console.log('Delete rows:', ids);
+    deleteData(ids);
   };
 
   return (

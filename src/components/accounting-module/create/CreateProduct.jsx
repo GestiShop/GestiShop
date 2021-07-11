@@ -1,6 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@material-ui/core';
@@ -10,18 +11,29 @@ import SubmitButton from '../../ui/forms/SubmitButton';
 import Select from '../../ui/forms/Select';
 import MultiSelect from '../../ui/forms/MultiSelect';
 import Switch from '../../ui/forms/Switch';
-import { addProduct } from '../../../db/ProductHelper';
+import { addProduct, updateProduct } from '../../../db/ProductHelper';
+import { fetchTaxes } from '../../../db/TaxHelper';
+import useIsMounted from '../../../utils/useIsMounted';
+import { fetchUnitTypes } from '../../../db/UnitTypeHelper';
+import { fetchWarehouses } from '../../../db/WarehouseHelper';
+import { fetchCategories } from '../../../db/CategoryHelper';
 
-const CreateProduct = ({ closeCallback }) => {
+const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const [stockAlert, setStockAlert] = useState(false);
+  const [taxesOptions, setTaxesOptions] = useState([]);
+  const [unitTypesOptions, setUnitTypesOptions] = useState([]);
+  const [warehousesOptions, setWarehousesOptions] = useState([]);
+  const [categoriesOptions, setCategoriesOptions] = useState([]);
 
-  const INITIAL_STATE = {
+  const isMounted = useIsMounted();
+
+  let INITIAL_STATE = {
     reference: '',
     name: '',
     basePrice: 0.0,
     discountPercentage: 0.0,
-    taxPercentage: 0.0,
+    taxPercentage: '',
     stock: 0.0,
     unitType: '',
     warehouse: '',
@@ -30,6 +42,23 @@ const CreateProduct = ({ closeCallback }) => {
     stockAlert: false,
     minStock: 0.0,
   };
+
+  if (initialState) {
+    INITIAL_STATE = {
+      reference: initialState.reference,
+      name: initialState.name,
+      basePrice: initialState.basePrice,
+      discountPercentage: initialState.discountPercentage,
+      taxPercentage: initialState.taxPercentage,
+      stock: initialState.stock,
+      unitType: initialState.unitType,
+      warehouse: initialState.warehouse,
+      categories: initialState.categories,
+      visible: initialState.visible,
+      stockAlert: initialState.stockAlert,
+      minStock: initialState.minStock,
+    };
+  }
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -57,18 +86,81 @@ const CreateProduct = ({ closeCallback }) => {
   });
 
   const handleSubmit = (data) => {
-    addProduct(
-      data,
+    if (!initialState) {
+      addProduct(
+        data,
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    } else {
+      updateProduct(
+        { ...data, _id: initialState._id },
+        (error) => {
+          console.log('error', error);
+          closeCallback();
+        },
+        () => {
+          console.log('NO ERROR');
+          closeCallback();
+        }
+      );
+    }
+  };
+
+  const fetchData = () => {
+    fetchTaxes(
       (error) => {
         console.log('error', error);
         closeCallback();
       },
-      () => {
-        console.log('NO ERROR');
+      (options) => {
+        if (isMounted.current) setTaxesOptions(options.map((x) => x.reference));
+      }
+    );
+
+    fetchUnitTypes(
+      (error) => {
+        console.log('error', error);
         closeCallback();
+      },
+      (options) => {
+        if (isMounted.current)
+          setUnitTypesOptions(options.map((x) => x.reference));
+      }
+    );
+
+    fetchWarehouses(
+      (error) => {
+        console.log('error', error);
+        closeCallback();
+      },
+      (options) => {
+        if (isMounted.current)
+          setWarehousesOptions(options.map((x) => x.reference));
+      }
+    );
+
+    fetchCategories(
+      (error) => {
+        console.log('error', error);
+        closeCallback();
+      },
+      (options) => {
+        if (isMounted.current)
+          setCategoriesOptions(options.map((x) => x.reference));
       }
     );
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Grid container>
@@ -106,7 +198,7 @@ const CreateProduct = ({ closeCallback }) => {
                   <Select
                     name="taxPercentage"
                     label="Tax percentage (%)"
-                    options={['21.00', '10.00', '0.00']}
+                    options={taxesOptions}
                   />
                 </Grid>
 
@@ -118,7 +210,7 @@ const CreateProduct = ({ closeCallback }) => {
                   <Select
                     name="unitType"
                     label="Unit type"
-                    options={['units', 'm', 'kg']}
+                    options={unitTypesOptions}
                   />
                 </Grid>
 
@@ -126,7 +218,7 @@ const CreateProduct = ({ closeCallback }) => {
                   <Select
                     name="warehouse"
                     label="Warehouse"
-                    options={['default warehouse', 'another warehouse']}
+                    options={warehousesOptions}
                   />
                 </Grid>
 
@@ -134,7 +226,7 @@ const CreateProduct = ({ closeCallback }) => {
                   <MultiSelect
                     name="categories"
                     label="Categories"
-                    options={['test', 'wow', 'lol', 'category', 'random']}
+                    options={categoriesOptions}
                   />
                 </Grid>
 
