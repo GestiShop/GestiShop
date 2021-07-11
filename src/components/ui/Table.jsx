@@ -2,7 +2,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -249,12 +249,12 @@ const EnhancedTable = ({
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState(headers[0].id);
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState(headers[0].id);
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -320,6 +320,7 @@ const EnhancedTable = ({
   const deleteItemsAndClose = () => {
     handleCloseDeleteDialog();
     deleteCallback(selected);
+    setSelected([]);
   };
 
   return (
