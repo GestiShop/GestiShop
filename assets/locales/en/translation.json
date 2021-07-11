@@ -55,7 +55,7 @@
       "advanced": "Advanced"
     }
   },
-  "form":{
+  "form": {
     "errors": {
       "required": "This field is required.",
       "invalid_number": "Please enter a valid number.",
@@ -72,10 +72,25 @@
     },
     "product": {
       "create": "Add new product",
+      "edit": "Edit product",
       "list": "Product list",
       "state": {
         "available": "Available",
         "hidden": "Hidden"
+      },
+      "structure": {
+        "reference": "Reference",
+        "name": "Name",
+        "base_price": "Base price ({{currency}})",
+        "discount_percentage": "Discount percentage (%)",
+        "tax_percentage": "Tax percentage (%)",
+        "stock": "Stock",
+        "unit_type": "Unit type",
+        "warehouse": "Warehouse",
+        "categories": "Categories",
+        "visible": "Visibility",
+        "stock_alert": "Alert when stock is too low?",
+        "min_stock": "Minimum stock"
       }
     },
     "tax": {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import GenericListComponent from './GenericListComponent';
 import { deleteProducts, fetchProducts } from '../../../db/ProductHelper';
 import CreateProduct from '../create/CreateProduct';
@@ -38,31 +39,34 @@ const ListProducts = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState(INIT_ROWS);
   const isMounted = useIsMounted();
+  const currency = useSelector(
+    (store) => store.configuration.currencyInfo.currency.label
+  );
 
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.product.list.headers.reference'),
+      label: t('accounting_module.product.structure.reference'),
       align: 'left',
     },
     {
       id: 'name',
-      label: t('accounting_module.product.list.headers.name'),
+      label: t('accounting_module.product.structure.name'),
       align: 'left',
     },
     {
       id: 'basePrice',
-      label: t('accounting_module.product.list.headers.price'),
+      label: t('accounting_module.product.structure.base_price', { currency }),
       align: 'right',
     },
     {
       id: 'stock',
-      label: t('accounting_module.product.list.headers.stock'),
+      label: t('accounting_module.product.structure.stock'),
       align: 'right',
     },
     {
       id: 'visible',
-      label: t('accounting_module.product.list.headers.state'),
+      label: t('accounting_module.product.structure.visible'),
       align: 'left',
     },
   ];
@@ -116,7 +120,7 @@ const ListProducts = () => {
       deleteCallback={handleDelete}
       texts={{
         create: t('accounting_module.product.create'),
-        title: t('accounting_module.product.list.title'),
+        title: t('accounting_module.product.list'),
         edit: t('accounting_module.product.edit'),
       }}
       creationComponent={<CreateProduct />}
