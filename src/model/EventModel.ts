@@ -2,9 +2,9 @@ const mongoose = window.require('mongoose');
 const { Schema } = mongoose;
 
 const eventSchema = new Schema({
-  start: Date,
-  end: Date,
-  title: String,
+  start: { type: Date, required: true },
+  end: { type: Date, required: true },
+  title: { type: String, required: true },
   description: String,
   allDay: Boolean,
 });

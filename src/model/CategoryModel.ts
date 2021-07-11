@@ -2,8 +2,8 @@ const mongoose = window.require('mongoose');
 const { Schema } = mongoose;
 
 const categorySchema = new Schema({
-  reference: String,
-  name: String,
+  reference: { type: String, unique: true, required: true, dropDups: true },
+  name: { type: String, required: true },
   parent: { type: mongoose.Types.ObjectId, ref: 'Category' },
 });
 

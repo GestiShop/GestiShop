@@ -2,18 +2,24 @@ const mongoose = window.require('mongoose');
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-  reference: String,
-  name: String,
-  basePrice: Number,
-  unitType: { type: mongoose.Types.ObjectId, ref: 'UnitType' },
-  discountPercentage: Number,
-  taxPercentage: { type: mongoose.Types.ObjectId, ref: 'Tax' },
-  stock: Number,
-  warehouse: { type: mongoose.Types.ObjectId, ref: 'Warehouse' },
-  categories: [{ type: mongoose.Types.ObjectId, ref: 'Category' }],
+  reference: { type: String, unique: true, required: true, dropDups: true },
+  name: { type: String, required: true },
+  basePrice: { type: Number, required: true },
+  unitType: { type: mongoose.Types.ObjectId, ref: 'UnitType', required: true },
+  discountPercentage: { type: Number, required: true, default: 0.0 },
+  taxPercentage: { type: mongoose.Types.ObjectId, ref: 'Tax', required: true },
+  stock: { type: Number, required: true },
+  warehouse: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Warehouse',
+    required: true,
+  },
+  categories: [
+    { type: mongoose.Types.ObjectId, ref: 'Category', required: true },
+  ],
   minStock: Number,
-  stockAlert: Boolean,
-  visible: Boolean,
+  stockAlert: { type: Boolean, required: true },
+  visible: { type: Boolean, required: true },
 });
 
 const Product = mongoose.model('Product', productSchema, 'products');

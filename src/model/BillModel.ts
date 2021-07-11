@@ -5,7 +5,7 @@ const mongoose = window.require('mongoose');
 const { Schema } = mongoose;
 
 const billSchema = new Schema({
-  billNumber: Number,
+  billNumber: { type: Number, unique: true, required: true, dropDups: true },
   date: Date,
   entityData: {
     entity: { type: mongoose.Types.ObjectId },
