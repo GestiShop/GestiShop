@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { connect as connectDb } from '../db/db';
 import logo from '../../assets/gestishop_logo.png';
@@ -33,7 +34,7 @@ const Home = () => {
       .catch((err) => {
         console.log('Failed to connect to db', err);
       });
-  }, [history]);
+  }, []);
 
   return (
     <div className={classes.floatCenter}>

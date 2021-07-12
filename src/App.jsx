@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import generateStore from './redux/store';
 import Onboarding from './components/Onboarding';
 import Settings from './components/Settings';
@@ -12,7 +12,7 @@ const App = () => {
   const store = generateStore();
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route exact path="/onboarding">
             <Onboarding />
@@ -23,14 +23,14 @@ const App = () => {
           <Route exact path="/settings">
             <Settings />
           </Route>
-          <Route exact path="/accounting_module_dashboard">
+          <Route path="/accounting_module">
             <AccountingModuleDashboard />
           </Route>
-          <Route>
+          <Route exact path="/">
             <Home />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   );
 };

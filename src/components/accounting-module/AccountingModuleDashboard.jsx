@@ -22,17 +22,12 @@ import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import StoreIcon from '@material-ui/icons/Store';
 import CategoryIcon from '@material-ui/icons/Category';
 import { useTranslation } from 'react-i18next';
-import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom';
-import CreateProduct from './create/CreateProduct';
+import { Link, useRouteMatch, Route, Switch, Redirect } from 'react-router-dom';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
-import CreateTax from './create/CreateTax';
 import ListUnitTypes from './list/ListUnitTypes';
-import CreateUnitType from './create/CreateUnitType';
 import ListWarehouses from './list/ListWarehouses';
-import CreateWarehouse from './create/CreateWarehouse';
 import Calendar from './calendar/Calendar';
-import CreateCategory from './create/CreateCategory';
 import ListCategories from './list/ListCategories';
 
 const DRAWER_WIDTH = 240;
@@ -106,37 +101,38 @@ const useStyles = makeStyles((theme) => ({
 
 const AccountingModuleDashboard = () => {
   const { t } = useTranslation();
+  const { path, url } = useRouteMatch();
 
   const DRAWER_ITEMS = [
     {
       text: t('accounting_module.menu.agenda'),
       icon: <EventIcon />,
-      linkTo: '/calendar',
+      linkTo: `${url}/calendar`,
     },
     {
       text: t('accounting_module.menu.products'),
       icon: <ShoppingBasketIcon />,
-      linkTo: '/list/products',
+      linkTo: `${url}/products`,
     },
     {
       text: t('accounting_module.menu.taxes'),
       icon: <AccountBalanceIcon />,
-      linkTo: '/list/taxes',
+      linkTo: `${url}/taxes`,
     },
     {
       text: t('accounting_module.menu.unit_types'),
       icon: <MoneyOffIcon />,
-      linkTo: '/list/unit_types',
+      linkTo: `${url}/unit_types`,
     },
     {
       text: t('accounting_module.menu.warehouses'),
       icon: <StoreIcon />,
-      linkTo: '/list/warehouses',
+      linkTo: `${url}/warehouses`,
     },
     {
       text: t('accounting_module.menu.categories'),
       icon: <CategoryIcon />,
-      linkTo: '/list/categories',
+      linkTo: `${url}/categories`,
     },
   ];
 
@@ -178,71 +174,76 @@ const AccountingModuleDashboard = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <BrowserRouter>
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {DRAWER_ITEMS.map((element) => (
-              <ListItem
-                button
-                key={element.text}
-                component={Link}
-                to={element.linkTo}
-              >
-                <ListItemIcon>{element.icon}</ListItemIcon>
-                <ListItemText primary={element.text} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Switch>
-            <Route path="/calendar" render={() => <Calendar />} />
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {DRAWER_ITEMS.map((element) => (
+            <ListItem
+              button
+              key={element.text}
+              component={Link}
+              to={element.linkTo}
+            >
+              <ListItemIcon>{element.icon}</ListItemIcon>
+              <ListItemText primary={element.text} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
 
-            <Route path="/list/products" render={() => <ListProducts />} />
-            <Route path="/create/product" render={() => <CreateProduct />} />
-
-            <Route path="/list/taxes" render={() => <ListTaxes />} />
-            <Route path="/create/tax" render={() => <CreateTax />} />
-
-            <Route path="/list/unit_types" render={() => <ListUnitTypes />} />
-            <Route path="/create/unit_type" render={() => <CreateUnitType />} />
-
-            <Route path="/list/warehouses" render={() => <ListWarehouses />} />
-            <Route
-              path="/create/warehouse"
-              render={() => <CreateWarehouse />}
-            />
-
-            <Route path="/list/categories" render={() => <ListCategories />} />
-            <Route path="/create/category" render={() => <CreateCategory />} />
-
-            <Route render={() => <Redirect to="/calendar" />} />
-          </Switch>
-        </main>
-      </BrowserRouter>
+        <Switch>
+          <Route exact path={`${path}/calendar`} render={() => <Calendar />} />
+          <Route
+            exact
+            path={`${path}/products`}
+            render={() => <ListProducts />}
+          />
+          <Route exact path={`${path}/taxes`} render={() => <ListTaxes />} />
+          <Route
+            exact
+            path={`${path}/unit_types`}
+            render={() => <ListUnitTypes />}
+          />
+          <Route
+            exact
+            path={`${path}/warehouses`}
+            render={() => <ListWarehouses />}
+          />
+          <Route
+            exact
+            path={`${path}/categories`}
+            render={() => <ListCategories />}
+          />
+          <Route
+            exact
+            path={`${path}`}
+            render={() => <Redirect to={`${path}/calendar`} />}
+          />
+        </Switch>
+      </main>
     </div>
   );
 };

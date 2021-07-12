@@ -23,7 +23,7 @@ const Dashboard = () => {
               <Grid item xs={12} className="d-flex">
                 <Button
                   component={Link}
-                  to="/accounting_module_dashboard"
+                  to="/accounting_module"
                   className="m-auto"
                 >
                   Accounting Module
