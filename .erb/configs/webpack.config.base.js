@@ -12,7 +12,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.(tsx|jsx|js|ts)?$/,
+        test: /\.tsx|\.jsx|\.ts|\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
