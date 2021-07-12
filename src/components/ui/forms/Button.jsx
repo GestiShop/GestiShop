@@ -9,6 +9,7 @@ const ButtonWrapper = ({ children, color, ...otherProps }) => {
     variant: 'contained',
     color: color || 'primary',
     fullWidth: true,
+    className: 'm-auto',
   };
 
   return <Button {...configButton}>{children}</Button>;

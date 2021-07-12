@@ -204,6 +204,7 @@ const AccountingModuleDashboard = () => {
               key={element.text}
               component={Link}
               to={element.linkTo}
+              replace
             >
               <ListItemIcon>{element.icon}</ListItemIcon>
               <ListItemText primary={element.text} />
@@ -215,33 +216,27 @@ const AccountingModuleDashboard = () => {
         <div className={classes.toolbar} />
 
         <Switch>
-          <Route exact path={`${path}/calendar`} render={() => <Calendar />} />
-          <Route
-            exact
-            path={`${path}/products`}
-            render={() => <ListProducts />}
-          />
-          <Route exact path={`${path}/taxes`} render={() => <ListTaxes />} />
-          <Route
-            exact
-            path={`${path}/unit_types`}
-            render={() => <ListUnitTypes />}
-          />
-          <Route
-            exact
-            path={`${path}/warehouses`}
-            render={() => <ListWarehouses />}
-          />
-          <Route
-            exact
-            path={`${path}/categories`}
-            render={() => <ListCategories />}
-          />
-          <Route
-            exact
-            path={`${path}`}
-            render={() => <Redirect to={`${path}/calendar`} />}
-          />
+          <Route exact path={`${path}/calendar`}>
+            <Calendar />
+          </Route>
+          <Route exact path={`${path}/products`}>
+            <ListProducts />
+          </Route>
+          <Route exact path={`${path}/taxes`}>
+            <ListTaxes />
+          </Route>
+          <Route exact path={`${path}/unit_types`}>
+            <ListUnitTypes />
+          </Route>
+          <Route exact path={`${path}/warehouses`}>
+            <ListWarehouses />
+          </Route>
+          <Route exact path={`${path}/categories`}>
+            <ListCategories />
+          </Route>
+          <Route exact path={`${path}`}>
+            <Redirect to={`${path}/calendar`} />
+          </Route>
         </Switch>
       </main>
     </div>
