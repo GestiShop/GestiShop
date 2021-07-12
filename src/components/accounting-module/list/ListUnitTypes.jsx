@@ -13,12 +13,12 @@ const ListUnitTypes = () => {
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.unit_type.list.headers.reference'),
+      label: t('accounting_module.unit_type.structure.reference'),
       align: 'left',
     },
     {
       id: 'unit',
-      label: t('accounting_module.unit_type.list.headers.unit'),
+      label: t('accounting_module.unit_type.structure.unit'),
       align: 'left',
     },
   ];
@@ -72,7 +72,7 @@ const ListUnitTypes = () => {
       deleteCallback={handleDelete}
       texts={{
         create: t('accounting_module.unit_type.create'),
-        title: t('accounting_module.unit_type.list.title'),
+        title: t('accounting_module.unit_type.list'),
         edit: t('accounting_module.unit_type.edit'),
       }}
       creationComponent={<CreateUnitType />}

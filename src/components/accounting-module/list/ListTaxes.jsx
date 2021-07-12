@@ -13,12 +13,12 @@ const ListTaxes = () => {
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.tax.list.headers.reference'),
+      label: t('accounting_module.tax.structure.reference'),
       align: 'left',
     },
     {
       id: 'percentage',
-      label: t('accounting_module.tax.list.headers.percentage'),
+      label: t('accounting_module.tax.structure.percentage'),
       align: 'right',
     },
   ];
@@ -72,7 +72,7 @@ const ListTaxes = () => {
       deleteCallback={handleDelete}
       texts={{
         create: t('accounting_module.tax.create'),
-        title: t('accounting_module.tax.list.title'),
+        title: t('accounting_module.tax.list'),
         edit: t('accounting_module.tax.edit'),
       }}
       creationComponent={<CreateTax />}

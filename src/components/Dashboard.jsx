@@ -11,21 +11,17 @@ const Dashboard = () => {
           <Container maxWidth="md">
             <Grid container spacing={2}>
               <Grid item xs={12} className="d-flex">
-                <Button component={Link} to="/onboarding" className="m-auto">
+                <Button component={Link} to="/onboarding" replace>
                   OnBoarding
                 </Button>
               </Grid>
               <Grid item xs={12} className="d-flex">
-                <Button component={Link} to="/settings" className="m-auto">
+                <Button component={Link} to="/settings" replace>
                   Settings
                 </Button>
               </Grid>
               <Grid item xs={12} className="d-flex">
-                <Button
-                  component={Link}
-                  to="/accounting_module_dashboard"
-                  className="m-auto"
-                >
+                <Button component={Link} to="/accounting_module" replace>
                   Accounting Module
                 </Button>
               </Grid>

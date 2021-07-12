@@ -35,7 +35,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useTranslation } from 'react-i18next';
-import '../../styles/Table.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +57,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 20,
     width: 1,
+  },
+  noStock: {
+    backgroundColor: 'rgba(205, 92, 92, 0.45) !important',
+    '&:hover': {
+      backgroundColor: 'rgba(205, 92, 92, 0.65) !important',
+    },
   },
 }));
 
@@ -214,11 +219,8 @@ const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title={t('accounting_module.table.delete')}>
-          <IconButton
-            aria-label={t('accounting_module.table.delete')}
-            onClick={deleteCallback}
-          >
+        <Tooltip title={t('buttons.delete')}>
+          <IconButton aria-label={t('buttons.delete')} onClick={deleteCallback}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -435,9 +437,9 @@ const EnhancedTable = ({
                   if (editCallback) {
                     headerCells.push(
                       <TableCell key="actions" align="right" padding="normal">
-                        <Tooltip title={t('accounting_module.table.edit')}>
+                        <Tooltip title={t('buttons.edit')}>
                           <IconButton
-                            aria-label={t('accounting_module.table.edit')}
+                            aria-label={t('buttons.edit')}
                             onClick={(event) => handleEditClick(event, row._id)}
                           >
                             <EditIcon />
@@ -458,7 +460,7 @@ const EnhancedTable = ({
                       selected={isItemSelected}
                       className={
                         row.stockAlert && row.stock <= row.minStock
-                          ? 'no-stock'
+                          ? classes.noStock
                           : null
                       }
                     >

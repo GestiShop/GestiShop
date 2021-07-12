@@ -64,7 +64,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
     start: Yup.date().required(t('form.errors.required')),
     end: Yup.date()
       .required(t('form.errors.required'))
-      .min(Yup.ref('start'), t('form.errors.end-date-before-start-date')),
+      .min(Yup.ref('start'), t('form.errors.end_date_before_start_date')),
     description: Yup.string(),
     colorCode: Yup.string(),
     allDay: Yup.bool(),
@@ -86,21 +86,21 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="title"
-                    label={t('accounting_module.event.title')}
+                    label={t('accounting_module.event.structure.title')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
                     name="start"
-                    label={t('accounting_module.event.start')}
+                    label={t('accounting_module.event.structure.start')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
                     name="end"
-                    label={t('accounting_module.event.end')}
+                    label={t('accounting_module.event.structure.end')}
                   />
                 </Grid>
 
@@ -109,14 +109,14 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                     multiline
                     rows={10}
                     name="description"
-                    label={t('accounting_module.event.description')}
+                    label={t('accounting_module.event.structure.description')}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <Select
                     name="colorCode"
-                    label="color"
+                    label={t('accounting_module.event.structure.color')}
                     options={EVENT_COLOR_LIST}
                   />
                 </Grid>
@@ -124,7 +124,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <Switch
                     name="allDay"
-                    label={t('accounting_module.event.all_day')}
+                    label={t('accounting_module.event.structure.all_day')}
                     initialState={INITIAL_STATE.allDay}
                   />
                 </Grid>

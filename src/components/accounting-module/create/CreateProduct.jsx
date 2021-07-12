@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import Select from '../../ui/forms/Select';
@@ -25,8 +26,10 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   const [unitTypesOptions, setUnitTypesOptions] = useState([]);
   const [warehousesOptions, setWarehousesOptions] = useState([]);
   const [categoriesOptions, setCategoriesOptions] = useState([]);
-
   const isMounted = useIsMounted();
+  const currency = useSelector(
+    (store) => store.configuration.currencyInfo.currency.label
+  );
 
   let INITIAL_STATE = {
     reference: '',
@@ -176,40 +179,58 @@ const CreateProduct = ({ closeCallback, initialState }) => {
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={3}>
-                  <TextField name="reference" label="Product Reference" />
+                  <TextField
+                    name="reference"
+                    label={t('accounting_module.product.structure.reference')}
+                  />
                 </Grid>
 
                 <Grid item xs={9}>
-                  <TextField name="name" label="Product Name" />
+                  <TextField
+                    name="name"
+                    label={t('accounting_module.product.structure.name')}
+                  />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <TextField name="basePrice" label="Product Base Price" />
+                  <TextField
+                    name="basePrice"
+                    label={t('accounting_module.product.structure.base_price', {
+                      currency,
+                    })}
+                  />
                 </Grid>
 
                 <Grid item xs={3}>
                   <TextField
                     name="discountPercentage"
-                    label="Product Discount (%)"
+                    label={t(
+                      'accounting_module.product.structure.discount_percentage'
+                    )}
                   />
                 </Grid>
 
                 <Grid item xs={3}>
                   <Select
                     name="taxPercentage"
-                    label="Tax percentage (%)"
+                    label={t(
+                      'accounting_module.product.structure.tax_percentage'
+                    )}
                     options={taxesOptions}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField name="stock" label="Product Stock" />
+                  <TextField
+                    name="stock"
+                    label={t('accounting_module.product.structure.stock')}
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
                   <Select
                     name="unitType"
-                    label="Unit type"
+                    label={t('accounting_module.product.structure.unit_type')}
                     options={unitTypesOptions}
                   />
                 </Grid>
@@ -217,7 +238,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                 <Grid item xs={4}>
                   <Select
                     name="warehouse"
-                    label="Warehouse"
+                    label={t('accounting_module.product.structure.warehouse')}
                     options={warehousesOptions}
                   />
                 </Grid>
@@ -225,19 +246,23 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <MultiSelect
                     name="categories"
-                    label="Categories"
+                    label={t('accounting_module.product.structure.categories')}
                     options={categoriesOptions}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <Switch name="visible" label="Visible" initialState />
+                  <Switch
+                    name="visible"
+                    label={t('accounting_module.product.structure.visible')}
+                    initialState
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
                   <Switch
                     name="stockAlert"
-                    label="Stock alert"
+                    label={t('accounting_module.product.structure.stock_alert')}
                     initialState={false}
                     setValue={(isChecked) => setStockAlert(isChecked)}
                   />
@@ -247,7 +272,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <TextField
                     disabled={!stockAlert}
                     name="minStock"
-                    label="Minimum stock"
+                    label={t('accounting_module.product.structure.min_stock')}
                   />
                 </Grid>
 

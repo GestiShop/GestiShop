@@ -73,21 +73,21 @@ const CreateUnitType = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="reference"
-                    label={t(
-                      'accounting_module.unit_type.list.headers.reference'
-                    )}
+                    label={t('accounting_module.unit_type.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
                     name="unit"
-                    label={t('accounting_module.unit_type.list.headers.unit')}
+                    label={t('accounting_module.unit_type.structure.unit')}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <SubmitButton>{t('buttons.create')}</SubmitButton>
+                  <SubmitButton>
+                    {initialState ? t('buttons.save') : t('buttons.create')}
+                  </SubmitButton>
                 </Grid>
               </Grid>
             </Form>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -22,17 +23,12 @@ import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import StoreIcon from '@material-ui/icons/Store';
 import CategoryIcon from '@material-ui/icons/Category';
 import { useTranslation } from 'react-i18next';
-import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom';
-import CreateProduct from './create/CreateProduct';
+import { Link, useRouteMatch, Route, Switch, Redirect } from 'react-router-dom';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
-import CreateTax from './create/CreateTax';
 import ListUnitTypes from './list/ListUnitTypes';
-import CreateUnitType from './create/CreateUnitType';
 import ListWarehouses from './list/ListWarehouses';
-import CreateWarehouse from './create/CreateWarehouse';
 import Calendar from './calendar/Calendar';
-import CreateCategory from './create/CreateCategory';
 import ListCategories from './list/ListCategories';
 
 const DRAWER_WIDTH = 240;
@@ -106,38 +102,43 @@ const useStyles = makeStyles((theme) => ({
 
 const AccountingModuleDashboard = () => {
   const { t } = useTranslation();
+  const { path, url } = useRouteMatch();
 
   const DRAWER_ITEMS = [
-    {
-      text: t('accounting_module.menu.agenda'),
-      icon: <EventIcon />,
-      linkTo: '/calendar',
-    },
-    {
-      text: t('accounting_module.menu.products'),
-      icon: <ShoppingBasketIcon />,
-      linkTo: '/list/products',
-    },
-    {
-      text: t('accounting_module.menu.taxes'),
-      icon: <AccountBalanceIcon />,
-      linkTo: '/list/taxes',
-    },
-    {
-      text: t('accounting_module.menu.unit_types'),
-      icon: <MoneyOffIcon />,
-      linkTo: '/list/unit_types',
-    },
-    {
-      text: t('accounting_module.menu.warehouses'),
-      icon: <StoreIcon />,
-      linkTo: '/list/warehouses',
-    },
-    {
-      text: t('accounting_module.menu.categories'),
-      icon: <CategoryIcon />,
-      linkTo: '/list/categories',
-    },
+    [
+      {
+        text: t('accounting_module.menu.schedule'),
+        icon: <EventIcon />,
+        linkTo: `${url}/calendar`,
+      },
+    ],
+    [
+      {
+        text: t('accounting_module.menu.products'),
+        icon: <ShoppingBasketIcon />,
+        linkTo: `${url}/products`,
+      },
+      {
+        text: t('accounting_module.menu.taxes'),
+        icon: <AccountBalanceIcon />,
+        linkTo: `${url}/taxes`,
+      },
+      {
+        text: t('accounting_module.menu.unit_types'),
+        icon: <MoneyOffIcon />,
+        linkTo: `${url}/unit_types`,
+      },
+      {
+        text: t('accounting_module.menu.warehouses'),
+        icon: <StoreIcon />,
+        linkTo: `${url}/warehouses`,
+      },
+      {
+        text: t('accounting_module.menu.categories'),
+        icon: <CategoryIcon />,
+        linkTo: `${url}/categories`,
+      },
+    ],
   ];
 
   const classes = useStyles();
@@ -178,71 +179,80 @@ const AccountingModuleDashboard = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <BrowserRouter>
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {DRAWER_ITEMS.map((element) => (
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {DRAWER_ITEMS.map((elementList, index) => {
+            let itemList = elementList.map((element) => (
               <ListItem
                 button
                 key={element.text}
                 component={Link}
                 to={element.linkTo}
+                replace
               >
                 <ListItemIcon>{element.icon}</ListItemIcon>
                 <ListItemText primary={element.text} />
               </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Switch>
-            <Route path="/calendar" render={() => <Calendar />} />
+            ));
 
-            <Route path="/list/products" render={() => <ListProducts />} />
-            <Route path="/create/product" render={() => <CreateProduct />} />
+            if (index !== DRAWER_ITEMS.length - 1) {
+              itemList = itemList.concat(
+                <Divider key={`elementlist-${index}`} />
+              );
+            }
 
-            <Route path="/list/taxes" render={() => <ListTaxes />} />
-            <Route path="/create/tax" render={() => <CreateTax />} />
-
-            <Route path="/list/unit_types" render={() => <ListUnitTypes />} />
-            <Route path="/create/unit_type" render={() => <CreateUnitType />} />
-
-            <Route path="/list/warehouses" render={() => <ListWarehouses />} />
-            <Route
-              path="/create/warehouse"
-              render={() => <CreateWarehouse />}
-            />
-
-            <Route path="/list/categories" render={() => <ListCategories />} />
-            <Route path="/create/category" render={() => <CreateCategory />} />
-
-            <Route render={() => <Redirect to="/calendar" />} />
-          </Switch>
-        </main>
-      </BrowserRouter>
+            return itemList;
+          })}
+        </List>
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Switch>
+          <Route exact path={`${path}/calendar`}>
+            <Calendar />
+          </Route>
+          <Route exact path={`${path}/products`}>
+            <ListProducts />
+          </Route>
+          <Route exact path={`${path}/taxes`}>
+            <ListTaxes />
+          </Route>
+          <Route exact path={`${path}/unit_types`}>
+            <ListUnitTypes />
+          </Route>
+          <Route exact path={`${path}/warehouses`}>
+            <ListWarehouses />
+          </Route>
+          <Route exact path={`${path}/categories`}>
+            <ListCategories />
+          </Route>
+          <Route exact path={`${path}`}>
+            <Redirect to={`${path}/calendar`} />
+          </Route>
+        </Switch>
+      </main>
     </div>
   );
 };

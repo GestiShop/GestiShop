@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { createTheme, MuiThemeProvider } from '@material-ui/core';
 import App from './App';
 import './i18n';
-import './styles/App.css';
+import './styles/App.global.css';
 import '@fontsource/roboto';
 
 window.require('dotenv').config();

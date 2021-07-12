@@ -7,7 +7,8 @@
     "cancel": "Cancelar",
     "edit": "Editar",
     "create": "Crear",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "save": "Guardar"
   },
   "settings": {
     "language_config": {
@@ -60,43 +61,105 @@
       "required": "Este campo es obligatorio.",
       "invalid_number": "Por favor, ingrese un número valido.",
       "invalid_email": "Por favor, ingrese un correo valido.",
-      "invalid_phone": "Por favor, ingrese un número de teléfono valido."
+      "invalid_phone": "Por favor, ingrese un número de teléfono valido.",
+      "end_date_before_start_date": "La fecha de finalización no puede ser anterior a la fecha de inicio."
     }
   },
   "accounting_module": {
     "accounting_module": "Módulo de contabilidad",
     "menu": {
+      "schedule": "Agenda",
       "products": "Productos",
       "taxes": "Impuestos",
-      "unit_types": "Tipos de unidades"
+      "unit_types": "Tipos de unidades",
+      "warehouses": "Almacenes",
+      "categories": "Categorías"
     },
     "product": {
       "create": "Añadir un producto",
+      "edit": "Editar producto",
       "list": "Listado de productos",
       "state": {
         "available": "Disponible",
         "hidden": "Escondido"
+      },
+      "structure": {
+        "reference": "Referencia",
+        "name": "Nombre",
+        "base_price": "Precio base ({{currency}})",
+        "discount_percentage": "Descuento (%)",
+        "tax_percentage": "Impuesto (%)",
+        "stock": "Stock",
+        "unit_type": "Tipo de unidad",
+        "warehouse": "Almacén",
+        "categories": "Categorías",
+        "visible": "Visibilidad",
+        "stock_alert": "Alertar cuando las existencias sean demasiado bajas.",
+        "min_stock": "Stock mínimo"
       }
     },
     "tax": {
       "create": "Añadir un impuesto",
-      "list": {
-        "title": "Listado de impuestos",
-        "headers": {
-          "reference": "Referencia",
-          "percentage": "Porcentaje (%)"
-        }
+      "edit": "Editar impuesto",
+      "list": "Listado de impuestos",
+      "structure": {
+        "reference": "Referencia",
+        "percentage": "Porcentaje (%)"
       }
     },
     "unit_type": {
       "create": "Añadir un tipo de unidad",
-      "list": {
-        "title": "Listado de tipos de unidad",
-        "headers": {
-          "reference": "Referencia",
-          "unit": "Unidad"
-        }
+      "edit": "Editar tipo de unidad",
+      "list": "Listado de tipos de unidad",
+      "headers": {
+        "reference": "Referencia",
+        "unit": "Unidad"
       }
+    },
+    "category": {
+      "create": "Añadir una categoría",
+      "edit": "Editar categoría",
+      "list": "Listado de categorías",
+      "structure": {
+        "reference": "Referencia",
+        "name": "Nombre",
+        "parent": "Padre"
+      }
+    },
+    "warehouse": {
+      "create": "Añadir un almacén",
+      "edit": "Editar almacén",
+      "list": "Listado de almacenes",
+      "structure": {
+        "reference": "Referencia",
+        "description": "Descripción",
+        "address": "Dirección"
+      }
+    },
+    "event": {
+      "new": "Nuevo evento",
+      "event": "Editar evento",
+      "structure": {
+        "title": "Título",
+        "start": "Data de inicio",
+        "end": "Data de finalización",
+        "description": "Descripción",
+        "color": "Color",
+        "all_day": "El evento dura todo el día."
+      }
+    },
+    "address": {
+      "road_type": "Tipo de carretera",
+      "street": "Calle",
+      "number": "Número",
+      "floor": "Piso",
+      "door": "Puerta",
+      "extra": "Extra",
+      "zip_code": "Código postal",
+      "city": "Ciudad",
+      "province": "Provincia",
+      "state": "Estado",
+      "country": "País"
     },
     "placeholders": {
       "search": "Ingrese texto para buscar..."
@@ -105,8 +168,6 @@
       "sorted_asc": "Ordenado ascendentemente",
       "sorted_desc": "Ordenado descendentemente",
       "select_all": "Seleccionar todos",
-      "edit": "Editar",
-      "delete": "Eliminar",
       "filter_list": "Filtrar lista",
       "selected_rows": "{{num}} seleccionados",
       "actions": "Acciones"

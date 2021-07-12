@@ -42,14 +42,11 @@ const GenericListComponent = ({
                     setInitialState(null);
                     setOpenCreationDialog(true);
                   }}
-                  className="m-auto"
                 >
                   {texts.create}
                 </Button>
               </Grid>
-              <Grid item xs={6}>
-                <p>Filters go here</p>
-              </Grid>
+              <Grid item xs={6} />
               <Grid item xs={3}>
                 <SearchBar onSubmit={(query) => searchCallback(query)} />
               </Grid>

@@ -7,7 +7,8 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "create": "Create",
-    "delete": "Delete"
+    "delete": "Delete",
+    "save": "Save"
   },
   "settings": {
     "language_config": {
@@ -55,48 +56,110 @@
       "advanced": "Advanced"
     }
   },
-  "form":{
+  "form": {
     "errors": {
       "required": "This field is required.",
       "invalid_number": "Please enter a valid number.",
       "invalid_email": "Please enter a valid email.",
-      "invalid_phone": "Please enter a valid phone number."
+      "invalid_phone": "Please enter a valid phone number.",
+      "end_date_before_start_date": "The end date can't be earlier than the start date."
     }
   },
   "accounting_module": {
     "accounting_module": "Accounting module",
     "menu": {
+      "schedule": "Schedule",
       "products": "Products",
       "taxes": "Taxes",
-      "unit_types": "Unit types"
+      "unit_types": "Unit types",
+      "warehouses": "Warehouses",
+      "categories": "Categories"
     },
     "product": {
       "create": "Add new product",
+      "edit": "Edit product",
       "list": "Product list",
       "state": {
         "available": "Available",
         "hidden": "Hidden"
+      },
+      "structure": {
+        "reference": "Reference",
+        "name": "Name",
+        "base_price": "Base price ({{currency}})",
+        "discount_percentage": "Discount (%)",
+        "tax_percentage": "Tax (%)",
+        "stock": "Stock",
+        "unit_type": "Unit type",
+        "warehouse": "Warehouse",
+        "categories": "Categories",
+        "visible": "Visibility",
+        "stock_alert": "Alert when stock is too low.",
+        "min_stock": "Minimum stock"
       }
     },
     "tax": {
       "create": "Add new tax",
-      "list": {
-        "title": "Taxes list",
-        "headers": {
-          "reference": "Reference",
-          "percentage": "Percentage (%)"
-        }
+      "edit": "Edit tax",
+      "list": "Tax list",
+      "structure": {
+        "reference": "Reference",
+        "percentage": "Percentage (%)"
       }
     },
     "unit_type": {
-      "create": "Add a unit type",
-      "list": {
-        "title": "Unit types list",
-        "headers": {
-          "reference": "Reference",
-          "unit": "Unit"
-        }
+      "create": "Add new unit type",
+      "edit": "Edit unit type",
+      "list": "Unit type list",
+      "structure": {
+        "reference": "Reference",
+        "unit": "Unit"
       }
+    },
+    "category": {
+      "create": "Add new category",
+      "edit": "Edit category",
+      "list": "Category list",
+      "structure": {
+        "reference": "Reference",
+        "name": "Name",
+        "parent": "Parent"
+      }
+    },
+    "warehouse": {
+      "create": "Add new warehouse",
+      "edit": "Edit warehouse",
+      "list": "Warehouse list",
+      "structure": {
+        "reference": "Reference",
+        "description": "Description",
+        "address": "Address"
+      }
+    },
+    "event": {
+      "new": "New event",
+      "event": "Edit event",
+      "structure": {
+        "title": "Title",
+        "start": "Start date",
+        "end": "End date",
+        "description": "Description",
+        "color": "Color",
+        "all_day": "The event lasts all day."
+      }
+    },
+    "address": {
+      "road_type": "Road type",
+      "street": "Street",
+      "number": "Number",
+      "floor": "Floor",
+      "door": "Door",
+      "extra": "Extra",
+      "zip_code": "Zip code",
+      "city": "City",
+      "province": "Province",
+      "state": "State",
+      "country": "Country"
     },
     "placeholders": {
       "search": "Input text to search..."
@@ -105,8 +168,6 @@
       "sorted_asc": "Sorted ascending",
       "sorted_desc": "Sorted descending",
       "select_all": "Select all",
-      "edit": "Edit",
-      "delete": "Delete",
       "filter_list": "Filter list",
       "selected_rows": "{{num}} selected",
       "actions": "Actions"
