@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -104,36 +105,40 @@ const AccountingModuleDashboard = () => {
   const { path, url } = useRouteMatch();
 
   const DRAWER_ITEMS = [
-    {
-      text: t('accounting_module.menu.agenda'),
-      icon: <EventIcon />,
-      linkTo: `${url}/calendar`,
-    },
-    {
-      text: t('accounting_module.menu.products'),
-      icon: <ShoppingBasketIcon />,
-      linkTo: `${url}/products`,
-    },
-    {
-      text: t('accounting_module.menu.taxes'),
-      icon: <AccountBalanceIcon />,
-      linkTo: `${url}/taxes`,
-    },
-    {
-      text: t('accounting_module.menu.unit_types'),
-      icon: <MoneyOffIcon />,
-      linkTo: `${url}/unit_types`,
-    },
-    {
-      text: t('accounting_module.menu.warehouses'),
-      icon: <StoreIcon />,
-      linkTo: `${url}/warehouses`,
-    },
-    {
-      text: t('accounting_module.menu.categories'),
-      icon: <CategoryIcon />,
-      linkTo: `${url}/categories`,
-    },
+    [
+      {
+        text: t('accounting_module.menu.schedule'),
+        icon: <EventIcon />,
+        linkTo: `${url}/calendar`,
+      },
+    ],
+    [
+      {
+        text: t('accounting_module.menu.products'),
+        icon: <ShoppingBasketIcon />,
+        linkTo: `${url}/products`,
+      },
+      {
+        text: t('accounting_module.menu.taxes'),
+        icon: <AccountBalanceIcon />,
+        linkTo: `${url}/taxes`,
+      },
+      {
+        text: t('accounting_module.menu.unit_types'),
+        icon: <MoneyOffIcon />,
+        linkTo: `${url}/unit_types`,
+      },
+      {
+        text: t('accounting_module.menu.warehouses'),
+        icon: <StoreIcon />,
+        linkTo: `${url}/warehouses`,
+      },
+      {
+        text: t('accounting_module.menu.categories'),
+        icon: <CategoryIcon />,
+        linkTo: `${url}/categories`,
+      },
+    ],
   ];
 
   const classes = useStyles();
@@ -198,23 +203,32 @@ const AccountingModuleDashboard = () => {
         </div>
         <Divider />
         <List>
-          {DRAWER_ITEMS.map((element) => (
-            <ListItem
-              button
-              key={element.text}
-              component={Link}
-              to={element.linkTo}
-              replace
-            >
-              <ListItemIcon>{element.icon}</ListItemIcon>
-              <ListItemText primary={element.text} />
-            </ListItem>
-          ))}
+          {DRAWER_ITEMS.map((elementList, index) => {
+            let itemList = elementList.map((element) => (
+              <ListItem
+                button
+                key={element.text}
+                component={Link}
+                to={element.linkTo}
+                replace
+              >
+                <ListItemIcon>{element.icon}</ListItemIcon>
+                <ListItemText primary={element.text} />
+              </ListItem>
+            ));
+
+            if (index !== DRAWER_ITEMS.length - 1) {
+              itemList = itemList.concat(
+                <Divider key={`elementlist-${index}`} />
+              );
+            }
+
+            return itemList;
+          })}
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-
         <Switch>
           <Route exact path={`${path}/calendar`}>
             <Calendar />

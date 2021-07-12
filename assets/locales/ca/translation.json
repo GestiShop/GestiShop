@@ -7,7 +7,8 @@
     "cancel": "Cancel·lar",
     "edit": "Editar",
     "create": "Crear",
-    "delete": "Esborrar"
+    "delete": "Esborrar",
+    "save": "Guardar"
   },
   "settings": {
     "language_config": {
@@ -60,43 +61,105 @@
       "required": "Aquest camp és obligatori.",
       "invalid_number": "Si us plau, introdueixi un número vàlid.",
       "invalid_email": "Si us plau, introdueixi un correu vàlid.",
-      "invalid_phone": "Si us plau, introdueixi un número de telèfon vàlid."
+      "invalid_phone": "Si us plau, introdueixi un número de telèfon vàlid.",
+      "end_date_before_start_date": "La data de finalització no pot ser anterior a la data d'inici."
     }
   },
   "accounting_module": {
     "accounting_module": "Mòdul de comptabilitat",
     "menu": {
+      "schedule": "Agenda",
       "products": "Productes",
       "taxes": "Impostos",
-      "unit_types": "Tipus d'unitats"
+      "unit_types": "Tipus d'unitats",
+      "warehouses": "Magatzems",
+      "categories": "Categories"
     },
     "product": {
       "create": "Afegir un producte",
+      "edit": "Editar producte",
       "list": "Llistat de productes",
       "state": {
         "available": "Disponible",
         "hidden": "Amagat"
+      },
+      "structure": {
+        "reference": "Referència",
+        "name": "Nom",
+        "base_price": "Preu base ({{currency}})",
+        "discount_percentage": "Descompte (%)",
+        "tax_percentage": "Impost (%)",
+        "stock": "Stock",
+        "unit_type": "Tipus d'unitat",
+        "warehouse": "Magatzem",
+        "categories": "Categories",
+        "visible": "Visibilitat",
+        "stock_alert": "Alertar quan les existències siguin massa baixes.",
+        "min_stock": "Stock mínim"
       }
     },
     "tax": {
       "create": "Afegir un impost",
-      "list": {
-        "title": "Llistat d'impostos",
-        "headers": {
-          "reference": "Referència",
-          "percentage": "Percentatge (%)"
-        }
+      "edit": "Editar impost",
+      "list": "Llistat d'impostos",
+      "structure": {
+        "reference": "Referència",
+        "percentage": "Percentatge (%)"
       }
     },
     "unit_type": {
       "create": "Afegir un tipus d'unitat",
-      "list": {
-        "title": "Llistat de tipus d'unitat",
-        "headers": {
-          "reference": "Referència",
-          "unit": "Unitat"
-        }
+      "edit": "Editar tipus d'unitat",
+      "list": "Llistat de tipus d'unitat",
+      "structure": {
+        "reference": "Referència",
+        "unit": "Unitat"
       }
+    },
+    "category": {
+      "create": "Afegir una categoria",
+      "edit": "Editar categoria",
+      "list": "Llistat de categories",
+      "structure": {
+        "reference": "Referència",
+        "name": "Nom",
+        "parent": "Pare"
+      }
+    },
+    "warehouse": {
+      "create": "Afegir un magatzem",
+      "edit": "Editar magatzem",
+      "list": "Llistat de magatzems",
+      "structure": {
+        "reference": "Referència",
+        "description": "Descripció",
+        "address": "Adreça"
+      }
+    },
+    "event": {
+      "new": "Nou esdeveniment",
+      "event": "Editar esdeveniment",
+      "structure": {
+        "title": "Títol",
+        "start": "Data d'inici",
+        "end": "Data de finalització",
+        "description": "Descripció",
+        "color": "Color",
+        "all_day": "L’esdeveniment dura tot el dia."
+      }
+    },
+    "address": {
+      "road_type": "Tipus de carretera",
+      "street": "Carrer",
+      "number": "Número",
+      "floor": "Pis",
+      "door": "Porta",
+      "extra": "Extra",
+      "zip_code": "Codi postal",
+      "city": "Ciutat",
+      "province": "Província",
+      "state": "Estat",
+      "country": "Païs"
     },
     "placeholders": {
       "search": "Introdueixi text per cercar..."
@@ -105,8 +168,6 @@
       "sorted_asc": "Ordenat ascendentment",
       "sorted_desc": "Ordenat descendentment",
       "select_all": "Seleccionar tots",
-      "edit": "Editar",
-      "delete": "Eliminar",
       "filter_list": "Filtrar llista",
       "selected_rows": "{{num}} seleccionats",
       "actions": "Accions"

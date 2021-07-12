@@ -117,7 +117,7 @@ const EventCalendar = () => {
 
   const newEvent = (_event) => {
     const newEvent = {
-      title: 'New Event',
+      title: t('accounting_module.event.new'),
       allDay: _event.slots.length === 1,
       start: _event.start,
       end: _event.end,
@@ -168,7 +168,7 @@ const EventCalendar = () => {
       <FullScreenDialog
         open={openEditDialog}
         closeCallback={handleCloseEditDialog}
-        title="EDIT EVENT"
+        title={t('accounting_module.event.edit')}
         childComponent={<CreateEvent />}
         initialState={state.selectedEvent}
       />

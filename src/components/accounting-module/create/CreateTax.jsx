@@ -75,19 +75,21 @@ const CreateTax = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="reference"
-                    label={t('accounting_module.tax.list.headers.reference')}
+                    label={t('accounting_module.tax.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
                     name="percentage"
-                    label={t('accounting_module.tax.list.headers.percentage')}
+                    label={t('accounting_module.tax.structure.percentage')}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <SubmitButton>{t('buttons.create')}</SubmitButton>
+                  <SubmitButton>
+                    {initialState ? t('buttons.save') : t('buttons.create')}
+                  </SubmitButton>
                 </Grid>
               </Grid>
             </Form>

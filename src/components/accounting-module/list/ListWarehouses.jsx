@@ -13,12 +13,12 @@ const ListWarehouses = () => {
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.warehouse.list.headers.reference'),
+      label: t('accounting_module.warehouse.structure.reference'),
       align: 'left',
     },
     {
       id: 'description',
-      label: t('accounting_module.warehouse.list.headers.description'),
+      label: t('accounting_module.warehouse.structure.description'),
       align: 'left',
     },
   ];
@@ -72,7 +72,7 @@ const ListWarehouses = () => {
       deleteCallback={handleDelete}
       texts={{
         create: t('accounting_module.warehouse.create'),
-        title: t('accounting_module.warehouse.list.title'),
+        title: t('accounting_module.warehouse.list'),
         edit: t('accounting_module.warehouse.edit'),
       }}
       creationComponent={<CreateWarehouse />}

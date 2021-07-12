@@ -13,17 +13,17 @@ const ListCategories = () => {
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.category.list.headers.reference'),
+      label: t('accounting_module.category.structure.reference'),
       align: 'left',
     },
     {
       id: 'name',
-      label: t('accounting_module.category.list.headers.name'),
+      label: t('accounting_module.category.structure.name'),
       align: 'left',
     },
     {
       id: 'parent',
-      label: t('accounting_module.category.list.headers.parent'),
+      label: t('accounting_module.category.structure.parent'),
       align: 'left',
     },
   ];
@@ -34,7 +34,6 @@ const ListCategories = () => {
         console.log('error', error);
       },
       (data) => {
-        console.log(data);
         if (isMounted.current) setRows(data);
       }
     );
@@ -78,7 +77,7 @@ const ListCategories = () => {
       deleteCallback={handleDelete}
       texts={{
         create: t('accounting_module.category.create'),
-        title: t('accounting_module.category.list.title'),
+        title: t('accounting_module.category.list'),
         edit: t('accounting_module.category.edit'),
       }}
       creationComponent={<CreateCategory />}

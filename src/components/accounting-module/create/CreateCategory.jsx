@@ -116,23 +116,21 @@ const CreateCategory = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="reference"
-                    label={t(
-                      'accounting_module.category.list.headers.reference'
-                    )}
+                    label={t('accounting_module.category.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
                     name="name"
-                    label={t('accounting_module.category.list.headers.name')}
+                    label={t('accounting_module.category.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <Select
                     name="parent"
-                    label="Parent"
+                    label={t('accounting_module.category.structure.parent')}
                     options={categoriesOptions.map(
                       (x) => `[${x.reference}] ${x.name}`
                     )}

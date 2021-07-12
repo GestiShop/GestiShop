@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import Select from '../../ui/forms/Select';
@@ -25,8 +26,10 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   const [unitTypesOptions, setUnitTypesOptions] = useState([]);
   const [warehousesOptions, setWarehousesOptions] = useState([]);
   const [categoriesOptions, setCategoriesOptions] = useState([]);
-
   const isMounted = useIsMounted();
+  const currency = useSelector(
+    (store) => store.configuration.currencyInfo.currency.label
+  );
 
   let INITIAL_STATE = {
     reference: '',
@@ -192,7 +195,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="basePrice"
-                    label={t('accounting_module.product.structure.base_price')}
+                    label={t('accounting_module.product.structure.base_price', {
+                      currency,
+                    })}
                   />
                 </Grid>
 

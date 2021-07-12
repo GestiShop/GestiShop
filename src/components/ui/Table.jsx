@@ -219,11 +219,8 @@ const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title={t('accounting_module.table.delete')}>
-          <IconButton
-            aria-label={t('accounting_module.table.delete')}
-            onClick={deleteCallback}
-          >
+        <Tooltip title={t('buttons.delete')}>
+          <IconButton aria-label={t('buttons.delete')} onClick={deleteCallback}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -440,9 +437,9 @@ const EnhancedTable = ({
                   if (editCallback) {
                     headerCells.push(
                       <TableCell key="actions" align="right" padding="normal">
-                        <Tooltip title={t('accounting_module.table.edit')}>
+                        <Tooltip title={t('buttons.edit')}>
                           <IconButton
-                            aria-label={t('accounting_module.table.edit')}
+                            aria-label={t('buttons.edit')}
                             onClick={(event) => handleEditClick(event, row._id)}
                           >
                             <EditIcon />

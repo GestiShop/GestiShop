@@ -110,9 +110,7 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="reference"
-                    label={t(
-                      'accounting_module.warehouse.list.headers.reference'
-                    )}
+                    label={t('accounting_module.warehouse.structure.reference')}
                   />
                 </Grid>
 
@@ -120,57 +118,92 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                   <TextField
                     name="description"
                     label={t(
-                      'accounting_module.warehouse.list.headers.description'
+                      'accounting_module.warehouse.structure.description'
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Typography>Address</Typography>
+                  <Typography>
+                    {t('accounting_module.warehouse.structure.address')}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={3}>
-                  <TextField name="address.roadType" label="Road type" />
+                  <TextField
+                    name="address.roadType"
+                    label={t('accounting_module.address.road_type')}
+                  />
                 </Grid>
 
                 <Grid item xs={9}>
-                  <TextField name="address.street" label="Street" />
+                  <TextField
+                    name="address.street"
+                    label={t('accounting_module.address.street')}
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField name="address.number" label="Number" />
+                  <TextField
+                    name="address.number"
+                    label={t('accounting_module.address.number')}
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField name="address.floor" label="Floor" />
+                  <TextField
+                    name="address.floor"
+                    label={t('accounting_module.address.floor')}
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField name="address.door" label="Door" />
+                  <TextField
+                    name="address.door"
+                    label={t('accounting_module.address.door')}
+                  />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField name="address.extra" label="Extra" />
+                  <TextField
+                    name="address.extra"
+                    label={t('accounting_module.address.extra')}
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField name="address.zipCode" label="Zip code" />
+                  <TextField
+                    name="address.zipCode"
+                    label={t('accounting_module.address.zip_code')}
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField name="address.city" label="City" />
+                  <TextField
+                    name="address.city"
+                    label={t('accounting_module.address.city')}
+                  />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField name="address.province" label="province" />
+                  <TextField
+                    name="address.province"
+                    label={t('accounting_module.address.province')}
+                  />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <TextField name="address.state" label="State" />
+                  <TextField
+                    name="address.state"
+                    label={t('accounting_module.address.state')}
+                  />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <TextField name="address.country" label="Country" />
+                  <TextField
+                    name="address.country"
+                    label={t('accounting_module.address.country')}
+                  />
                 </Grid>
 
                 <Grid item xs={12}>
