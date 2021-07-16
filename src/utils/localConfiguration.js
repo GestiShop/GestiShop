@@ -1,4 +1,4 @@
-const Store = window.require('electron-store');
+import Store from 'electron-store';
 
 const schema = {
   lang: {
