@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
-import { connect as connectDb } from '../db/db';
+import { connectDb } from '../db/db';
 import logo from '../../assets/gestishop_logo.png';
 
 const useStyles = makeStyles(() => ({

@@ -1,13 +1,11 @@
+import { Schema, Types, model } from 'mongoose';
 import { addressSchema } from './AddressModel';
-
-const mongoose = window.require('mongoose');
-const { Schema } = mongoose;
 
 const budgetSchema = new Schema({
   budgetNumber: { type: Number, unique: true, required: true, dropDups: true },
   date: Date,
   entityData: {
-    entity: { type: mongoose.Types.ObjectId },
+    entity: { type: Types.ObjectId },
     fiscalData: {
       name: String,
       nif: String,
@@ -16,7 +14,7 @@ const budgetSchema = new Schema({
   },
   products: [
     {
-      product: { type: mongoose.Types.ObjectId, ref: 'Product' },
+      product: { type: Types.ObjectId, ref: 'Product' },
       reference: String,
       name: String,
       basePrice: Number,
@@ -28,18 +26,10 @@ const budgetSchema = new Schema({
   ],
   notes: String,
   generalDiscount: Number,
-  associatedBill: { type: mongoose.Types.ObjectId },
+  associatedBill: { type: Types.ObjectId },
 });
 
-const ClientBudget = mongoose.model(
-  'ClientBudget',
-  budgetSchema,
-  'clientBudgets'
-);
-const ProviderBudget = mongoose.model(
-  'ProviderBudget',
-  budgetSchema,
-  'providerBudgets'
-);
+const ClientBudget = model('ClientBudget', budgetSchema, 'clientBudgets');
+const ProviderBudget = model('ProviderBudget', budgetSchema, 'providerBudgets');
 
 export { budgetSchema, ClientBudget, ProviderBudget };

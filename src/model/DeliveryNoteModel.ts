@@ -1,7 +1,5 @@
+import { Schema, Types, model } from 'mongoose';
 import { addressSchema } from './AddressModel';
-
-const mongoose = window.require('mongoose');
-const { Schema } = mongoose;
 
 const deliveryNoteSchema = new Schema({
   deliveryNoteNumber: {
@@ -12,7 +10,7 @@ const deliveryNoteSchema = new Schema({
   },
   date: Date,
   entityData: {
-    entity: { type: mongoose.Types.ObjectId },
+    entity: { type: Types.ObjectId },
     fiscalData: {
       name: String,
       nif: String,
@@ -21,7 +19,7 @@ const deliveryNoteSchema = new Schema({
   },
   products: [
     {
-      product: { type: mongoose.Types.ObjectId, ref: 'Product' },
+      product: { type: Types.ObjectId, ref: 'Product' },
       reference: String,
       name: String,
       basePrice: Number,
@@ -33,15 +31,15 @@ const deliveryNoteSchema = new Schema({
   ],
   notes: String,
   generalDiscount: Number,
-  associatedBill: { type: mongoose.Types.ObjectId },
+  associatedBill: { type: Types.ObjectId },
 });
 
-const ClientDeliveryNote = mongoose.model(
+const ClientDeliveryNote = model(
   'ClientDeliveryNote',
   deliveryNoteSchema,
   'clientDeliveryNotes'
 );
-const ProviderDeliveryNote = mongoose.model(
+const ProviderDeliveryNote = model(
   'ProviderDeliveryNote',
   deliveryNoteSchema,
   'providerDeliveryNotes'

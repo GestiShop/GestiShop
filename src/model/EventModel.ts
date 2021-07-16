@@ -1,5 +1,4 @@
-const mongoose = window.require('mongoose');
-const { Schema } = mongoose;
+import { Schema, model } from 'mongoose';
 
 const eventSchema = new Schema({
   start: { type: Date, required: true },
@@ -10,6 +9,6 @@ const eventSchema = new Schema({
   colorCode: String,
 });
 
-const Event = mongoose.model('Event', eventSchema, 'events');
+const Event = model('Event', eventSchema, 'events');
 
 export { eventSchema, Event };

@@ -1,6 +1,4 @@
 /* eslint-disable import/first */
-window.require('dotenv').config();
-
 import React from 'react';
 import { render } from 'react-dom';
 import { createTheme, MuiThemeProvider } from '@material-ui/core';

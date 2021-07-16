@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-const { Schema } = window.require('mongoose');
+import { Schema } from 'mongoose';
 
 const addressSchema = new Schema({
   roadType: { type: String, required: true },
