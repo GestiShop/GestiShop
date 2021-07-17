@@ -1,14 +1,25 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
-  "version": "2.3.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "gestishop",
+  "productName": "GestiShop",
+  "version": "1.0.0",
+  "description": "GestiShop, the open-source multi-platform business management tool.",
   "main": "./main.prod.js",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "GestiShop Team (Iscle & Ferran)",
+    "url": "https://github.com/GestiShop/GestiShop"
   },
+  "contributors": [
+    {
+      "name": "Ferran Montoliu",
+      "email": "montoliuferran@gmail.com",
+      "url": "https://github.com/FerranMontoliu"
+    },
+    {
+      "name": "Iscle Gil",
+      "email": "albertiscle9@gmail.com",
+      "url": "https://github.com/Iscle"
+    }
+  ],
   "scripts": {
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild"
