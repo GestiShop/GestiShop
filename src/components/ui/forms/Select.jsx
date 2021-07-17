@@ -32,10 +32,10 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
       <MenuItem key={-1} value="">
         -
       </MenuItem>
-      {Object.keys(options).map((item, pos) => {
+      {options.map((item, pos) => {
         return (
-          <MenuItem key={pos} value={item}>
-            {options[item]}
+          <MenuItem key={pos} value={item.value}>
+            {item.displayText}
           </MenuItem>
         );
       })}

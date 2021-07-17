@@ -32,22 +32,26 @@ const CreateCategory = ({ closeCallback, initialState }) => {
     INITIAL_STATE = {
       reference: initialState.reference,
       name: initialState.name,
-      parent: initialState.parent || '',
+      parent:
+        initialState.parent && initialState.parent.reference
+          ? initialState.parent.reference
+          : '',
     };
   }
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
     name: Yup.string().required(t('form.errors.required')),
-    parent: Yup.number(),
+    parent: Yup.string(),
   });
 
   const handleSubmit = (data) => {
+    const parentCategory = categoriesOptions.find(
+      (x) => x.reference == data.parent
+    );
     const dataToSubmit = {
       ...data,
-      parent: categoriesOptions[data.parent]
-        ? categoriesOptions[data.parent]._id
-        : null,
+      parent: parentCategory ? parentCategory._id : null,
     };
 
     if (!initialState) {
@@ -131,9 +135,12 @@ const CreateCategory = ({ closeCallback, initialState }) => {
                   <Select
                     name="parent"
                     label={t('accounting_module.category.structure.parent')}
-                    options={categoriesOptions.map(
-                      (x) => `[${x.reference}] ${x.name}`
-                    )}
+                    options={categoriesOptions.map((x) => {
+                      return {
+                        displayText: `[${x.reference}] ${x.name}`,
+                        value: x.reference,
+                      };
+                    })}
                   />
                 </Grid>
 
