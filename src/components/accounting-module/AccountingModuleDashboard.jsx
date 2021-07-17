@@ -19,7 +19,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import EventIcon from '@material-ui/icons/Event';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import MoneyOffIcon from '@material-ui/icons/MoneyOff';
+import TimelineIcon from '@material-ui/icons/Timeline';
 import StoreIcon from '@material-ui/icons/Store';
 import CategoryIcon from '@material-ui/icons/Category';
 import { useTranslation } from 'react-i18next';
@@ -125,7 +125,7 @@ const AccountingModuleDashboard = () => {
       },
       {
         text: t('accounting_module.menu.unit_types'),
-        icon: <MoneyOffIcon />,
+        icon: <TimelineIcon />,
         linkTo: `${url}/unit_types`,
       },
       {
