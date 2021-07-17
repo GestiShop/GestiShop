@@ -23,7 +23,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
     start: moment(initialState.start).format('YYYY-MM-DDTHH:MM:SS'),
     end: moment(initialState.end).format('YYYY-MM-DDTHH:MM:SS'),
     description: initialState.description || '',
-    colorCode: initialState.color || '',
+    colorCode: initialState.colorCode || 'lightseagreen',
     allDay: initialState.allDay || false,
   };
 
@@ -31,7 +31,6 @@ const CreateEvent = ({ closeCallback, initialState }) => {
     updateEvent(
       {
         ...data,
-        colorCode: EVENT_COLOR_LIST[data.colorCode],
         _id: initialState._id,
       },
       (error) => {
