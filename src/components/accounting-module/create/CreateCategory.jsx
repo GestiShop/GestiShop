@@ -46,9 +46,7 @@ const CreateCategory = ({ closeCallback, initialState }) => {
   });
 
   const handleSubmit = (data) => {
-    const parentCategory = categoriesOptions.find(
-      (x) => x.reference == data.parent
-    );
+    const parentCategory = categoriesOptions.find((x) => x._id == data.parent);
     const dataToSubmit = {
       ...data,
       parent: parentCategory ? parentCategory._id : null,
@@ -138,7 +136,7 @@ const CreateCategory = ({ closeCallback, initialState }) => {
                     options={categoriesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.name}`,
-                        value: x.reference,
+                        value: x._id,
                       };
                     })}
                   />

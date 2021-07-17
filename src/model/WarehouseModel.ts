@@ -3,7 +3,7 @@ import { addressSchema } from './AddressModel';
 
 const warehouseSchema = new Schema({
   reference: { type: String, unique: true, required: true, dropDups: true },
-  description: { type: Number, required: true },
+  description: { type: String, required: true },
   address: { type: addressSchema, required: true },
 });
 

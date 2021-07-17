@@ -89,6 +89,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   });
 
   const handleSubmit = (data) => {
+    // TODO: FIX DATA
     if (!initialState) {
       addProduct(
         data,
@@ -123,7 +124,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) setTaxesOptions(options.map((x) => x.reference));
+        if (isMounted.current) setTaxesOptions(options);
       }
     );
 
@@ -133,8 +134,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current)
-          setUnitTypesOptions(options.map((x) => x.reference));
+        if (isMounted.current) setUnitTypesOptions(options);
       }
     );
 
@@ -144,8 +144,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current)
-          setWarehousesOptions(options.map((x) => x.reference));
+        if (isMounted.current) setWarehousesOptions(options);
       }
     );
 
@@ -155,8 +154,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current)
-          setCategoriesOptions(options.map((x) => x.reference));
+        if (isMounted.current) setCategoriesOptions(options);
       }
     );
   };
@@ -216,7 +214,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     label={t(
                       'accounting_module.product.structure.tax_percentage'
                     )}
-                    options={taxesOptions}
+                    options={taxesOptions.map((x) => {
+                      return {
+                        displayText: `[${x.reference}] ${x.percentage}%`,
+                        value: x._id,
+                      };
+                    })}
                   />
                 </Grid>
 
@@ -231,7 +234,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Select
                     name="unitType"
                     label={t('accounting_module.product.structure.unit_type')}
-                    options={unitTypesOptions}
+                    options={unitTypesOptions.map((x) => {
+                      return {
+                        displayText: `[${x.reference}] ${x.unit}`,
+                        value: x._id,
+                      };
+                    })}
                   />
                 </Grid>
 
@@ -239,7 +247,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Select
                     name="warehouse"
                     label={t('accounting_module.product.structure.warehouse')}
-                    options={warehousesOptions}
+                    options={warehousesOptions.map((x) => {
+                      return {
+                        displayText: `[${x.reference}] ${x.description}`,
+                        value: x._id,
+                      };
+                    })}
                   />
                 </Grid>
 
@@ -247,7 +260,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <MultiSelect
                     name="categories"
                     label={t('accounting_module.product.structure.categories')}
-                    options={categoriesOptions}
+                    options={categoriesOptions.map((x) => {
+                      return {
+                        displayText: `[${x.reference}] ${x.name}`,
+                        value: x._id,
+                      };
+                    })}
                   />
                 </Grid>
 

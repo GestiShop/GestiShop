@@ -57,9 +57,9 @@ const MultiSelectWrapper = ({ name, label, options, ...otherProps }) => {
         renderValue={(selected) => selected.join(', ')}
       >
         {options.map((item, pos) => (
-          <MenuItem key={pos} value={item}>
-            <Checkbox checked={value.includes(item)} />
-            <ListItemText primary={item} />
+          <MenuItem key={pos} value={item.value}>
+            <Checkbox checked={value.includes(item.value)} />
+            <ListItemText primary={item.displayText} />
           </MenuItem>
         ))}
       </Select>
