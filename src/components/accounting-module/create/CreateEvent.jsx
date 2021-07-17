@@ -12,7 +12,7 @@ import { deleteEvent, updateEvent } from '../../../db/EventHelper';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import Switch from '../../ui/forms/Switch';
 import Button from '../../ui/forms/Button';
-import Select from '../../ui/forms/Select';
+import ColoredSelect from '../../ui/forms/ColoredSelect';
 import EVENT_COLOR_LIST from '../../../../assets/event_colors';
 
 const CreateEvent = ({ closeCallback, initialState }) => {
@@ -114,7 +114,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Select
+                  <ColoredSelect
                     name="colorCode"
                     label={t('accounting_module.event.structure.color')}
                     options={EVENT_COLOR_LIST}

@@ -138,7 +138,7 @@
     },
     "event": {
       "new": "Nuevo evento",
-      "event": "Editar evento",
+      "edit": "Editar evento",
       "structure": {
         "title": "Título",
         "start": "Data de inicio",
@@ -146,6 +146,17 @@
         "description": "Descripción",
         "color": "Color",
         "all_day": "El evento dura todo el día."
+      },
+      "colors": {
+        "lightseagreen": "Verde mar",
+        "lightblue": "Azúl",
+        "lightcoral": "Coral",
+        "lightgoldenrodyellow": "Dorado",
+        "lightcyan": "Cian",
+        "lightpink": "Rosa",
+        "lightgreen": "Verde",
+        "lightsalmon": "Salmón",
+        "lightgray": "Gris"
       }
     },
     "address": {

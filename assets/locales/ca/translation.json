@@ -138,7 +138,7 @@
     },
     "event": {
       "new": "Nou esdeveniment",
-      "event": "Editar esdeveniment",
+      "edit": "Editar esdeveniment",
       "structure": {
         "title": "Títol",
         "start": "Data d'inici",
@@ -146,6 +146,17 @@
         "description": "Descripció",
         "color": "Color",
         "all_day": "L’esdeveniment dura tot el dia."
+      },
+      "colors": {
+        "lightseagreen": "Verd mar",
+        "lightblue": "Blau",
+        "lightcoral": "Corall",
+        "lightgoldenrodyellow": "Daurat",
+        "lightcyan": "Cian",
+        "lightpink": "Rosa",
+        "lightgreen": "Verd",
+        "lightsalmon": "Salmó",
+        "lightgray": "Gris"
       }
     },
     "address": {
