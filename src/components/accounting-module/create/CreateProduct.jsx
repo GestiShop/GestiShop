@@ -60,21 +60,17 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       buyingInfo: {
         basePrice: initialState.buyingInfo.basePrice,
         discountPercentage: initialState.buyingInfo.discountPercentage,
-        taxPercentage: JSON.stringify(
-          initialState.buyingInfo.taxPercentage._id
-        ),
+        taxPercentage: initialState.buyingInfo.taxPercentage.id,
       },
       sellingInfo: {
         basePrice: initialState.sellingInfo.basePrice,
         discountPercentage: initialState.sellingInfo.discountPercentage,
-        taxPercentage: JSON.stringify(
-          initialState.sellingInfo.taxPercentage._id
-        ),
+        taxPercentage: initialState.sellingInfo.taxPercentage.id,
       },
       stock: initialState.stock,
-      unitType: JSON.stringify(initialState.unitType._id),
-      warehouse: JSON.stringify(initialState.warehouse._id),
-      categories: initialState.categories.map((x) => JSON.stringify(x._id)),
+      unitType: initialState.unitType.id,
+      warehouse: initialState.warehouse.id,
+      categories: Array.from(initialState.categories.map((x) => x.id)),
       visible: initialState.visible,
       stockAlert: initialState.stockAlert,
       minStock: initialState.minStock,
@@ -234,7 +230,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={unitTypesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.unit}`,
-                        value: JSON.stringify(x._id),
+                        value: x.id,
                       };
                     })}
                   />
@@ -247,7 +243,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={warehousesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.description}`,
-                        value: JSON.stringify(x._id),
+                        value: x.id,
                       };
                     })}
                   />
@@ -260,7 +256,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={categoriesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.name}`,
-                        value: JSON.stringify(x._id),
+                        value: x.id,
                       };
                     })}
                   />
@@ -322,7 +318,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={taxesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.percentage}%`,
-                        value: JSON.stringify(x._id),
+                        value: x.id,
                       };
                     })}
                   />
@@ -359,7 +355,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={taxesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.percentage}%`,
-                        value: JSON.stringify(x._id),
+                        value: x.id,
                       };
                     })}
                   />

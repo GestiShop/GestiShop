@@ -52,6 +52,8 @@ const MultiSelectWrapper = ({ name, label, options, ...otherProps }) => {
     configMultiSelect.helperText = meta.error;
   }
 
+  console.log(value);
+
   return (
     <FormControl variant="outlined" fullWidth>
       <InputLabel id={labelId}>{label}</InputLabel>

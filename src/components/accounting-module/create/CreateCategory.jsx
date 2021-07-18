@@ -33,8 +33,8 @@ const CreateCategory = ({ closeCallback, initialState }) => {
       reference: initialState.reference,
       name: initialState.name,
       parent:
-        initialState.parent && initialState.parent._id
-          ? JSON.stringify(initialState.parent._id)
+        initialState.parent && initialState.parent.id
+          ? initialState.parent.id
           : '',
     };
   }
@@ -136,7 +136,7 @@ const CreateCategory = ({ closeCallback, initialState }) => {
                     options={categoriesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.name}`,
-                        value: JSON.stringify(x._id),
+                        value: x.id,
                       };
                     })}
                   />
