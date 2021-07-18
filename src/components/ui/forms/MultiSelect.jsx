@@ -25,10 +25,16 @@ const MenuProps = {
   getContentAnchorEl: () => null,
 };
 
-const MultiSelectWrapper = ({ name, label, options, ...otherProps }) => {
+const MultiSelectWrapper = ({
+  name,
+  label,
+  options,
+  initialValue,
+  ...otherProps
+}) => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(initialValue);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -51,8 +57,6 @@ const MultiSelectWrapper = ({ name, label, options, ...otherProps }) => {
     configMultiSelect.error = true;
     configMultiSelect.helperText = meta.error;
   }
-
-  console.log(value);
 
   return (
     <FormControl variant="outlined" fullWidth>

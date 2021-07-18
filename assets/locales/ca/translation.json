@@ -79,6 +79,11 @@
       "create": "Afegir un producte",
       "edit": "Editar producte",
       "list": "Llistat de productes",
+      "creation": {
+        "basic_information": "Informació bàsica",
+        "buying_information": "Informació de compra",
+        "selling_information": "Informació de venta"
+      },
       "state": {
         "available": "Disponible",
         "hidden": "Amagat"

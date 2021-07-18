@@ -79,6 +79,11 @@
       "create": "Añadir un producto",
       "edit": "Editar producto",
       "list": "Listado de productos",
+      "creation": {
+        "basic_information": "Información básica",
+        "buying_information": "Información de compra",
+        "selling_information": "Información de venta"
+      },
       "state": {
         "available": "Disponible",
         "hidden": "Escondido"

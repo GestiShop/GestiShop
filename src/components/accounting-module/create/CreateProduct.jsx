@@ -21,7 +21,9 @@ import { fetchCategories } from '../../../db/CategoryHelper';
 
 const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
-  const [stockAlert, setStockAlert] = useState(false);
+  const [stockAlert, setStockAlert] = useState(
+    initialState ? initialState.stockAlert : false
+  );
   const [taxesOptions, setTaxesOptions] = useState([]);
   const [unitTypesOptions, setUnitTypesOptions] = useState([]);
   const [warehousesOptions, setWarehousesOptions] = useState([]);
@@ -200,7 +202,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography>Basic information</Typography>
+                  <Typography>
+                    {t('accounting_module.product.creation.basic_information')}
+                  </Typography>
                 </Grid>
                 <Grid item xs={3}>
                   <TextField
@@ -253,6 +257,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <MultiSelect
                     name="categories"
                     label={t('accounting_module.product.structure.categories')}
+                    initialValue={INITIAL_STATE.categories}
                     options={categoriesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.name}`,
@@ -266,7 +271,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Switch
                     name="visible"
                     label={t('accounting_module.product.structure.visible')}
-                    initialState
+                    initialState={INITIAL_STATE.visible}
                   />
                 </Grid>
 
@@ -274,7 +279,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Switch
                     name="stockAlert"
                     label={t('accounting_module.product.structure.stock_alert')}
-                    initialState={false}
+                    initialState={INITIAL_STATE.stockAlert}
                     setValue={(isChecked) => setStockAlert(isChecked)}
                   />
                 </Grid>
@@ -288,7 +293,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Typography>Buying information</Typography>
+                  <Typography>
+                    {t('accounting_module.product.creation.buying_information')}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
@@ -325,7 +332,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Typography>Selling information</Typography>
+                  <Typography>
+                    {t(
+                      'accounting_module.product.creation.selling_information'
+                    )}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
