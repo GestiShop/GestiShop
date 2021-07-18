@@ -81,12 +81,9 @@
       "list": "Product list",
       "creation": {
         "basic_information": "Basic information",
+        "stock_information": "Stock information",
         "buying_information": "Buying information",
         "selling_information": "Selling information"
-      },
-      "state": {
-        "available": "Available",
-        "hidden": "Hidden"
       },
       "structure": {
         "reference": "Reference",
@@ -98,7 +95,6 @@
         "unit_type": "Unit type",
         "warehouse": "Warehouse",
         "categories": "Categories",
-        "visible": "Visibility",
         "stock_alert": "Alert when stock is too low.",
         "min_stock": "Minimum stock"
       }

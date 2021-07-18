@@ -29,6 +29,7 @@ const ListProducts = () => {
       id: 'basePrice',
       label: t('accounting_module.product.structure.base_price', { currency }),
       align: 'right',
+      parent: 'sellingInfo',
     },
     {
       id: 'stock',
@@ -38,11 +39,6 @@ const ListProducts = () => {
     {
       id: 'minStock',
       label: t('accounting_module.product.structure.min_stock'),
-      align: 'right',
-    },
-    {
-      id: 'visible',
-      label: t('accounting_module.product.structure.visible'),
       align: 'right',
     },
   ];

@@ -50,7 +50,6 @@ const CreateProduct = ({ closeCallback, initialState }) => {
     unitType: '',
     warehouse: '',
     categories: [],
-    visible: true,
     stockAlert: false,
     minStock: 0.0,
   };
@@ -73,7 +72,6 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       unitType: initialState.unitType.id,
       warehouse: initialState.warehouse.id,
       categories: Array.from(initialState.categories.map((x) => x.id)),
-      visible: initialState.visible,
       stockAlert: initialState.stockAlert,
       minStock: initialState.minStock,
     };
@@ -106,7 +104,6 @@ const CreateProduct = ({ closeCallback, initialState }) => {
     unitType: Yup.string().required(t('form.errors.required')),
     warehouse: Yup.string().required(t('form.errors.required')),
     categories: Yup.array(),
-    visible: Yup.bool(),
     stockAlert: Yup.bool(),
     minStock: Yup.number()
       .typeError(t('form.errors.invalid_number'))
@@ -206,6 +203,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     {t('accounting_module.product.creation.basic_information')}
                   </Typography>
                 </Grid>
+
                 <Grid item xs={3}>
                   <TextField
                     name="reference"
@@ -220,14 +218,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   />
                 </Grid>
 
-                <Grid item xs={4}>
-                  <TextField
-                    name="stock"
-                    label={t('accounting_module.product.structure.stock')}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                   <Select
                     name="unitType"
                     label={t('accounting_module.product.structure.unit_type')}
@@ -240,7 +231,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   />
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                   <Select
                     name="warehouse"
                     label={t('accounting_module.product.structure.warehouse')}
@@ -267,28 +258,33 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   />
                 </Grid>
 
-                <Grid item xs={4}>
-                  <Switch
-                    name="visible"
-                    label={t('accounting_module.product.structure.visible')}
-                    initialState={INITIAL_STATE.visible}
+                <Grid item xs={12}>
+                  <Typography>
+                    {t('accounting_module.product.creation.stock_information')}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={3}>
+                  <TextField
+                    name="stock"
+                    label={t('accounting_module.product.structure.stock')}
                   />
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={3}>
+                  <TextField
+                    disabled={!stockAlert}
+                    name="minStock"
+                    label={t('accounting_module.product.structure.min_stock')}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
                   <Switch
                     name="stockAlert"
                     label={t('accounting_module.product.structure.stock_alert')}
                     initialState={INITIAL_STATE.stockAlert}
                     setValue={(isChecked) => setStockAlert(isChecked)}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    disabled={!stockAlert}
-                    name="minStock"
-                    label={t('accounting_module.product.structure.min_stock')}
                   />
                 </Grid>
 

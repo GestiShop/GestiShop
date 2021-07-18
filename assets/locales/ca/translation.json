@@ -81,12 +81,9 @@
       "list": "Llistat de productes",
       "creation": {
         "basic_information": "Informació bàsica",
+        "stock_information": "Informació de stock",
         "buying_information": "Informació de compra",
         "selling_information": "Informació de venta"
-      },
-      "state": {
-        "available": "Disponible",
-        "hidden": "Amagat"
       },
       "structure": {
         "reference": "Referència",
@@ -98,7 +95,6 @@
         "unit_type": "Tipus d'unitat",
         "warehouse": "Magatzem",
         "categories": "Categories",
-        "visible": "Visibilitat",
         "stock_alert": "Alertar quan les existències siguin massa baixes.",
         "min_stock": "Stock mínim"
       }

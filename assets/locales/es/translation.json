@@ -81,12 +81,9 @@
       "list": "Listado de productos",
       "creation": {
         "basic_information": "Información básica",
+        "stock_information": "Información de stock",
         "buying_information": "Información de compra",
         "selling_information": "Información de venta"
-      },
-      "state": {
-        "available": "Disponible",
-        "hidden": "Escondido"
       },
       "structure": {
         "reference": "Referencia",
@@ -98,7 +95,6 @@
         "unit_type": "Tipo de unidad",
         "warehouse": "Almacén",
         "categories": "Categorías",
-        "visible": "Visibilidad",
         "stock_alert": "Alertar cuando las existencias sean demasiado bajas.",
         "min_stock": "Stock mínimo"
       }
