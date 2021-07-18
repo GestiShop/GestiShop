@@ -6,38 +6,9 @@ import { deleteProducts, fetchProducts } from '../../../db/ProductHelper';
 import CreateProduct from '../create/CreateProduct';
 import useIsMounted from '../../../utils/useIsMounted';
 
-const INIT_ROWS = [
-  {
-    _id: 'ID0',
-    reference: 'PROD000',
-    name: 'Product 000',
-    basePrice: 26.98,
-    stock: 10,
-    unitType: 'kg',
-    discountPercentage: 0.0,
-    taxPercentage: 21.0,
-    minStock: 12,
-    stockAlert: true,
-    visible: true,
-  },
-  {
-    _id: 'ID1',
-    reference: 'PROD001',
-    name: 'Product 001',
-    basePrice: 22.98,
-    stock: 18,
-    unitType: 'units',
-    discountPercentage: 0.0,
-    taxPercentage: 21.0,
-    minStock: 50,
-    stockAlert: false,
-    visible: true,
-  },
-];
-
 const ListProducts = () => {
   const { t } = useTranslation();
-  const [rows, setRows] = useState(INIT_ROWS);
+  const [rows, setRows] = useState([]);
   const isMounted = useIsMounted();
   const currency = useSelector(
     (store) => store.configuration.currencyInfo.currency.label
@@ -65,9 +36,14 @@ const ListProducts = () => {
       align: 'right',
     },
     {
+      id: 'minStock',
+      label: t('accounting_module.product.structure.min_stock'),
+      align: 'right',
+    },
+    {
       id: 'visible',
       label: t('accounting_module.product.structure.visible'),
-      align: 'left',
+      align: 'right',
     },
   ];
 
@@ -77,7 +53,7 @@ const ListProducts = () => {
         console.log('error', error);
       },
       (data) => {
-        // if (isMounted.current) setRows(data);
+        if (isMounted.current) setRows(data);
       }
     );
   };

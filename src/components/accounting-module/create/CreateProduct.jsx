@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import TextField from '../../ui/forms/TextField';
@@ -34,9 +34,16 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     reference: '',
     name: '',
-    basePrice: 0.0,
-    discountPercentage: 0.0,
-    taxPercentage: '',
+    buyingInfo: {
+      basePrice: 0.0,
+      discountPercentage: 0.0,
+      taxPercentage: '',
+    },
+    sellingInfo: {
+      basePrice: 0.0,
+      discountPercentage: 0.0,
+      taxPercentage: '',
+    },
     stock: 0.0,
     unitType: '',
     warehouse: '',
@@ -50,13 +57,24 @@ const CreateProduct = ({ closeCallback, initialState }) => {
     INITIAL_STATE = {
       reference: initialState.reference,
       name: initialState.name,
-      basePrice: initialState.basePrice,
-      discountPercentage: initialState.discountPercentage,
-      taxPercentage: initialState.taxPercentage,
+      buyingInfo: {
+        basePrice: initialState.buyingInfo.basePrice,
+        discountPercentage: initialState.buyingInfo.discountPercentage,
+        taxPercentage: JSON.stringify(
+          initialState.buyingInfo.taxPercentage._id
+        ),
+      },
+      sellingInfo: {
+        basePrice: initialState.sellingInfo.basePrice,
+        discountPercentage: initialState.sellingInfo.discountPercentage,
+        taxPercentage: JSON.stringify(
+          initialState.sellingInfo.taxPercentage._id
+        ),
+      },
       stock: initialState.stock,
-      unitType: initialState.unitType,
-      warehouse: initialState.warehouse,
-      categories: initialState.categories,
+      unitType: JSON.stringify(initialState.unitType._id),
+      warehouse: JSON.stringify(initialState.warehouse._id),
+      categories: initialState.categories.map((x) => JSON.stringify(x._id)),
       visible: initialState.visible,
       stockAlert: initialState.stockAlert,
       minStock: initialState.minStock,
@@ -66,15 +84,28 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
     name: Yup.string().required(t('form.errors.required')),
-    basePrice: Yup.number()
-      .typeError(t('form.errors.invalid_number'))
-      .required(t('form.errors.required')),
-    discountPercentage: Yup.number()
-      .typeError(t('form.errors.invalid_number'))
-      .required(t('form.errors.required')),
-    taxPercentage: Yup.number()
-      .typeError(t('form.errors.invalid_number'))
-      .required(t('form.errors.required')),
+    buyingInfo: Yup.object().shape({
+      basePrice: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
+      discountPercentage: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
+      taxPercentage: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
+    }),
+    sellingInfo: Yup.object().shape({
+      basePrice: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
+      discountPercentage: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
+      taxPercentage: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
+    }),
     stock: Yup.number()
       .typeError(t('form.errors.invalid_number'))
       .required(t('form.errors.required')),
@@ -176,6 +207,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
           >
             <Form>
               <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography>Basic information</Typography>
+                </Grid>
                 <Grid item xs={3}>
                   <TextField
                     name="reference"
@@ -187,39 +221,6 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <TextField
                     name="name"
                     label={t('accounting_module.product.structure.name')}
-                  />
-                </Grid>
-
-                <Grid item xs={6}>
-                  <TextField
-                    name="basePrice"
-                    label={t('accounting_module.product.structure.base_price', {
-                      currency,
-                    })}
-                  />
-                </Grid>
-
-                <Grid item xs={3}>
-                  <TextField
-                    name="discountPercentage"
-                    label={t(
-                      'accounting_module.product.structure.discount_percentage'
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={3}>
-                  <Select
-                    name="taxPercentage"
-                    label={t(
-                      'accounting_module.product.structure.tax_percentage'
-                    )}
-                    options={taxesOptions.map((x) => {
-                      return {
-                        displayText: `[${x.reference}] ${x.percentage}%`,
-                        value: x._id,
-                      };
-                    })}
                   />
                 </Grid>
 
@@ -237,7 +238,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={unitTypesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.unit}`,
-                        value: x._id,
+                        value: JSON.stringify(x._id),
                       };
                     })}
                   />
@@ -250,7 +251,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={warehousesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.description}`,
-                        value: x._id,
+                        value: JSON.stringify(x._id),
                       };
                     })}
                   />
@@ -263,7 +264,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     options={categoriesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.name}`,
-                        value: x._id,
+                        value: JSON.stringify(x._id),
                       };
                     })}
                   />
@@ -291,6 +292,80 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     disabled={!stockAlert}
                     name="minStock"
                     label={t('accounting_module.product.structure.min_stock')}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography>Buying information</Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <TextField
+                    name="buyingInfo.basePrice"
+                    label={t('accounting_module.product.structure.base_price', {
+                      currency,
+                    })}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <TextField
+                    name="buyingInfo.discountPercentage"
+                    label={t(
+                      'accounting_module.product.structure.discount_percentage'
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <Select
+                    name="buyingInfo.taxPercentage"
+                    label={t(
+                      'accounting_module.product.structure.tax_percentage'
+                    )}
+                    options={taxesOptions.map((x) => {
+                      return {
+                        displayText: `[${x.reference}] ${x.percentage}%`,
+                        value: JSON.stringify(x._id),
+                      };
+                    })}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography>Selling information</Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <TextField
+                    name="sellingInfo.basePrice"
+                    label={t('accounting_module.product.structure.base_price', {
+                      currency,
+                    })}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <TextField
+                    name="sellingInfo.discountPercentage"
+                    label={t(
+                      'accounting_module.product.structure.discount_percentage'
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <Select
+                    name="sellingInfo.taxPercentage"
+                    label={t(
+                      'accounting_module.product.structure.tax_percentage'
+                    )}
+                    options={taxesOptions.map((x) => {
+                      return {
+                        displayText: `[${x.reference}] ${x.percentage}%`,
+                        value: JSON.stringify(x._id),
+                      };
+                    })}
                   />
                 </Grid>
 

@@ -1,3 +1,7 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
@@ -54,7 +58,12 @@ const MultiSelectWrapper = ({ name, label, options, ...otherProps }) => {
       <Select
         {...configMultiSelect}
         value={value}
-        renderValue={(selected) => selected.join(', ')}
+        renderValue={(selected) =>
+          options
+            .filter((x) => selected.includes(x.value))
+            .map((x) => x.displayText)
+            .join(', ')
+        }
       >
         {options.map((item, pos) => (
           <MenuItem key={pos} value={item.value}>
