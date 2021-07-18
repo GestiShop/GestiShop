@@ -91,9 +91,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       discountPercentage: Yup.number()
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
-      taxPercentage: Yup.number()
-        .typeError(t('form.errors.invalid_number'))
-        .required(t('form.errors.required')),
+      taxPercentage: Yup.string().required(t('form.errors.required')),
     }),
     sellingInfo: Yup.object().shape({
       basePrice: Yup.number()
@@ -102,9 +100,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       discountPercentage: Yup.number()
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
-      taxPercentage: Yup.number()
-        .typeError(t('form.errors.invalid_number'))
-        .required(t('form.errors.required')),
+      taxPercentage: Yup.string().required(t('form.errors.required')),
     }),
     stock: Yup.number()
       .typeError(t('form.errors.invalid_number'))
@@ -370,7 +366,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <SubmitButton>{t('buttons.create')}</SubmitButton>
+                  <SubmitButton>
+                    {initialState ? t('buttons.save') : t('buttons.create')}
+                  </SubmitButton>
                 </Grid>
               </Grid>
             </Form>
