@@ -89,6 +89,7 @@
         "reference": "Referència",
         "name": "Nom",
         "base_price": "Preu base ({{currency}})",
+        "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descompte (%)",
         "tax_percentage": "Impost (%)",
         "stock": "Stock",

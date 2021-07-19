@@ -40,11 +40,13 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       basePrice: 0.0,
       discountPercentage: 0.0,
       taxPercentage: '',
+      pvp: 0.0,
     },
     sellingInfo: {
       basePrice: 0.0,
       discountPercentage: 0.0,
       taxPercentage: '',
+      pvp: 0.0,
     },
     stock: 0.0,
     unitType: '',
@@ -62,11 +64,19 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         basePrice: initialState.buyingInfo.basePrice,
         discountPercentage: initialState.buyingInfo.discountPercentage,
         taxPercentage: initialState.buyingInfo.taxPercentage.id,
+        pvp:
+          initialState.buyingInfo.basePrice *
+          (1 - initialState.buyingInfo.discountPercentage / 100) *
+          (1 + initialState.buyingInfo.taxPercentage.percentage / 100),
       },
       sellingInfo: {
         basePrice: initialState.sellingInfo.basePrice,
         discountPercentage: initialState.sellingInfo.discountPercentage,
         taxPercentage: initialState.sellingInfo.taxPercentage.id,
+        pvp:
+          initialState.sellingInfo.basePrice *
+          (1 - initialState.sellingInfo.discountPercentage / 100) *
+          (1 + initialState.sellingInfo.taxPercentage.percentage / 100),
       },
       stock: initialState.stock,
       unitType: initialState.unitType.id,
@@ -88,6 +98,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
       taxPercentage: Yup.string().required(t('form.errors.required')),
+      pvp: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
     }),
     sellingInfo: Yup.object().shape({
       basePrice: Yup.number()
@@ -97,6 +110,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
       taxPercentage: Yup.string().required(t('form.errors.required')),
+      pvp: Yup.number()
+        .typeError(t('form.errors.invalid_number'))
+        .required(t('form.errors.required')),
     }),
     stock: Yup.number()
       .typeError(t('form.errors.invalid_number'))
@@ -111,7 +127,6 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   });
 
   const handleSubmit = (data) => {
-    // TODO: FIX DATA
     if (!initialState) {
       addProduct(
         data,
@@ -194,7 +209,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
               ...INITIAL_STATE,
             }}
             validationSchema={FORM_VALIDATION}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values) => {
+              delete values.sellingInfo.pvp;
+              delete values.buyingInfo.pvp;
+              handleSubmit(values);
+            }}
           >
             <Form>
               <Grid container spacing={2}>
@@ -268,6 +287,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <TextField
                     name="stock"
                     label={t('accounting_module.product.structure.stock')}
+                    type="number"
                   />
                 </Grid>
 
@@ -276,6 +296,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     disabled={!stockAlert}
                     name="minStock"
                     label={t('accounting_module.product.structure.min_stock')}
+                    type="number"
                   />
                 </Grid>
 
@@ -294,12 +315,13 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={3}>
                   <TextField
                     name="buyingInfo.basePrice"
                     label={t('accounting_module.product.structure.base_price', {
                       currency,
                     })}
+                    type="number"
                   />
                 </Grid>
 
@@ -309,6 +331,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     label={t(
                       'accounting_module.product.structure.discount_percentage'
                     )}
+                    type="number"
                   />
                 </Grid>
 
@@ -327,6 +350,16 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   />
                 </Grid>
 
+                <Grid item xs={3}>
+                  <TextField
+                    name="buyingInfo.pvp"
+                    label={t('accounting_module.product.structure.pvp', {
+                      currency,
+                    })}
+                    type="number"
+                  />
+                </Grid>
+
                 <Grid item xs={12}>
                   <Typography>
                     {t(
@@ -335,12 +368,13 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={3}>
                   <TextField
                     name="sellingInfo.basePrice"
                     label={t('accounting_module.product.structure.base_price', {
                       currency,
                     })}
+                    type="number"
                   />
                 </Grid>
 
@@ -350,6 +384,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     label={t(
                       'accounting_module.product.structure.discount_percentage'
                     )}
+                    type="number"
                   />
                 </Grid>
 
@@ -365,6 +400,16 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <TextField
+                    name="sellingInfo.pvp"
+                    label={t('accounting_module.product.structure.pvp', {
+                      currency,
+                    })}
+                    type="number"
                   />
                 </Grid>
 

@@ -83,6 +83,7 @@ const CreateTax = ({ closeCallback, initialState }) => {
                   <TextField
                     name="percentage"
                     label={t('accounting_module.tax.structure.percentage')}
+                    type="number"
                   />
                 </Grid>
 
