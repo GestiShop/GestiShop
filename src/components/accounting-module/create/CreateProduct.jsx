@@ -29,8 +29,37 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   const [warehousesOptions, setWarehousesOptions] = useState([]);
   const [categoriesOptions, setCategoriesOptions] = useState([]);
   const isMounted = useIsMounted();
+  const [buyingInfo, setBuyingInfo] = useState(
+    initialState
+      ? {
+          basePrice: initialState.buyingInfo.basePrice,
+          discountPercentage: initialState.buyingInfo.discountPercentage,
+          taxPercentage: initialState.buyingInfo.taxPercentage.percentage,
+        }
+      : {
+          basePrice: 0,
+          discountPercentage: 0,
+          taxPercentage: 0,
+        }
+  );
+  const [sellingInfo, setSellingInfo] = useState(
+    initialState
+      ? {
+          basePrice: initialState.sellingInfo.basePrice,
+          discountPercentage: initialState.sellingInfo.discountPercentage,
+          taxPercentage: initialState.sellingInfo.taxPercentage.percentage,
+        }
+      : {
+          basePrice: 0,
+          discountPercentage: 0,
+          taxPercentage: 0,
+        }
+  );
   const currency = useSelector(
     (store) => store.configuration.currencyInfo.currency.label
+  );
+  const numberOfDecimals = useSelector(
+    (store) => store.configuration.currencyInfo.floatingPositions
   );
 
   let INITIAL_STATE = {
@@ -322,6 +351,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                       currency,
                     })}
                     type="number"
+                    onInput={(event) =>
+                      setBuyingInfo({
+                        ...buyingInfo,
+                        basePrice: parseFloat(event.target.value),
+                      })
+                    }
                   />
                 </Grid>
 
@@ -332,6 +367,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                       'accounting_module.product.structure.discount_percentage'
                     )}
                     type="number"
+                    onInput={(event) =>
+                      setBuyingInfo({
+                        ...buyingInfo,
+                        discountPercentage: parseFloat(event.target.value),
+                      })
+                    }
                   />
                 </Grid>
 
@@ -347,11 +388,25 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
+                    onInput={(event) =>
+                      setBuyingInfo({
+                        ...buyingInfo,
+                        taxPercentage: taxesOptions.filter(
+                          (x) => x.id === event.target.value
+                        )[0].percentage,
+                      })
+                    }
                   />
                 </Grid>
 
                 <Grid item xs={3}>
                   <TextField
+                    value={parseFloat(
+                      buyingInfo.basePrice *
+                        (1 - buyingInfo.discountPercentage / 100) *
+                        (1 + buyingInfo.taxPercentage / 100)
+                    ).toFixed(numberOfDecimals)}
+                    disabled
                     name="buyingInfo.pvp"
                     label={t('accounting_module.product.structure.pvp', {
                       currency,
@@ -375,6 +430,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                       currency,
                     })}
                     type="number"
+                    onInput={(event) =>
+                      setSellingInfo({
+                        ...sellingInfo,
+                        basePrice: parseFloat(event.target.value),
+                      })
+                    }
                   />
                 </Grid>
 
@@ -385,6 +446,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                       'accounting_module.product.structure.discount_percentage'
                     )}
                     type="number"
+                    onInput={(event) =>
+                      setSellingInfo({
+                        ...sellingInfo,
+                        discountPercentage: parseFloat(event.target.value),
+                      })
+                    }
                   />
                 </Grid>
 
@@ -400,11 +467,25 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
+                    onInput={(event) =>
+                      setSellingInfo({
+                        ...sellingInfo,
+                        taxPercentage: taxesOptions.filter(
+                          (x) => x.id === event.target.value
+                        )[0].percentage,
+                      })
+                    }
                   />
                 </Grid>
 
                 <Grid item xs={3}>
                   <TextField
+                    disabled
+                    value={parseFloat(
+                      sellingInfo.basePrice *
+                        (1 - sellingInfo.discountPercentage / 100) *
+                        (1 + sellingInfo.taxPercentage / 100)
+                    ).toFixed(numberOfDecimals)}
                     name="sellingInfo.pvp"
                     label={t('accounting_module.product.structure.pvp', {
                       currency,

@@ -5,12 +5,15 @@ import React from 'react';
 import { MenuItem, TextField } from '@material-ui/core';
 import { useField, useFormikContext } from 'formik';
 
-const SelectWrapper = ({ name, options, ...otherProps }) => {
+const SelectWrapper = ({ name, options, onInput, ...otherProps }) => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
   const handleChange = (event) => {
     setFieldValue(name, event.target.value);
+    if (onInput) {
+      onInput(event);
+    }
   };
 
   const configSelect = {
