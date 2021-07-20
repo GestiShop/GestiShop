@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function ConfigBusinessInfo() {
+const ConfigBusinessInfo = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -76,4 +76,6 @@ export default function ConfigBusinessInfo() {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default ConfigBusinessInfo;

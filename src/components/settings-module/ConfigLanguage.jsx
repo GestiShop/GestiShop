@@ -1,43 +1,70 @@
 import React from 'react';
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import * as Yup from 'yup';
+import { Container, Grid } from '@material-ui/core';
+import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import LocalConfiguration from '../../utils/localConfiguration';
+import Select from '../ui/forms/Select';
 import { LANGUAGE_LIST } from '../../../assets/config/config';
 import { setDefaultLang } from '../../redux/configuration';
 
-export default function ConfigLanguage() {
+const ConfigLanguage = () => {
   const { t, i18n } = useTranslation();
-
   const dispatch = useDispatch();
-  const defaultLang = useSelector((store) => store.configuration.lang);
 
-  const [lang, setLang] = React.useState(defaultLang);
+  const initialValue = useSelector((store) => store.configuration.lang);
 
-  const handleChange = (event) => {
-    const newLang = event.target.value;
+  const INITIAL_STATE = initialValue
+    ? {
+        lang: initialValue.value,
+      }
+    : {
+        lang: LANGUAGE_LIST[0].value,
+      };
 
-    setLang(newLang);
-    dispatch(setDefaultLang(newLang));
-    i18n.changeLanguage(newLang.value);
-  };
+  const FORM_VALIDATION = Yup.object().shape({
+    lang: Yup.string().required(t('form.errors.required')),
+  });
 
   return (
-    <FormControl variant="outlined">
-      <InputLabel htmlFor="lang">
-        {t('settings.language_config.language')}
-      </InputLabel>
-      <Select
-        id="lang"
-        value={lang}
-        onChange={handleChange}
-        label={t('settings.language_config.language')}
-      >
-        {LANGUAGE_LIST.map((item) => (
-          <MenuItem key={item.value} value={item}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Grid container>
+      <Grid item xs={12}>
+        <Container maxWidth="md">
+          <Formik
+            initialValues={{ ...INITIAL_STATE }}
+            validationSchema={FORM_VALIDATION}
+          >
+            <Form>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Select
+                    name="lang"
+                    label={t('settings.language_config.language')}
+                    options={LANGUAGE_LIST.map((x) => {
+                      return {
+                        displayText: x.label,
+                        value: x.value,
+                      };
+                    })}
+                    onInput={(event) => {
+                      const newLang = LANGUAGE_LIST.filter(
+                        (x) => x.value === event.target.value
+                      )[0];
+
+                      LocalConfiguration.setLocalLang(newLang);
+                      i18n.changeLanguage(newLang.value);
+                      dispatch(setDefaultLang(newLang));
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Form>
+          </Formik>
+        </Container>
+      </Grid>
+    </Grid>
   );
-}
+};
+
+export default ConfigLanguage;

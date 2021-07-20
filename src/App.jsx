@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import generateStore from './redux/store';
 import Onboarding from './components/Onboarding';
-import Settings from './components/Settings';
+import Settings from './components/settings-module/Settings';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import AccountingModuleDashboard from './components/accounting-module/AccountingModuleDashboard';

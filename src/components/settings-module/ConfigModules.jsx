@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function ConfigModules() {
+const ConfigModules = () => {
   return <p>Config modules</p>;
-}
+};
+
+export default ConfigModules;

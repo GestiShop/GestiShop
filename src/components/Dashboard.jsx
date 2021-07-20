@@ -11,7 +11,7 @@ const Dashboard = () => {
           <Container maxWidth="md">
             <Grid container spacing={2}>
               <Grid item xs={12} className="d-flex">
-                <Button component={Link} to="/onboarding" replace>
+                <Button disabled component={Link} to="/onboarding" replace>
                   OnBoarding
                 </Button>
               </Grid>

@@ -1,9 +1,11 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
+import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { FormControl, Grid, InputLabel, Select } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
+import { Formik, Form } from 'formik';
+import LocalConfiguration from '../../utils/localConfiguration';
+import Select from '../ui/forms/Select';
 import {
   setDefaultCurrency,
   setDefaultDecimalMode,
@@ -15,105 +17,114 @@ import {
   FLOATING_POINT_OPTIONS,
 } from '../../../assets/config/config';
 
-export default function ConfigCurrencyInfo() {
+const ConfigCurrencyInfo = () => {
   const { t } = useTranslation();
-
   const dispatch = useDispatch();
-  const defaultCurrency = useSelector(
+
+  const initialValues = useSelector(
     (store) => store.configuration.currencyInfo
   );
 
-  const [state, setState] = React.useState(defaultCurrency);
+  const FORM_VALIDATION = Yup.object().shape({
+    currency: Yup.string().required(t('form.errors.required')),
+    decimalMode: Yup.string().required(t('form.errors.required')),
+    floatingPositions: Yup.string().required(t('form.errors.required')),
+  });
 
-  console.log(defaultCurrency);
-
-  const handleChange = (event) => {
-    const eventName = event.target.name;
-    const newValue = event.target.value;
-
-    setState({
-      ...state,
-      [eventName]: newValue,
-    });
-
-    switch (eventName) {
-      case 'currency':
-        dispatch(setDefaultCurrency(newValue));
-        break;
-
-      case 'decimalMode':
-        dispatch(setDefaultDecimalMode(newValue));
-        break;
-
-      case 'floatingPosition':
-        dispatch(setDefaultFloatingPositions(newValue));
-        break;
-
-      default:
-        break;
-    }
-  };
+  const INITIAL_STATE =
+    initialValues && initialValues.currency
+      ? {
+          currency: initialValues.currency.value
+            ? initialValues.currency.value
+            : CURRENCY_LIST[0],
+          decimalMode: initialValues.decimalMode
+            ? initialValues.decimalMode
+            : DECIMAL_MODES[0],
+          floatingPositions: initialValues.floatingPositions
+            ? initialValues.floatingPositions
+            : FLOATING_POINT_OPTIONS[0],
+        }
+      : {
+          currency: CURRENCY_LIST[0],
+          decimalMode: DECIMAL_MODES[0],
+          floatingPositions: FLOATING_POINT_OPTIONS[0],
+        };
 
   return (
-    <Grid container spacing={3}>
+    <Grid container>
       <Grid item xs={12}>
-        <TextField
-          name="currency"
-          select
-          label={t('settings.currency_config.currency')}
-          value={state.currency}
-          onChange={handleChange}
-          variant="outlined"
-        >
-          {CURRENCY_LIST.map((option) => (
-            <MenuItem key={option.value} value={option}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Grid>
-
-      <Grid item xs={12}>
-        <FormControl variant="outlined">
-          <InputLabel htmlFor="decimalMode">
-            {t('settings.currency_config.decimal_mode')}
-          </InputLabel>
-          <Select
-            name="decimalMode"
-            id="decimalMode"
-            value={state.decimalMode}
-            onChange={handleChange}
-            label={t('settings.currency_config.decimal_mode')}
+        <Container maxWidth="md">
+          <Formik
+            initialValues={{ ...INITIAL_STATE }}
+            validationSchema={FORM_VALIDATION}
           >
-            {DECIMAL_MODES.map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
+            <Form>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Select
+                    name="currency"
+                    label={t('settings.currency_config.currency')}
+                    options={CURRENCY_LIST.map((x) => {
+                      return {
+                        displayText: `${x.value} [${x.label}]`,
+                        value: x.value,
+                      };
+                    })}
+                    onInput={(event) => {
+                      LocalConfiguration.setLocalCurrency(
+                        CURRENCY_LIST.filter(
+                          (x) => x.value === event.target.value
+                        )[0]
+                      );
+                      dispatch(setDefaultCurrency(event.target.value));
+                    }}
+                  />
+                </Grid>
 
-      <Grid item xs={12}>
-        <FormControl variant="outlined">
-          <InputLabel htmlFor="floatingPosition">
-            {t('settings.currency_config.floating_positions')}
-          </InputLabel>
-          <Select
-            name="floatingPosition"
-            id="floatingPosition"
-            value={state.floatingPositions}
-            onChange={handleChange}
-            label={t('settings.currency_config.floating_positions')}
-          >
-            {FLOATING_POINT_OPTIONS.map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+                <Grid item xs={12}>
+                  <Select
+                    name="decimalMode"
+                    label={t('settings.currency_config.decimal_mode')}
+                    options={DECIMAL_MODES.map((x) => {
+                      return {
+                        displayText: `${x}`,
+                        value: x,
+                      };
+                    })}
+                    onInput={(event) => {
+                      LocalConfiguration.setLocalDecimalMode(
+                        event.target.value
+                      );
+                      dispatch(setDefaultDecimalMode(event.target.value));
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Select
+                    name="floatingPositions"
+                    label={t('settings.currency_config.floating_positions')}
+                    options={FLOATING_POINT_OPTIONS.map((x) => {
+                      return {
+                        displayText: `${x}`,
+                        value: x,
+                      };
+                    })}
+                    onInput={(event) => {
+                      LocalConfiguration.setLocalFloatingPositions(
+                        event.target.value
+                      );
+                      dispatch(setDefaultFloatingPositions(event.target.value));
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Form>
+          </Formik>
+        </Container>
       </Grid>
     </Grid>
   );
-}
+};
+
+export default ConfigCurrencyInfo;
