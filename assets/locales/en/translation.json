@@ -11,6 +11,7 @@
     "save": "Save"
   },
   "settings": {
+    "title": "Settings",
     "language_config": {
       "title": "Language selection",
       "language": "Language"

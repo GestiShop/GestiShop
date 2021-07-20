@@ -11,6 +11,7 @@
     "save": "Guardar"
   },
   "settings": {
+    "title": "Configuración",
     "language_config": {
       "title": "Selección del idioma",
       "language": "Idioma"
@@ -113,7 +114,7 @@
       "create": "Añadir un tipo de unidad",
       "edit": "Editar tipo de unidad",
       "list": "Listado de tipos de unidad",
-      "headers": {
+      "structure": {
         "reference": "Referencia",
         "unit": "Unidad"
       }

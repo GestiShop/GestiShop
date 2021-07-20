@@ -11,6 +11,7 @@
     "save": "Guardar"
   },
   "settings": {
+    "title": "Configuració",
     "language_config": {
       "title": "Selecció de l'idioma",
       "language": "Idioma"
