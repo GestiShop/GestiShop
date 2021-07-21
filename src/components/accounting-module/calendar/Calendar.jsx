@@ -6,14 +6,23 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
-import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
-import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import { useTranslation } from 'react-i18next';
+import LocalConfiguration from '../../../utils/localConfiguration';
 import FullScreenDialog from '../../ui/FullscreenDialog';
 import { addEvent, fetchEvents, updateEvent } from '../../../db/EventHelper';
 import useIsMounted from '../../../utils/useIsMounted';
 import CreateEvent from '../create/CreateEvent';
 import EVENT_COLOR_LIST from '../../../../assets/event_colors';
+import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
+import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
+
+const localLang = LocalConfiguration.getLocalLang();
+if (localLang) {
+  let langPath = localLang.value;
+  langPath += langPath === 'en' ? '-gb' : '';
+
+  import(`moment/locale/${langPath}`);
+}
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 

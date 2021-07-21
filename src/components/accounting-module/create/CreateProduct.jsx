@@ -276,6 +276,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
+                    acceptNone
                   />
                 </Grid>
 
@@ -289,6 +290,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
+                    acceptNone
                   />
                 </Grid>
 
@@ -396,6 +398,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         )[0].percentage,
                       })
                     }
+                    acceptNone
                   />
                 </Grid>
 
@@ -475,6 +478,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         )[0].percentage,
                       })
                     }
+                    acceptNone
                   />
                 </Grid>
 

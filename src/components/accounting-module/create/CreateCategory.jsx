@@ -139,6 +139,7 @@ const CreateCategory = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
+                    acceptNone
                   />
                 </Grid>
 
