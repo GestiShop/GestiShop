@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import { addWarehouse, updateWarehouse } from '../../../db/WarehouseHelper';
+import { AddressSchemaValidator, EmptyAddress } from '../../../utils/constants';
+import AddressForm from '../../ui/AddressForm';
 
 const CreateWarehouse = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -15,19 +17,7 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     reference: '',
     description: '',
-    address: {
-      roadType: '',
-      street: '',
-      number: '',
-      floor: '',
-      door: '',
-      extra: '',
-      zipCode: '',
-      city: '',
-      province: '',
-      state: '',
-      country: '',
-    },
+    address: EmptyAddress,
   };
 
   if (initialState) {
@@ -53,19 +43,7 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
     description: Yup.string().required(t('form.errors.required')),
-    address: Yup.object().shape({
-      roadType: Yup.string().required(t('form.errors.required')),
-      street: Yup.string().required(t('form.errors.required')),
-      number: Yup.string().required(t('form.errors.required')),
-      floor: Yup.string(),
-      door: Yup.string(),
-      extra: Yup.string(),
-      zipCode: Yup.string().required(t('form.errors.required')),
-      city: Yup.string().required(t('form.errors.required')),
-      province: Yup.string().required(t('form.errors.required')),
-      state: Yup.string().required(t('form.errors.required')),
-      country: Yup.string().required(t('form.errors.required')),
-    }),
+    address: Yup.object().shape(AddressSchemaValidator(t)),
   });
 
   const handleSubmit = (data) => {
@@ -129,82 +107,7 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={3}>
-                  <TextField
-                    name="address.roadType"
-                    label={t('accounting_module.address.road_type')}
-                  />
-                </Grid>
-
-                <Grid item xs={9}>
-                  <TextField
-                    name="address.street"
-                    label={t('accounting_module.address.street')}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    name="address.number"
-                    label={t('accounting_module.address.number')}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    name="address.floor"
-                    label={t('accounting_module.address.floor')}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    name="address.door"
-                    label={t('accounting_module.address.door')}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    name="address.extra"
-                    label={t('accounting_module.address.extra')}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    name="address.zipCode"
-                    label={t('accounting_module.address.zip_code')}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    name="address.city"
-                    label={t('accounting_module.address.city')}
-                  />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    name="address.province"
-                    label={t('accounting_module.address.province')}
-                  />
-                </Grid>
-
-                <Grid item xs={6}>
-                  <TextField
-                    name="address.state"
-                    label={t('accounting_module.address.state')}
-                  />
-                </Grid>
-
-                <Grid item xs={6}>
-                  <TextField
-                    name="address.country"
-                    label={t('accounting_module.address.country')}
-                  />
-                </Grid>
+                <AddressForm parent="address" />
 
                 <Grid item xs={12}>
                   <SubmitButton>

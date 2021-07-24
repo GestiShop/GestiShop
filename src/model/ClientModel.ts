@@ -8,10 +8,8 @@ const clientSchema = new Schema({
   reference: { type: String, unique: true, required: true, dropDups: true },
   contactData: {
     name: String,
-    mainPhone: { type: Types.ObjectId, ref: 'Client.phones' },
-    phones: [phoneSchema],
-    mainEmail: { type: Types.ObjectId, ref: 'Client.emails' },
-    emails: [emailSchema],
+    phone: phoneSchema,
+    email: emailSchema,
   },
   fiscalData: {
     name: String,
@@ -20,7 +18,7 @@ const clientSchema = new Schema({
   },
   postalData: {
     name: String,
-    email: { type: Types.ObjectId, ref: 'Client.emails' },
+    email: emailSchema,
     address: addressSchema,
   },
   tributationData: {

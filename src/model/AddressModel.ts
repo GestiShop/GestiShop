@@ -11,7 +11,7 @@ const addressSchema = new Schema({
   zipCode: { type: String, required: true },
   city: { type: String, required: true },
   province: { type: String, required: true },
-  state: { type: String, required: true },
+  state: String,
   country: { type: String, required: true },
 });
 
