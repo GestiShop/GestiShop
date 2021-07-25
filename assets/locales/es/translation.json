@@ -74,7 +74,8 @@
       "taxes": "Impuestos",
       "unit_types": "Tipos de unidades",
       "warehouses": "Almacenes",
-      "categories": "Categorías"
+      "categories": "Categorías",
+      "clients": "Clientes"
     },
     "product": {
       "create": "Añadir un producto",

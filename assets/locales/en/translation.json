@@ -74,7 +74,8 @@
       "taxes": "Taxes",
       "unit_types": "Unit types",
       "warehouses": "Warehouses",
-      "categories": "Categories"
+      "categories": "Categories",
+      "clients": "Clients"
     },
     "product": {
       "create": "Add new product",

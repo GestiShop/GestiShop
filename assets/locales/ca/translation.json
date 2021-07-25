@@ -74,7 +74,8 @@
       "taxes": "Impostos",
       "unit_types": "Tipus d'unitats",
       "warehouses": "Magatzems",
-      "categories": "Categories"
+      "categories": "Categories",
+      "clients": "Clients"
     },
     "product": {
       "create": "Afegir un producte",

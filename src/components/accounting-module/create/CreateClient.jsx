@@ -49,6 +49,11 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
   if (initialState) {
     INITIAL_STATE = {
       reference: initialState.reference,
+      contactData: initialState.contactData,
+      fiscalData: initialState.fiscalData,
+      postalData: initialState.postalData,
+      tributationData: initialState.tributationData,
+      eFactData: initialState.eFactData,
     };
   }
 

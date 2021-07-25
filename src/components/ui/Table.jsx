@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/prop-types */
@@ -384,24 +385,25 @@ const EnhancedTable = ({
                         );
                         break;
                       default:
+                        let rowToRender;
+                        if (header.parents) {
+                          let finalParent = row;
+                          for (const headerParent of header.parents) {
+                            finalParent = finalParent[headerParent];
+                          }
+                          rowToRender = finalParent[header.id];
+                        } else {
+                          rowToRender = row[header.id];
+                        }
+
                         headerCells.push(
-                          header.parent ? (
-                            <TableCell
-                              key={header.id}
-                              align={header.align}
-                              padding="normal"
-                            >
-                              {row[header.parent][header.id]}
-                            </TableCell>
-                          ) : (
-                            <TableCell
-                              key={header.id}
-                              align={header.align}
-                              padding="normal"
-                            >
-                              {row[header.id]}
-                            </TableCell>
-                          )
+                          <TableCell
+                            key={header.id}
+                            align={header.align}
+                            padding="normal"
+                          >
+                            {rowToRender}
+                          </TableCell>
                         );
                         break;
                     }

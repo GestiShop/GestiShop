@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import GenericListComponent from './GenericListComponent';
 import { deleteClients, fetchClients } from '../../../db/ClientHelper';
 import CreateClient from '../create/CreateClient';
@@ -10,9 +9,6 @@ const ListClients = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const isMounted = useIsMounted();
-  const currency = useSelector(
-    (store) => store.configuration.currencyInfo.currency.label
-  );
 
   const headers = [
     {
@@ -24,19 +20,19 @@ const ListClients = () => {
       id: 'name',
       label: t('accounting_module.client.structure.name'),
       align: 'left',
-      parent: 'contactData',
+      parents: ['contactData'],
     },
     {
-      id: 'mainEmail',
+      id: 'email',
       label: t('accounting_module.client.structure.main_email_email'),
       align: 'right',
-      parent: 'contactData.email',
+      parents: ['contactData', 'email'],
     },
     {
-      id: 'mainPhone',
+      id: 'phone',
       label: t('accounting_module.client.structure.main_phone_phone'),
       align: 'right',
-      parent: 'contactData.phone',
+      parents: ['contactData', 'phone'],
     },
   ];
 
