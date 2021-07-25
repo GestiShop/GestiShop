@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import AddressForm from '../../ui/AddressForm';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import { addClient, updateClient } from '../../../db/ClientHelper';
+import { addProvider, updateProvider } from '../../../db/ProviderHelper';
 import {
   AddressSchemaValidator,
   EmailSchemaValidator,
@@ -19,7 +19,7 @@ import {
   PhoneSchemaValidator,
 } from '../../../utils/constants';
 
-const CreateClient = ({ closeCallback, initialState }) => {
+const CreateProvider = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
 
   let INITIAL_STATE = {
@@ -98,7 +98,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
   const handleSubmit = (data) => {
     if (!initialState) {
-      addClient(
+      addProvider(
         data,
         (error) => {
           console.log('error', error);
@@ -110,7 +110,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
         }
       );
     } else {
-      updateClient(
+      updateProvider(
         { ...data, _id: initialState._id },
         (error) => {
           console.log('error', error);
@@ -138,20 +138,20 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="reference"
-                    label={t('accounting_module.client.structure.reference')}
+                    label={t('accounting_module.provider.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <Typography>
-                    {t('accounting_module.client.creation.contact_data')}
+                    {t('accounting_module.provider.creation.contact_data')}
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                   <TextField
                     name="contactData.name"
-                    label={t('accounting_module.client.structure.name')}
+                    label={t('accounting_module.provider.structure.name')}
                   />
                 </Grid>
 
@@ -159,7 +159,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="contactData.phone.phone"
                     label={t(
-                      'accounting_module.client.structure.main_phone_phone'
+                      'accounting_module.provider.structure.main_phone_phone'
                     )}
                   />
                 </Grid>
@@ -168,7 +168,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="contactData.phone.description"
                     label={t(
-                      'accounting_module.client.structure.main_phone_description'
+                      'accounting_module.provider.structure.main_phone_description'
                     )}
                   />
                 </Grid>
@@ -177,7 +177,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="contactData.email.email"
                     label={t(
-                      'accounting_module.client.structure.main_email_email'
+                      'accounting_module.provider.structure.main_email_email'
                     )}
                   />
                 </Grid>
@@ -186,28 +186,28 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="contactData.email.description"
                     label={t(
-                      'accounting_module.client.structure.main_email_description'
+                      'accounting_module.provider.structure.main_email_description'
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <Typography>
-                    {t('accounting_module.client.creation.fiscal_data')}
+                    {t('accounting_module.provider.creation.fiscal_data')}
                   </Typography>
                 </Grid>
 
                 <Grid item xs={8}>
                   <TextField
                     name="fiscalData.name"
-                    label={t('accounting_module.client.structure.name')}
+                    label={t('accounting_module.provider.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
                     name="fiscalData.nif"
-                    label={t('accounting_module.client.structure.nif')}
+                    label={t('accounting_module.provider.structure.nif')}
                   />
                 </Grid>
 
@@ -215,14 +215,14 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={12}>
                   <Typography>
-                    {t('accounting_module.client.creation.postal_data')}
+                    {t('accounting_module.provider.creation.postal_data')}
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                   <TextField
                     name="postalData.name"
-                    label={t('accounting_module.client.structure.name')}
+                    label={t('accounting_module.provider.structure.name')}
                   />
                 </Grid>
 
@@ -230,7 +230,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     type="email"
                     name="postalData.email.email"
-                    label={t('accounting_module.client.structure.email')}
+                    label={t('accounting_module.provider.structure.email')}
                   />
                 </Grid>
 
@@ -238,7 +238,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="postalData.email.description"
                     label={t(
-                      'accounting_module.client.structure.email_description'
+                      'accounting_module.provider.structure.email_description'
                     )}
                   />
                 </Grid>
@@ -247,7 +247,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={12}>
                   <Typography>
-                    {t('accounting_module.client.creation.tributation_data')}
+                    {t('accounting_module.provider.creation.tributation_data')}
                   </Typography>
                 </Grid>
 
@@ -256,7 +256,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                     type="number"
                     name="tributationData.retentionPercentage"
                     label={t(
-                      'accounting_module.client.structure.retention_percentage'
+                      'accounting_module.provider.structure.retention_percentage'
                     )}
                   />
                 </Grid>
@@ -266,14 +266,14 @@ const CreateClient = ({ closeCallback, initialState }) => {
                     type="number"
                     name="tributationData.personalDiscount"
                     label={t(
-                      'accounting_module.client.structure.personal_discount'
+                      'accounting_module.provider.structure.personal_discount'
                     )}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <Typography>
-                    {t('accounting_module.client.creation.efact_data')}
+                    {t('accounting_module.provider.creation.efact_data')}
                   </Typography>
                 </Grid>
 
@@ -281,7 +281,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="eFactData.accountingOfficeCode"
                     label={t(
-                      'accounting_module.client.structure.accounting_office_code'
+                      'accounting_module.provider.structure.accounting_office_code'
                     )}
                   />
                 </Grid>
@@ -290,7 +290,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="eFactData.accountingOfficeName"
                     label={t(
-                      'accounting_module.client.structure.accounting_office_name'
+                      'accounting_module.provider.structure.accounting_office_name'
                     )}
                   />
                 </Grid>
@@ -299,7 +299,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="eFactData.managementBodyCode"
                     label={t(
-                      'accounting_module.client.structure.management_body_code'
+                      'accounting_module.provider.structure.management_body_code'
                     )}
                   />
                 </Grid>
@@ -308,7 +308,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="eFactData.managementBodyName"
                     label={t(
-                      'accounting_module.client.structure.management_body_name'
+                      'accounting_module.provider.structure.management_body_name'
                     )}
                   />
                 </Grid>
@@ -317,7 +317,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="eFactData.processingUnitCode"
                     label={t(
-                      'accounting_module.client.structure.processing_unit_code'
+                      'accounting_module.provider.structure.processing_unit_code'
                     )}
                   />
                 </Grid>
@@ -326,7 +326,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="eFactData.processingUnitName"
                     label={t(
-                      'accounting_module.client.structure.processing_unit_name'
+                      'accounting_module.provider.structure.processing_unit_name'
                     )}
                   />
                 </Grid>
@@ -335,7 +335,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     name="eFactData.electronicBillingCode"
                     label={t(
-                      'accounting_module.client.structure.electronic_billing_code'
+                      'accounting_module.provider.structure.electronic_billing_code'
                     )}
                   />
                 </Grid>
@@ -354,4 +354,4 @@ const CreateClient = ({ closeCallback, initialState }) => {
   );
 };
 
-export default CreateClient;
+export default CreateProvider;

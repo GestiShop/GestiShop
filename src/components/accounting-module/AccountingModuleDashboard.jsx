@@ -28,6 +28,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import StoreIcon from '@material-ui/icons/Store';
 import PeopleIcon from '@material-ui/icons/People';
+import WorkIcon from '@material-ui/icons/Work';
 import CategoryIcon from '@material-ui/icons/Category';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
@@ -38,6 +39,7 @@ import ListCategories from './list/ListCategories';
 import FullScreenDialog from '../ui/FullscreenDialog';
 import Settings from '../settings-module/Settings';
 import ListClients from './list/ListClients';
+import ListProviders from './list/ListProviders';
 
 const DRAWER_WIDTH = 240;
 
@@ -157,6 +159,11 @@ const AccountingModuleDashboard = () => {
         text: t('accounting_module.menu.clients'),
         icon: <PeopleIcon />,
         linkTo: `${url}/clients`,
+      },
+      {
+        text: t('accounting_module.menu.providers'),
+        icon: <WorkIcon />,
+        linkTo: `${url}/providers`,
       },
     ],
   ];
@@ -294,6 +301,9 @@ const AccountingModuleDashboard = () => {
             </Route>
             <Route exact path={`${path}/clients`}>
               <ListClients />
+            </Route>
+            <Route exact path={`${path}/providers`}>
+              <ListProviders />
             </Route>
             <Route exact path={`${path}`}>
               <Redirect to={`${path}/calendar`} />
