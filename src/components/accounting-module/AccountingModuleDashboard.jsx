@@ -28,7 +28,11 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import StoreIcon from '@material-ui/icons/Store';
 import PeopleIcon from '@material-ui/icons/People';
-import WorkIcon from '@material-ui/icons/Work';
+import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
+import DescriptionIcon from '@material-ui/icons/Description';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import CategoryIcon from '@material-ui/icons/Category';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
@@ -41,7 +45,7 @@ import Settings from '../settings-module/Settings';
 import ListClients from './list/ListClients';
 import ListProviders from './list/ListProviders';
 
-const DRAWER_WIDTH = 240;
+const DRAWER_WIDTH = 300;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -162,8 +166,30 @@ const AccountingModuleDashboard = () => {
       },
       {
         text: t('accounting_module.menu.providers'),
-        icon: <WorkIcon />,
+        icon: <PeopleOutlineOutlinedIcon />,
         linkTo: `${url}/providers`,
+      },
+    ],
+    [
+      {
+        text: t('accounting_module.menu.client_bills'),
+        icon: <DescriptionIcon />,
+        linkTo: `${url}/client_bills`,
+      },
+      {
+        text: t('accounting_module.menu.provider_bills'),
+        icon: <DescriptionOutlinedIcon />,
+        linkTo: `${url}/provider_bills`,
+      },
+      {
+        text: t('accounting_module.menu.client_budgets'),
+        icon: <ReceiptIcon />,
+        linkTo: `${url}/client_budgets`,
+      },
+      {
+        text: t('accounting_module.menu.provider_budgets'),
+        icon: <ReceiptOutlinedIcon />,
+        linkTo: `${url}/provider_budgets`,
       },
     ],
   ];
@@ -304,6 +330,18 @@ const AccountingModuleDashboard = () => {
             </Route>
             <Route exact path={`${path}/providers`}>
               <ListProviders />
+            </Route>
+            <Route exact path={`${path}/client_bills`}>
+              <p>[NOT IMPLEMENTED] Client bills</p>
+            </Route>
+            <Route exact path={`${path}/provider_bills`}>
+              <p>[NOT IMPLEMENTED] Provider bills</p>
+            </Route>
+            <Route exact path={`${path}/client_budgets`}>
+              <p>[NOT IMPLEMENTED] Client budgets</p>
+            </Route>
+            <Route exact path={`${path}/provider_budgets`}>
+              <p>[NOT IMPLEMENTED] Provider budgets</p>
             </Route>
             <Route exact path={`${path}`}>
               <Redirect to={`${path}/calendar`} />

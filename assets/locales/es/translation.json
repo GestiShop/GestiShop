@@ -76,7 +76,11 @@
       "warehouses": "Almacenes",
       "categories": "Categorías",
       "clients": "Clientes",
-      "providers": "Proveedores"
+      "providers": "Proveedores",
+      "client_bills": "Facturas a clientes",
+      "provider_bills": "Facturas de proveedores",
+      "client_budgets": "Presupuestos a clientes",
+      "provider_budgets": "Presupuestos de proveedores"
     },
     "product": {
       "create": "Añadir un producto",

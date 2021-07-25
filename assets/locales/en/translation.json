@@ -76,7 +76,11 @@
       "warehouses": "Warehouses",
       "categories": "Categories",
       "clients": "Clients",
-      "providers": "Providers"
+      "providers": "Providers",
+      "client_bills": "Bills to clients",
+      "provider_bills": "Bills from providers",
+      "client_budgets": "Budgets to clients",
+      "provider_budgets": "Budgets from providers"
     },
     "product": {
       "create": "Add new product",

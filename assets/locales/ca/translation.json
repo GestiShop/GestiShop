@@ -76,7 +76,11 @@
       "warehouses": "Magatzems",
       "categories": "Categories",
       "clients": "Clients",
-      "providers": "Proveïdors"
+      "providers": "Proveïdors",
+      "client_bills": "Factures a clients",
+      "provider_bills": "Factures de proveïdors",
+      "client_budgets": "Pressupostos a clients",
+      "provider_budgets": "Pressupostos de proveïdors"
     },
     "product": {
       "create": "Afegir un producte",
