@@ -12,7 +12,7 @@ import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: 'relative',
+    position: 'sticky',
   },
   title: {
     marginLeft: theme.spacing(2),
