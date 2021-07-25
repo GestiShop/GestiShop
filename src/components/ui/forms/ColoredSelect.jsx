@@ -34,7 +34,6 @@ const ColoredSelect = ({ name, options, ...otherProps }) => {
   };
 
   const configSelect = {
-    acceptNone: true,
     ...field,
     ...otherProps,
     select: true,

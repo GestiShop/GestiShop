@@ -85,21 +85,21 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="title"
-                    label={t('accounting_module.event.structure.title')}
+                    label={`${t('accounting_module.event.structure.title')} *`}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
                     name="start"
-                    label={t('accounting_module.event.structure.start')}
+                    label={`${t('accounting_module.event.structure.start')} *`}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
                     name="end"
-                    label={t('accounting_module.event.structure.end')}
+                    label={`${t('accounting_module.event.structure.end')} *`}
                   />
                 </Grid>
 

@@ -21,7 +21,7 @@ const productSchema = new Schema({
     ref: 'Warehouse',
     required: true,
   },
-  categories: [{ type: Types.ObjectId, ref: 'Category', required: true }],
+  categories: [{ type: Types.ObjectId, ref: 'Category' }],
   minStock: Number,
   stockAlert: { type: Boolean, required: true },
   visible: { type: Boolean, required: true },

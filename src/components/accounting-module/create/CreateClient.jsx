@@ -138,7 +138,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="reference"
-                    label={t('accounting_module.client.structure.reference')}
+                    label={`${t(
+                      'accounting_module.client.structure.reference'
+                    )} *`}
                   />
                 </Grid>
 
@@ -151,16 +153,16 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="contactData.name"
-                    label={t('accounting_module.client.structure.name')}
+                    label={`${t('accounting_module.client.structure.name')} *`}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
                     name="contactData.phone.phone"
-                    label={t(
+                    label={`${t(
                       'accounting_module.client.structure.main_phone_phone'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 
@@ -176,9 +178,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="contactData.email.email"
-                    label={t(
+                    label={`${t(
                       'accounting_module.client.structure.main_email_email'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 
@@ -200,14 +202,14 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid item xs={8}>
                   <TextField
                     name="fiscalData.name"
-                    label={t('accounting_module.client.structure.name')}
+                    label={`${t('accounting_module.client.structure.name')} *`}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
                     name="fiscalData.nif"
-                    label={t('accounting_module.client.structure.nif')}
+                    label={`${t('accounting_module.client.structure.nif')} *`}
                   />
                 </Grid>
 
@@ -222,7 +224,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="postalData.name"
-                    label={t('accounting_module.client.structure.name')}
+                    label={`${t('accounting_module.client.structure.name')} *`}
                   />
                 </Grid>
 
@@ -230,7 +232,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     type="email"
                     name="postalData.email.email"
-                    label={t('accounting_module.client.structure.email')}
+                    label={`${t('accounting_module.client.structure.email')} *`}
                   />
                 </Grid>
 
@@ -255,9 +257,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     type="number"
                     name="tributationData.retentionPercentage"
-                    label={t(
+                    label={`${t(
                       'accounting_module.client.structure.retention_percentage'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 
@@ -265,9 +267,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <TextField
                     type="number"
                     name="tributationData.personalDiscount"
-                    label={t(
+                    label={`${t(
                       'accounting_module.client.structure.personal_discount'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 

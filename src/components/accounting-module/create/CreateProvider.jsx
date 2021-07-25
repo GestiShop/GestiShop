@@ -138,7 +138,9 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="reference"
-                    label={t('accounting_module.provider.structure.reference')}
+                    label={`${t(
+                      'accounting_module.provider.structure.reference'
+                    )} *`}
                   />
                 </Grid>
 
@@ -151,16 +153,18 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="contactData.name"
-                    label={t('accounting_module.provider.structure.name')}
+                    label={`${t(
+                      'accounting_module.provider.structure.name'
+                    )} *`}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
                     name="contactData.phone.phone"
-                    label={t(
+                    label={`${t(
                       'accounting_module.provider.structure.main_phone_phone'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 
@@ -176,9 +180,9 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="contactData.email.email"
-                    label={t(
+                    label={`${t(
                       'accounting_module.provider.structure.main_email_email'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 
@@ -200,14 +204,16 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                 <Grid item xs={8}>
                   <TextField
                     name="fiscalData.name"
-                    label={t('accounting_module.provider.structure.name')}
+                    label={`${t(
+                      'accounting_module.provider.structure.name'
+                    )} *`}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
                     name="fiscalData.nif"
-                    label={t('accounting_module.provider.structure.nif')}
+                    label={`${t('accounting_module.provider.structure.nif')} *`}
                   />
                 </Grid>
 
@@ -222,7 +228,9 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="postalData.name"
-                    label={t('accounting_module.provider.structure.name')}
+                    label={`${t(
+                      'accounting_module.provider.structure.name'
+                    )} *`}
                   />
                 </Grid>
 
@@ -230,7 +238,9 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                   <TextField
                     type="email"
                     name="postalData.email.email"
-                    label={t('accounting_module.provider.structure.email')}
+                    label={`${t(
+                      'accounting_module.provider.structure.email'
+                    )} *`}
                   />
                 </Grid>
 
@@ -255,9 +265,9 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                   <TextField
                     type="number"
                     name="tributationData.retentionPercentage"
-                    label={t(
+                    label={`${t(
                       'accounting_module.provider.structure.retention_percentage'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 
@@ -265,9 +275,9 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                   <TextField
                     type="number"
                     name="tributationData.personalDiscount"
-                    label={t(
+                    label={`${t(
                       'accounting_module.provider.structure.personal_discount'
-                    )}
+                    )} *`}
                   />
                 </Grid>
 

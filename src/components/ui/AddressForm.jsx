@@ -12,21 +12,21 @@ const AddressForm = ({ parent }) => {
       <Grid item xs={3}>
         <TextField
           name={`${parent}.roadType`}
-          label={t('accounting_module.address.road_type')}
+          label={`${t('accounting_module.address.road_type')} *`}
         />
       </Grid>
 
       <Grid item xs={9}>
         <TextField
           name={`${parent}.street`}
-          label={t('accounting_module.address.street')}
+          label={`${t('accounting_module.address.street')} *`}
         />
       </Grid>
 
       <Grid item xs={4}>
         <TextField
           name={`${parent}.number`}
-          label={t('accounting_module.address.number')}
+          label={`${t('accounting_module.address.number')} *`}
         />
       </Grid>
 
@@ -54,21 +54,21 @@ const AddressForm = ({ parent }) => {
       <Grid item xs={4}>
         <TextField
           name={`${parent}.zipCode`}
-          label={t('accounting_module.address.zip_code')}
+          label={`${t('accounting_module.address.zip_code')} *`}
         />
       </Grid>
 
       <Grid item xs={4}>
         <TextField
           name={`${parent}.city`}
-          label={t('accounting_module.address.city')}
+          label={`${t('accounting_module.address.city')} *`}
         />
       </Grid>
 
       <Grid item xs={4}>
         <TextField
           name={`${parent}.province`}
-          label={t('accounting_module.address.province')}
+          label={`${t('accounting_module.address.province')} *`}
         />
       </Grid>
 
@@ -82,7 +82,7 @@ const AddressForm = ({ parent }) => {
       <Grid item xs={6}>
         <TextField
           name={`${parent}.country`}
-          label={t('accounting_module.address.country')}
+          label={`${t('accounting_module.address.country')} *`}
         />
       </Grid>
     </>

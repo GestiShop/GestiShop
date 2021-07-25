@@ -7,23 +7,23 @@ import { eFactSchema } from './EFactModel';
 const clientSchema = new Schema({
   reference: { type: String, unique: true, required: true, dropDups: true },
   contactData: {
-    name: String,
+    name: { type: String, required: true },
     phone: phoneSchema,
     email: emailSchema,
   },
   fiscalData: {
-    name: String,
-    nif: String,
+    name: { type: String, required: true },
+    nif: { type: String, required: true },
     address: addressSchema,
   },
   postalData: {
-    name: String,
+    name: { type: String, required: true },
     email: emailSchema,
     address: addressSchema,
   },
   tributationData: {
-    retentionPercentage: Number,
-    personalDiscount: Number,
+    retentionPercentage: { type: Number, required: true, default: 0.0 },
+    personalDiscount: { type: Number, required: true, default: 0.0 },
   },
   eFactData: eFactSchema,
   bills: [{ type: Types.ObjectId, ref: 'ClientBill' }],
