@@ -170,7 +170,7 @@ const AccountingModuleDashboard = () => {
 
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [indexes, setIndexes] = useState({
     i: 0,
     j: 0,
