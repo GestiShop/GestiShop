@@ -138,7 +138,9 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Typography>Contact data</Typography>
+                  <Typography>
+                    {t('accounting_module.client.creation.contact_data')}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -185,7 +187,9 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Typography>Fiscal data</Typography>
+                  <Typography>
+                    {t('accounting_module.client.creation.fiscal_data')}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={8}>
@@ -205,7 +209,9 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                 <AddressForm parent="fiscalData.address" />
 
                 <Grid item xs={12}>
-                  <Typography>Postal data</Typography>
+                  <Typography>
+                    {t('accounting_module.client.creation.postal_data')}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -235,7 +241,9 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                 <AddressForm parent="postalData.address" />
 
                 <Grid item xs={12}>
-                  <Typography>Tributation data</Typography>
+                  <Typography>
+                    {t('accounting_module.client.creation.tributation_data')}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
@@ -259,7 +267,9 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Typography>Electronic billing data</Typography>
+                  <Typography>
+                    {t('accounting_module.client.creation.efact_data')}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={6}>

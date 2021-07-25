@@ -139,6 +139,38 @@
         "address": "Address"
       }
     },
+    "client": {
+      "create": "Add new client",
+      "edit": "Edit client",
+      "list": "Client list",
+      "creation": {
+        "contact_data": "Contact data",
+        "fiscal_data": "Fiscal data",
+        "postal_data": "Postal data",
+        "tributation_data": "Tributation data",
+        "efact_data": "Electronic billing data"
+      },
+      "structure": {
+        "reference": "Reference",
+        "name": "Name",
+        "main_phone_phone": "Main phone number",
+        "main_phone_description": "Main phone description",
+        "main_email_email": "Main email address",
+        "main_email_description": "Main email description",
+        "nif": "N.I.F.",
+        "email": "Email",
+        "email_description": "Email description",
+        "retention_percentage": "Retention (%)",
+        "personal_discount": "Personal discount (%)",
+        "accounting_office_code": "Accounting office code",
+        "accounting_office_name": "Accounting office name",
+        "management_body_code": "Management body code",
+        "management_body_name": "Management body name",
+        "processing_unit_code": "Processing unit code",
+        "processing_unit_name": "Processing unit name",
+        "electronic_billing_code": "Electronic billing code"
+      }
+    },
     "event": {
       "new": "New event",
       "edit": "Edit event",

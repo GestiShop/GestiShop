@@ -28,15 +28,15 @@ const ListClients = () => {
     },
     {
       id: 'mainEmail',
-      label: t('accounting_module.client.structure.main_email'),
+      label: t('accounting_module.client.structure.main_email_email'),
       align: 'right',
-      parent: 'contactData',
+      parent: 'contactData.email',
     },
     {
       id: 'mainPhone',
-      label: t('accounting_module.client.structure.main_phone'),
+      label: t('accounting_module.client.structure.main_phone_phone'),
       align: 'right',
-      parent: 'contactData',
+      parent: 'contactData.phone',
     },
   ];
 

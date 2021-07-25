@@ -139,6 +139,38 @@
         "address": "Adreça"
       }
     },
+    "client": {
+      "create": "Afegir un client",
+      "edit": "Editar client",
+      "list": "Llistat de clients",
+      "creation": {
+        "contact_data": "Dades de contacte",
+        "fiscal_data": "Dades fiscals",
+        "postal_data": "Dades postals",
+        "tributation_data": "Dades de tributació",
+        "efact_data": "Dades de facturació electrònica"
+      },
+      "structure": {
+        "reference": "Referència",
+        "name": "Nom",
+        "main_phone_phone": "Número de telèfon principal",
+        "main_phone_description": "Descripció del telèfon principal",
+        "main_email_email": "Direcció de l'email principal",
+        "main_email_description": "Descripció de l'email principal",
+        "nif": "N.I.F.",
+        "email": "Email",
+        "email_description": "Descripció de l'email",
+        "retention_percentage": "Retenció (%)",
+        "personal_discount": "Descompte personal (%)",
+        "accounting_office_code": "Codi de l'oficina de comptabilitat",
+        "accounting_office_name": "Nom de l'oficina de comptabilitat",
+        "management_body_code": "Codi de l'organisme de gestió",
+        "management_body_name": "Nom de l'organisme de gestió",
+        "processing_unit_code": "Codi d'unitat de processament",
+        "processing_unit_name": "Nom d'unitat de processament",
+        "electronic_billing_code": "Codi de facturació electrònica"
+      }
+    },
     "event": {
       "new": "Nou esdeveniment",
       "edit": "Editar esdeveniment",

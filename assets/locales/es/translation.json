@@ -139,6 +139,38 @@
         "address": "Dirección"
       }
     },
+    "client": {
+      "create": "Añadir un cliente",
+      "edit": "Editar cliente",
+      "list": "Listado de clientes",
+      "creation": {
+        "contact_data": "Datos de contacto",
+        "fiscal_data": "Datos fiscales",
+        "postal_data": "Datos postales",
+        "tributation_data": "Datos de tributación",
+        "efact_data": "Datos de facturación electrónica"
+      },
+      "structure": {
+        "reference": "Referencia",
+        "name": "Nombre",
+        "main_phone_phone": "Número de teléfono principal",
+        "main_phone_description": "Descripción del teléfono principal",
+        "main_email_email": "Dirección del email principal",
+        "main_email_description": "Descripción del email principal",
+        "nif": "N.I.F.",
+        "email": "Email",
+        "email_description": "Descripción del email",
+        "retention_percentage": "Retención (%)",
+        "personal_discount": "Descuento personal (%)",
+        "accounting_office_code": "Código de la oficina de contabilidad",
+        "accounting_office_name": "Nombre de la oficina de contabilidad",
+        "management_body_code": "Código del organismo de gestión",
+        "management_body_name": "Nombre del organismo de gestión",
+        "processing_unit_code": "Código de unidad de procesamiento",
+        "processing_unit_name": "Nombre de unidad de procesamiento",
+        "electronic_billing_code": "Código de facturación electrónica"
+      }
+    },
     "event": {
       "new": "Nuevo evento",
       "edit": "Editar evento",
