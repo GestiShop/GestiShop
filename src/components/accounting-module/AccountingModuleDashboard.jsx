@@ -163,7 +163,11 @@ const AccountingModuleDashboard = () => {
 
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [indexes, setIndexes] = useState({
+    i: 0,
+    j: 0,
+  });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -171,6 +175,10 @@ const AccountingModuleDashboard = () => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const isItemSelected = (i, j) => {
+    return indexes.i === i && indexes.j === j;
   };
 
   return (
@@ -232,23 +240,30 @@ const AccountingModuleDashboard = () => {
           </div>
           <Divider />
           <List>
-            {DRAWER_ITEMS.map((elementList, index) => {
-              let itemList = elementList.map((element) => (
+            {DRAWER_ITEMS.map((elementList, i) => {
+              let itemList = elementList.map((element, j) => (
                 <ListItem
+                  selected={isItemSelected(i, j)}
                   button
                   key={element.text}
                   component={Link}
                   to={element.linkTo}
                   replace
+                  onClick={() =>
+                    setIndexes({
+                      i,
+                      j,
+                    })
+                  }
                 >
                   <ListItemIcon>{element.icon}</ListItemIcon>
                   <ListItemText primary={element.text} />
                 </ListItem>
               ));
 
-              if (index !== DRAWER_ITEMS.length - 1) {
+              if (i !== DRAWER_ITEMS.length - 1) {
                 itemList = itemList.concat(
-                  <Divider key={`elementlist-${index}`} />
+                  <Divider key={`elementlist-${i}`} />
                 );
               }
 
