@@ -65,6 +65,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     reference: '',
     name: '',
+    description: '',
     buyingInfo: {
       basePrice: 0.0,
       discountPercentage: 0.0,
@@ -89,6 +90,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
     INITIAL_STATE = {
       reference: initialState.reference,
       name: initialState.name,
+      description: initialState.description,
       buyingInfo: {
         basePrice: initialState.buyingInfo.basePrice,
         discountPercentage: initialState.buyingInfo.discountPercentage,
@@ -263,6 +265,15 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <TextField
                     name="name"
                     label={t('accounting_module.product.structure.name')}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    multiline
+                    rows={5}
+                    name="description"
+                    label={t('accounting_module.product.structure.description')}
                   />
                 </Grid>
 

@@ -91,6 +91,7 @@
       "structure": {
         "reference": "Referencia",
         "name": "Nombre",
+        "description": "Descripción",
         "base_price": "Precio base ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descuento (%)",

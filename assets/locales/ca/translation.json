@@ -91,6 +91,7 @@
       "structure": {
         "reference": "Referència",
         "name": "Nom",
+        "description": "Descripció",
         "base_price": "Preu base ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descompte (%)",

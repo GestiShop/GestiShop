@@ -3,6 +3,7 @@ import { Schema, Types, model } from 'mongoose';
 const productSchema = new Schema({
   reference: { type: String, unique: true, required: true, dropDups: true },
   name: { type: String, required: true },
+  description: String,
   buyingInfo: {
     basePrice: { type: Number, required: true },
     discountPercentage: { type: Number, required: true, default: 0.0 },
