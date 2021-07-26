@@ -1,4 +1,8 @@
 {
+  "home": {
+    "loading": "Connectant, esperi si us plau...",
+    "error": "S'ha produït un error en intentar connectar-se a la base de dades. Si us plau, reinicieu l'aplicació."
+  },
   "buttons": {
     "back": "Enrere",
     "accept": "Acceptar",

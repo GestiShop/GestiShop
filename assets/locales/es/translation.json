@@ -1,4 +1,8 @@
 {
+  "home": {
+    "loading": "Conectando, espere por favor...",
+    "error": "Se produjo un error al intentar conectarse a la base de datos. Por favor, reinicie la aplicación."
+  },
   "buttons": {
     "back": "Atrás",
     "accept": "Aceptar",
