@@ -44,6 +44,7 @@ import FullScreenDialog from '../ui/FullscreenDialog';
 import Settings from '../settings-module/Settings';
 import ListClients from './list/ListClients';
 import ListProviders from './list/ListProviders';
+import ListClientBills from './list/ListClientBills';
 
 const DRAWER_WIDTH = 300;
 
@@ -332,7 +333,7 @@ const AccountingModuleDashboard = () => {
               <ListProviders />
             </Route>
             <Route exact path={`${path}/client_bills`}>
-              <p>[NOT IMPLEMENTED] Client bills</p>
+              <ListClientBills />
             </Route>
             <Route exact path={`${path}/provider_bills`}>
               <p>[NOT IMPLEMENTED] Provider bills</p>
