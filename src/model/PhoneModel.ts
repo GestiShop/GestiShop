@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-const { Schema } = window.require('mongoose');
+import { Schema } from 'mongoose';
 
 const phoneSchema = new Schema({
   description: String,
-  number: { type: String, required: true },
+  phone: { type: String, required: true },
 });
 
 export { phoneSchema };

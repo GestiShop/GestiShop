@@ -1,50 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import GenericListComponent from './GenericListComponent';
-import { deleteProducts, fetchProducts } from '../../../db/ProductHelper';
-import CreateProduct from '../create/CreateProduct';
+import { deleteClients, fetchClients } from '../../../db/ClientHelper';
+import CreateClient from '../create/CreateClient';
 import useIsMounted from '../../../utils/useIsMounted';
 
-const ListProducts = () => {
+const ListClients = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const isMounted = useIsMounted();
-  const currency = useSelector(
-    (store) => store.configuration.currencyInfo.currency.label
-  );
 
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.product.structure.reference'),
+      label: t('accounting_module.client.structure.reference'),
       align: 'left',
     },
     {
       id: 'name',
-      label: t('accounting_module.product.structure.name'),
+      label: t('accounting_module.client.structure.name'),
       align: 'left',
+      parents: ['contactData'],
     },
     {
-      id: 'basePrice',
-      label: t('accounting_module.product.structure.base_price', { currency }),
+      id: 'email',
+      label: t('accounting_module.client.structure.main_email_email'),
       align: 'right',
-      parents: ['sellingInfo'],
+      parents: ['contactData', 'email'],
     },
     {
-      id: 'stock',
-      label: t('accounting_module.product.structure.stock'),
+      id: 'phone',
+      label: t('accounting_module.client.structure.main_phone_phone'),
       align: 'right',
-    },
-    {
-      id: 'minStock',
-      label: t('accounting_module.product.structure.min_stock'),
-      align: 'right',
+      parents: ['contactData', 'phone'],
     },
   ];
 
   const fetchData = () => {
-    fetchProducts(
+    fetchClients(
       (error) => {
         console.log('error', error);
       },
@@ -55,7 +48,7 @@ const ListProducts = () => {
   };
 
   const deleteData = (ids) => {
-    deleteProducts(
+    deleteClients(
       ids,
       (error) => {
         console.log('error', error);
@@ -91,13 +84,13 @@ const ListProducts = () => {
       searchCallback={handleSearch}
       deleteCallback={handleDelete}
       texts={{
-        create: t('accounting_module.product.create'),
-        title: t('accounting_module.product.list'),
-        edit: t('accounting_module.product.edit'),
+        create: t('accounting_module.client.create'),
+        title: t('accounting_module.client.list'),
+        edit: t('accounting_module.client.edit'),
       }}
-      creationComponent={<CreateProduct />}
+      creationComponent={<CreateClient />}
     />
   );
 };
 
-export default ListProducts;
+export default ListClients;

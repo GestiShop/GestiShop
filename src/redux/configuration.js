@@ -7,20 +7,20 @@ import {
 } from '../../assets/config/config';
 
 const initialState = {
-  lang: LocalConfiguration.getDefaultLang() || LANGUAGE_LIST[0],
-  currencyInfo: LocalConfiguration.getDefaultCurrency() || {
+  lang: LocalConfiguration.getLocalLang() || LANGUAGE_LIST[0],
+  currencyInfo: LocalConfiguration.getLocalCurrencyInfo() || {
     currency: CURRENCY_LIST[0],
     decimalMode: DECIMAL_MODES[0],
     floatingPositions: FLOATING_POINT_OPTIONS[0],
   },
-  databaseInfo: LocalConfiguration.getDefaultDatabaseInfo() || {
+  databaseInfo: LocalConfiguration.getLocalDatabaseInfo() || {
     url: 'localhost',
     port: '27017',
     name: 'gestishop',
     user: 'root',
     password: '',
   },
-  businessInfo: LocalConfiguration.getDefaultBusinessInfo() || {
+  businessInfo: LocalConfiguration.getLocalBusinessInfo() || {
     name: '',
     nif: '',
   },

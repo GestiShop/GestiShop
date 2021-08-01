@@ -13,13 +13,19 @@ const addProduct = (product, errorCallback, resultCallback) => {
 };
 
 const fetchProducts = (errorCallback, resultCallback) => {
-  return Product.find({}, (err, docs) => {
-    if (err) {
-      errorCallback(err);
-    } else {
-      resultCallback(docs);
-    }
-  });
+  return Product.find({})
+    .populate('buyingInfo.taxPercentage')
+    .populate('sellingInfo.taxPercentage')
+    .populate('unitType')
+    .populate('warehouse')
+    .populate('categories')
+    .exec((err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    });
 };
 
 const updateProduct = (product, errorCallback, resultCallback) => {

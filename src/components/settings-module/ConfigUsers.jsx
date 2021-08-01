@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function ConfigUsers() {
+const ConfigUsers = () => {
   return <p>Config users</p>;
-}
+};
+
+export default ConfigUsers;

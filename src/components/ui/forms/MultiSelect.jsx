@@ -1,3 +1,7 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
@@ -21,10 +25,16 @@ const MenuProps = {
   getContentAnchorEl: () => null,
 };
 
-const MultiSelectWrapper = ({ name, label, options, ...otherProps }) => {
+const MultiSelectWrapper = ({
+  name,
+  label,
+  options,
+  initialValue,
+  ...otherProps
+}) => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(initialValue);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -54,12 +64,17 @@ const MultiSelectWrapper = ({ name, label, options, ...otherProps }) => {
       <Select
         {...configMultiSelect}
         value={value}
-        renderValue={(selected) => selected.join(', ')}
+        renderValue={(selected) =>
+          options
+            .filter((x) => selected.includes(x.value))
+            .map((x) => x.displayText)
+            .join(', ')
+        }
       >
         {options.map((item, pos) => (
-          <MenuItem key={pos} value={item}>
-            <Checkbox checked={value.includes(item)} />
-            <ListItemText primary={item} />
+          <MenuItem key={pos} value={item.value}>
+            <Checkbox checked={value.includes(item.value)} />
+            <ListItemText primary={item.displayText} />
           </MenuItem>
         ))}
       </Select>

@@ -12,7 +12,7 @@ import { deleteEvent, updateEvent } from '../../../db/EventHelper';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import Switch from '../../ui/forms/Switch';
 import Button from '../../ui/forms/Button';
-import Select from '../../ui/forms/Select';
+import ColoredSelect from '../../ui/forms/ColoredSelect';
 import EVENT_COLOR_LIST from '../../../../assets/event_colors';
 
 const CreateEvent = ({ closeCallback, initialState }) => {
@@ -23,7 +23,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
     start: moment(initialState.start).format('YYYY-MM-DDTHH:MM:SS'),
     end: moment(initialState.end).format('YYYY-MM-DDTHH:MM:SS'),
     description: initialState.description || '',
-    colorCode: initialState.color || '',
+    colorCode: initialState.colorCode || 'lightseagreen',
     allDay: initialState.allDay || false,
   };
 
@@ -31,7 +31,6 @@ const CreateEvent = ({ closeCallback, initialState }) => {
     updateEvent(
       {
         ...data,
-        colorCode: EVENT_COLOR_LIST[data.colorCode],
         _id: initialState._id,
       },
       (error) => {
@@ -86,21 +85,21 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                 <Grid item xs={12}>
                   <TextField
                     name="title"
-                    label={t('accounting_module.event.structure.title')}
+                    label={`${t('accounting_module.event.structure.title')} *`}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
                     name="start"
-                    label={t('accounting_module.event.structure.start')}
+                    label={`${t('accounting_module.event.structure.start')} *`}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
                     name="end"
-                    label={t('accounting_module.event.structure.end')}
+                    label={`${t('accounting_module.event.structure.end')} *`}
                   />
                 </Grid>
 
@@ -114,7 +113,7 @@ const CreateEvent = ({ closeCallback, initialState }) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Select
+                  <ColoredSelect
                     name="colorCode"
                     label={t('accounting_module.event.structure.color')}
                     options={EVENT_COLOR_LIST}

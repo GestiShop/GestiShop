@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function ConfigInputMode() {
+const ConfigInputMode = () => {
   return <p>Config input mode</p>;
-}
+};
+
+export default ConfigInputMode;

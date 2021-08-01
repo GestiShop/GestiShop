@@ -1,9 +1,7 @@
-const Store = window.require('electron-store');
+import Store from 'electron-store';
 
 const schema = {
-  lang: {
-    type: 'string',
-  },
+  lang: {},
   currencyInfo: {},
   databaseInfo: {},
   businessInfo: {},
@@ -12,27 +10,36 @@ const schema = {
 const store = new Store({ schema });
 
 const LocalConfiguration = {
-  getDefaultLang() {
+  getLocalLang() {
     return store.get('lang');
   },
 
-  getDefaultCurrency() {
+  setLocalLang(lang) {
+    store.set('lang', lang);
+  },
+
+  getLocalCurrencyInfo() {
     return store.get('currencyInfo');
   },
 
-  getDefaultDatabaseInfo() {
+  setLocalCurrency(currency) {
+    store.set('currencyInfo.currency', currency);
+  },
+
+  setLocalDecimalMode(decimalMode) {
+    store.set('currencyInfo.decimalMode', decimalMode);
+  },
+
+  setLocalFloatingPositions(floatingPositions) {
+    store.set('currencyInfo.floatingPositions', floatingPositions);
+  },
+
+  getLocalDatabaseInfo() {
     return store.get('databaseInfo');
   },
 
-  getDefaultBusinessInfo() {
+  getLocalBusinessInfo() {
     return store.get('businessInfo');
-  },
-
-  setDefaultConfigurationInfo(configuration) {
-    store.set('lang', configuration.lang);
-    store.set('currencyInfo', configuration.currencyInfo);
-    store.set('databaseInfo', configuration.databaseInfo);
-    store.set('businessInfo', configuration.businessInfo);
   },
 };
 

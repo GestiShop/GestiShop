@@ -1,4 +1,8 @@
 {
+  "home": {
+    "loading": "Connecting, please wait...",
+    "error": "An error occurred while trying to connect to the database. Please restart the application."
+  },
   "buttons": {
     "back": "Back",
     "accept": "Accept",
@@ -11,6 +15,7 @@
     "save": "Save"
   },
   "settings": {
+    "title": "Settings",
     "language_config": {
       "title": "Language selection",
       "language": "Language"
@@ -73,27 +78,36 @@
       "taxes": "Taxes",
       "unit_types": "Unit types",
       "warehouses": "Warehouses",
-      "categories": "Categories"
+      "categories": "Categories",
+      "clients": "Clients",
+      "providers": "Providers",
+      "client_bills": "Bills to clients",
+      "provider_bills": "Bills from providers",
+      "client_budgets": "Budgets to clients",
+      "provider_budgets": "Budgets from providers"
     },
     "product": {
       "create": "Add new product",
       "edit": "Edit product",
       "list": "Product list",
-      "state": {
-        "available": "Available",
-        "hidden": "Hidden"
+      "creation": {
+        "basic_information": "Basic information",
+        "stock_information": "Stock information",
+        "buying_information": "Buying information",
+        "selling_information": "Selling information"
       },
       "structure": {
         "reference": "Reference",
         "name": "Name",
+        "description": "Description",
         "base_price": "Base price ({{currency}})",
+        "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Discount (%)",
         "tax_percentage": "Tax (%)",
         "stock": "Stock",
         "unit_type": "Unit type",
         "warehouse": "Warehouse",
         "categories": "Categories",
-        "visible": "Visibility",
         "stock_alert": "Alert when stock is too low.",
         "min_stock": "Minimum stock"
       }
@@ -136,9 +150,73 @@
         "address": "Address"
       }
     },
+    "client": {
+      "create": "Add new client",
+      "edit": "Edit client",
+      "list": "Client list",
+      "creation": {
+        "contact_data": "Contact data",
+        "fiscal_data": "Fiscal data",
+        "postal_data": "Postal data",
+        "tributation_data": "Tributation data",
+        "efact_data": "Electronic billing data"
+      },
+      "structure": {
+        "reference": "Reference",
+        "name": "Name",
+        "main_phone_phone": "Main phone number",
+        "main_phone_description": "Main phone description",
+        "main_email_email": "Main email address",
+        "main_email_description": "Main email description",
+        "nif": "N.I.F.",
+        "email": "Email",
+        "email_description": "Email description",
+        "retention_percentage": "Retention (%)",
+        "personal_discount": "Personal discount (%)",
+        "accounting_office_code": "Accounting office code",
+        "accounting_office_name": "Accounting office name",
+        "management_body_code": "Management body code",
+        "management_body_name": "Management body name",
+        "processing_unit_code": "Processing unit code",
+        "processing_unit_name": "Processing unit name",
+        "electronic_billing_code": "Electronic billing code"
+      }
+    },
+    "provider": {
+      "create": "Add new provider",
+      "edit": "Edit provider",
+      "list": "Provider list",
+      "creation": {
+        "contact_data": "Contact data",
+        "fiscal_data": "Fiscal data",
+        "postal_data": "Postal data",
+        "tributation_data": "Tributation data",
+        "efact_data": "Electronic billing data"
+      },
+      "structure": {
+        "reference": "Reference",
+        "name": "Name",
+        "main_phone_phone": "Main phone number",
+        "main_phone_description": "Main phone description",
+        "main_email_email": "Main email address",
+        "main_email_description": "Main email description",
+        "nif": "N.I.F.",
+        "email": "Email",
+        "email_description": "Email description",
+        "retention_percentage": "Retention (%)",
+        "personal_discount": "Personal discount (%)",
+        "accounting_office_code": "Accounting office code",
+        "accounting_office_name": "Accounting office name",
+        "management_body_code": "Management body code",
+        "management_body_name": "Management body name",
+        "processing_unit_code": "Processing unit code",
+        "processing_unit_name": "Processing unit name",
+        "electronic_billing_code": "Electronic billing code"
+      }
+    },
     "event": {
       "new": "New event",
-      "event": "Edit event",
+      "edit": "Edit event",
       "structure": {
         "title": "Title",
         "start": "Start date",
@@ -146,6 +224,17 @@
         "description": "Description",
         "color": "Color",
         "all_day": "The event lasts all day."
+      },
+      "colors": {
+        "lightseagreen": "Sea green",
+        "lightblue": "Blue",
+        "lightcoral": "Coral",
+        "lightgoldenrodyellow": "Golden",
+        "lightcyan": "Cyan",
+        "lightpink": "Pink",
+        "lightgreen": "Green",
+        "lightsalmon": "Salmon",
+        "lightgray": "Gray"
       }
     },
     "address": {

@@ -1,8 +1,8 @@
-/* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
-import { connect as connectDb } from '../db/db';
+import { connectDb } from '../db/db';
 import logo from '../../assets/gestishop_logo.png';
 
 const useStyles = makeStyles(() => ({
@@ -20,8 +20,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Home = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
+  const [text, setText] = useState(t('home.loading'));
 
   useEffect(() => {
     console.log('Starting db connection');
@@ -33,13 +35,14 @@ const Home = () => {
       })
       .catch((err) => {
         console.log('Failed to connect to db', err);
+        setText(t('home.error'));
       });
   }, []);
 
   return (
     <div className={classes.floatCenter}>
       <img className={classes.logo} src={logo} alt="GestiShop" />
-      <p>Starting, please wait...</p>
+      <p>{text}</p>
     </div>
   );
 };

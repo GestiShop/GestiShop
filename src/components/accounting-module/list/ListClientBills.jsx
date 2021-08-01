@@ -1,50 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import GenericListComponent from './GenericListComponent';
-import { deleteProducts, fetchProducts } from '../../../db/ProductHelper';
-import CreateProduct from '../create/CreateProduct';
+import {
+  deleteClientBills,
+  fetchClientBills,
+} from '../../../db/ClientBillHelper';
+import CreateClientBill from '../create/CreateClientBill';
 import useIsMounted from '../../../utils/useIsMounted';
 
-const ListProducts = () => {
+const ListClientBills = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const isMounted = useIsMounted();
-  const currency = useSelector(
-    (store) => store.configuration.currencyInfo.currency.label
-  );
 
   const headers = [
     {
       id: 'reference',
-      label: t('accounting_module.product.structure.reference'),
+      label: t('accounting_module.bill.structure.reference'),
       align: 'left',
-    },
-    {
-      id: 'name',
-      label: t('accounting_module.product.structure.name'),
-      align: 'left',
-    },
-    {
-      id: 'basePrice',
-      label: t('accounting_module.product.structure.base_price', { currency }),
-      align: 'right',
-      parents: ['sellingInfo'],
-    },
-    {
-      id: 'stock',
-      label: t('accounting_module.product.structure.stock'),
-      align: 'right',
-    },
-    {
-      id: 'minStock',
-      label: t('accounting_module.product.structure.min_stock'),
-      align: 'right',
     },
   ];
 
   const fetchData = () => {
-    fetchProducts(
+    fetchClientBills(
       (error) => {
         console.log('error', error);
       },
@@ -55,7 +33,7 @@ const ListProducts = () => {
   };
 
   const deleteData = (ids) => {
-    deleteProducts(
+    deleteClientBills(
       ids,
       (error) => {
         console.log('error', error);
@@ -91,13 +69,13 @@ const ListProducts = () => {
       searchCallback={handleSearch}
       deleteCallback={handleDelete}
       texts={{
-        create: t('accounting_module.product.create'),
-        title: t('accounting_module.product.list'),
-        edit: t('accounting_module.product.edit'),
+        create: t('accounting_module.bill.client.create'),
+        title: t('accounting_module.bill.client.list'),
+        edit: t('accounting_module.bill.client.edit'),
       }}
-      creationComponent={<CreateProduct />}
+      creationComponent={<CreateClientBill />}
     />
   );
 };
 
-export default ListProducts;
+export default ListClientBills;

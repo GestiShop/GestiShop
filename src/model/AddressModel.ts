@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-const { Schema } = window.require('mongoose');
+import { Schema } from 'mongoose';
 
 const addressSchema = new Schema({
   roadType: { type: String, required: true },
@@ -11,7 +11,7 @@ const addressSchema = new Schema({
   zipCode: { type: String, required: true },
   city: { type: String, required: true },
   province: { type: String, required: true },
-  state: { type: String, required: true },
+  state: String,
   country: { type: String, required: true },
 });
 

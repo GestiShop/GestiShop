@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function ConfigDbInfo() {
+const ConfigDbInfo = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -139,4 +139,6 @@ export default function ConfigDbInfo() {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default ConfigDbInfo;

@@ -1,38 +1,34 @@
+import { Schema, Types, model } from 'mongoose';
 import { phoneSchema } from './PhoneModel';
 import { emailSchema } from './EmailModel';
 import { addressSchema } from './AddressModel';
 import { eFactSchema } from './EFactModel';
 
-const mongoose = window.require('mongoose');
-const { Schema } = mongoose;
-
 const providerSchema = new Schema({
   reference: { type: String, unique: true, required: true, dropDups: true },
   contactData: {
-    name: String,
-    mainPhone: { type: mongoose.Types.ObjectId, ref: 'Provider.phones' },
-    phones: [phoneSchema],
-    mainEmail: { type: mongoose.Types.ObjectId, ref: 'Provider.emails' },
-    emails: [emailSchema],
+    name: { type: String, required: true },
+    phone: phoneSchema,
+    email: emailSchema,
   },
   fiscalData: {
-    name: String,
-    nif: String,
+    name: { type: String, required: true },
+    nif: { type: String, required: true },
     address: addressSchema,
   },
   postalData: {
-    name: String,
-    email: { type: mongoose.Types.ObjectId, ref: 'Provider.emails' },
+    name: { type: String, required: true },
+    email: emailSchema,
     address: addressSchema,
   },
   tributationData: {
-    retentionPercentage: Number,
-    personalDiscount: Number,
+    retentionPercentage: { type: Number, required: true, default: 0.0 },
+    personalDiscount: { type: Number, required: true, default: 0.0 },
   },
   eFactData: eFactSchema,
-  bills: [{ type: mongoose.Types.ObjectId, ref: 'ProviderBill' }],
+  bills: [{ type: Types.ObjectId, ref: 'ProviderBill' }],
 });
 
-const Provider = mongoose.model('Provider', providerSchema, 'providers');
+const Provider = model('Provider', providerSchema, 'providers');
 
 export { providerSchema, Provider };

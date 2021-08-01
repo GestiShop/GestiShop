@@ -1,14 +1,12 @@
+import { Types, Schema, model } from 'mongoose';
 import { addressSchema } from './AddressModel';
 import { paymentMethodSchema } from './PaymentMethodModel';
-
-const mongoose = window.require('mongoose');
-const { Schema } = mongoose;
 
 const billSchema = new Schema({
   billNumber: { type: Number, unique: true, required: true, dropDups: true },
   date: Date,
   entityData: {
-    entity: { type: mongoose.Types.ObjectId },
+    entity: { type: Types.ObjectId },
     fiscalData: {
       name: String,
       nif: String,
@@ -17,7 +15,7 @@ const billSchema = new Schema({
   },
   products: [
     {
-      product: { type: mongoose.Types.ObjectId, ref: 'Product' },
+      product: { type: Types.ObjectId, ref: 'Product' },
       reference: String,
       name: String,
       basePrice: Number,
@@ -36,11 +34,7 @@ const billSchema = new Schema({
   isPaid: Boolean,
 });
 
-const ClientBill = mongoose.model('ClientBill', billSchema, 'clientBills');
-const ProviderBill = mongoose.model(
-  'ProviderBill',
-  billSchema,
-  'providerBills'
-);
+const ClientBill = model('ClientBill', billSchema, 'clientBills');
+const ProviderBill = model('ProviderBill', billSchema, 'providerBills');
 
 export { billSchema, ClientBill, ProviderBill };

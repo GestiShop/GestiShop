@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import Button from './ui/forms/Button';
 
 const Dashboard = () => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Grid container>
@@ -11,18 +14,13 @@ const Dashboard = () => {
           <Container maxWidth="md">
             <Grid container spacing={2}>
               <Grid item xs={12} className="d-flex">
-                <Button component={Link} to="/onboarding" replace>
-                  OnBoarding
-                </Button>
-              </Grid>
-              <Grid item xs={12} className="d-flex">
                 <Button component={Link} to="/settings" replace>
-                  Settings
+                  {t('settings.title')}
                 </Button>
               </Grid>
               <Grid item xs={12} className="d-flex">
                 <Button component={Link} to="/accounting_module" replace>
-                  Accounting Module
+                  {t('accounting_module.accounting_module')}
                 </Button>
               </Grid>
             </Grid>

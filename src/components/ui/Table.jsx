@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/prop-types */
@@ -9,7 +10,6 @@ import { lighten, makeStyles } from '@material-ui/core/styles';
 import {
   Button,
   Checkbox,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -32,8 +32,6 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
@@ -371,41 +369,6 @@ const EnhancedTable = ({
                           </TableCell>
                         );
                         break;
-                      case 'visible':
-                        if (row.visible === true) {
-                          headerCells.push(
-                            <TableCell
-                              key={header.id}
-                              align={header.align}
-                              padding="normal"
-                            >
-                              <Chip
-                                label={t(
-                                  'accounting_module.product.state.available'
-                                ).toUpperCase()}
-                                icon={<VisibilityIcon />}
-                                color="primary"
-                              />
-                            </TableCell>
-                          );
-                        } else {
-                          headerCells.push(
-                            <TableCell
-                              key={header.id}
-                              align={header.align}
-                              padding="normal"
-                            >
-                              <Chip
-                                label={t(
-                                  'accounting_module.product.state.hidden'
-                                ).toUpperCase()}
-                                icon={<VisibilityOffIcon />}
-                                color="secondary"
-                              />
-                            </TableCell>
-                          );
-                        }
-                        break;
                       case 'parent':
                         headerCells.push(
                           <TableCell
@@ -422,13 +385,24 @@ const EnhancedTable = ({
                         );
                         break;
                       default:
+                        let rowToRender;
+                        if (header.parents) {
+                          let finalParent = row;
+                          for (const headerParent of header.parents) {
+                            finalParent = finalParent[headerParent];
+                          }
+                          rowToRender = finalParent[header.id];
+                        } else {
+                          rowToRender = row[header.id];
+                        }
+
                         headerCells.push(
                           <TableCell
                             key={header.id}
                             align={header.align}
                             padding="normal"
                           >
-                            {row[header.id]}
+                            {rowToRender}
                           </TableCell>
                         );
                         break;

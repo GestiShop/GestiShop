@@ -1,4 +1,8 @@
 {
+  "home": {
+    "loading": "Connectant, esperi si us plau...",
+    "error": "S'ha produït un error en intentar connectar-se a la base de dades. Si us plau, reinicieu l'aplicació."
+  },
   "buttons": {
     "back": "Enrere",
     "accept": "Acceptar",
@@ -11,6 +15,7 @@
     "save": "Guardar"
   },
   "settings": {
+    "title": "Configuració",
     "language_config": {
       "title": "Selecció de l'idioma",
       "language": "Idioma"
@@ -73,27 +78,36 @@
       "taxes": "Impostos",
       "unit_types": "Tipus d'unitats",
       "warehouses": "Magatzems",
-      "categories": "Categories"
+      "categories": "Categories",
+      "clients": "Clients",
+      "providers": "Proveïdors",
+      "client_bills": "Factures a clients",
+      "provider_bills": "Factures de proveïdors",
+      "client_budgets": "Pressupostos a clients",
+      "provider_budgets": "Pressupostos de proveïdors"
     },
     "product": {
       "create": "Afegir un producte",
       "edit": "Editar producte",
       "list": "Llistat de productes",
-      "state": {
-        "available": "Disponible",
-        "hidden": "Amagat"
+      "creation": {
+        "basic_information": "Informació bàsica",
+        "stock_information": "Informació de stock",
+        "buying_information": "Informació de compra",
+        "selling_information": "Informació de venta"
       },
       "structure": {
         "reference": "Referència",
         "name": "Nom",
+        "description": "Descripció",
         "base_price": "Preu base ({{currency}})",
+        "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descompte (%)",
         "tax_percentage": "Impost (%)",
         "stock": "Stock",
         "unit_type": "Tipus d'unitat",
         "warehouse": "Magatzem",
         "categories": "Categories",
-        "visible": "Visibilitat",
         "stock_alert": "Alertar quan les existències siguin massa baixes.",
         "min_stock": "Stock mínim"
       }
@@ -136,9 +150,73 @@
         "address": "Adreça"
       }
     },
+    "client": {
+      "create": "Afegir un client",
+      "edit": "Editar client",
+      "list": "Llistat de clients",
+      "creation": {
+        "contact_data": "Dades de contacte",
+        "fiscal_data": "Dades fiscals",
+        "postal_data": "Dades postals",
+        "tributation_data": "Dades de tributació",
+        "efact_data": "Dades de facturació electrònica"
+      },
+      "structure": {
+        "reference": "Referència",
+        "name": "Nom",
+        "main_phone_phone": "Número de telèfon principal",
+        "main_phone_description": "Descripció del telèfon principal",
+        "main_email_email": "Direcció de l'email principal",
+        "main_email_description": "Descripció de l'email principal",
+        "nif": "N.I.F.",
+        "email": "Email",
+        "email_description": "Descripció de l'email",
+        "retention_percentage": "Retenció (%)",
+        "personal_discount": "Descompte personal (%)",
+        "accounting_office_code": "Codi de l'oficina de comptabilitat",
+        "accounting_office_name": "Nom de l'oficina de comptabilitat",
+        "management_body_code": "Codi de l'organisme de gestió",
+        "management_body_name": "Nom de l'organisme de gestió",
+        "processing_unit_code": "Codi d'unitat de processament",
+        "processing_unit_name": "Nom d'unitat de processament",
+        "electronic_billing_code": "Codi de facturació electrònica"
+      }
+    },
+    "provider": {
+      "create": "Afegir un proveïdor",
+      "edit": "Editar proveïdor",
+      "list": "Llistat de proveïdors",
+      "creation": {
+        "contact_data": "Dades de contacte",
+        "fiscal_data": "Dades fiscals",
+        "postal_data": "Dades postals",
+        "tributation_data": "Dades de tributació",
+        "efact_data": "Dades de facturació electrònica"
+      },
+      "structure": {
+        "reference": "Referència",
+        "name": "Nom",
+        "main_phone_phone": "Número de telèfon principal",
+        "main_phone_description": "Descripció del telèfon principal",
+        "main_email_email": "Direcció de l'email principal",
+        "main_email_description": "Descripció de l'email principal",
+        "nif": "N.I.F.",
+        "email": "Email",
+        "email_description": "Descripció de l'email",
+        "retention_percentage": "Retenció (%)",
+        "personal_discount": "Descompte personal (%)",
+        "accounting_office_code": "Codi de l'oficina de comptabilitat",
+        "accounting_office_name": "Nom de l'oficina de comptabilitat",
+        "management_body_code": "Codi de l'organisme de gestió",
+        "management_body_name": "Nom de l'organisme de gestió",
+        "processing_unit_code": "Codi d'unitat de processament",
+        "processing_unit_name": "Nom d'unitat de processament",
+        "electronic_billing_code": "Codi de facturació electrònica"
+      }
+    },
     "event": {
       "new": "Nou esdeveniment",
-      "event": "Editar esdeveniment",
+      "edit": "Editar esdeveniment",
       "structure": {
         "title": "Títol",
         "start": "Data d'inici",
@@ -146,6 +224,17 @@
         "description": "Descripció",
         "color": "Color",
         "all_day": "L’esdeveniment dura tot el dia."
+      },
+      "colors": {
+        "lightseagreen": "Verd mar",
+        "lightblue": "Blau",
+        "lightcoral": "Corall",
+        "lightgoldenrodyellow": "Daurat",
+        "lightcyan": "Cian",
+        "lightpink": "Rosa",
+        "lightgreen": "Verd",
+        "lightsalmon": "Salmó",
+        "lightgray": "Gris"
       }
     },
     "address": {

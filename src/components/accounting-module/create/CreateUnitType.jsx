@@ -73,14 +73,18 @@ const CreateUnitType = ({ closeCallback, initialState }) => {
                 <Grid item xs={6}>
                   <TextField
                     name="reference"
-                    label={t('accounting_module.unit_type.structure.reference')}
+                    label={`${t(
+                      'accounting_module.unit_type.structure.reference'
+                    )} *`}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
                     name="unit"
-                    label={t('accounting_module.unit_type.structure.unit')}
+                    label={`${t(
+                      'accounting_module.unit_type.structure.unit'
+                    )} *`}
                   />
                 </Grid>
 

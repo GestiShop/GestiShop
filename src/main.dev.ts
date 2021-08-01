@@ -15,9 +15,8 @@ import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import Store from 'electron-store';
+import url from 'url';
 import MenuBuilder from './menu';
-
-const url = require('url');
 
 export default class AppUpdater {
   constructor() {
