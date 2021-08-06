@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable eqeqeq */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import Button from '../../ui/forms/Button';
 import SearchBar from '../../ui/SearchBar';
@@ -19,6 +19,7 @@ const GenericListComponent = ({
 }) => {
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
   const [initialState, setInitialState] = useState(false);
+  const [filteredRows, setFilteredRows] = useState(rows);
 
   const handleEdit = (id) => {
     setInitialState(rows.find((row) => row._id == id));
@@ -29,6 +30,25 @@ const GenericListComponent = ({
     setOpenCreationDialog(false);
     editCallback();
   };
+
+  const handleSearch = (query) => {
+    if (!headers) {
+      return;
+    }
+
+    const searchQuery = query.trim().toLowerCase();
+    setFilteredRows(
+      rows.filter((row) =>
+        row[headers[0].id].toString().toLowerCase().includes(searchQuery)
+      )
+    );
+
+    searchCallback(query);
+  };
+
+  useEffect(() => {
+    setFilteredRows(rows);
+  }, [rows]);
 
   return (
     <>
@@ -48,12 +68,12 @@ const GenericListComponent = ({
               </Grid>
               <Grid item xs={6} />
               <Grid item xs={3}>
-                <SearchBar onSubmit={(query) => searchCallback(query)} />
+                <SearchBar onSubmit={handleSearch} />
               </Grid>
 
               <Grid item xs={12}>
                 <Table
-                  rows={rows}
+                  rows={filteredRows}
                   headers={headers}
                   title={texts.title}
                   editCallback={handleEdit}
