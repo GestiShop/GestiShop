@@ -10,6 +10,7 @@ const SelectWrapper = ({
   options,
   onInput,
   acceptNone,
+  required,
   ...otherProps
 }) => {
   const { setFieldValue } = useFormikContext();
@@ -29,6 +30,9 @@ const SelectWrapper = ({
     variant: 'outlined',
     fullWidth: true,
     onChange: handleChange,
+    InputLabelProps: {
+      required,
+    },
   };
 
   if (meta && meta.touched && meta.error) {

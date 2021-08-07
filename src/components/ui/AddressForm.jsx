@@ -11,25 +11,28 @@ const AddressForm = ({ parent, disabled }) => {
     <>
       <Grid item xs={3}>
         <TextField
+          required
           disabled={disabled}
           name={`${parent}.roadType`}
-          label={`${t('accounting_module.address.road_type')} *`}
+          label={t('accounting_module.address.road_type')}
         />
       </Grid>
 
       <Grid item xs={9}>
         <TextField
+          required
           disabled={disabled}
           name={`${parent}.street`}
-          label={`${t('accounting_module.address.street')} *`}
+          label={t('accounting_module.address.street')}
         />
       </Grid>
 
       <Grid item xs={4}>
         <TextField
+          required
           disabled={disabled}
           name={`${parent}.number`}
-          label={`${t('accounting_module.address.number')} *`}
+          label={t('accounting_module.address.number')}
         />
       </Grid>
 
@@ -59,25 +62,28 @@ const AddressForm = ({ parent, disabled }) => {
 
       <Grid item xs={4}>
         <TextField
+          required
           disabled={disabled}
           name={`${parent}.zipCode`}
-          label={`${t('accounting_module.address.zip_code')} *`}
+          label={t('accounting_module.address.zip_code')}
         />
       </Grid>
 
       <Grid item xs={4}>
         <TextField
+          required
           disabled={disabled}
           name={`${parent}.city`}
-          label={`${t('accounting_module.address.city')} *`}
+          label={t('accounting_module.address.city')}
         />
       </Grid>
 
       <Grid item xs={4}>
         <TextField
+          required
           disabled={disabled}
           name={`${parent}.province`}
-          label={`${t('accounting_module.address.province')} *`}
+          label={t('accounting_module.address.province')}
         />
       </Grid>
 
@@ -91,9 +97,10 @@ const AddressForm = ({ parent, disabled }) => {
 
       <Grid item xs={6}>
         <TextField
+          required
           disabled={disabled}
           name={`${parent}.country`}
-          label={`${t('accounting_module.address.country')} *`}
+          label={t('accounting_module.address.country')}
         />
       </Grid>
     </>

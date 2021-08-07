@@ -4,7 +4,7 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import { useField } from 'formik';
 
-const DateTimePicker = ({ name, ...otherProps }) => {
+const DateTimePicker = ({ name, required, ...otherProps }) => {
   const [field, meta] = useField(name);
 
   const configDateTimePicker = {
@@ -15,6 +15,7 @@ const DateTimePicker = ({ name, ...otherProps }) => {
     fullWidth: true,
     InputLabelProps: {
       shrink: true,
+      required,
     },
   };
 

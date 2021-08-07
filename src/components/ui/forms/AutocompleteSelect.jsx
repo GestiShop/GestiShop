@@ -11,6 +11,7 @@ const AutocompleteSelectWrapper = ({
   label,
   options,
   onInput,
+  required,
   ...otherProps
 }) => {
   const [field, meta] = useField(name);
@@ -32,6 +33,10 @@ const AutocompleteSelectWrapper = ({
     variant: 'outlined',
     fullWidth: true,
     label,
+    InputLabelProps: {
+      shrink: true,
+      required,
+    },
   };
 
   if (meta && meta.touched && meta.error) {

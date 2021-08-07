@@ -207,11 +207,15 @@ const CreateClient = ({ closeCallback, initialState }) => {
     );
   };
 
-  const handleProductSelect = (productId, setFieldValue) => {
+  const handleProductSelect = (productId, index, setFieldValue) => {
     const selectedProduct = productList.find(
       (product) => product.id === productId
     );
+
     console.log(selectedProduct);
+
+    setFieldValue(`products.${index}.reference`, 'caca');
+    setFieldValue(`products.${index}.name`, 'caca2');
   };
 
   return (
@@ -219,6 +223,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
+            enableReinitialize
             initialValues={{ ...INITIAL_STATE }}
             validationSchema={FORM_VALIDATION}
             onSubmit={(values) => handleSubmit(values)}
@@ -228,17 +233,17 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <TextField
+                      required
                       name="billNumber"
-                      label={`${t(
-                        'accounting_module.bill.structure.bill_number'
-                      )} *`}
+                      label={t('accounting_module.bill.structure.bill_number')}
                     />
                   </Grid>
 
                   <Grid item xs={6}>
                     <DatePicker
+                      required
                       name="date"
-                      label={`${t('accounting_module.bill.structure.date')} *`}
+                      label={t('accounting_module.bill.structure.date')}
                     />
                   </Grid>
 
@@ -250,10 +255,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                   <Grid item xs={12}>
                     <AutocompleteSelect
+                      required
                       name="entityData.entity"
-                      label={`${t(
-                        'accounting_module.bill.structure.client'
-                      )} *`}
+                      label={t('accounting_module.bill.structure.client')}
                       options={clientListOptions}
                       onInput={(clientId) =>
                         handleClientSelect(clientId, setFieldValue)
@@ -264,20 +268,18 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   <Grid item xs={12}>
                     <TextField
                       disabled
+                      required
                       name="entityData.fiscalData.name"
-                      label={`${t(
-                        'accounting_module.bill.structure.client_name'
-                      )} *`}
+                      label={t('accounting_module.bill.structure.client_name')}
                     />
                   </Grid>
 
                   <Grid item xs={12}>
                     <TextField
                       disabled
+                      required
                       name="entityData.fiscalData.nif"
-                      label={`${t(
-                        'accounting_module.bill.structure.client_nif'
-                      )} *`}
+                      label={t('accounting_module.bill.structure.client_nif')}
                     />
                   </Grid>
 
@@ -302,14 +304,16 @@ const CreateClient = ({ closeCallback, initialState }) => {
                               <Grid container spacing={2} key={index}>
                                 <Grid item xs={10}>
                                   <AutocompleteSelect
+                                    required
                                     name={`products.${index}.product`}
-                                    label={`${t(
+                                    label={t(
                                       'accounting_module.bill.structure.product'
-                                    )} *`}
+                                    )}
                                     options={productListOptions}
                                     onInput={(productId) =>
                                       handleProductSelect(
                                         productId,
+                                        index,
                                         setFieldValue
                                       )
                                     }
@@ -338,6 +342,28 @@ const CreateClient = ({ closeCallback, initialState }) => {
                                     +
                                   </Button>
                                 </Grid>
+
+                                <Grid item xs={3}>
+                                  <TextField
+                                    disabled
+                                    required
+                                    name={`products.${index}.reference`}
+                                    label={t(
+                                      'accounting_module.product.structure.reference'
+                                    )}
+                                  />
+                                </Grid>
+
+                                <Grid item xs={9}>
+                                  <TextField
+                                    disabled
+                                    required
+                                    name={`products.${index}.name`}
+                                    label={t(
+                                      'accounting_module.product.structure.name'
+                                    )}
+                                  />
+                                </Grid>
                               </Grid>
                             ))
                           ) : (
@@ -346,7 +372,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                                 arrayHelpers.push(EmptyBillProduct)
                               }
                             >
-                              Add a product
+                              {t('accounting_module.product.create')}
                             </Button>
                           )}
                         </div>

@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { TextField } from '@material-ui/core';
 import { useField } from 'formik';
+import TextField from './TextField';
 
-const DatePicker = ({ name, ...otherProps }) => {
+const DatePicker = ({ name, required, ...otherProps }) => {
   const [field, meta] = useField(name);
 
   const configDatePicker = {
@@ -15,6 +15,7 @@ const DatePicker = ({ name, ...otherProps }) => {
     fullWidth: true,
     InputLabelProps: {
       shrink: true,
+      required,
     },
   };
 

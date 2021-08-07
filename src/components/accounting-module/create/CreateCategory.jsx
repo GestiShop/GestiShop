@@ -117,17 +117,17 @@ const CreateCategory = ({ closeCallback, initialState }) => {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="reference"
-                    label={`${t(
-                      'accounting_module.category.structure.reference'
-                    )} *`}
+                    label={t('accounting_module.category.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="name"
-                    label={`${t('accounting_module.category.structure.name')}*`}
+                    label={t('accounting_module.category.structure.name')}
                   />
                 </Grid>
 
