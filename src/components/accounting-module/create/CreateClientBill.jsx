@@ -1,8 +1,9 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FieldArray } from 'formik';
 import { Container, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
@@ -10,11 +11,13 @@ import SubmitButton from '../../ui/forms/SubmitButton';
 import Switch from '../../ui/forms/Switch';
 import { addClientBill, updateClientBill } from '../../../db/ClientBillHelper';
 import { fetchClients } from '../../../db/ClientHelper';
+import { fetchProducts } from '../../../db/ProductHelper';
 import DatePicker from '../../ui/forms/DatePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
-import { EmptyAddress } from '../../../utils/constants';
+import { EmptyAddress, EmptyBillProduct } from '../../../utils/constants';
+import Button from '../../ui/forms/Button';
 
 const getCurrentDate = () => {
   const today = new Date();
@@ -30,6 +33,8 @@ const CreateClient = ({ closeCallback, initialState }) => {
   const isMounted = useIsMounted();
   const [clientList, setClientList] = useState([]);
   const [clientListOptions, setClientListOptions] = useState([]);
+  const [productList, setProductList] = useState([]);
+  const [productListOptions, setProductListOptions] = useState([]);
 
   const fetchData = () => {
     fetchClients(
@@ -45,6 +50,26 @@ const CreateClient = ({ closeCallback, initialState }) => {
               return {
                 value: client.id,
                 displayText: `${client.fiscalData.name} [${client.reference}]`,
+              };
+            })
+          );
+        }
+      }
+    );
+
+    fetchProducts(
+      (error) => {
+        console.log('error', error);
+        closeCallback();
+      },
+      (options) => {
+        if (isMounted.current) {
+          setProductList(options);
+          setProductListOptions(
+            options.map((product) => {
+              return {
+                value: product.id,
+                displayText: `${product.name} [${product.reference}]`,
               };
             })
           );
@@ -69,7 +94,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
         address: EmptyAddress,
       },
     },
-    products: {},
+    products: [],
     notes: '',
     generalDiscount: 0,
     paymentData: {},
@@ -95,7 +120,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
       .typeError(t('form.errors.invalid_number'))
       .required(t('form.errors.required')),
     entity: Yup.object().required(t('form.errors.required')),
-    products: Yup.array().of(Yup.object().shape({})),
+    products: Yup.array().of(Yup.object()),
     notes: Yup.string(),
     generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
     paymentData: Yup.object().shape({}),
@@ -182,6 +207,13 @@ const CreateClient = ({ closeCallback, initialState }) => {
     );
   };
 
+  const handleProductSelect = (productId, setFieldValue) => {
+    const selectedProduct = productList.find(
+      (product) => product.id === productId
+    );
+    console.log(selectedProduct);
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -191,7 +223,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
             validationSchema={FORM_VALIDATION}
             onSubmit={(values) => handleSubmit(values)}
           >
-            {({ setFieldValue }) => (
+            {({ values, setFieldValue }) => (
               <Form>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
@@ -261,7 +293,65 @@ const CreateClient = ({ closeCallback, initialState }) => {
                   </Grid>
 
                   <Grid item xs={12}>
-                    Products form
+                    <FieldArray
+                      name="products"
+                      render={(arrayHelpers) => (
+                        <div>
+                          {values.products && values.products.length > 0 ? (
+                            values.products.map((product, index) => (
+                              <Grid container spacing={2} key={index}>
+                                <Grid item xs={10}>
+                                  <AutocompleteSelect
+                                    name={`products.${index}.product`}
+                                    label={`${t(
+                                      'accounting_module.bill.structure.product'
+                                    )} *`}
+                                    options={productListOptions}
+                                    onInput={(productId) =>
+                                      handleProductSelect(
+                                        productId,
+                                        setFieldValue
+                                      )
+                                    }
+                                  />
+                                </Grid>
+
+                                <Grid item xs={1}>
+                                  <Button
+                                    className="h-100"
+                                    onClick={() => arrayHelpers.remove(index)}
+                                  >
+                                    -
+                                  </Button>
+                                </Grid>
+
+                                <Grid item xs={1}>
+                                  <Button
+                                    className="h-100"
+                                    onClick={() =>
+                                      arrayHelpers.insert(
+                                        index,
+                                        EmptyBillProduct
+                                      )
+                                    }
+                                  >
+                                    +
+                                  </Button>
+                                </Grid>
+                              </Grid>
+                            ))
+                          ) : (
+                            <Button
+                              onClick={() =>
+                                arrayHelpers.push(EmptyBillProduct)
+                              }
+                            >
+                              Add a product
+                            </Button>
+                          )}
+                        </div>
+                      )}
+                    />
                   </Grid>
 
                   <Grid item xs={12}>

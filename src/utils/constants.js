@@ -24,6 +24,10 @@ export const EmptyAddress = {
   country: '',
 };
 
+export const EmptyBillProduct = {
+  name: '',
+};
+
 export const EmptyEfact = {
   accountingOfficeCode: '',
   accountingOfficeName: '',
