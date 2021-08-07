@@ -26,7 +26,9 @@ const billSchema = new Schema({
     },
   ],
   notes: String,
+  basePrice: Number,
   generalDiscount: Number,
+  pvp: Number,
   paymentData: {
     method: paymentMethodSchema,
     expirationDate: Date,

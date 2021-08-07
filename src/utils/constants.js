@@ -25,7 +25,16 @@ export const EmptyAddress = {
 };
 
 export const EmptyBillProduct = {
+  product: '',
+  reference: '',
   name: '',
+  basePricePerUnit: 0,
+  basePrice: 0,
+  unitType: '',
+  discountPercentage: 0,
+  taxPercentage: 0,
+  quantity: 0,
+  pvp: 0,
 };
 
 export const EmptyEfact = {

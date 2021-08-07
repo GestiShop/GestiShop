@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
@@ -5,7 +6,10 @@ import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik, FieldArray } from 'formik';
 import { Container, Grid, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import Switch from '../../ui/forms/Switch';
@@ -35,6 +39,10 @@ const CreateClient = ({ closeCallback, initialState }) => {
   const [clientListOptions, setClientListOptions] = useState([]);
   const [productList, setProductList] = useState([]);
   const [productListOptions, setProductListOptions] = useState([]);
+
+  const currency = useSelector(
+    (store) => store.configuration.currencyInfo.currency.label
+  );
 
   const fetchData = () => {
     fetchClients(
@@ -96,10 +104,13 @@ const CreateClient = ({ closeCallback, initialState }) => {
     },
     products: [],
     notes: '',
+    basePrice: 0,
     generalDiscount: 0,
+    pvp: 0,
     paymentData: {},
     isPaid: false,
   };
+
   if (initialState) {
     INITIAL_STATE = {
       billNumber: initialState.billNumber,
@@ -107,7 +118,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
       entityData: initialState.entityData,
       products: initialState.products,
       notes: initialState.notes,
+      basePrice: initialState.basePrice,
       generalDiscount: initialState.generalDiscount,
+      pvp: initialState.pvp,
       paymentData: initialState.paymentData,
       isPaid: initialState.isPaid,
     };
@@ -116,13 +129,38 @@ const CreateClient = ({ closeCallback, initialState }) => {
   // TODO: FINISH
   const FORM_VALIDATION = Yup.object().shape({
     billNumber: Yup.string().required(t('form.errors.required')),
-    date: Yup.date()
-      .typeError(t('form.errors.invalid_number'))
-      .required(t('form.errors.required')),
+    date: Yup.date().required(t('form.errors.required')),
     entity: Yup.object().required(t('form.errors.required')),
-    products: Yup.array().of(Yup.object()),
+    products: Yup.array().of(
+      Yup.object().shape({
+        product: Yup.object().required(t('form.errors.required')),
+        reference: Yup.string().required(t('form.errors.required')),
+        name: Yup.string().required(t('form.errors.required')),
+        basePricePerUnit: Yup.number()
+          .typeError(t('form.errors.invalid_number'))
+          .required(t('form.errors.required')),
+        basePrice: Yup.number()
+          .typeError(t('form.errors.invalid_number'))
+          .required(t('form.errors.required')),
+        unitType: Yup.string().required(t('form.errors.required')),
+        discountPercentage: Yup.number()
+          .typeError(t('form.errors.invalid_number'))
+          .required(t('form.errors.required')),
+        taxPercentage: Yup.number()
+          .typeError(t('form.errors.invalid_number'))
+          .required(t('form.errors.required')),
+        quantity: Yup.number()
+          .typeError(t('form.errors.invalid_number'))
+          .required(t('form.errors.required')),
+        pvp: Yup.number()
+          .typeError(t('form.errors.invalid_number'))
+          .required(t('form.errors.required')),
+      })
+    ),
     notes: Yup.string(),
+    basePrice: Yup.number().typeError(t('form.errors.invalid_number')),
     generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
+    pvp: Yup.number().typeError(t('form.errors.invalid_number')),
     paymentData: Yup.object().shape({}),
     isPaid: Yup.bool().required(t('form.errors.required')),
   });
@@ -214,8 +252,20 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
     console.log(selectedProduct);
 
-    setFieldValue(`products.${index}.reference`, 'caca');
-    setFieldValue(`products.${index}.name`, 'caca2');
+    setFieldValue(`products.${index}.reference`, selectedProduct.reference);
+    setFieldValue(`products.${index}.name`, selectedProduct.name);
+    setFieldValue(
+      `products.${index}.basePricePerUnit`,
+      selectedProduct.sellingInfo.basePricePerUnit
+    );
+    setFieldValue(
+      `products.${index}.discountPercentage`,
+      selectedProduct.sellingInfo.discountPercentage
+    );
+    setFieldValue(
+      `products.${index}.taxPercentage`,
+      selectedProduct.sellingInfo.taxPercentage.percentage
+    );
   };
 
   return (
@@ -298,94 +348,166 @@ const CreateClient = ({ closeCallback, initialState }) => {
                     <FieldArray
                       name="products"
                       render={(arrayHelpers) => (
-                        <div>
+                        <Grid container spacing={4}>
                           {values.products && values.products.length > 0 ? (
                             values.products.map((product, index) => (
-                              <Grid container spacing={2} key={index}>
-                                <Grid item xs={10}>
-                                  <AutocompleteSelect
-                                    required
-                                    name={`products.${index}.product`}
-                                    label={t(
-                                      'accounting_module.bill.structure.product'
-                                    )}
-                                    options={productListOptions}
-                                    onInput={(productId) =>
-                                      handleProductSelect(
-                                        productId,
-                                        index,
-                                        setFieldValue
-                                      )
-                                    }
-                                  />
-                                </Grid>
+                              <Grid item xs={12} key={index}>
+                                <Grid container spacing={2} key={index}>
+                                  <Grid item xs={10}>
+                                    <AutocompleteSelect
+                                      required
+                                      name={`products.${index}.product`}
+                                      label={t(
+                                        'accounting_module.bill.structure.product'
+                                      )}
+                                      options={productListOptions}
+                                      onInput={(productId) =>
+                                        handleProductSelect(
+                                          productId,
+                                          index,
+                                          setFieldValue
+                                        )
+                                      }
+                                    />
+                                  </Grid>
 
-                                <Grid item xs={1}>
-                                  <Button
-                                    className="h-100"
-                                    onClick={() => arrayHelpers.remove(index)}
-                                  >
-                                    -
-                                  </Button>
-                                </Grid>
+                                  <Grid item xs={1}>
+                                    <Button
+                                      color="secondary"
+                                      className="h-100"
+                                      onClick={() => arrayHelpers.remove(index)}
+                                    >
+                                      <DeleteIcon />
+                                    </Button>
+                                  </Grid>
 
-                                <Grid item xs={1}>
-                                  <Button
-                                    className="h-100"
-                                    onClick={() =>
-                                      arrayHelpers.insert(
-                                        index,
-                                        EmptyBillProduct
-                                      )
-                                    }
-                                  >
-                                    +
-                                  </Button>
-                                </Grid>
+                                  <Grid item xs={1}>
+                                    <Button
+                                      className="h-100"
+                                      onClick={() =>
+                                        arrayHelpers.insert(
+                                          index,
+                                          EmptyBillProduct
+                                        )
+                                      }
+                                    >
+                                      <AddIcon />
+                                    </Button>
+                                  </Grid>
 
-                                <Grid item xs={3}>
-                                  <TextField
-                                    disabled
-                                    required
-                                    name={`products.${index}.reference`}
-                                    label={t(
-                                      'accounting_module.product.structure.reference'
-                                    )}
-                                  />
-                                </Grid>
+                                  <Grid item xs={3}>
+                                    <TextField
+                                      disabled
+                                      required
+                                      name={`products.${index}.reference`}
+                                      label={t(
+                                        'accounting_module.product.structure.reference'
+                                      )}
+                                    />
+                                  </Grid>
 
-                                <Grid item xs={9}>
-                                  <TextField
-                                    disabled
-                                    required
-                                    name={`products.${index}.name`}
-                                    label={t(
-                                      'accounting_module.product.structure.name'
-                                    )}
-                                  />
+                                  <Grid item xs={9}>
+                                    <TextField
+                                      disabled
+                                      required
+                                      name={`products.${index}.name`}
+                                      label={t(
+                                        'accounting_module.product.structure.name'
+                                      )}
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      required
+                                      type="number"
+                                      name={`products.${index}.basePricePerUnit`}
+                                      label={t(
+                                        'accounting_module.product.structure.base_price_per_unit',
+                                        {
+                                          currency,
+                                        }
+                                      )}
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      required
+                                      type="number"
+                                      name={`products.${index}.discountPercentage`}
+                                      label={t(
+                                        'accounting_module.product.structure.discount_percentage'
+                                      )}
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      disabled
+                                      required
+                                      type="number"
+                                      name={`products.${index}.taxPercentage`}
+                                      label={t(
+                                        'accounting_module.product.structure.tax_percentage'
+                                      )}
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      required
+                                      type="number"
+                                      name={`products.${index}.quantity`}
+                                      label={t(
+                                        'accounting_module.product.structure.quantity'
+                                      )}
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      required
+                                      type="number"
+                                      name={`products.${index}.basePrice`}
+                                      label={t(
+                                        'accounting_module.product.structure.base_price',
+                                        {
+                                          currency,
+                                        }
+                                      )}
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      required
+                                      type="number"
+                                      name={`products.${index}.pvp`}
+                                      label={t(
+                                        'accounting_module.product.structure.pvp',
+                                        {
+                                          currency,
+                                        }
+                                      )}
+                                    />
+                                  </Grid>
                                 </Grid>
                               </Grid>
                             ))
                           ) : (
-                            <Button
-                              onClick={() =>
-                                arrayHelpers.push(EmptyBillProduct)
-                              }
-                            >
-                              {t('accounting_module.product.create')}
-                            </Button>
+                            <Grid item xs={12}>
+                              <Button
+                                onClick={() =>
+                                  arrayHelpers.push(EmptyBillProduct)
+                                }
+                              >
+                                {t('accounting_module.product.create')}
+                              </Button>
+                            </Grid>
                           )}
-                        </div>
+                        </Grid>
                       )}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <TextField
-                      multiline
-                      rows={5}
-                      name="notes"
-                      label={t('accounting_module.bill.structure.notes')}
                     />
                   </Grid>
 
@@ -399,7 +521,18 @@ const CreateClient = ({ closeCallback, initialState }) => {
                     Payment data form
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={4}>
+                    <TextField
+                      disabled
+                      name="basePrice"
+                      type="number"
+                      label={t(
+                        'accounting_module.bill.structure.total_base_price'
+                      )}
+                    />
+                  </Grid>
+
+                  <Grid item xs={4}>
                     <TextField
                       name="generalDiscount"
                       type="number"
@@ -409,11 +542,29 @@ const CreateClient = ({ closeCallback, initialState }) => {
                     />
                   </Grid>
 
+                  <Grid item xs={4}>
+                    <TextField
+                      disabled
+                      name="pvp"
+                      type="number"
+                      label={t('accounting_module.bill.structure.pvp')}
+                    />
+                  </Grid>
+
                   <Grid item xs={6}>
                     <Switch
                       name="isPaid"
                       label={t('accounting_module.bill.structure.is_paid')}
                       initialState={INITIAL_STATE.isPaid}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      multiline
+                      rows={5}
+                      name="notes"
+                      label={t('accounting_module.bill.structure.notes')}
                     />
                   </Grid>
 

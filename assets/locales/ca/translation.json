@@ -101,6 +101,7 @@
         "name": "Nom",
         "description": "Descripció",
         "base_price": "Preu base ({{currency}})",
+        "base_price_per_unit": "Preu base per unitat ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descompte (%)",
         "tax_percentage": "Impost (%)",
@@ -109,7 +110,8 @@
         "warehouse": "Magatzem",
         "categories": "Categories",
         "stock_alert": "Alertar quan les existències siguin massa baixes.",
-        "min_stock": "Stock mínim"
+        "min_stock": "Stock mínim",
+        "quantity": "Quantitat"
       }
     },
     "tax": {

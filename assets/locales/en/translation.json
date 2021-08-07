@@ -101,6 +101,7 @@
         "name": "Name",
         "description": "Description",
         "base_price": "Base price ({{currency}})",
+        "base_price_per_unit": "Base price per unit ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Discount (%)",
         "tax_percentage": "Tax (%)",
@@ -109,7 +110,8 @@
         "warehouse": "Warehouse",
         "categories": "Categories",
         "stock_alert": "Alert when stock is too low.",
-        "min_stock": "Minimum stock"
+        "min_stock": "Minimum stock",
+        "quantity": "Quantity"
       }
     },
     "tax": {

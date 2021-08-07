@@ -101,6 +101,7 @@
         "name": "Nombre",
         "description": "Descripción",
         "base_price": "Precio base ({{currency}})",
+        "base_price_per_unit": "Precio base por unidad ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descuento (%)",
         "tax_percentage": "Impuesto (%)",
@@ -109,7 +110,8 @@
         "warehouse": "Almacén",
         "categories": "Categorías",
         "stock_alert": "Alertar cuando las existencias sean demasiado bajas.",
-        "min_stock": "Stock mínimo"
+        "min_stock": "Stock mínimo",
+        "quantity": "Cantidad"
       }
     },
     "tax": {
