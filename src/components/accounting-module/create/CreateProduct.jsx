@@ -355,7 +355,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     name="stockAlert"
                     label={t('accounting_module.product.structure.stock_alert')}
                     initialState={INITIAL_STATE.stockAlert}
-                    setValue={(isChecked) => setStockAlert(isChecked)}
+                    setValue={setStockAlert}
                   />
                 </Grid>
 

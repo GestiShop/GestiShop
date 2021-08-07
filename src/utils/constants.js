@@ -45,7 +45,7 @@ export const AddressSchemaValidator = (t) => {
     zipCode: Yup.string().required(t('form.errors.required')),
     city: Yup.string().required(t('form.errors.required')),
     province: Yup.string().required(t('form.errors.required')),
-    state: Yup.string().required(t('form.errors.required')),
+    state: Yup.string(),
     country: Yup.string().required(t('form.errors.required')),
   };
 };
