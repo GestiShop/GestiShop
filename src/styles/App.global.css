@@ -17,6 +17,10 @@ body {
   margin: auto !important;
 }
 
+.m-2r {
+  margin: 2rem !important;
+}
+
 /* ----- ----- DISPLAY ----- ----- */
 .d-flex {
   display: flex !important;
@@ -28,4 +32,17 @@ body {
 
 .h-100 {
   height: 100% !important;
+}
+
+.center-content {
+  align-content: center !important;
+}
+
+.br-20px {
+  border-radius: 20px !important;
+}
+
+/* ----- ----- FONT ----- ----- */
+.font-3r {
+  font-size: 3rem !important;
 }
