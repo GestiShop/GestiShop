@@ -4,6 +4,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import moment from 'moment';
 import { Form, Formik, FieldArray } from 'formik';
 import { Container, Grid, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -17,20 +18,14 @@ import { addClientBill, updateClientBill } from '../../../db/ClientBillHelper';
 import { fetchClients } from '../../../db/ClientHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import DatePicker from '../../ui/forms/DatePicker';
+import DateTimePicker from '../../ui/forms/DateTimePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
+import Select from '../../ui/forms/Select';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
 import { EmptyAddress, EmptyBillProduct } from '../../../utils/constants';
 import Button from '../../ui/forms/Button';
-
-const getCurrentDate = () => {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const yyyy = today.getFullYear();
-
-  return `${yyyy}-${mm}-${dd}`;
-};
+import PAYMENT_METHODS from '../../../../assets/payment_methods';
 
 const CreateClient = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -39,9 +34,8 @@ const CreateClient = ({ closeCallback, initialState }) => {
   const [clientListOptions, setClientListOptions] = useState([]);
   const [productList, setProductList] = useState([]);
   const [productListOptions, setProductListOptions] = useState([]);
-
-  const currency = useSelector(
-    (store) => store.configuration.currencyInfo.currency.label
+  const [currency, setCurrency] = useState(
+    useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
 
   const fetchData = () => {
@@ -93,7 +87,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
   // TODO: FINISH STRUCTURE
   let INITIAL_STATE = {
     billNumber: '',
-    date: getCurrentDate(),
+    date: moment().format('YYYY-MM-DD'),
     entityData: {
       entity: '',
       fiscalData: {
@@ -107,7 +101,10 @@ const CreateClient = ({ closeCallback, initialState }) => {
     basePrice: 0,
     generalDiscount: 0,
     pvp: 0,
-    paymentData: {},
+    paymentData: {
+      method: '',
+      expirationDate: moment().format('YYYY-MM-DDTHH:MM'),
+    },
     isPaid: false,
   };
 
@@ -161,7 +158,10 @@ const CreateClient = ({ closeCallback, initialState }) => {
     basePrice: Yup.number().typeError(t('form.errors.invalid_number')),
     generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
     pvp: Yup.number().typeError(t('form.errors.invalid_number')),
-    paymentData: Yup.object().shape({}),
+    paymentData: Yup.object().shape({
+      method: Yup.object().required(t('form.errors.required')),
+      expirationDate: Yup.date().required(t('form.errors.required')),
+    }),
     isPaid: Yup.bool().required(t('form.errors.required')),
   });
 
@@ -249,8 +249,6 @@ const CreateClient = ({ closeCallback, initialState }) => {
     const selectedProduct = productList.find(
       (product) => product.id === productId
     );
-
-    console.log(selectedProduct);
 
     setFieldValue(`products.${index}.reference`, selectedProduct.reference);
     setFieldValue(`products.${index}.name`, selectedProduct.name);
@@ -517,6 +515,28 @@ const CreateClient = ({ closeCallback, initialState }) => {
                     </Typography>
                   </Grid>
 
+                  <Grid item xs={8}>
+                    <Select
+                      required
+                      name="paymentData.method"
+                      label={t(
+                        'accounting_module.bill.structure.payment_method'
+                      )}
+                      options={PAYMENT_METHODS(t)}
+                      acceptNone
+                    />
+                  </Grid>
+
+                  <Grid item xs={4}>
+                    <DateTimePicker
+                      required
+                      name="paymentData.expirationDate"
+                      label={t(
+                        'accounting_module.bill.structure.expiration_date'
+                      )}
+                    />
+                  </Grid>
+
                   <Grid item xs={12}>
                     Payment data form
                   </Grid>
@@ -527,7 +547,10 @@ const CreateClient = ({ closeCallback, initialState }) => {
                       name="basePrice"
                       type="number"
                       label={t(
-                        'accounting_module.bill.structure.total_base_price'
+                        'accounting_module.bill.structure.total_base_price',
+                        {
+                          currency,
+                        }
                       )}
                     />
                   </Grid>
@@ -547,7 +570,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
                       disabled
                       name="pvp"
                       type="number"
-                      label={t('accounting_module.bill.structure.pvp')}
+                      label={t('accounting_module.bill.structure.pvp', {
+                        currency,
+                      })}
                     />
                   </Grid>
 

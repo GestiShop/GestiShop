@@ -55,11 +55,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
           taxPercentage: 0,
         }
   );
-  const currency = useSelector(
-    (store) => store.configuration.currencyInfo.currency.label
+  const [currency, setCurrency] = useState(
+    useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
-  const numberOfDecimals = useSelector(
-    (store) => store.configuration.currencyInfo.floatingPositions
+  const [numberOfDecimals, setNumberOfDecimals] = useState(
+    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
   );
 
   let INITIAL_STATE = {
@@ -236,6 +236,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
+            enableReinitialize
             initialValues={{
               ...INITIAL_STATE,
             }}

@@ -24,7 +24,7 @@ const DatePicker = ({ name, required, ...otherProps }) => {
     configDatePicker.helperText = meta.error;
   }
 
-  return <TextField {...configDatePicker} />;
+  return <TextField {...configDatePicker} required />;
 };
 
 export default DatePicker;

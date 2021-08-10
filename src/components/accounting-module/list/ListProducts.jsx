@@ -10,8 +10,8 @@ const ListProducts = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const isMounted = useIsMounted();
-  const currency = useSelector(
-    (store) => store.configuration.currencyInfo.currency.label
+  const [currency, setCurrency] = useState(
+    useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
 
   const headers = [

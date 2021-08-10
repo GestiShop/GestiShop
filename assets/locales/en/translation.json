@@ -72,6 +72,16 @@
   },
   "accounting_module": {
     "accounting_module": "Accounting module",
+    "payment_methods": {
+      "cash": "Cash",
+      "debit_card": "Debit card",
+      "credit_card": "Credit card",
+      "bizum": "Bizum",
+      "paypal": "PayPal",
+      "wire_transfer": "Wire transfer",
+      "check": "Check",
+      "others": "Others"
+    },
     "menu": {
       "schedule": "Schedule",
       "products": "Products",
@@ -215,6 +225,33 @@
         "processing_unit_name": "Processing unit name",
         "electronic_billing_code": "Electronic billing code"
       }
+    },
+    "bill": {
+      "creation": {
+        "client_data": "Client data",
+        "products": "Products",
+        "payment_data": "Payment data"
+      },
+      "structure": {
+        "bill_number": "Bill number",
+        "date": "Date",
+        "client": "Client",
+        "client_name": "Client name",
+        "client_nif": "Client N.I.F.",
+        "product": "Product",
+        "payment_method": "Payment method",
+        "expiration_date": "Expiration date",
+        "total_base_price": "Total base price ({{currency}})",
+        "general_discount": "General discount (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "is_paid": "Paid",
+        "notes": "Extra notes"
+      }
+    },
+    "client_bill": {
+      "create": "Add new client bill",
+      "edit": "Edit client bill",
+      "list": "Client bill list"
     },
     "event": {
       "new": "New event",

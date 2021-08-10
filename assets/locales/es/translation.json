@@ -72,6 +72,16 @@
   },
   "accounting_module": {
     "accounting_module": "Módulo de contabilidad",
+    "payment_methods": {
+      "cash": "Efectivo",
+      "debit_card": "Tarjeta de crédito",
+      "credit_card": "Tarjeta de débito",
+      "bizum": "Bizum",
+      "paypal": "PayPal",
+      "wire_transfer": "Transferencia bancaria",
+      "check": "Cheque",
+      "others": "Otros"
+    },
     "menu": {
       "schedule": "Agenda",
       "products": "Productos",
@@ -215,6 +225,33 @@
         "processing_unit_name": "Nombre de unidad de procesamiento",
         "electronic_billing_code": "Código de facturación electrónica"
       }
+    },
+    "bill": {
+      "creation": {
+        "client_data": "Datos del cliente",
+        "products": "Productos",
+        "payment_data": "Datos de pago"
+      },
+      "structure": {
+        "bill_number": "Número de factura",
+        "date": "Fecha",
+        "client": "Cliente",
+        "client_name": "Nombre del cliente",
+        "client_nif": "N.I.F. del cliente",
+        "product": "Producto",
+        "payment_method": "Método de pago",
+        "expiration_date": "Fecha de vencimiento",
+        "total_base_price": "Precio base total ({{currency}})",
+        "general_discount": "Descuento general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "is_paid": "Pagado",
+        "notes": "Notas adicionales"
+      }
+    },
+    "client_bill": {
+      "create": "Añadir una factura a cliente",
+      "edit": "Editar factura a cliente",
+      "list": "Lista de facturas a clientes"
     },
     "event": {
       "new": "Nuevo evento",

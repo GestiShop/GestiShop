@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import GenericListComponent from './GenericListComponent';
 import {
   deleteClientBills,
@@ -12,12 +13,37 @@ const ListClientBills = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const isMounted = useIsMounted();
+  const [currency, setCurrency] = useState(
+    useSelector((store) => store.configuration.currencyInfo.currency.label)
+  );
 
   const headers = [
     {
-      id: 'reference',
-      label: t('accounting_module.bill.structure.reference'),
+      id: 'billNumber',
+      label: t('accounting_module.bill.structure.bill_number'),
       align: 'left',
+    },
+    {
+      id: 'entityData.fiscalData.name',
+      label: t('accounting_module.bill.structure.client_name'),
+      align: 'left',
+    },
+    {
+      id: 'pvp',
+      label: t('accounting_module.bill.structure.pvp', {
+        currency,
+      }),
+      align: 'right',
+    },
+    {
+      id: 'date',
+      label: t('accounting_module.bill.structure.date'),
+      align: 'right',
+    },
+    {
+      id: 'isPaid',
+      label: t('accounting_module.bill.structure.is_paid'),
+      align: 'right',
     },
   ];
 
@@ -69,9 +95,9 @@ const ListClientBills = () => {
       searchCallback={handleSearch}
       deleteCallback={handleDelete}
       texts={{
-        create: t('accounting_module.bill.client.create'),
-        title: t('accounting_module.bill.client.list'),
-        edit: t('accounting_module.bill.client.edit'),
+        create: t('accounting_module.client_bill.create'),
+        title: t('accounting_module.client_bill.list'),
+        edit: t('accounting_module.client_bill.edit'),
       }}
       creationComponent={<CreateClientBill />}
     />

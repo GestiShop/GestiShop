@@ -72,6 +72,16 @@
   },
   "accounting_module": {
     "accounting_module": "Mòdul de comptabilitat",
+    "payment_methods": {
+      "cash": "Efectiu",
+      "debit_card": "Targeta de crèdit",
+      "credit_card": "Targeta de dèbit",
+      "bizum": "Bizum",
+      "paypal": "PayPal",
+      "wire_transfer": "Transferència bancària",
+      "check": "Xec",
+      "others": "Altres"
+    },
     "menu": {
       "schedule": "Agenda",
       "products": "Productes",
@@ -215,6 +225,33 @@
         "processing_unit_name": "Nom d'unitat de processament",
         "electronic_billing_code": "Codi de facturació electrònica"
       }
+    },
+    "bill": {
+      "creation": {
+        "client_data": "Dades del client",
+        "products": "Productes",
+        "payment_data": "Dades de pagament"
+      },
+      "structure": {
+        "bill_number": "Número de factura",
+        "date": "Data",
+        "client": "Client",
+        "client_name": "Nom del client",
+        "client_nif": "N.I.F. del client",
+        "product": "Producte",
+        "payment_method": "Mètodo de pagament",
+        "expiration_date": "Data de vencimient",
+        "total_base_price": "Preu base total ({{currency}})",
+        "general_discount": "Descompte general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "is_paid": "Pagat",
+        "notes": "Notes addicionals"
+      }
+    },
+    "client_bill": {
+      "create": "Afegir una factura a client",
+      "edit": "Editar factura a client",
+      "list": "Llistat de factures a clients"
     },
     "event": {
       "new": "Nou esdeveniment",

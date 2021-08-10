@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useField, useFormikContext } from 'formik';
@@ -12,6 +12,7 @@ const AutocompleteSelectWrapper = ({
   options,
   onInput,
   required,
+  acceptNone,
   ...otherProps
 }) => {
   const [field, meta] = useField(name);
