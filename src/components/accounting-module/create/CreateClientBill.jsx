@@ -159,7 +159,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
     generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
     pvp: Yup.number().typeError(t('form.errors.invalid_number')),
     paymentData: Yup.object().shape({
-      method: Yup.object().required(t('form.errors.required')),
+      method: Yup.string().required(t('form.errors.required')),
       expirationDate: Yup.date().required(t('form.errors.required')),
     }),
     isPaid: Yup.bool().required(t('form.errors.required')),
@@ -523,7 +523,6 @@ const CreateClient = ({ closeCallback, initialState }) => {
                         'accounting_module.bill.structure.payment_method'
                       )}
                       options={PAYMENT_METHODS(t)}
-                      acceptNone
                     />
                   </Grid>
 
