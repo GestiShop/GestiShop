@@ -80,6 +80,7 @@
       "paypal": "PayPal",
       "wire_transfer": "Transferència bancària",
       "check": "Xec",
+      "bank_receipt": "Rebut bancari",
       "others": "Altres"
     },
     "menu": {

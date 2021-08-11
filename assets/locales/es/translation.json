@@ -80,6 +80,7 @@
       "paypal": "PayPal",
       "wire_transfer": "Transferencia bancaria",
       "check": "Cheque",
+      "bank_receipt": "Recibo bancario",
       "others": "Otros"
     },
     "menu": {

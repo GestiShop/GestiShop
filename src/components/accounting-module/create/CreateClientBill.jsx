@@ -23,9 +23,44 @@ import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import Select from '../../ui/forms/Select';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
-import { EmptyAddress, EmptyBillProduct } from '../../../utils/constants';
+import {
+  EmptyAddress,
+  EmptyBillProduct,
+  AddressSchemaValidator,
+} from '../../../utils/constants';
 import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
+
+const encodeProduct = (data) => {
+  return {
+    product: data.product.value,
+    reference: data.reference,
+    name: data.name,
+    basePricePerUnit: data.basePricePerUnit,
+    unitType: data.unitType,
+    discountPercentage: data.discountPercentage,
+    taxPercentage: data.taxPercentage,
+    quantity: data.quantity,
+  };
+};
+
+const encodeClientBill = (data) => {
+  return {
+    billNumber: data.billNumber,
+    date: data.date,
+    entityData: {
+      entity: data.entityData.entity.value,
+      fiscalData: data.entityData.fiscalData,
+    },
+    products: data.products.map(encodeProduct),
+    notes: data.notes,
+    basePrice: data.basePrice,
+    generalDiscount: data.generalDiscount,
+    pvp: data.pvp,
+    paymentData: data.paymentData,
+    isPaid: data.isPaid,
+  };
+};
 
 const CreateClient = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -127,7 +162,14 @@ const CreateClient = ({ closeCallback, initialState }) => {
   const FORM_VALIDATION = Yup.object().shape({
     billNumber: Yup.string().required(t('form.errors.required')),
     date: Yup.date().required(t('form.errors.required')),
-    entity: Yup.object().required(t('form.errors.required')),
+    entityData: Yup.object().shape({
+      entity: Yup.object().required(t('form.errors.required')),
+      fiscalData: Yup.object().shape({
+        name: Yup.string().required(t('form.errors.required')),
+        nif: Yup.string().required(t('form.errors.required')),
+        address: Yup.object().shape(AddressSchemaValidator(t)),
+      }),
+    }),
     products: Yup.array().of(
       Yup.object().shape({
         product: Yup.object().required(t('form.errors.required')),
@@ -139,7 +181,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
         basePrice: Yup.number()
           .typeError(t('form.errors.invalid_number'))
           .required(t('form.errors.required')),
-        unitType: Yup.string().required(t('form.errors.required')),
+        // unitType: Yup.string().required(t('form.errors.required')),
         discountPercentage: Yup.number()
           .typeError(t('form.errors.invalid_number'))
           .required(t('form.errors.required')),
@@ -154,7 +196,6 @@ const CreateClient = ({ closeCallback, initialState }) => {
           .required(t('form.errors.required')),
       })
     ),
-    notes: Yup.string(),
     basePrice: Yup.number().typeError(t('form.errors.invalid_number')),
     generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
     pvp: Yup.number().typeError(t('form.errors.invalid_number')),
@@ -163,12 +204,15 @@ const CreateClient = ({ closeCallback, initialState }) => {
       expirationDate: Yup.date().required(t('form.errors.required')),
     }),
     isPaid: Yup.bool().required(t('form.errors.required')),
+    notes: Yup.string(),
   });
 
   const handleSubmit = (data) => {
+    const encodedData = encodeClientBill(data);
+    console.log(encodedData);
     if (!initialState) {
       addClientBill(
-        data,
+        encodedData,
         (error) => {
           console.log('error', error);
           closeCallback();
@@ -180,7 +224,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
       );
     } else {
       updateClientBill(
-        { ...data, _id: initialState._id },
+        { ...encodedData, _id: initialState._id },
         (error) => {
           console.log('error', error);
           closeCallback();
@@ -254,7 +298,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
     setFieldValue(`products.${index}.name`, selectedProduct.name);
     setFieldValue(
       `products.${index}.basePricePerUnit`,
-      selectedProduct.sellingInfo.basePricePerUnit
+      selectedProduct.sellingInfo.basePrice
     );
     setFieldValue(
       `products.${index}.discountPercentage`,
@@ -274,7 +318,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
             enableReinitialize
             initialValues={{ ...INITIAL_STATE }}
             validationSchema={FORM_VALIDATION}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={handleSubmit}
           >
             {({ values, setFieldValue }) => (
               <Form>

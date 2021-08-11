@@ -80,6 +80,7 @@
       "paypal": "PayPal",
       "wire_transfer": "Wire transfer",
       "check": "Check",
+      "bank_receipt": "Bank receipt",
       "others": "Others"
     },
     "menu": {

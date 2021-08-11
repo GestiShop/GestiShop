@@ -28,6 +28,10 @@ const PAYMENT_METHODS = (t: any) => [
     value: 'CHECK',
   },
   {
+    displayText: t('accounting_module.payment_methods.bank_receipt'),
+    value: 'BANK_RECEIPT',
+  },
+  {
     displayText: t('accounting_module.payment_methods.others'),
     value: 'OTHERS',
   },
