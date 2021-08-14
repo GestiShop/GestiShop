@@ -63,10 +63,6 @@ const ListCategories = () => {
     fetchData();
   };
 
-  const handleSearch = (textToSearch) => {
-    console.log('Searching text:', textToSearch);
-  };
-
   const handleDelete = (ids) => {
     console.log('Delete rows:', ids);
     deleteData(ids);
@@ -78,7 +74,6 @@ const ListCategories = () => {
       rows={rows}
       headers={headers}
       editCallback={handleEdit}
-      searchCallback={handleSearch}
       deleteCallback={handleDelete}
       texts={{
         create: t('accounting_module.category.create'),

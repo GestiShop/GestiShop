@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import Button from '../../ui/forms/Button';
-import SearchBar from '../../ui/SearchBar';
 import Table from '../../ui/Table';
 import FullScreenDialog from '../../ui/FullscreenDialog';
 
@@ -13,7 +12,6 @@ const GenericListComponent = ({
   rows,
   headers,
   editCallback,
-  searchCallback,
   deleteCallback,
   texts,
   creationComponent,
@@ -30,21 +28,6 @@ const GenericListComponent = ({
   const handleDialogClose = () => {
     setOpenCreationDialog(false);
     editCallback();
-  };
-
-  const handleSearch = (query) => {
-    if (!headers) {
-      return;
-    }
-
-    const searchQuery = query.trim().toLowerCase();
-    setFilteredRows(
-      rows.filter((row) =>
-        row[headers[0].id].toString().toLowerCase().includes(searchQuery)
-      )
-    );
-
-    searchCallback(query);
   };
 
   useEffect(() => {
@@ -67,10 +50,7 @@ const GenericListComponent = ({
                   {texts.create}
                 </Button>
               </Grid>
-              <Grid item xs={6} />
-              <Grid item xs={3}>
-                <SearchBar onSubmit={handleSearch} />
-              </Grid>
+              <Grid item xs={9} />
 
               <Grid item xs={12}>
                 <Table

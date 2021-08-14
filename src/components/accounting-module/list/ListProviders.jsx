@@ -71,10 +71,6 @@ const ListProviders = () => {
     fetchData();
   };
 
-  const handleSearch = (textToSearch) => {
-    console.log('Searching text:', textToSearch);
-  };
-
   const handleDelete = (ids) => {
     console.log('Delete rows:', ids);
     deleteData(ids);
@@ -86,7 +82,6 @@ const ListProviders = () => {
       rows={rows}
       headers={headers}
       editCallback={handleEdit}
-      searchCallback={handleSearch}
       deleteCallback={handleDelete}
       texts={{
         create: t('accounting_module.provider.create'),
