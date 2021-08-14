@@ -12,6 +12,7 @@ import useIsMounted from '../../../utils/useIsMounted';
 const ListClientBills = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const isMounted = useIsMounted();
   const [currency, setCurrency] = useState(
     useSelector((store) => store.configuration.currencyInfo.currency.label)
@@ -53,7 +54,10 @@ const ListClientBills = () => {
         console.log('error', error);
       },
       (data) => {
-        if (isMounted.current) setRows(data);
+        if (isMounted.current) {
+          setRows(data);
+          setIsDataLoaded(true);
+        }
       }
     );
   };
@@ -89,6 +93,7 @@ const ListClientBills = () => {
 
   return (
     <GenericListComponent
+      isDataLoaded={isDataLoaded}
       rows={rows}
       headers={headers}
       editCallback={handleEdit}

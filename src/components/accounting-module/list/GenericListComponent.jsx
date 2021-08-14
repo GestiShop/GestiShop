@@ -9,6 +9,7 @@ import Table from '../../ui/Table';
 import FullScreenDialog from '../../ui/FullscreenDialog';
 
 const GenericListComponent = ({
+  isDataLoaded,
   rows,
   headers,
   editCallback,
@@ -73,6 +74,7 @@ const GenericListComponent = ({
 
               <Grid item xs={12}>
                 <Table
+                  isDataLoaded={isDataLoaded}
                   rows={filteredRows}
                   headers={headers}
                   title={texts.title}

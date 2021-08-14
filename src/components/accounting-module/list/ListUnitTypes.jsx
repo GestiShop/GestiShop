@@ -8,6 +8,7 @@ import useIsMounted from '../../../utils/useIsMounted';
 const ListUnitTypes = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const isMounted = useIsMounted();
 
   const headers = [
@@ -29,7 +30,10 @@ const ListUnitTypes = () => {
         console.log('error', error);
       },
       (data) => {
-        if (isMounted.current) setRows(data);
+        if (isMounted.current) {
+          setRows(data);
+          setIsDataLoaded(true);
+        }
       }
     );
   };
@@ -65,6 +69,7 @@ const ListUnitTypes = () => {
 
   return (
     <GenericListComponent
+      isDataLoaded={isDataLoaded}
       rows={rows}
       headers={headers}
       editCallback={handleEdit}
