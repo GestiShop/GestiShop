@@ -26,6 +26,11 @@ body {
   display: flex !important;
 }
 
+.d-col {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 .w-100 {
   width: 100% !important;
 }
@@ -36,6 +41,7 @@ body {
 
 .center-content {
   align-content: center !important;
+  text-align: center !important;
 }
 
 .br-20px {

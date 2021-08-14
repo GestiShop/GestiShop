@@ -291,7 +291,8 @@
       "country": "Country"
     },
     "placeholders": {
-      "search": "Input text to search..."
+      "search": "Input text to search...",
+      "loading_data": "Loading data, please wait..."
     },
     "table": {
       "sorted_asc": "Sorted ascending",

@@ -291,7 +291,8 @@
       "country": "Païs"
     },
     "placeholders": {
-      "search": "Introdueixi text per cercar..."
+      "search": "Introdueixi text per cercar...",
+      "loading_data": "Carregant dades, esperi si us plau..."
     },
     "table": {
       "sorted_asc": "Ordenat ascendentment",

@@ -315,7 +315,7 @@ const EnhancedTable = ({
 
   return (
     <div className={classes.root}>
-      {isDataLoaded && (
+      {isDataLoaded ? (
         <Paper className={classes.paper}>
           <EnhancedTableToolbar
             numSelected={selected.length}
@@ -445,11 +445,12 @@ const EnhancedTable = ({
             </Table>
           </TableContainer>
         </Paper>
-      )}
-
-      {!isDataLoaded && (
-        <div className=" d-flex w-100 center-content">
-          <CircularProgress color="#fff" className="m-auto" />
+      ) : (
+        <div className=" d-col w-100 center-content">
+          <CircularProgress className="m-auto" />
+          <Typography className="m-2r">
+            {t('accounting_module.placeholders.loading_data')}
+          </Typography>
         </div>
       )}
 
