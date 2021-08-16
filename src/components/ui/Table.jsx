@@ -32,7 +32,10 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -384,6 +387,17 @@ const EnhancedTable = ({
                             rowToRender = finalParent[header.id];
                           } else {
                             rowToRender = row[header.id];
+                          }
+
+                          if (rowToRender instanceof Date) {
+                            rowToRender =
+                              moment(rowToRender).format('DD/MM/YYYY');
+                          } else if (typeof rowToRender === 'boolean') {
+                            rowToRender = rowToRender ? (
+                              <CheckIcon color="primary" />
+                            ) : (
+                              <ClearIcon color="secondary" />
+                            );
                           }
 
                           headerCells.push(

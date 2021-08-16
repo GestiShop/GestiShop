@@ -234,6 +234,7 @@
         "payment_data": "Payment data"
       },
       "structure": {
+        "bill_number_preamble": "Preamble",
         "bill_number": "Bill number",
         "date": "Date",
         "client": "Client",

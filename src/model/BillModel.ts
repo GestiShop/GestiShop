@@ -2,7 +2,8 @@ import { Types, Schema, model } from 'mongoose';
 import { addressSchema } from './AddressModel';
 
 const billSchema = new Schema({
-  billNumber: { type: String, unique: true, required: true, dropDups: true },
+  billNumberPreamble: { type: String, default: '' },
+  billNumber: { type: Number, required: true },
   date: { type: Date, required: true },
   entityData: {
     entity: { type: Types.ObjectId, required: true },
@@ -34,6 +35,8 @@ const billSchema = new Schema({
   },
   isPaid: { type: Boolean, required: true },
 });
+
+billSchema.index({ billNumberPreamble: 1, billNumber: 1 }, { unique: true });
 
 const ClientBill = model('ClientBill', billSchema, 'clientBills');
 const ProviderBill = model('ProviderBill', billSchema, 'providerBills');

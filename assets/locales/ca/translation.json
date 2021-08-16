@@ -234,6 +234,7 @@
         "payment_data": "Dades de pagament"
       },
       "structure": {
+        "bill_number_preamble": "Preàmbul",
         "bill_number": "Número de factura",
         "date": "Data",
         "client": "Client",

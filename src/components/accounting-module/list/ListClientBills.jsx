@@ -25,9 +25,10 @@ const ListClientBills = () => {
       align: 'left',
     },
     {
-      id: 'entityData.fiscalData.name',
+      id: 'name',
       label: t('accounting_module.bill.structure.client_name'),
       align: 'left',
+      parents: ['entityData', 'fiscalData'],
     },
     {
       id: 'pvp',

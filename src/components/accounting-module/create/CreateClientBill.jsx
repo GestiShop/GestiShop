@@ -46,6 +46,7 @@ const encodeProduct = (data) => {
 
 const encodeClientBill = (data) => {
   return {
+    billNumberPreamble: data.billNumberPreamble,
     billNumber: data.billNumber,
     date: data.date,
     entityData: {
@@ -119,9 +120,9 @@ const CreateClient = ({ closeCallback, initialState }) => {
     fetchData();
   }, []);
 
-  // TODO: FINISH STRUCTURE
   let INITIAL_STATE = {
-    billNumber: '',
+    billNumberPreamble: '', // TODO: THIS SHOULD TAKE THE PREAMBLE FROM THE LOCAL CONFIGURATION
+    billNumber: '', // TODO: THIS SHOULD TAKE THE NEXT AVAILABLE NUMBER
     date: moment().format('YYYY-MM-DD'),
     entityData: {
       entity: '',
@@ -145,6 +146,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
   if (initialState) {
     INITIAL_STATE = {
+      billNumberPreamble: initialState.billNumberPreamble,
       billNumber: initialState.billNumber,
       date: initialState.date,
       entityData: initialState.entityData,
@@ -158,9 +160,11 @@ const CreateClient = ({ closeCallback, initialState }) => {
     };
   }
 
-  // TODO: FINISH
   const FORM_VALIDATION = Yup.object().shape({
-    billNumber: Yup.string().required(t('form.errors.required')),
+    billNumberPreamble: Yup.string().default(''),
+    billNumber: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
     date: Yup.date().required(t('form.errors.required')),
     entityData: Yup.object().shape({
       entity: Yup.object().required(t('form.errors.required')),
@@ -181,7 +185,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
         basePrice: Yup.number()
           .typeError(t('form.errors.invalid_number'))
           .required(t('form.errors.required')),
-        // unitType: Yup.string().required(t('form.errors.required')),
+        unitType: Yup.string().required(t('form.errors.required')),
         discountPercentage: Yup.number()
           .typeError(t('form.errors.invalid_number'))
           .required(t('form.errors.required')),
@@ -296,6 +300,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
     setFieldValue(`products.${index}.reference`, selectedProduct.reference);
     setFieldValue(`products.${index}.name`, selectedProduct.name);
+    setFieldValue(`products.${index}.unitType`, selectedProduct.unitType.unit);
     setFieldValue(
       `products.${index}.basePricePerUnit`,
       selectedProduct.sellingInfo.basePrice
@@ -323,15 +328,26 @@ const CreateClient = ({ closeCallback, initialState }) => {
             {({ values, setFieldValue }) => (
               <Form>
                 <Grid container spacing={2}>
+                  <Grid item xs={2}>
+                    <TextField
+                      required
+                      name="billNumberPreamble"
+                      label={t(
+                        'accounting_module.bill.structure.bill_number_preamble'
+                      )}
+                    />
+                  </Grid>
+
                   <Grid item xs={6}>
                     <TextField
                       required
+                      type="number"
                       name="billNumber"
                       label={t('accounting_module.bill.structure.bill_number')}
                     />
                   </Grid>
 
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <DatePicker
                       required
                       name="date"
@@ -486,7 +502,6 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                                   <Grid item xs={4}>
                                     <TextField
-                                      disabled
                                       required
                                       type="number"
                                       name={`products.${index}.taxPercentage`}
@@ -496,7 +511,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                                     />
                                   </Grid>
 
-                                  <Grid item xs={4}>
+                                  <Grid item xs={3}>
                                     <TextField
                                       required
                                       type="number"
@@ -507,7 +522,17 @@ const CreateClient = ({ closeCallback, initialState }) => {
                                     />
                                   </Grid>
 
-                                  <Grid item xs={4}>
+                                  <Grid item xs={3}>
+                                    <TextField
+                                      required
+                                      name={`products.${index}.unitType`}
+                                      label={t(
+                                        'accounting_module.product.structure.unit_type'
+                                      )}
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={3}>
                                     <TextField
                                       required
                                       type="number"
@@ -521,7 +546,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
                                     />
                                   </Grid>
 
-                                  <Grid item xs={4}>
+                                  <Grid item xs={3}>
                                     <TextField
                                       required
                                       type="number"
