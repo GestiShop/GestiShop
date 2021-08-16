@@ -1,7 +1,7 @@
 import { Schema, Types, model } from 'mongoose';
 
 const productSchema = new Schema({
-  reference: { type: String, unique: true, required: true, dropDups: true },
+  reference: { type: String, unique: true, required: true },
   name: { type: String, required: true },
   description: String,
   buyingInfo: {

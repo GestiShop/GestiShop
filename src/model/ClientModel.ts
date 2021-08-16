@@ -5,7 +5,7 @@ import { addressSchema } from './AddressModel';
 import { eFactSchema } from './EFactModel';
 
 const clientSchema = new Schema({
-  reference: { type: String, unique: true, required: true, dropDups: true },
+  reference: { type: String, unique: true, required: true },
   contactData: {
     name: { type: String, required: true },
     phone: phoneSchema,

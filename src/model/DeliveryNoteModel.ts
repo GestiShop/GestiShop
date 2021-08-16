@@ -6,7 +6,6 @@ const deliveryNoteSchema = new Schema({
     type: Number,
     unique: true,
     required: true,
-    dropDups: true,
   },
   date: Date,
   entityData: {
