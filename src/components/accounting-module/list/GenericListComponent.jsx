@@ -13,12 +13,17 @@ const GenericListComponent = ({
   headers,
   editCallback,
   deleteCallback,
+  printCallback,
   texts,
   creationComponent,
 }) => {
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
   const [initialState, setInitialState] = useState(false);
   const [filteredRows, setFilteredRows] = useState(rows);
+
+  const handlePrint = (id) => {
+    printCallback(rows.find((row) => row._id == id));
+  };
 
   const handleEdit = (id) => {
     setInitialState(rows.find((row) => row._id == id));
@@ -60,6 +65,7 @@ const GenericListComponent = ({
                   title={texts.title}
                   editCallback={handleEdit}
                   deleteCallback={deleteCallback}
+                  printCallback={printCallback ? handlePrint : undefined}
                 />
               </Grid>
             </Grid>

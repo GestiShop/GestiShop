@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useReactToPrint } from 'react-to-print';
+import { Box } from '@material-ui/core';
 import GenericListComponent from './GenericListComponent';
 import {
   deleteClientBills,
@@ -8,9 +10,13 @@ import {
 } from '../../../db/ClientBillHelper';
 import CreateClientBill from '../create/CreateClientBill';
 import useIsMounted from '../../../utils/useIsMounted';
+import billGenerator from '../../../utils/document-generator/billGenerator';
 
 const ListClientBills = () => {
   const { t } = useTranslation();
+  const componentRef = useRef();
+  const [billToPrint, setBillToPrint] = useState(null);
+  const [shouldPrint, setShouldPrint] = useState(false);
   const [rows, setRows] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const isMounted = useIsMounted();
@@ -88,20 +94,44 @@ const ListClientBills = () => {
     deleteData(ids);
   };
 
+  const printHandler = useReactToPrint({
+    content: () => componentRef.current,
+    removeAfterPrint: true,
+    suppressErrors: true,
+  });
+
+  const handlePrint = (data) => {
+    setBillToPrint(billGenerator(data));
+    setShouldPrint(true);
+  };
+
+  useEffect(() => {
+    if (!shouldPrint) return;
+
+    printHandler();
+    setShouldPrint(false);
+  }, [shouldPrint]);
+
   return (
-    <GenericListComponent
-      isDataLoaded={isDataLoaded}
-      rows={rows}
-      headers={headers}
-      editCallback={handleEdit}
-      deleteCallback={handleDelete}
-      texts={{
-        create: t('accounting_module.client_bill.create'),
-        title: t('accounting_module.client_bill.list'),
-        edit: t('accounting_module.client_bill.edit'),
-      }}
-      creationComponent={<CreateClientBill />}
-    />
+    <>
+      <GenericListComponent
+        isDataLoaded={isDataLoaded}
+        rows={rows}
+        headers={headers}
+        editCallback={handleEdit}
+        deleteCallback={handleDelete}
+        printCallback={handlePrint}
+        texts={{
+          create: t('accounting_module.client_bill.create'),
+          title: t('accounting_module.client_bill.list'),
+          edit: t('accounting_module.client_bill.edit'),
+        }}
+        creationComponent={<CreateClientBill />}
+      />
+      <Box display="none" displayPrint="block" ref={componentRef}>
+        {billToPrint}
+      </Box>
+    </>
   );
 };
 

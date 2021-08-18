@@ -12,7 +12,8 @@
     "edit": "Edit",
     "create": "Create",
     "delete": "Delete",
-    "save": "Save"
+    "save": "Save",
+    "print": "Print"
   },
   "settings": {
     "title": "Settings",

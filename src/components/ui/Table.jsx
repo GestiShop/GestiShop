@@ -32,6 +32,7 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';
+import PrintIcon from '@material-ui/icons/Print';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useTranslation } from 'react-i18next';
@@ -253,6 +254,7 @@ const EnhancedTable = ({
   title,
   editCallback,
   deleteCallback,
+  printCallback,
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -300,6 +302,11 @@ const EnhancedTable = ({
   const handleEditClick = (event, id) => {
     event.stopPropagation();
     editCallback(id);
+  };
+
+  const handlePrintClick = (event, id) => {
+    event.stopPropagation();
+    printCallback(id);
   };
 
   const handleClickOpen = () => {
@@ -352,7 +359,7 @@ const EnhancedTable = ({
                         case 'reference':
                           headerCells.push(
                             <TableCell
-                              key="reference"
+                              key={header.id}
                               component="th"
                               id={labelId}
                               scope="row"
@@ -425,6 +432,18 @@ const EnhancedTable = ({
                               <EditIcon />
                             </IconButton>
                           </Tooltip>
+                          {printCallback && (
+                            <Tooltip title={t('buttons.print')}>
+                              <IconButton
+                                aria-label={t('buttons.print')}
+                                onClick={(event) =>
+                                  handlePrintClick(event, row.id)
+                                }
+                              >
+                                <PrintIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
                         </TableCell>
                       );
                     }
@@ -436,7 +455,7 @@ const EnhancedTable = ({
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.reference}
+                        key={row.id}
                         selected={isItemSelected}
                         className={
                           row.stockAlert && row.stock <= row.minStock
@@ -460,7 +479,7 @@ const EnhancedTable = ({
           </TableContainer>
         </Paper>
       ) : (
-        <div className=" d-col w-100 center-content">
+        <div className="d-col w-100 center-content">
           <CircularProgress className="m-auto" />
           <Typography className="m-2r">
             {t('accounting_module.placeholders.loading_data')}

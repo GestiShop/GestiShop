@@ -12,7 +12,8 @@
     "edit": "Editar",
     "create": "Crear",
     "delete": "Esborrar",
-    "save": "Guardar"
+    "save": "Guardar",
+    "print": "Imprimir"
   },
   "settings": {
     "title": "Configuració",
