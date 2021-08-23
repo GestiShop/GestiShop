@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 import React from 'react';
 import { render } from 'react-dom';
 import { createTheme, MuiThemeProvider } from '@material-ui/core';
