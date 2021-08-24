@@ -26,8 +26,8 @@ const CreateClient = ({ closeCallback, initialState }) => {
     reference: '',
     contactData: {
       name: '',
-      contactPhone: EmptyPhone,
-      contactEmail: EmptyEmail,
+      phone: EmptyPhone,
+      email: EmptyEmail,
     },
     fiscalData: {
       name: '',

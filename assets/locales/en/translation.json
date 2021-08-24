@@ -124,6 +124,16 @@
         "stock_alert": "Alert when stock is too low.",
         "min_stock": "Minimum stock",
         "quantity": "Quantity"
+      },
+      "document": {
+        "description": "Description",
+        "quantity": "Quantity",
+        "price_per_unit": "Price per unit ({{currency}})",
+        "discount": "Discount (%)",
+        "subtotal": "Subtotal ({{currency}})",
+        "vat": "V.A.T. (%)",
+        "vat_fee": "V.A.T. fee ({{currency}})",
+        "total": "Bill total ({{currency}})"
       }
     },
     "tax": {

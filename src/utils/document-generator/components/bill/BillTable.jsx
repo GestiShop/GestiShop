@@ -1,96 +1,161 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { withStyles } from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { useTranslation } from 'react-i18next';
 
-const TAX_RATE = 0.07;
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
+const StyledTableCell = withStyles(() => ({
+  head: {
+    backgroundColor: '#E1E1E1',
+    fontWeight: 'bold',
   },
-});
+  body: {
+    backgroundColor: '#E1E1E1',
+    fontWeight: 'bold',
+  },
+}))(TableCell);
 
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
-
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
-
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  createRow('Paperclips (Box)', 100, 1.15),
-  createRow('Paper (Case)', 10, 45.99),
-  createRow('Waste Basket', 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
-export default function SpanningTable() {
-  const classes = useStyles();
+const ProductsTable = ({ products }) => {
+  const { t } = useTranslation();
+  const [currency, setCurrency] = useState(
+    useSelector((store) => store.configuration.currencyInfo.currency.label)
+  );
+  const [numberOfDecimals, setNumberOfDecimals] = useState(
+    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
+  );
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="spanning table">
+    <TableContainer>
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={3}>
-              Details
-            </TableCell>
-            <TableCell align="right">Price</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Desc</TableCell>
-            <TableCell align="right">Qty.</TableCell>
-            <TableCell align="right">Unit</TableCell>
-            <TableCell align="right">Sum</TableCell>
+            <StyledTableCell>
+              {t('accounting_module.product.document.description')}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {t('accounting_module.product.document.quantity')}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {t('accounting_module.product.document.price_per_unit', {
+                currency,
+              })}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {t('accounting_module.product.document.discount')}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {t('accounting_module.product.document.subtotal', { currency })}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {t('accounting_module.product.document.vat')}
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+          {products.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>{row.name}</TableCell>
+              <TableCell align="right">{row.quantity}</TableCell>
+              <TableCell align="right">
+                {row.basePricePerUnit.toFixed(numberOfDecimals)}
+              </TableCell>
+              <TableCell align="right">{row.discountPercentage}</TableCell>
+              <TableCell align="right">
+                {(
+                  row.quantity *
+                  row.basePricePerUnit *
+                  (1 - row.discountPercentage / 100)
+                ).toFixed(numberOfDecimals)}
+              </TableCell>
+              <TableCell align="right">{row.taxPercentage}</TableCell>
             </TableRow>
           ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
 
+const SummaryTable = ({ products }) => {
+  const { t } = useTranslation();
+  const [currency, setCurrency] = useState(
+    useSelector((store) => store.configuration.currencyInfo.currency.label)
+  );
+  const [numberOfDecimals, setNumberOfDecimals] = useState(
+    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
+  );
+
+  const vatPercentages = products.reduce((acc, product) => {
+    const productSubtotal =
+      product.basePricePerUnit *
+      product.quantity *
+      (1 - product.discountPercentage / 100);
+
+    (acc[product.taxPercentage] = acc[product.taxPercentage] || []).push(
+      productSubtotal
+    );
+    return acc;
+  }, {});
+
+  const billTotal = products
+    .map(
+      (product) =>
+        product.basePricePerUnit *
+        product.quantity *
+        (1 - product.discountPercentage / 100) *
+        (1 + product.taxPercentage / 100)
+    )
+    .reduce((acc, product) => acc + product);
+
+  return (
+    <TableContainer>
+      <Table>
+        <TableHead>
           <TableRow>
-            <TableCell rowSpan={3} />
-            <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            <StyledTableCell>
+              {t('accounting_module.product.document.subtotal', { currency })}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {t('accounting_module.product.document.vat')}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {t('accounting_module.product.document.vat_fee', { currency })}
+            </StyledTableCell>
           </TableRow>
+        </TableHead>
+        <TableBody>
+          {Object.keys(vatPercentages).map((i) => {
+            const vatSubtotal = vatPercentages[i].reduce(
+              (acc, product) => acc + product
+            );
+            return (
+              <TableRow key={i}>
+                <TableCell>{vatSubtotal.toFixed(numberOfDecimals)}</TableCell>
+                <TableCell align="right">{i}</TableCell>
+                <TableCell align="right">
+                  {(vatSubtotal * (i / 100)).toFixed(numberOfDecimals)}
+                </TableCell>
+              </TableRow>
+            );
+          })}
           <TableRow>
-            <TableCell>Tax</TableCell>
-            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-              0
-            )} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            <StyledTableCell>
+              {t('accounting_module.product.document.total', { currency })}
+            </StyledTableCell>
+            <StyledTableCell align="right" colSpan={2}>
+              {billTotal.toFixed(numberOfDecimals)}
+            </StyledTableCell>
           </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
+};
+
+export { ProductsTable, SummaryTable };
