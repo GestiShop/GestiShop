@@ -319,6 +319,20 @@
         "title": "Esteu segur que voleu suprimir aquests elements?",
         "description": "Aquesta acció és permanent. Si els esborreu, no els podreu recuperar més endavant."
       }
+    },
+    "model": {
+      "347": {
+        "title": "Model 347",
+        "document": {
+          "nif": "N.I.F.",
+          "name": "Nom",
+          "trimester_1": "1r trimestre ({{currency}})",
+          "trimester_2": "2n trimestre ({{currency}})",
+          "trimester_3": "3r trimestre ({{currency}})",
+          "trimester_4": "4t trimestre ({{currency}})",
+          "total": "Total ({{currency}})"
+        }
+      }
     }
   }
 }

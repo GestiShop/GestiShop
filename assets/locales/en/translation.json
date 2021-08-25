@@ -319,6 +319,20 @@
         "title": "Are you sure you want to delete these items?",
         "description": "This action is permanent. If you delete them, you will not be able to recover them later."
       }
+    },
+    "model": {
+      "347": {
+        "title": "347 model",
+        "document": {
+          "nif": "N.I.F.",
+          "name": "Name",
+          "trimester_1": "1st trimester ({{currency}})",
+          "trimester_2": "2nd trimester ({{currency}})",
+          "trimester_3": "3rd trimester ({{currency}})",
+          "trimester_4": "4th trimester ({{currency}})",
+          "total": "Total ({{currency}})"
+        }
+      }
     }
   }
 }

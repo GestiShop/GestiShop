@@ -1,10 +1,6 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import {
-  BillHeader,
-  ProductsTable,
-  SummaryTable,
-} from './components/bill/BillTable';
+import { BillHeader, ProductsTable, SummaryTable } from './components/Bill';
 
 const generateHeader = (billNumberPreamble, billNumber, date, clientData) => {
   return (

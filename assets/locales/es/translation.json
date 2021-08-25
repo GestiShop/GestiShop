@@ -319,6 +319,20 @@
         "title": "¿Está seguro de que desea eliminar estos elementos?",
         "description": "Esta acción es permanente. Si los borra, no podrá recuperarlos más tarde."
       }
+    },
+    "model": {
+      "347": {
+        "title": "Modelo 347",
+        "document": {
+          "nif": "N.I.F.",
+          "name": "Nombre",
+          "trimester_1": "1r trimestre ({{currency}})",
+          "trimester_2": "2o trimestre ({{currency}})",
+          "trimester_3": "3r trimestre ({{currency}})",
+          "trimester_4": "4o trimestre ({{currency}})",
+          "total": "Total ({{currency}})"
+        }
+      }
     }
   }
 }
