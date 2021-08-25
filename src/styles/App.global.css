@@ -20,6 +20,10 @@ body {
   margin: 2rem !important;
 }
 
+.mb-2r {
+  margin-bottom: 2rem !important;
+}
+
 /* ----- ----- DISPLAY ----- ----- */
 .d-flex {
   display: flex !important;
@@ -50,4 +54,8 @@ body {
 /* ----- ----- FONT ----- ----- */
 .font-3r {
   font-size: 3rem !important;
+}
+
+.bold {
+  font-weight: bold !important;
 }

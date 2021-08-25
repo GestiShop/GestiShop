@@ -124,6 +124,16 @@
         "stock_alert": "Alertar quan les existències siguin massa baixes.",
         "min_stock": "Stock mínim",
         "quantity": "Quantitat"
+      },
+      "document": {
+        "description": "Descripció",
+        "quantity": "Quantitat",
+        "price_per_unit": "Preu per unitat ({{currency}})",
+        "discount": "Descompte (%)",
+        "subtotal": "Subtotal ({{currency}})",
+        "vat": "I.V.A. (%)",
+        "vat_fee": "Quota d'I.V.A. ({{currency}})",
+        "total": "Total factura ({{currency}})"
       }
     },
     "tax": {

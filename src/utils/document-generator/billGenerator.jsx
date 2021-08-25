@@ -1,9 +1,20 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { ProductsTable, SummaryTable } from './components/bill/BillTable';
+import {
+  BillHeader,
+  ProductsTable,
+  SummaryTable,
+} from './components/bill/BillTable';
 
-const generateHeader = (data) => {
-  return <div>Header</div>;
+const generateHeader = (billNumberPreamble, billNumber, date, clientData) => {
+  return (
+    <BillHeader
+      billNumberPreamble={billNumberPreamble}
+      billNumber={billNumber}
+      date={date}
+      clientData={clientData}
+    />
+  );
 };
 
 const generateBody = (products) => {
@@ -18,7 +29,12 @@ const generateBill = (data) => {
   return (
     <Grid container className="m-2r" spacing={3}>
       <Grid item xs={12}>
-        {generateHeader(null)}
+        {generateHeader(
+          data.billNumberPreamble,
+          data.billNumber,
+          data.date,
+          data.entityData.fiscalData
+        )}
       </Grid>
       <Grid item xs={12}>
         {generateBody(data.products)}

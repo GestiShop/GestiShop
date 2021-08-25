@@ -124,6 +124,16 @@
         "stock_alert": "Alertar cuando las existencias sean demasiado bajas.",
         "min_stock": "Stock mínimo",
         "quantity": "Cantidad"
+      },
+      "document": {
+        "description": "Descripción",
+        "quantity": "Cantidad",
+        "price_per_unit": "Precio por unidad ({{currency}})",
+        "discount": "Descuento (%)",
+        "subtotal": "Subtotal ({{currency}})",
+        "vat": "I.V.A. (%)",
+        "vat_fee": "Cuota de I.V.A. ({{currency}})",
+        "total": "Total factura ({{currency}})"
       }
     },
     "tax": {

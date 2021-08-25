@@ -2,13 +2,18 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { withStyles } from '@material-ui/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  TableCell,
+  TableHead,
+  TableRow,
+  Grid,
+  Typography,
+} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 const StyledTableCell = withStyles(() => ({
   head: {
@@ -20,6 +25,73 @@ const StyledTableCell = withStyles(() => ({
     fontWeight: 'bold',
   },
 }))(TableCell);
+
+const BillHeader = ({ billNumberPreamble, billNumber, date, clientData }) => {
+  const { t } = useTranslation();
+  const billNumberToPrint = billNumberPreamble
+    ? `${billNumberPreamble}-${billNumber}`
+    : billNumber;
+
+  const [businessInfo, setBusinessInfo] = useState(
+    useSelector((store) => store.configuration.businessInfo)
+  );
+
+  const getAddressToPrint = (address) => {
+    let res = `${address.roadType}. ${address.street}, ${address.number}`;
+
+    if (address.floor) {
+      res += ` Nº ${businessInfo.address.floor}`;
+      if (address.door) {
+        res += `, ${businessInfo.address.door}`;
+      }
+    }
+
+    return res;
+  };
+
+  return (
+    <Grid container spacing={3}>
+      <Grid item xs={6}>
+        <Typography align="left" className="mb-2r bold" paragraph>
+          {`${t(
+            'accounting_module.bill.structure.bill_number'
+          )}: ${billNumberToPrint}`}
+        </Typography>
+        <Typography align="left" paragraph>
+          {businessInfo.name}
+        </Typography>
+        <Typography align="left" paragraph>
+          {businessInfo.nif}
+        </Typography>
+        <Typography align="left" paragraph>
+          {getAddressToPrint(businessInfo.address)}
+        </Typography>
+        <Typography align="left" paragraph>
+          {`${businessInfo.address.zipCode} ${businessInfo.address.city}`}
+        </Typography>
+      </Grid>
+      <Grid item xs={6}>
+        <Typography align="right" className="mb-2r bold" paragraph>
+          {`${t('accounting_module.bill.structure.date')}: ${moment(
+            date
+          ).format('DD/MM/YYYY')}`}
+        </Typography>
+        <Typography align="right" paragraph>
+          {clientData.name}
+        </Typography>
+        <Typography align="right" paragraph>
+          {clientData.nif}
+        </Typography>
+        <Typography align="right" paragraph>
+          {getAddressToPrint(clientData.address)}
+        </Typography>
+        <Typography align="right" paragraph>
+          {`${clientData.address.zipCode} ${clientData.address.city}`}
+        </Typography>
+      </Grid>
+    </Grid>
+  );
+};
 
 const ProductsTable = ({ products }) => {
   const { t } = useTranslation();
@@ -158,4 +230,4 @@ const SummaryTable = ({ products }) => {
   );
 };
 
-export { ProductsTable, SummaryTable };
+export { BillHeader, ProductsTable, SummaryTable };
