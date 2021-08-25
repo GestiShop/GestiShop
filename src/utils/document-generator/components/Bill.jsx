@@ -133,7 +133,7 @@ const ProductsTable = ({ products }) => {
           {products.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.name}</TableCell>
-              <TableCell align="right">{row.quantity}</TableCell>
+              <TableCell align="right">{`${row.quantity} ${row.unitType}`}</TableCell>
               <TableCell align="right">
                 {row.basePricePerUnit.toFixed(numberOfDecimals)}
               </TableCell>

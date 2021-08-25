@@ -59,3 +59,28 @@ body {
 .bold {
   font-weight: bold !important;
 }
+
+@media print {
+  table {
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tfoot {
+    display: table-footer-group;
+  }
+
+  @page {
+    size: auto;
+    margin: 27mm 16mm 27mm 16mm;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}

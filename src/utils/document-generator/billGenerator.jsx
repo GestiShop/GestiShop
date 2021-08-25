@@ -23,7 +23,7 @@ const generateFooter = (products) => {
 
 const generateBill = (data) => {
   return (
-    <Grid container className="m-2r" spacing={3}>
+    <Grid container spacing={3}>
       <Grid item xs={12}>
         {generateHeader(
           data.billNumberPreamble,
