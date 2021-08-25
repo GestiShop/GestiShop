@@ -96,7 +96,8 @@
       "client_bills": "Bills to clients",
       "provider_bills": "Bills from providers",
       "client_budgets": "Budgets to clients",
-      "provider_budgets": "Budgets from providers"
+      "provider_budgets": "Budgets from providers",
+      "documents": "Documents"
     },
     "product": {
       "create": "Add new product",
@@ -324,6 +325,8 @@
       "347": {
         "title": "347 model",
         "document": {
+          "clients": "Clients",
+          "providers": "Providers",
           "nif": "N.I.F.",
           "name": "Name",
           "trimester_1": "1st trimester ({{currency}})",

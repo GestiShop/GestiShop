@@ -96,7 +96,8 @@
       "client_bills": "Facturas a clientes",
       "provider_bills": "Facturas de proveedores",
       "client_budgets": "Presupuestos a clientes",
-      "provider_budgets": "Presupuestos de proveedores"
+      "provider_budgets": "Presupuestos de proveedores",
+      "documents": "Documentos"
     },
     "product": {
       "create": "Añadir un producto",
@@ -324,6 +325,8 @@
       "347": {
         "title": "Modelo 347",
         "document": {
+          "clients": "Clientes",
+          "providers": "Proveedores",
           "nif": "N.I.F.",
           "name": "Nombre",
           "trimester_1": "1r trimestre ({{currency}})",

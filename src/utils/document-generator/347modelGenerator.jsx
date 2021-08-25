@@ -19,7 +19,7 @@ const generateBody = (providers, clients) => {
   );
 };
 
-const generateBill = (providers, clients) => {
+const generate347Model = (providers, clients) => {
   return (
     <Grid container className="m-2r" spacing={3}>
       <Grid item xs={12}>
@@ -32,4 +32,4 @@ const generateBill = (providers, clients) => {
   );
 };
 
-export default generateBill;
+export default generate347Model;

@@ -52,25 +52,25 @@ const EntityTableHeader = ({ title }) => {
       </TableRow>
       <TableRow>
         <StyledTableCell>
-          {t('accounting_module.model.347.nif')}
+          {t('accounting_module.model.347.document.nif')}
         </StyledTableCell>
         <StyledTableCell align="right">
-          {t('accounting_module.model.347.name')}
+          {t('accounting_module.model.347.document.name')}
         </StyledTableCell>
         <StyledTableCell align="right">
-          {t('accounting_module.model.347.trimester_1', { currency })}
+          {t('accounting_module.model.347.document.trimester_1', { currency })}
         </StyledTableCell>
         <StyledTableCell align="right">
-          {t('accounting_module.model.347.trimester_2', { currency })}
+          {t('accounting_module.model.347.document.trimester_2', { currency })}
         </StyledTableCell>
         <StyledTableCell align="right">
-          {t('accounting_module.model.347.trimester_3', { currency })}
+          {t('accounting_module.model.347.document.trimester_3', { currency })}
         </StyledTableCell>
         <StyledTableCell align="right">
-          {t('accounting_module.model.347.trimester_4', { currency })}
+          {t('accounting_module.model.347.document.trimester_4', { currency })}
         </StyledTableCell>
         <StyledTableCell align="right">
-          {t('accounting_module.model.347.total', { currency })}
+          {t('accounting_module.model.347.document.total', { currency })}
         </StyledTableCell>
       </TableRow>
     </TableHead>
@@ -84,8 +84,8 @@ const EntitiesTable = ({ entities, isClient }) => {
   );
 
   const translation = isClient
-    ? t('accounting_module.model.347.clients')
-    : t('accounting_module.model.347.providers');
+    ? t('accounting_module.model.347.document.clients')
+    : t('accounting_module.model.347.document.providers');
 
   return (
     <TableContainer>

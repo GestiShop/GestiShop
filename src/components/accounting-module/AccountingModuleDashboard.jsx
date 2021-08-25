@@ -34,6 +34,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import CategoryIcon from '@material-ui/icons/Category';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
 import ListUnitTypes from './list/ListUnitTypes';
@@ -45,6 +46,7 @@ import Settings from '../settings-module/Settings';
 import ListClients from './list/ListClients';
 import ListProviders from './list/ListProviders';
 import ListClientBills from './list/ListClientBills';
+import DocumentGenerator from './documents/DocumentGenerator';
 
 const DRAWER_WIDTH = 300;
 
@@ -191,6 +193,13 @@ const AccountingModuleDashboard = () => {
         text: t('accounting_module.menu.provider_budgets'),
         icon: <ReceiptOutlinedIcon />,
         linkTo: `${url}/provider_budgets`,
+      },
+    ],
+    [
+      {
+        text: t('accounting_module.menu.documents'),
+        icon: <InsertDriveFileIcon />,
+        linkTo: `${url}/document_generator`,
       },
     ],
   ];
@@ -343,6 +352,9 @@ const AccountingModuleDashboard = () => {
             </Route>
             <Route exact path={`${path}/provider_budgets`}>
               <p>[NOT IMPLEMENTED] Provider budgets</p>
+            </Route>
+            <Route exact path={`${path}/document_generator`}>
+              <DocumentGenerator />
             </Route>
             <Route exact path={`${path}`}>
               <Redirect to={`${path}/calendar`} />

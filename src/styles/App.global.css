@@ -60,27 +60,34 @@ body {
   font-weight: bold !important;
 }
 
+/* ----- ----- PDF ----- ----- */
 @media print {
-  table {
-    page-break-inside: auto;
-  }
-  tr {
-    page-break-inside: avoid;
-    page-break-after: auto;
-  }
-  thead {
-    display: table-header-group;
-  }
-  tfoot {
-    display: table-footer-group;
-  }
-
+  /* Basic styling */
   @page {
     size: auto;
     margin: 27mm 16mm 27mm 16mm;
   }
+
   body {
     margin: 0;
     padding: 0;
+  }
+
+  /* Table styling */
+  table {
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
   }
 }
