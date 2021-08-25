@@ -5,14 +5,14 @@ import { useReactToPrint } from 'react-to-print';
 import { Box } from '@material-ui/core';
 import GenericListComponent from './GenericListComponent';
 import {
-  deleteClientBills,
-  fetchClientBills,
-} from '../../../db/ClientBillHelper';
-import CreateClientBill from '../create/CreateClientBill';
+  deleteProviderBills,
+  fetchProviderBills,
+} from '../../../db/ProviderBillHelper';
+import CreateProviderBill from '../create/CreateProviderBill';
 import useIsMounted from '../../../utils/useIsMounted';
 import billGenerator from '../../../utils/document-generator/billGenerator';
 
-const ListClientBills = () => {
+const ListProviderBills = () => {
   const { t } = useTranslation();
   const componentRef = useRef();
   const [contentToPrint, setContentToPrint] = useState(null);
@@ -32,7 +32,7 @@ const ListClientBills = () => {
     },
     {
       id: 'name',
-      label: t('accounting_module.bill.structure.client_name'),
+      label: t('accounting_module.bill.structure.provider_name'),
       align: 'left',
       parents: ['entityData', 'fiscalData'],
     },
@@ -56,7 +56,7 @@ const ListClientBills = () => {
   ];
 
   const fetchData = () => {
-    fetchClientBills(
+    fetchProviderBills(
       (error) => {
         console.log('error', error);
       },
@@ -70,7 +70,7 @@ const ListClientBills = () => {
   };
 
   const deleteData = (ids) => {
-    deleteClientBills(
+    deleteProviderBills(
       ids,
       (error) => {
         console.log('error', error);
@@ -122,11 +122,11 @@ const ListClientBills = () => {
         deleteCallback={handleDelete}
         printCallback={handlePrint}
         texts={{
-          create: t('accounting_module.client_bill.create'),
-          title: t('accounting_module.client_bill.list'),
-          edit: t('accounting_module.client_bill.edit'),
+          create: t('accounting_module.provider_bill.create'),
+          title: t('accounting_module.provider_bill.list'),
+          edit: t('accounting_module.provider_bill.edit'),
         }}
-        creationComponent={<CreateClientBill />}
+        creationComponent={<CreateProviderBill />}
       />
       <Box display="none" displayPrint="block" ref={componentRef}>
         {contentToPrint}
@@ -135,4 +135,4 @@ const ListClientBills = () => {
   );
 };
 
-export default ListClientBills;
+export default ListProviderBills;

@@ -242,6 +242,7 @@
     "bill": {
       "creation": {
         "client_data": "Dades del client",
+        "provider_data": "Dades del proveïdor",
         "products": "Productes",
         "payment_data": "Dades de pagament"
       },
@@ -250,8 +251,11 @@
         "bill_number": "Número de factura",
         "date": "Data",
         "client": "Client",
+        "provider": "Proveïdor",
         "client_name": "Nom del client",
+        "provider_name": "Nom del proveïdor",
         "client_nif": "N.I.F. del client",
+        "provider_nif": "N.I.F. del proveïdor",
         "product": "Producte",
         "payment_method": "Mètodo de pagament",
         "expiration_date": "Data de vencimient",
@@ -266,6 +270,11 @@
       "create": "Afegir una factura a client",
       "edit": "Editar factura a client",
       "list": "Llistat de factures a clients"
+    },
+    "provider_bill": {
+      "create": "Afegir una factura de proveïdor",
+      "edit": "Editar factura de proveïdor",
+      "list": "Llistat de factures de proveïdors"
     },
     "event": {
       "new": "Nou esdeveniment",

@@ -242,6 +242,7 @@
     "bill": {
       "creation": {
         "client_data": "Client data",
+        "provider_data": "Provider data",
         "products": "Products",
         "payment_data": "Payment data"
       },
@@ -250,8 +251,11 @@
         "bill_number": "Bill number",
         "date": "Date",
         "client": "Client",
+        "provider": "Provider",
         "client_name": "Client name",
+        "provider_name": "Provider name",
         "client_nif": "Client N.I.F.",
+        "provider_nif": "Provider N.I.F.",
         "product": "Product",
         "payment_method": "Payment method",
         "expiration_date": "Expiration date",
@@ -266,6 +270,11 @@
       "create": "Add new client bill",
       "edit": "Edit client bill",
       "list": "Client bill list"
+    },
+    "provider_bill": {
+      "create": "Add new provider bill",
+      "edit": "Edit provider bill",
+      "list": "Provider bill list"
     },
     "event": {
       "new": "New event",
