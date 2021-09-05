@@ -87,19 +87,19 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="reference"
-                    label={`${t(
-                      'accounting_module.warehouse.structure.reference'
-                    )} *`}
+                    label={t('accounting_module.warehouse.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="description"
-                    label={`${t(
+                    label={t(
                       'accounting_module.warehouse.structure.description'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 

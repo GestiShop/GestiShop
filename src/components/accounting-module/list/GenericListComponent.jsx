@@ -1,24 +1,29 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable eqeqeq */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import Button from '../../ui/forms/Button';
-import SearchBar from '../../ui/SearchBar';
 import Table from '../../ui/Table';
 import FullScreenDialog from '../../ui/FullscreenDialog';
 
 const GenericListComponent = ({
+  isDataLoaded,
   rows,
   headers,
   editCallback,
-  searchCallback,
   deleteCallback,
+  printCallback,
   texts,
   creationComponent,
 }) => {
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
   const [initialState, setInitialState] = useState(false);
+  const [filteredRows, setFilteredRows] = useState(rows);
+
+  const handlePrint = (id) => {
+    printCallback(rows.find((row) => row._id == id));
+  };
 
   const handleEdit = (id) => {
     setInitialState(rows.find((row) => row._id == id));
@@ -29,6 +34,10 @@ const GenericListComponent = ({
     setOpenCreationDialog(false);
     editCallback();
   };
+
+  useEffect(() => {
+    setFilteredRows(rows);
+  }, [rows]);
 
   return (
     <>
@@ -46,18 +55,17 @@ const GenericListComponent = ({
                   {texts.create}
                 </Button>
               </Grid>
-              <Grid item xs={6} />
-              <Grid item xs={3}>
-                <SearchBar onSubmit={(query) => searchCallback(query)} />
-              </Grid>
+              <Grid item xs={9} />
 
               <Grid item xs={12}>
                 <Table
-                  rows={rows}
+                  isDataLoaded={isDataLoaded}
+                  rows={filteredRows}
                   headers={headers}
                   title={texts.title}
                   editCallback={handleEdit}
                   deleteCallback={deleteCallback}
+                  printCallback={printCallback ? handlePrint : undefined}
                 />
               </Grid>
             </Grid>

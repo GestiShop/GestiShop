@@ -20,8 +20,8 @@ const CreateEvent = ({ closeCallback, initialState }) => {
 
   const INITIAL_STATE = {
     title: initialState.title,
-    start: moment(initialState.start).format('YYYY-MM-DDTHH:MM:SS'),
-    end: moment(initialState.end).format('YYYY-MM-DDTHH:MM:SS'),
+    start: moment(initialState.start).format('YYYY-MM-DDTHH:MM'),
+    end: moment(initialState.end).format('YYYY-MM-DDTHH:MM'),
     description: initialState.description || '',
     colorCode: initialState.colorCode || 'lightseagreen',
     allDay: initialState.allDay || false,
@@ -84,22 +84,25 @@ const CreateEvent = ({ closeCallback, initialState }) => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
+                    required
                     name="title"
-                    label={`${t('accounting_module.event.structure.title')} *`}
+                    label={t('accounting_module.event.structure.title')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
+                    required
                     name="start"
-                    label={`${t('accounting_module.event.structure.start')} *`}
+                    label={t('accounting_module.event.structure.start')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <DateTimePicker
+                    required
                     name="end"
-                    label={`${t('accounting_module.event.structure.end')} *`}
+                    label={t('accounting_module.event.structure.end')}
                   />
                 </Grid>
 

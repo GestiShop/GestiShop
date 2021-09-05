@@ -1,11 +1,10 @@
-/* eslint-disable import/first */
 import React from 'react';
 import { render } from 'react-dom';
 import { createTheme, MuiThemeProvider } from '@material-ui/core';
+import '@fontsource/roboto';
 import App from './App';
 import './i18n';
 import './styles/App.global.css';
-import '@fontsource/roboto';
 
 const theme = createTheme({
   palette: {
@@ -21,6 +20,12 @@ const theme = createTheme({
       dark: '#BA000D',
       contrastText: '#000000',
     },
+  },
+  typography: {
+    fontFamily: [
+      // 'Roboto',
+      'sans-serif',
+    ].join(','),
   },
 });
 

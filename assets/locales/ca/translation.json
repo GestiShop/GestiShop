@@ -12,7 +12,8 @@
     "edit": "Editar",
     "create": "Crear",
     "delete": "Esborrar",
-    "save": "Guardar"
+    "save": "Guardar",
+    "print": "Imprimir"
   },
   "settings": {
     "title": "Configuració",
@@ -72,6 +73,17 @@
   },
   "accounting_module": {
     "accounting_module": "Mòdul de comptabilitat",
+    "payment_methods": {
+      "cash": "Efectiu",
+      "debit_card": "Targeta de crèdit",
+      "credit_card": "Targeta de dèbit",
+      "bizum": "Bizum",
+      "paypal": "PayPal",
+      "wire_transfer": "Transferència bancària",
+      "check": "Xec",
+      "bank_receipt": "Rebut bancari",
+      "others": "Altres"
+    },
     "menu": {
       "schedule": "Agenda",
       "products": "Productes",
@@ -84,7 +96,8 @@
       "client_bills": "Factures a clients",
       "provider_bills": "Factures de proveïdors",
       "client_budgets": "Pressupostos a clients",
-      "provider_budgets": "Pressupostos de proveïdors"
+      "provider_budgets": "Pressupostos de proveïdors",
+      "documents": "Documents"
     },
     "product": {
       "create": "Afegir un producte",
@@ -101,6 +114,7 @@
         "name": "Nom",
         "description": "Descripció",
         "base_price": "Preu base ({{currency}})",
+        "base_price_per_unit": "Preu base per unitat ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descompte (%)",
         "tax_percentage": "Impost (%)",
@@ -109,7 +123,18 @@
         "warehouse": "Magatzem",
         "categories": "Categories",
         "stock_alert": "Alertar quan les existències siguin massa baixes.",
-        "min_stock": "Stock mínim"
+        "min_stock": "Stock mínim",
+        "quantity": "Quantitat"
+      },
+      "document": {
+        "description": "Descripció",
+        "quantity": "Quantitat",
+        "price_per_unit": "Preu per unitat ({{currency}})",
+        "discount": "Descompte (%)",
+        "subtotal": "Subtotal ({{currency}})",
+        "vat": "I.V.A. (%)",
+        "vat_fee": "Quota d'I.V.A. ({{currency}})",
+        "total": "Total factura ({{currency}})"
       }
     },
     "tax": {
@@ -214,6 +239,43 @@
         "electronic_billing_code": "Codi de facturació electrònica"
       }
     },
+    "bill": {
+      "creation": {
+        "client_data": "Dades del client",
+        "provider_data": "Dades del proveïdor",
+        "products": "Productes",
+        "payment_data": "Dades de pagament"
+      },
+      "structure": {
+        "bill_number_preamble": "Preàmbul",
+        "bill_number": "Número de factura",
+        "date": "Data",
+        "client": "Client",
+        "provider": "Proveïdor",
+        "client_name": "Nom del client",
+        "provider_name": "Nom del proveïdor",
+        "client_nif": "N.I.F. del client",
+        "provider_nif": "N.I.F. del proveïdor",
+        "product": "Producte",
+        "payment_method": "Mètodo de pagament",
+        "expiration_date": "Data de vencimient",
+        "total_base_price": "Preu base total ({{currency}})",
+        "general_discount": "Descompte general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "is_paid": "Pagat",
+        "notes": "Notes addicionals"
+      }
+    },
+    "client_bill": {
+      "create": "Afegir una factura a client",
+      "edit": "Editar factura a client",
+      "list": "Llistat de factures a clients"
+    },
+    "provider_bill": {
+      "create": "Afegir una factura de proveïdor",
+      "edit": "Editar factura de proveïdor",
+      "list": "Llistat de factures de proveïdors"
+    },
     "event": {
       "new": "Nou esdeveniment",
       "edit": "Editar esdeveniment",
@@ -251,7 +313,8 @@
       "country": "Païs"
     },
     "placeholders": {
-      "search": "Introdueixi text per cercar..."
+      "search": "Introdueixi text per cercar...",
+      "loading_data": "Carregant dades, esperi si us plau..."
     },
     "table": {
       "sorted_asc": "Ordenat ascendentment",
@@ -265,6 +328,22 @@
       "delete": {
         "title": "Esteu segur que voleu suprimir aquests elements?",
         "description": "Aquesta acció és permanent. Si els esborreu, no els podreu recuperar més endavant."
+      }
+    },
+    "model": {
+      "347": {
+        "title": "Model 347",
+        "document": {
+          "clients": "Clients",
+          "providers": "Proveïdors",
+          "nif": "N.I.F.",
+          "name": "Nom",
+          "trimester_1": "1r trimestre ({{currency}})",
+          "trimester_2": "2n trimestre ({{currency}})",
+          "trimester_3": "3r trimestre ({{currency}})",
+          "trimester_4": "4t trimestre ({{currency}})",
+          "total": "Total ({{currency}})"
+        }
       }
     }
   }

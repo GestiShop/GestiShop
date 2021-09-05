@@ -2,7 +2,7 @@ import { Schema, Types, model } from 'mongoose';
 import { addressSchema } from './AddressModel';
 
 const budgetSchema = new Schema({
-  budgetNumber: { type: Number, unique: true, required: true, dropDups: true },
+  budgetNumber: { type: Number, unique: true, required: true },
   date: Date,
   entityData: {
     entity: { type: Types.ObjectId },

@@ -12,7 +12,8 @@
     "edit": "Edit",
     "create": "Create",
     "delete": "Delete",
-    "save": "Save"
+    "save": "Save",
+    "print": "Print"
   },
   "settings": {
     "title": "Settings",
@@ -72,6 +73,17 @@
   },
   "accounting_module": {
     "accounting_module": "Accounting module",
+    "payment_methods": {
+      "cash": "Cash",
+      "debit_card": "Debit card",
+      "credit_card": "Credit card",
+      "bizum": "Bizum",
+      "paypal": "PayPal",
+      "wire_transfer": "Wire transfer",
+      "check": "Check",
+      "bank_receipt": "Bank receipt",
+      "others": "Others"
+    },
     "menu": {
       "schedule": "Schedule",
       "products": "Products",
@@ -84,7 +96,8 @@
       "client_bills": "Bills to clients",
       "provider_bills": "Bills from providers",
       "client_budgets": "Budgets to clients",
-      "provider_budgets": "Budgets from providers"
+      "provider_budgets": "Budgets from providers",
+      "documents": "Documents"
     },
     "product": {
       "create": "Add new product",
@@ -101,6 +114,7 @@
         "name": "Name",
         "description": "Description",
         "base_price": "Base price ({{currency}})",
+        "base_price_per_unit": "Base price per unit ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Discount (%)",
         "tax_percentage": "Tax (%)",
@@ -109,7 +123,18 @@
         "warehouse": "Warehouse",
         "categories": "Categories",
         "stock_alert": "Alert when stock is too low.",
-        "min_stock": "Minimum stock"
+        "min_stock": "Minimum stock",
+        "quantity": "Quantity"
+      },
+      "document": {
+        "description": "Description",
+        "quantity": "Quantity",
+        "price_per_unit": "Price per unit ({{currency}})",
+        "discount": "Discount (%)",
+        "subtotal": "Subtotal ({{currency}})",
+        "vat": "V.A.T. (%)",
+        "vat_fee": "V.A.T. fee ({{currency}})",
+        "total": "Bill total ({{currency}})"
       }
     },
     "tax": {
@@ -214,6 +239,43 @@
         "electronic_billing_code": "Electronic billing code"
       }
     },
+    "bill": {
+      "creation": {
+        "client_data": "Client data",
+        "provider_data": "Provider data",
+        "products": "Products",
+        "payment_data": "Payment data"
+      },
+      "structure": {
+        "bill_number_preamble": "Preamble",
+        "bill_number": "Bill number",
+        "date": "Date",
+        "client": "Client",
+        "provider": "Provider",
+        "client_name": "Client name",
+        "provider_name": "Provider name",
+        "client_nif": "Client N.I.F.",
+        "provider_nif": "Provider N.I.F.",
+        "product": "Product",
+        "payment_method": "Payment method",
+        "expiration_date": "Expiration date",
+        "total_base_price": "Total base price ({{currency}})",
+        "general_discount": "General discount (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "is_paid": "Paid",
+        "notes": "Extra notes"
+      }
+    },
+    "client_bill": {
+      "create": "Add new client bill",
+      "edit": "Edit client bill",
+      "list": "Client bill list"
+    },
+    "provider_bill": {
+      "create": "Add new provider bill",
+      "edit": "Edit provider bill",
+      "list": "Provider bill list"
+    },
     "event": {
       "new": "New event",
       "edit": "Edit event",
@@ -251,7 +313,8 @@
       "country": "Country"
     },
     "placeholders": {
-      "search": "Input text to search..."
+      "search": "Input text to search...",
+      "loading_data": "Loading data, please wait..."
     },
     "table": {
       "sorted_asc": "Sorted ascending",
@@ -265,6 +328,22 @@
       "delete": {
         "title": "Are you sure you want to delete these items?",
         "description": "This action is permanent. If you delete them, you will not be able to recover them later."
+      }
+    },
+    "model": {
+      "347": {
+        "title": "347 model",
+        "document": {
+          "clients": "Clients",
+          "providers": "Providers",
+          "nif": "N.I.F.",
+          "name": "Name",
+          "trimester_1": "1st trimester ({{currency}})",
+          "trimester_2": "2nd trimester ({{currency}})",
+          "trimester_3": "3rd trimester ({{currency}})",
+          "trimester_4": "4th trimester ({{currency}})",
+          "total": "Total ({{currency}})"
+        }
       }
     }
   }

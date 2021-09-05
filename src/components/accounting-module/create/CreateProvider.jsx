@@ -152,19 +152,19 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={12}>
                   <TextField
+                    required
                     name="contactData.name"
-                    label={`${t(
-                      'accounting_module.provider.structure.name'
-                    )} *`}
+                    label={t('accounting_module.provider.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
+                    required
                     name="contactData.phone.phone"
-                    label={`${t(
+                    label={t(
                       'accounting_module.provider.structure.main_phone_phone'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 
@@ -179,10 +179,11 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="contactData.email.email"
-                    label={`${t(
+                    label={t(
                       'accounting_module.provider.structure.main_email_email'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 
@@ -203,17 +204,17 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={8}>
                   <TextField
+                    required
                     name="fiscalData.name"
-                    label={`${t(
-                      'accounting_module.provider.structure.name'
-                    )} *`}
+                    label={t('accounting_module.provider.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
+                    required
                     name="fiscalData.nif"
-                    label={`${t('accounting_module.provider.structure.nif')} *`}
+                    label={t('accounting_module.provider.structure.nif')}
                   />
                 </Grid>
 
@@ -227,20 +228,18 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={12}>
                   <TextField
+                    required
                     name="postalData.name"
-                    label={`${t(
-                      'accounting_module.provider.structure.name'
-                    )} *`}
+                    label={t('accounting_module.provider.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     type="email"
                     name="postalData.email.email"
-                    label={`${t(
-                      'accounting_module.provider.structure.email'
-                    )} *`}
+                    label={t('accounting_module.provider.structure.email')}
                   />
                 </Grid>
 
@@ -263,21 +262,23 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     type="number"
                     name="tributationData.retentionPercentage"
-                    label={`${t(
+                    label={t(
                       'accounting_module.provider.structure.retention_percentage'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     type="number"
                     name="tributationData.personalDiscount"
-                    label={`${t(
+                    label={t(
                       'accounting_module.provider.structure.personal_discount'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 

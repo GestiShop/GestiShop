@@ -12,7 +12,8 @@
     "edit": "Editar",
     "create": "Crear",
     "delete": "Eliminar",
-    "save": "Guardar"
+    "save": "Guardar",
+    "print": "Imprimir"
   },
   "settings": {
     "title": "Configuración",
@@ -72,6 +73,17 @@
   },
   "accounting_module": {
     "accounting_module": "Módulo de contabilidad",
+    "payment_methods": {
+      "cash": "Efectivo",
+      "debit_card": "Tarjeta de crédito",
+      "credit_card": "Tarjeta de débito",
+      "bizum": "Bizum",
+      "paypal": "PayPal",
+      "wire_transfer": "Transferencia bancaria",
+      "check": "Cheque",
+      "bank_receipt": "Recibo bancario",
+      "others": "Otros"
+    },
     "menu": {
       "schedule": "Agenda",
       "products": "Productos",
@@ -84,7 +96,8 @@
       "client_bills": "Facturas a clientes",
       "provider_bills": "Facturas de proveedores",
       "client_budgets": "Presupuestos a clientes",
-      "provider_budgets": "Presupuestos de proveedores"
+      "provider_budgets": "Presupuestos de proveedores",
+      "documents": "Documentos"
     },
     "product": {
       "create": "Añadir un producto",
@@ -101,6 +114,7 @@
         "name": "Nombre",
         "description": "Descripción",
         "base_price": "Precio base ({{currency}})",
+        "base_price_per_unit": "Precio base por unidad ({{currency}})",
         "pvp": "P.V.P. ({{currency}})",
         "discount_percentage": "Descuento (%)",
         "tax_percentage": "Impuesto (%)",
@@ -109,7 +123,18 @@
         "warehouse": "Almacén",
         "categories": "Categorías",
         "stock_alert": "Alertar cuando las existencias sean demasiado bajas.",
-        "min_stock": "Stock mínimo"
+        "min_stock": "Stock mínimo",
+        "quantity": "Cantidad"
+      },
+      "document": {
+        "description": "Descripción",
+        "quantity": "Cantidad",
+        "price_per_unit": "Precio por unidad ({{currency}})",
+        "discount": "Descuento (%)",
+        "subtotal": "Subtotal ({{currency}})",
+        "vat": "I.V.A. (%)",
+        "vat_fee": "Cuota de I.V.A. ({{currency}})",
+        "total": "Total factura ({{currency}})"
       }
     },
     "tax": {
@@ -214,6 +239,43 @@
         "electronic_billing_code": "Código de facturación electrónica"
       }
     },
+    "bill": {
+      "creation": {
+        "client_data": "Datos del cliente",
+        "provider_data": "Datos del proveedor",
+        "products": "Productos",
+        "payment_data": "Datos de pago"
+      },
+      "structure": {
+        "bill_number_preamble": "Preámbulo",
+        "bill_number": "Número de factura",
+        "date": "Fecha",
+        "client": "Cliente",
+        "provider": "Proveedor",
+        "client_name": "Nombre del cliente",
+        "provider_name": "Nombre del proveedor",
+        "client_nif": "N.I.F. del cliente",
+        "provider_nif": "N.I.F. del proveedor",
+        "product": "Producto",
+        "payment_method": "Método de pago",
+        "expiration_date": "Fecha de vencimiento",
+        "total_base_price": "Precio base total ({{currency}})",
+        "general_discount": "Descuento general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "is_paid": "Pagado",
+        "notes": "Notas adicionales"
+      }
+    },
+    "client_bill": {
+      "create": "Añadir una factura a cliente",
+      "edit": "Editar factura a cliente",
+      "list": "Lista de facturas a clientes"
+    },
+    "provider_bill": {
+      "create": "Añadir una factura de proveedor",
+      "edit": "Editar factura de proveedor",
+      "list": "Lista de facturas de proveedores"
+    },
     "event": {
       "new": "Nuevo evento",
       "edit": "Editar evento",
@@ -251,7 +313,8 @@
       "country": "País"
     },
     "placeholders": {
-      "search": "Ingrese texto para buscar..."
+      "search": "Ingrese texto para buscar...",
+      "loading_data": "Cargando datos, espere por favor..."
     },
     "table": {
       "sorted_asc": "Ordenado ascendentemente",
@@ -265,6 +328,22 @@
       "delete": {
         "title": "¿Está seguro de que desea eliminar estos elementos?",
         "description": "Esta acción es permanente. Si los borra, no podrá recuperarlos más tarde."
+      }
+    },
+    "model": {
+      "347": {
+        "title": "Modelo 347",
+        "document": {
+          "clients": "Clientes",
+          "providers": "Proveedores",
+          "nif": "N.I.F.",
+          "name": "Nombre",
+          "trimester_1": "1r trimestre ({{currency}})",
+          "trimester_2": "2o trimestre ({{currency}})",
+          "trimester_3": "3r trimestre ({{currency}})",
+          "trimester_4": "4o trimestre ({{currency}})",
+          "total": "Total ({{currency}})"
+        }
       }
     }
   }

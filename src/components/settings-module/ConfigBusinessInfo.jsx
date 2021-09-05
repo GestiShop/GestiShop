@@ -1,78 +1,78 @@
 import React from 'react';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { createStyles, Grid, makeStyles } from '@material-ui/core';
+import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Container, Grid } from '@material-ui/core';
+import { Formik, Form } from 'formik';
+import LocalConfiguration from '../../utils/localConfiguration';
 import { setDefaultBusinessInfo } from '../../redux/configuration';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    w100: {
-      width: '100%',
-    },
-  })
-);
+import Textfield from '../ui/forms/TextField';
+import SubmitButton from '../ui/forms/SubmitButton';
+import { AddressSchemaValidator, EmptyAddress } from '../../utils/constants';
+import AddressForm from '../ui/AddressForm';
 
 const ConfigBusinessInfo = () => {
   const { t } = useTranslation();
-
   const dispatch = useDispatch();
-  const defaultBusinessInfo = useSelector(
+
+  const initialValues = useSelector(
     (store) => store.configuration.businessInfo
   );
 
-  const classes = useStyles();
+  const FORM_VALIDATION = Yup.object().shape({
+    name: Yup.string().required(t('form.errors.required')),
+    nif: Yup.string().required(t('form.errors.required')),
+    address: Yup.object().shape(AddressSchemaValidator),
+  });
 
-  const [state, setState] = React.useState(defaultBusinessInfo);
+  const INITIAL_STATE = {
+    name: initialValues && initialValues.name ? initialValues.name : '',
+    nif: initialValues && initialValues.nif ? initialValues.nif : '',
+    address:
+      initialValues && initialValues.address
+        ? initialValues.address
+        : EmptyAddress,
+  };
 
-  const handleChange = (event) => {
-    const newState = {
-      ...state,
-      [event.target.name]: event.target.value,
-    };
-
-    setState(newState);
-    dispatch(setDefaultBusinessInfo(newState));
+  const handleSubmit = (data) => {
+    LocalConfiguration.setLocalBusinessInfo(data);
+    dispatch(setDefaultBusinessInfo(data));
   };
 
   return (
-    <Grid container spacing={3}>
+    <Grid container>
       <Grid item xs={12}>
-        <FormControl variant="outlined" className={classes.w100}>
-          <InputLabel htmlFor="name">
-            {t('settings.business_config.name')}
-          </InputLabel>
-          <OutlinedInput
-            id="name"
-            value={state.name}
-            placeholder={t('settings.business_config.enter_name')}
-            onChange={handleChange}
-            label={t('settings.business_config.name')}
-            name="name"
-            type="text"
-            required
-          />
-        </FormControl>
-      </Grid>
+        <Container maxWidth="md">
+          <Formik
+            initialValues={{ ...INITIAL_STATE }}
+            validationSchema={FORM_VALIDATION}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Textfield
+                    name="name"
+                    label={t('settings.business_config.name')}
+                  />
+                </Grid>
 
-      <Grid item xs={12}>
-        <FormControl variant="outlined" className={classes.w100}>
-          <InputLabel htmlFor="nif">
-            {t('settings.business_config.nif')}
-          </InputLabel>
-          <OutlinedInput
-            id="nif"
-            value={state.nif}
-            placeholder={t('settings.business_config.enter_nif')}
-            onChange={handleChange}
-            label={t('settings.business_config.nif')}
-            name="nif"
-            type="text"
-            required
-          />
-        </FormControl>
+                <Grid item xs={12}>
+                  <Textfield
+                    name="nif"
+                    label={t('settings.business_config.nif')}
+                  />
+                </Grid>
+
+                <AddressForm parent="address" />
+
+                <Grid item xs={12}>
+                  <SubmitButton>{t('buttons.save')}</SubmitButton>
+                </Grid>
+              </Grid>
+            </Form>
+          </Formik>
+        </Container>
       </Grid>
     </Grid>
   );

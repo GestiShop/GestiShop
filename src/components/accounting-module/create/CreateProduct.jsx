@@ -55,11 +55,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
           taxPercentage: 0,
         }
   );
-  const currency = useSelector(
-    (store) => store.configuration.currencyInfo.currency.label
+  const [currency, setCurrency] = useState(
+    useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
-  const numberOfDecimals = useSelector(
-    (store) => store.configuration.currencyInfo.floatingPositions
+  const [numberOfDecimals, setNumberOfDecimals] = useState(
+    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
   );
 
   let INITIAL_STATE = {
@@ -236,6 +236,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
+            enableReinitialize
             initialValues={{
               ...INITIAL_STATE,
             }}
@@ -256,17 +257,17 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <TextField
+                    required
                     name="reference"
-                    label={`${t(
-                      'accounting_module.product.structure.reference'
-                    )} *`}
+                    label={t('accounting_module.product.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={9}>
                   <TextField
+                    required
                     name="name"
-                    label={`${t('accounting_module.product.structure.name')} *`}
+                    label={t('accounting_module.product.structure.name')}
                   />
                 </Grid>
 
@@ -281,10 +282,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <Select
+                    required
                     name="unitType"
-                    label={`${t(
-                      'accounting_module.product.structure.unit_type'
-                    )} *`}
+                    label={t('accounting_module.product.structure.unit_type')}
                     options={unitTypesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.unit}`,
@@ -297,10 +297,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <Select
+                    required
                     name="warehouse"
-                    label={`${t(
-                      'accounting_module.product.structure.warehouse'
-                    )} *`}
+                    label={t('accounting_module.product.structure.warehouse')}
                     options={warehousesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.description}`,
@@ -333,10 +332,9 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <TextField
+                    required
                     name="stock"
-                    label={`${t(
-                      'accounting_module.product.structure.stock'
-                    )} *`}
+                    label={t('accounting_module.product.structure.stock')}
                     type="number"
                   />
                 </Grid>
@@ -355,7 +353,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     name="stockAlert"
                     label={t('accounting_module.product.structure.stock_alert')}
                     initialState={INITIAL_STATE.stockAlert}
-                    setValue={(isChecked) => setStockAlert(isChecked)}
+                    setValue={setStockAlert}
                   />
                 </Grid>
 
@@ -367,11 +365,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <TextField
+                    required
                     name="buyingInfo.basePrice"
-                    label={`${t(
-                      'accounting_module.product.structure.base_price',
-                      { currency }
-                    )} *`}
+                    label={t('accounting_module.product.structure.base_price', {
+                      currency,
+                    })}
                     type="number"
                     onInput={(event) =>
                       setBuyingInfo({
@@ -384,10 +382,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <TextField
+                    required
                     name="buyingInfo.discountPercentage"
-                    label={`${t(
+                    label={t(
                       'accounting_module.product.structure.discount_percentage'
-                    )} *`}
+                    )}
                     type="number"
                     onInput={(event) =>
                       setBuyingInfo({
@@ -400,10 +399,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <Select
+                    required
                     name="buyingInfo.taxPercentage"
-                    label={`${t(
+                    label={t(
                       'accounting_module.product.structure.tax_percentage'
-                    )} *`}
+                    )}
                     options={taxesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.percentage}%`,
@@ -448,11 +448,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <TextField
+                    required
                     name="sellingInfo.basePrice"
-                    label={`${t(
-                      'accounting_module.product.structure.base_price',
-                      { currency }
-                    )} *`}
+                    label={t('accounting_module.product.structure.base_price', {
+                      currency,
+                    })}
                     type="number"
                     onInput={(event) =>
                       setSellingInfo({
@@ -465,10 +465,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <TextField
+                    required
                     name="sellingInfo.discountPercentage"
-                    label={`${t(
+                    label={t(
                       'accounting_module.product.structure.discount_percentage'
-                    )} *`}
+                    )}
                     type="number"
                     onInput={(event) =>
                       setSellingInfo({
@@ -481,10 +482,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <Select
+                    required
                     name="sellingInfo.taxPercentage"
-                    label={`${t(
+                    label={t(
                       'accounting_module.product.structure.tax_percentage'
-                    )} *`}
+                    )}
                     options={taxesOptions.map((x) => {
                       return {
                         displayText: `[${x.reference}] ${x.percentage}%`,

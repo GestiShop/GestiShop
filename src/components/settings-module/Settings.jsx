@@ -67,11 +67,11 @@ const Settings = () => {
       label: t('settings.currency_config.currency'),
       component: ConfigCurrencyInfo,
     },
-    /*
     {
       label: t('settings.business_config.business'),
       component: ConfigBusinessInfo,
     },
+    /*
     {
       label: t('settings.database_config.database'),
       component: ConfigDbInfo,

@@ -41,6 +41,10 @@ const LocalConfiguration = {
   getLocalBusinessInfo() {
     return store.get('businessInfo');
   },
+
+  setLocalBusinessInfo(businessInfo) {
+    store.set('businessInfo', businessInfo);
+  },
 };
 
 export default LocalConfiguration;
