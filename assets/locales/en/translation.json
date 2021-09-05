@@ -267,5 +267,8 @@
         "description": "This action is permanent. If you delete them, you will not be able to recover them later."
       }
     }
+  },
+  "pos_module": {
+    "name": "Point of sale"
   }
 }

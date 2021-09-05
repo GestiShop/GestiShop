@@ -267,5 +267,8 @@
         "description": "Esta acción es permanente. Si los borra, no podrá recuperarlos más tarde."
       }
     }
+  },
+  "pos_module": {
+    "name": "Punto de venta"
   }
 }

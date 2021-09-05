@@ -6,7 +6,7 @@ import Settings from './components/settings-module/Settings';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import AccountingModuleDashboard from './components/accounting-module/AccountingModuleDashboard';
-import NotFound from './components/NotFound';
+import PosModuleDashboard from './components/pos-module/PosModuleDashboard';
 
 const App = () => {
   const store = generateStore();
@@ -23,11 +23,11 @@ const App = () => {
           <Route path="/accounting_module">
             <AccountingModuleDashboard />
           </Route>
+          <Route path="/pos_module">
+            <PosModuleDashboard />
+          </Route>
           <Route exact path="/">
             <Home />
-          </Route>
-          <Route>
-            <NotFound />
           </Route>
         </Switch>
       </HashRouter>

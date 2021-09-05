@@ -23,6 +23,11 @@ const Dashboard = () => {
                   {t('accounting_module.accounting_module')}
                 </Button>
               </Grid>
+              <Grid item xs={12} className="d-flex">
+                <Button component={Link} to="/pos_module" replace>
+                  {t('pos_module.name')}
+                </Button>
+              </Grid>
             </Grid>
           </Container>
         </Grid>

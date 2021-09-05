@@ -267,5 +267,16 @@
         "description": "Aquesta acció és permanent. Si els esborreu, no els podreu recuperar més endavant."
       }
     }
+  },
+  "pos_module": {
+    "name": "Punt de venta",
+    "menu": {
+      "sales": "Ventes",
+      "edit_sales": "Editar ventes",
+      "close_cash": "Tancament de caixa",
+      "clients":  "Clients",
+      "providers": "Proveidors",
+      "stock": "Stock"
+    }
   }
 }
