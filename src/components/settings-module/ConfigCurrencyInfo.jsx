@@ -31,24 +31,20 @@ const ConfigCurrencyInfo = () => {
     floatingPositions: Yup.string().required(t('form.errors.required')),
   });
 
-  const INITIAL_STATE =
-    initialValues && initialValues.currency
-      ? {
-          currency: initialValues.currency.value
-            ? initialValues.currency.value
-            : CURRENCY_LIST[0],
-          decimalMode: initialValues.decimalMode
-            ? initialValues.decimalMode
-            : DECIMAL_MODES[0],
-          floatingPositions: initialValues.floatingPositions
-            ? initialValues.floatingPositions
-            : FLOATING_POINT_OPTIONS[0],
-        }
-      : {
-          currency: CURRENCY_LIST[0],
-          decimalMode: DECIMAL_MODES[0],
-          floatingPositions: FLOATING_POINT_OPTIONS[0],
-        };
+  const INITIAL_STATE = {
+    currency:
+      initialValues && initialValues.currency && initialValues.currency.value
+        ? initialValues.currency.value
+        : CURRENCY_LIST[0],
+    decimalMode:
+      initialValues && initialValues.decimalMode
+        ? initialValues.decimalMode
+        : DECIMAL_MODES[0],
+    floatingPositions:
+      initialValues && initialValues.floatingPositions != null
+        ? initialValues.floatingPositions
+        : FLOATING_POINT_OPTIONS[0],
+  };
 
   return (
     <Grid container>

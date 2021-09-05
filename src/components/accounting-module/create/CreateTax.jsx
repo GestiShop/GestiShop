@@ -74,19 +74,17 @@ const CreateTax = ({ closeCallback, initialState }) => {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="reference"
-                    label={`${t(
-                      'accounting_module.tax.structure.reference'
-                    )} *`}
+                    label={t('accounting_module.tax.structure.reference')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="percentage"
-                    label={`${t(
-                      'accounting_module.tax.structure.percentage'
-                    )} *`}
+                    label={t('accounting_module.tax.structure.percentage')}
                     type="number"
                   />
                 </Grid>

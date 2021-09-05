@@ -4,7 +4,7 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import { useField } from 'formik';
 
-const TextfieldWrapper = ({ name, ...otherProps }) => {
+const TextfieldWrapper = ({ name, required, ...otherProps }) => {
   const [field, meta] = useField(name);
 
   const configTextfield = {
@@ -12,6 +12,7 @@ const TextfieldWrapper = ({ name, ...otherProps }) => {
     ...otherProps,
     fullWidth: true,
     variant: 'outlined',
+    InputLabelProps: { required },
   };
 
   if (meta && meta.touched && meta.error) {

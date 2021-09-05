@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
   },
   logo: {
-    width: '300px',
+    width: '750px',
   },
 }));
 

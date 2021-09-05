@@ -1,7 +1,7 @@
 import { Schema, Types, model } from 'mongoose';
 
 const productSchema = new Schema({
-  reference: { type: String, unique: true, required: true, dropDups: true },
+  reference: { type: String, unique: true, required: true },
   name: { type: String, required: true },
   description: String,
   buyingInfo: {
@@ -24,7 +24,6 @@ const productSchema = new Schema({
   categories: [{ type: Types.ObjectId, ref: 'Category' }],
   minStock: Number,
   stockAlert: { type: Boolean, required: true },
-  visible: { type: Boolean, required: true },
 });
 
 const Product = model('Product', productSchema, 'products');

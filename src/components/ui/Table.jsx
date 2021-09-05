@@ -22,19 +22,26 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TableSortLabel,
   Toolbar,
   Tooltip,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';
+import PrintIcon from '@material-ui/icons/Print';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    height: '65vh',
+  },
   root: {
     width: '100%',
   },
@@ -241,19 +248,19 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const EnhancedTable = ({
+  isDataLoaded,
   headers,
   rows,
   title,
   editCallback,
   deleteCallback,
+  printCallback,
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState(headers[0].id);
   const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const handleRequestSort = (event, property) => {
@@ -264,7 +271,7 @@ const EnhancedTable = ({
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      setSelected(rows.map((n) => n._id));
+      setSelected(rows.map((n) => n.id));
     } else {
       setSelected([]);
     }
@@ -290,23 +297,16 @@ const EnhancedTable = ({
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const isSelected = (id) => selected.indexOf(id) !== -1;
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const handleEditClick = (event, id) => {
     event.stopPropagation();
     editCallback(id);
+  };
+
+  const handlePrintClick = (event, id) => {
+    event.stopPropagation();
+    printCallback(id);
   };
 
   const handleClickOpen = () => {
@@ -325,147 +325,167 @@ const EnhancedTable = ({
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          title={title}
-          t={t}
-          deleteCallback={handleClickOpen}
-        />
-        <TableContainer>
-          <Table className={classes.table} size="medium">
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-              headers={headers}
-              t={t}
-              hasActions={editCallback != null}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row._id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+      {isDataLoaded ? (
+        <Paper className={classes.paper}>
+          <EnhancedTableToolbar
+            numSelected={selected.length}
+            title={title}
+            t={t}
+            deleteCallback={handleClickOpen}
+          />
+          <TableContainer className={classes.container}>
+            <Table stickyHeader className={classes.table} size="medium">
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+                headers={headers}
+                t={t}
+                hasActions={editCallback != null}
+              />
+              <TableBody>
+                {stableSort(rows, getComparator(order, orderBy)).map(
+                  (row, index) => {
+                    const isItemSelected = isSelected(row.id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  const headerCells = [];
-                  for (const header of headers) {
-                    switch (header.id) {
-                      case 'reference':
-                        headerCells.push(
-                          <TableCell
-                            key="reference"
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            align="left"
-                          >
-                            {row.reference}
-                          </TableCell>
-                        );
-                        break;
-                      case 'parent':
-                        headerCells.push(
-                          <TableCell
-                            key={header.id}
-                            align={header.align}
-                            padding="normal"
-                          >
-                            {row[header.id]
-                              ? `[${row[header.id].reference}] ${
-                                  row[header.id].name
-                                }`
-                              : '-'}
-                          </TableCell>
-                        );
-                        break;
-                      default:
-                        let rowToRender;
-                        if (header.parents) {
-                          let finalParent = row;
-                          for (const headerParent of header.parents) {
-                            finalParent = finalParent[headerParent];
+                    const headerCells = [];
+                    for (const header of headers) {
+                      switch (header.id) {
+                        case 'reference':
+                          headerCells.push(
+                            <TableCell
+                              key={header.id}
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              align="left"
+                            >
+                              {row.reference}
+                            </TableCell>
+                          );
+                          break;
+                        case 'parent':
+                          headerCells.push(
+                            <TableCell
+                              key={header.id}
+                              align={header.align}
+                              padding="normal"
+                            >
+                              {row[header.id]
+                                ? `[${row[header.id].reference}] ${
+                                    row[header.id].name
+                                  }`
+                                : '-'}
+                            </TableCell>
+                          );
+                          break;
+                        default:
+                          let rowToRender;
+                          if (header.parents) {
+                            let finalParent = row;
+                            for (const headerParent of header.parents) {
+                              finalParent = finalParent[headerParent];
+                            }
+                            rowToRender = finalParent[header.id];
+                          } else {
+                            rowToRender = row[header.id];
                           }
-                          rowToRender = finalParent[header.id];
-                        } else {
-                          rowToRender = row[header.id];
-                        }
 
-                        headerCells.push(
-                          <TableCell
-                            key={header.id}
-                            align={header.align}
-                            padding="normal"
-                          >
-                            {rowToRender}
-                          </TableCell>
-                        );
-                        break;
+                          if (rowToRender instanceof Date) {
+                            rowToRender =
+                              moment(rowToRender).format('DD/MM/YYYY');
+                          } else if (typeof rowToRender === 'boolean') {
+                            rowToRender = rowToRender ? (
+                              <CheckIcon color="primary" />
+                            ) : (
+                              <ClearIcon color="secondary" />
+                            );
+                          }
+
+                          headerCells.push(
+                            <TableCell
+                              key={header.id}
+                              align={header.align}
+                              padding="normal"
+                            >
+                              {rowToRender}
+                            </TableCell>
+                          );
+                          break;
+                      }
                     }
-                  }
-                  if (editCallback) {
-                    headerCells.push(
-                      <TableCell key="actions" align="right" padding="normal">
-                        <Tooltip title={t('buttons.edit')}>
-                          <IconButton
-                            aria-label={t('buttons.edit')}
-                            onClick={(event) => handleEditClick(event, row._id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
+                    if (editCallback) {
+                      headerCells.push(
+                        <TableCell key="actions" align="right" padding="normal">
+                          <Tooltip title={t('buttons.edit')}>
+                            <IconButton
+                              aria-label={t('buttons.edit')}
+                              onClick={(event) =>
+                                handleEditClick(event, row.id)
+                              }
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          </Tooltip>
+                          {printCallback && (
+                            <Tooltip title={t('buttons.print')}>
+                              <IconButton
+                                aria-label={t('buttons.print')}
+                                onClick={(event) =>
+                                  handlePrintClick(event, row.id)
+                                }
+                              >
+                                <PrintIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                        </TableCell>
+                      );
+                    }
+
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row.id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.id}
+                        selected={isItemSelected}
+                        className={
+                          row.stockAlert && row.stock <= row.minStock
+                            ? classes.noStock
+                            : null
+                        }
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </TableCell>
+                        {headerCells}
+                      </TableRow>
                     );
                   }
-
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row._id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.reference}
-                      selected={isItemSelected}
-                      className={
-                        row.stockAlert && row.stock <= row.minStock
-                          ? classes.noStock
-                          : null
-                      }
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      {headerCells}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      ) : (
+        <div className="d-col w-100 center-content">
+          <CircularProgress className="m-auto" />
+          <Typography className="m-2r">
+            {t('accounting_module.placeholders.loading_data')}
+          </Typography>
+        </div>
+      )}
 
       <Dialog
         open={openDeleteDialog}

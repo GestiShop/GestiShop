@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { TextField } from '@material-ui/core';
 import { useField } from 'formik';
+import TextField from './TextField';
 
-const DateTimePicker = ({ name, required, ...otherProps }) => {
+const DatePicker = ({ name, required, ...otherProps }) => {
   const [field, meta] = useField(name);
 
-  const configDateTimePicker = {
+  const configDatePicker = {
     ...field,
     ...otherProps,
-    type: 'datetime-local',
+    type: 'date',
     variant: 'outlined',
     fullWidth: true,
     InputLabelProps: {
@@ -20,11 +20,11 @@ const DateTimePicker = ({ name, required, ...otherProps }) => {
   };
 
   if (meta && meta.touched && meta.error) {
-    configDateTimePicker.error = true;
-    configDateTimePicker.helperText = meta.error;
+    configDatePicker.error = true;
+    configDatePicker.helperText = meta.error;
   }
 
-  return <TextField {...configDateTimePicker} />;
+  return <TextField {...configDatePicker} required />;
 };
 
-export default DateTimePicker;
+export default DatePicker;

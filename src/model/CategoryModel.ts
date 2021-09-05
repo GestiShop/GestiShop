@@ -1,7 +1,7 @@
 import { Schema, Types, model } from 'mongoose';
 
 const categorySchema = new Schema({
-  reference: { type: String, unique: true, required: true, dropDups: true },
+  reference: { type: String, unique: true, required: true },
   name: { type: String, required: true },
   parent: { type: Types.ObjectId, ref: 'Category' },
 });

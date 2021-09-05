@@ -5,6 +5,7 @@ import {
   FLOATING_POINT_OPTIONS,
   LANGUAGE_LIST,
 } from '../../assets/config/config';
+import { EmptyAddress } from '../utils/constants';
 
 const initialState = {
   lang: LocalConfiguration.getLocalLang() || LANGUAGE_LIST[0],
@@ -23,6 +24,7 @@ const initialState = {
   businessInfo: LocalConfiguration.getLocalBusinessInfo() || {
     name: '',
     nif: '',
+    address: EmptyAddress,
   },
 };
 
@@ -30,9 +32,9 @@ const initialState = {
 const SET_LANG = 'SET_LANG';
 const SET_CURRENCY = 'SET_CURRENCY';
 const SET_DATABASE = 'SET_DATABASE';
-const SET_BUSINESS = 'SET_BUSINESS';
 const SET_DECIMAL_MODE = 'SET_DECIMAL_MODE';
 const SET_FLOATING_POSITIONS = 'SET_FLOATING_POSITIONS';
+const SET_BUSINESS_INFO = 'SET_BUSINESS_INFO';
 
 // Reducer
 export default function configurationReducer(state = initialState, action) {
@@ -76,7 +78,7 @@ export default function configurationReducer(state = initialState, action) {
         databaseInfo: action.payload,
       };
 
-    case SET_BUSINESS:
+    case SET_BUSINESS_INFO:
       return {
         ...state,
         businessInfo: action.payload,
@@ -111,7 +113,7 @@ export const setDefaultDatabaseInfo = (databaseInfo) => (dispatch) => {
 
 export const setDefaultBusinessInfo = (businessInfo) => (dispatch) => {
   dispatch({
-    type: SET_BUSINESS,
+    type: SET_BUSINESS_INFO,
     payload: businessInfo,
   });
 };

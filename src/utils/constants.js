@@ -24,6 +24,19 @@ export const EmptyAddress = {
   country: '',
 };
 
+export const EmptyBillProduct = {
+  product: '',
+  reference: '',
+  name: '',
+  basePricePerUnit: 0,
+  basePrice: 0,
+  unitType: '',
+  discountPercentage: 0,
+  taxPercentage: 0,
+  quantity: 0,
+  pvp: 0,
+};
+
 export const EmptyEfact = {
   accountingOfficeCode: '',
   accountingOfficeName: '',
@@ -45,7 +58,7 @@ export const AddressSchemaValidator = (t) => {
     zipCode: Yup.string().required(t('form.errors.required')),
     city: Yup.string().required(t('form.errors.required')),
     province: Yup.string().required(t('form.errors.required')),
-    state: Yup.string().required(t('form.errors.required')),
+    state: Yup.string(),
     country: Yup.string().required(t('form.errors.required')),
   };
 };

@@ -26,8 +26,8 @@ const CreateClient = ({ closeCallback, initialState }) => {
     reference: '',
     contactData: {
       name: '',
-      contactPhone: EmptyPhone,
-      contactEmail: EmptyEmail,
+      phone: EmptyPhone,
+      email: EmptyEmail,
     },
     fiscalData: {
       name: '',
@@ -82,18 +82,15 @@ const CreateClient = ({ closeCallback, initialState }) => {
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
     }),
-    eFactData: Yup.object()
-      .notRequired()
-      .default(undefined)
-      .shape({
-        accountingOfficeCode: Yup.string().required(t('form.errors.required')),
-        accountingOfficeName: Yup.string().required(t('form.errors.required')),
-        managementBodyCode: Yup.string().required(t('form.errors.required')),
-        managementBodyName: Yup.string().required(t('form.errors.required')),
-        processingUnitCode: Yup.string().required(t('form.errors.required')),
-        processingUnitName: Yup.string().required(t('form.errors.required')),
-        electronicBillingCode: Yup.string().required(t('form.errors.required')),
-      }),
+    eFactData: Yup.object().shape({
+      accountingOfficeCode: Yup.string(),
+      accountingOfficeName: Yup.string(),
+      managementBodyCode: Yup.string(),
+      managementBodyName: Yup.string(),
+      processingUnitCode: Yup.string(),
+      processingUnitName: Yup.string(),
+      electronicBillingCode: Yup.string(),
+    }),
   });
 
   const handleSubmit = (data) => {
@@ -152,17 +149,19 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={12}>
                   <TextField
+                    required
                     name="contactData.name"
-                    label={`${t('accounting_module.client.structure.name')} *`}
+                    label={t('accounting_module.client.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
+                    required
                     name="contactData.phone.phone"
-                    label={`${t(
+                    label={t(
                       'accounting_module.client.structure.main_phone_phone'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 
@@ -177,10 +176,11 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     name="contactData.email.email"
-                    label={`${t(
+                    label={t(
                       'accounting_module.client.structure.main_email_email'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 
@@ -201,15 +201,17 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={8}>
                   <TextField
+                    required
                     name="fiscalData.name"
-                    label={`${t('accounting_module.client.structure.name')} *`}
+                    label={t('accounting_module.client.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
+                    required
                     name="fiscalData.nif"
-                    label={`${t('accounting_module.client.structure.nif')} *`}
+                    label={t('accounting_module.client.structure.nif')}
                   />
                 </Grid>
 
@@ -223,16 +225,18 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={12}>
                   <TextField
+                    required
                     name="postalData.name"
-                    label={`${t('accounting_module.client.structure.name')} *`}
+                    label={t('accounting_module.client.structure.name')}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     type="email"
                     name="postalData.email.email"
-                    label={`${t('accounting_module.client.structure.email')} *`}
+                    label={t('accounting_module.client.structure.email')}
                   />
                 </Grid>
 
@@ -255,21 +259,23 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     type="number"
                     name="tributationData.retentionPercentage"
-                    label={`${t(
+                    label={t(
                       'accounting_module.client.structure.retention_percentage'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 
                 <Grid item xs={6}>
                   <TextField
+                    required
                     type="number"
                     name="tributationData.personalDiscount"
-                    label={`${t(
+                    label={t(
                       'accounting_module.client.structure.personal_discount'
-                    )} *`}
+                    )}
                   />
                 </Grid>
 

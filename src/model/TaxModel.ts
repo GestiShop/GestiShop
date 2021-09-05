@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 const taxSchema = new Schema({
-  reference: { type: String, unique: true, required: true, dropDups: true },
+  reference: { type: String, unique: true, required: true },
   percentage: { type: Number, required: true },
 });
 
