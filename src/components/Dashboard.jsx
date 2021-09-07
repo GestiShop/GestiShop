@@ -30,9 +30,9 @@ const Dashboard = () => {
             </Grid>
 
             <Grid item xs={12} className="d-flex">
-              <Button component={Link} to="/accounting_module" replace>
+              <Button component={Link} to="/pos_module" replace>
                 <AccountTreeIcon className="m-2r font-3r" />
-                [TODO] POS MODULE
+                {t('pos_module.name')}
               </Button>
             </Grid>
           </Grid>
