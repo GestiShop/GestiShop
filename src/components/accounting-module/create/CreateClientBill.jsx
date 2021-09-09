@@ -221,7 +221,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
           console.log('error', error);
           closeCallback();
         },
-        () => {
+        (bill) => {
           console.log('NO ERROR');
           closeCallback();
         }

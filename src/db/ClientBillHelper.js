@@ -3,11 +3,11 @@ import { ClientBill } from '../model/BillModel';
 
 const addClientBill = (clientBill, errorCallback, resultCallback) => {
   const dbClientBill = new ClientBill(clientBill);
-  dbClientBill.save((err) => {
+  dbClientBill.save((err, bill) => {
     if (err) {
       errorCallback(err);
     } else {
-      resultCallback();
+      resultCallback(bill);
     }
   });
 };
@@ -33,8 +33,8 @@ const updateClientBill = (clientBill, errorCallback, resultCallback) => {
   });
 };
 
-const deleteClientBills = (clientBills, errorCallback, resultCallback) => {
-  const query = { _id: clientBills.map((x) => x._id) };
+const deleteClientBills = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return ClientBill.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);

@@ -35,8 +35,8 @@ const updateCategory = (category, errorCallback, resultCallback) => {
   });
 };
 
-const deleteCategories = (categories, errorCallback, resultCallback) => {
-  const query = { _id: categories.map((x) => x._id) };
+const deleteCategories = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return Category.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);

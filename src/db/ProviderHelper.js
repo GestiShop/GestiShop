@@ -22,6 +22,18 @@ const fetchProviders = (errorCallback, resultCallback) => {
   });
 };
 
+const fetchProvidersWithBills = (errorCallback, resultCallback) => {
+  return Provider.find({})
+    .populate('bills')
+    .exec((err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    });
+};
+
 const updateProvider = (provider, errorCallback, resultCallback) => {
   const query = { _id: provider._id };
   return Provider.findOneAndUpdate(query, provider, (err, docs) => {
@@ -33,8 +45,8 @@ const updateProvider = (provider, errorCallback, resultCallback) => {
   });
 };
 
-const deleteProviders = (providers, errorCallback, resultCallback) => {
-  const query = { _id: providers.map((x) => x._id) };
+const deleteProviders = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return Provider.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
@@ -44,4 +56,10 @@ const deleteProviders = (providers, errorCallback, resultCallback) => {
   });
 };
 
-export { addProvider, fetchProviders, updateProvider, deleteProviders };
+export {
+  addProvider,
+  fetchProviders,
+  fetchProvidersWithBills,
+  updateProvider,
+  deleteProviders,
+};

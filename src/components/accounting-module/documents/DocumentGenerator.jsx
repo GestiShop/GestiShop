@@ -3,7 +3,8 @@ import { useReactToPrint } from 'react-to-print';
 import { Container, Grid, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import Button from '../../ui/forms/Button';
-import { fetchClientBills } from '../../../db/ClientBillHelper';
+import { fetchClientsWithBills } from '../../../db/ClientHelper';
+import { fetchProvidersWithBills } from '../../../db/ProviderHelper';
 import generate347Model from '../../../utils/document-generator/347modelGenerator';
 
 const DocumentGenerator = () => {
@@ -12,17 +13,25 @@ const DocumentGenerator = () => {
   const [contentToPrint, setContentToPrint] = useState(null);
   const [shouldPrint, setShouldPrint] = useState(false);
 
+  const generate130ModelHandler = () => {};
+
+  const generate303ModelHandler = () => {};
+
   const generate347ModelHandler = () => {
-    fetchClientBills(
+    fetchClientsWithBills(
       (error) => {
         console.log('error', error);
       },
-      (data) => {
-        // TODO: TREAT DATA
-        const providers = [];
-        const clients = [];
-        setContentToPrint(generate347Model(providers, clients));
-        setShouldPrint(true);
+      (clients) => {
+        fetchProvidersWithBills(
+          (error) => {
+            console.log('error', error);
+          },
+          (providers) => {
+            setContentToPrint(generate347Model(providers, clients));
+            setShouldPrint(true);
+          }
+        );
       }
     );
   };
@@ -46,6 +55,18 @@ const DocumentGenerator = () => {
         <Grid item xs={12}>
           <Container maxWidth="md">
             <Grid container spacing={2}>
+              <Grid item xs={12} className="d-flex">
+                <Button onClick={generate130ModelHandler}>
+                  {t('accounting_module.model.130.title')}
+                </Button>
+              </Grid>
+
+              <Grid item xs={12} className="d-flex">
+                <Button onClick={generate303ModelHandler}>
+                  {t('accounting_module.model.303.title')}
+                </Button>
+              </Grid>
+
               <Grid item xs={12} className="d-flex">
                 <Button onClick={generate347ModelHandler}>
                   {t('accounting_module.model.347.title')}

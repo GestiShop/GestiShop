@@ -33,8 +33,8 @@ const updateProviderBill = (providerBill, errorCallback, resultCallback) => {
   });
 };
 
-const deleteProviderBills = (providerBills, errorCallback, resultCallback) => {
-  const query = { _id: providerBills.map((x) => x._id) };
+const deleteProviderBills = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return ProviderBill.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
