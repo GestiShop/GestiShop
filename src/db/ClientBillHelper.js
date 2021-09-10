@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { ClientBill } from '../model/BillModel';
+import { addBill } from './ClientHelper';
 
 const addClientBill = (clientBill, errorCallback, resultCallback) => {
   const dbClientBill = new ClientBill(clientBill);
@@ -7,7 +8,16 @@ const addClientBill = (clientBill, errorCallback, resultCallback) => {
     if (err) {
       errorCallback(err);
     } else {
-      resultCallback(bill);
+      addBill(
+        clientBill.entityData.entity,
+        bill.id,
+        (error) => {
+          errorCallback(error);
+        },
+        (docs) => {
+          resultCallback();
+        }
+      );
     }
   });
 };

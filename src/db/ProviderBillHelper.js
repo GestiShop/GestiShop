@@ -1,13 +1,23 @@
 /* eslint-disable no-underscore-dangle */
 import { ProviderBill } from '../model/BillModel';
+import { addBill } from './ProviderHelper';
 
 const addProviderBill = (providerBill, errorCallback, resultCallback) => {
   const dbProviderBill = new ProviderBill(providerBill);
-  dbProviderBill.save((err) => {
+  dbProviderBill.save((err, bill) => {
     if (err) {
       errorCallback(err);
     } else {
-      resultCallback();
+      addBill(
+        providerBill.entityData.entity,
+        bill.id,
+        (error) => {
+          errorCallback(error);
+        },
+        (docs) => {
+          resultCallback();
+        }
+      );
     }
   });
 };

@@ -45,6 +45,34 @@ const updateProvider = (provider, errorCallback, resultCallback) => {
   });
 };
 
+const addBill = (providerId, billId, errorCallback, resultCallback) => {
+  return Provider.findOneAndUpdate(
+    { _id: providerId },
+    { $push: { bills: billId } },
+    (err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    }
+  );
+};
+
+const removeBill = (providerId, billId, errorCallback, resultCallback) => {
+  return Provider.findOneAndUpdate(
+    { _id: providerId },
+    { $pullAll: { bills: billId } },
+    (err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    }
+  );
+};
+
 const deleteProviders = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
   return Provider.deleteMany(query, (err) => {
@@ -62,4 +90,6 @@ export {
   fetchProvidersWithBills,
   updateProvider,
   deleteProviders,
+  addBill,
+  removeBill,
 };

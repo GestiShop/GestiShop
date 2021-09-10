@@ -45,6 +45,34 @@ const updateClient = (client, errorCallback, resultCallback) => {
   });
 };
 
+const addBill = (clientId, billId, errorCallback, resultCallback) => {
+  return Client.findOneAndUpdate(
+    { _id: clientId },
+    { $push: { bills: billId } },
+    (err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    }
+  );
+};
+
+const removeBill = (clientId, billId, errorCallback, resultCallback) => {
+  return Client.findOneAndUpdate(
+    { _id: clientId },
+    { $pullAll: { bills: billId } },
+    (err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    }
+  );
+};
+
 const deleteClients = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
   return Client.deleteMany(query, (err) => {
@@ -62,4 +90,6 @@ export {
   fetchClientsWithBills,
   updateClient,
   deleteClients,
+  addBill,
+  removeBill,
 };
