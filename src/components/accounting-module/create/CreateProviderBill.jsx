@@ -34,38 +34,6 @@ import {
 import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 
-const encodeProduct = (data) => {
-  return {
-    product: data.product.value,
-    reference: data.reference,
-    name: data.name,
-    basePricePerUnit: data.basePricePerUnit,
-    unitType: data.unitType,
-    discountPercentage: data.discountPercentage,
-    taxPercentage: data.taxPercentage,
-    quantity: data.quantity,
-  };
-};
-
-const encodeProviderBill = (data) => {
-  return {
-    billNumberPreamble: data.billNumberPreamble,
-    billNumber: data.billNumber,
-    date: data.date,
-    entityData: {
-      entity: data.entityData.entity.value,
-      fiscalData: data.entityData.fiscalData,
-    },
-    products: data.products.map(encodeProduct),
-    notes: data.notes,
-    basePrice: data.basePrice,
-    generalDiscount: data.generalDiscount,
-    pvp: data.pvp,
-    paymentData: data.paymentData,
-    isPaid: data.isPaid,
-  };
-};
-
 const CreateProvider = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const isMounted = useIsMounted();
@@ -81,6 +49,57 @@ const CreateProvider = ({ closeCallback, initialState }) => {
   );
   const [billProducts, setBillProducts] = useState([]);
   const [generalDiscount, setGeneralDiscount] = useState(0);
+
+  const encodeProduct = (data, i) => {
+    return {
+      product: data.product.value,
+      reference: data.reference,
+      name: data.name,
+      basePricePerUnit: billProducts[i].basePricePerUnit,
+      unitType: data.unitType,
+      discountPercentage: billProducts[i].discountPercentage,
+      taxPercentage: billProducts[i].taxPercentage,
+      quantity: billProducts[i].quantity,
+    };
+  };
+
+  const encodeProviderBill = (data) => {
+    return {
+      billNumberPreamble: data.billNumberPreamble,
+      billNumber: data.billNumber,
+      date: data.date,
+      entityData: {
+        entity: data.entityData.entity.value,
+        fiscalData: data.entityData.fiscalData,
+      },
+      products: data.products.map(encodeProduct),
+      notes: data.notes,
+      basePrice:
+        billProducts
+          .map(
+            (product) =>
+              product.basePricePerUnit *
+              product.quantity *
+              (1 - product.discountPercentage / 100)
+          )
+          .reduce((acc, product) => acc + product, 0) *
+        (1 - generalDiscount / 100),
+      generalDiscount: data.generalDiscount,
+      pvp:
+        billProducts
+          .map(
+            (product) =>
+              product.basePricePerUnit *
+              product.quantity *
+              (1 - product.discountPercentage / 100) *
+              (1 + product.taxPercentage / 100)
+          )
+          .reduce((acc, product) => acc + product, 0) *
+        (1 - generalDiscount / 100),
+      paymentData: data.paymentData,
+      isPaid: data.isPaid,
+    };
+  };
 
   const fetchData = () => {
     fetchProviders(
@@ -208,9 +227,15 @@ const CreateProvider = ({ closeCallback, initialState }) => {
           .required(t('form.errors.required')),
       })
     ),
-    basePrice: Yup.number().typeError(t('form.errors.invalid_number')),
-    generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
-    pvp: Yup.number().typeError(t('form.errors.invalid_number')),
+    basePrice: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
+    generalDiscount: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
+    pvp: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
     paymentData: Yup.object().shape({
       method: Yup.string().required(t('form.errors.required')),
       expirationDate: Yup.date().required(t('form.errors.required')),
@@ -221,6 +246,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
   const handleSubmit = (data) => {
     const encodedData = encodeProviderBill(data);
+    console.log(encodedData);
 
     if (!initialState) {
       addProviderBill(
@@ -341,7 +367,6 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={2}>
                     <TextField
-                      required
                       name="billNumberPreamble"
                       label={t(
                         'accounting_module.bill.structure.bill_number_preamble'

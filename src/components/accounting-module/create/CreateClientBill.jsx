@@ -205,9 +205,15 @@ const CreateClient = ({ closeCallback, initialState }) => {
           .required(t('form.errors.required')),
       })
     ),
-    basePrice: Yup.number().typeError(t('form.errors.invalid_number')),
-    generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
-    pvp: Yup.number().typeError(t('form.errors.invalid_number')),
+    basePrice: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
+    generalDiscount: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
+    pvp: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
     paymentData: Yup.object().shape({
       method: Yup.string().required(t('form.errors.required')),
       expirationDate: Yup.date().required(t('form.errors.required')),
@@ -333,7 +339,6 @@ const CreateClient = ({ closeCallback, initialState }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={2}>
                     <TextField
-                      required
                       name="billNumberPreamble"
                       label={t(
                         'accounting_module.bill.structure.bill_number_preamble'
