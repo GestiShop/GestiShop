@@ -1,24 +1,22 @@
 /* eslint-disable no-underscore-dangle */
 import { ProviderBill } from '../model/BillModel';
-import { addBill } from './ProviderHelper';
+import { addBill, removeBill } from './ProviderHelper';
 
 const addProviderBill = (providerBill, errorCallback, resultCallback) => {
   const dbProviderBill = new ProviderBill(providerBill);
   dbProviderBill.save((err, bill) => {
-    if (err) {
-      errorCallback(err);
-    } else {
-      addBill(
-        providerBill.entityData.entity,
-        bill.id,
-        (error) => {
-          errorCallback(error);
-        },
-        (docs) => {
-          resultCallback();
-        }
-      );
-    }
+    if (err) errorCallback(err);
+
+    addBill(
+      providerBill.entityData.entity,
+      bill.id,
+      (error) => {
+        errorCallback(error);
+      },
+      (docs) => {
+        resultCallback();
+      }
+    );
   });
 };
 
@@ -44,13 +42,26 @@ const updateProviderBill = (providerBill, errorCallback, resultCallback) => {
 };
 
 const deleteProviderBills = (ids, errorCallback, resultCallback) => {
-  const query = { _id: ids };
-  return ProviderBill.deleteMany(query, (err) => {
-    if (err) {
-      errorCallback(err);
-    } else {
-      resultCallback();
-    }
+  ids.forEach((billId) => {
+    const query = { _id: billId };
+    ProviderBill.findById(query, (err1, bill) => {
+      if (err1) errorCallback(err1);
+
+      ProviderBill.deleteOne(query, (err2) => {
+        if (err2) errorCallback(err2);
+
+        removeBill(
+          bill.entityData.entity,
+          billId,
+          (err3) => {
+            errorCallback(err3);
+          },
+          (docs) => {
+            resultCallback();
+          }
+        );
+      });
+    });
   });
 };
 

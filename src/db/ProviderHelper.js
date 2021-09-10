@@ -62,7 +62,7 @@ const addBill = (providerId, billId, errorCallback, resultCallback) => {
 const removeBill = (providerId, billId, errorCallback, resultCallback) => {
   return Provider.findOneAndUpdate(
     { _id: providerId },
-    { $pullAll: { bills: billId } },
+    { $pullAll: { bills: [billId] } },
     (err, docs) => {
       if (err) {
         errorCallback(err);
