@@ -4,6 +4,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -262,6 +263,9 @@ const EnhancedTable = ({
   const [orderBy, setOrderBy] = useState(headers[0].id);
   const [selected, setSelected] = useState([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [numberOfDecimals, setNumberOfDecimals] = useState(
+    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
+  );
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -405,6 +409,9 @@ const EnhancedTable = ({
                             ) : (
                               <ClearIcon color="secondary" />
                             );
+                          } else if (header.numeric) {
+                            rowToRender =
+                              parseFloat(rowToRender).toFixed(numberOfDecimals);
                           }
 
                           headerCells.push(

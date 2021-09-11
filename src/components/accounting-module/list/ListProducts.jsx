@@ -31,6 +31,7 @@ const ListProducts = () => {
       label: t('accounting_module.product.structure.base_price', { currency }),
       align: 'right',
       parents: ['sellingInfo'],
+      numeric: true,
     },
     {
       id: 'stock',
