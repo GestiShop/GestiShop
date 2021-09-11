@@ -42,6 +42,7 @@ const ListProviderBills = () => {
         currency,
       }),
       align: 'right',
+      numeric: true,
     },
     {
       id: 'date',

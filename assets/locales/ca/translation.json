@@ -257,7 +257,7 @@
         "client_nif": "N.I.F. del client",
         "provider_nif": "N.I.F. del proveïdor",
         "product": "Producte",
-        "payment_method": "Mètodo de pagament",
+        "payment_method": "Mètode de pagament",
         "expiration_date": "Data de vencimient",
         "total_base_price": "Preu base total ({{currency}})",
         "general_discount": "Descompte general (%)",
@@ -331,6 +331,12 @@
       }
     },
     "model": {
+      "130": {
+        "title": "Model 130"
+      },
+      "303": {
+        "title": "Model 303"
+      },
       "347": {
         "title": "Model 347",
         "document": {

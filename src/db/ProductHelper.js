@@ -39,8 +39,8 @@ const updateProduct = (product, errorCallback, resultCallback) => {
   });
 };
 
-const deleteProducts = (products, errorCallback, resultCallback) => {
-  const query = { _id: products.map((x) => x._id) };
+const deleteProducts = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return Product.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);

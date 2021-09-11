@@ -22,6 +22,18 @@ const fetchClients = (errorCallback, resultCallback) => {
   });
 };
 
+const fetchClientsWithBills = (errorCallback, resultCallback) => {
+  return Client.find({})
+    .populate('bills')
+    .exec((err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    });
+};
+
 const updateClient = (client, errorCallback, resultCallback) => {
   const query = { _id: client._id };
   return Client.findOneAndUpdate(query, client, (err, docs) => {
@@ -33,8 +45,36 @@ const updateClient = (client, errorCallback, resultCallback) => {
   });
 };
 
-const deleteClients = (clients, errorCallback, resultCallback) => {
-  const query = { _id: clients.map((x) => x._id) };
+const addBill = (clientId, billId, errorCallback, resultCallback) => {
+  return Client.findOneAndUpdate(
+    { _id: clientId },
+    { $push: { bills: billId } },
+    (err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    }
+  );
+};
+
+const removeBill = (clientId, billId, errorCallback, resultCallback) => {
+  return Client.findOneAndUpdate(
+    { _id: clientId },
+    { $pullAll: { bills: [billId] } },
+    (err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
+    }
+  );
+};
+
+const deleteClients = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return Client.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
@@ -44,4 +84,12 @@ const deleteClients = (clients, errorCallback, resultCallback) => {
   });
 };
 
-export { addClient, fetchClients, updateClient, deleteClients };
+export {
+  addClient,
+  fetchClients,
+  fetchClientsWithBills,
+  updateClient,
+  deleteClients,
+  addBill,
+  removeBill,
+};

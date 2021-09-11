@@ -33,8 +33,8 @@ const updateUnitType = (unitType, errorCallback, resultCallback) => {
   });
 };
 
-const deleteUnitTypes = (UnitTypes, errorCallback, resultCallback) => {
-  const query = { _id: UnitTypes.map((x) => x._id) };
+const deleteUnitTypes = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return UnitType.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
