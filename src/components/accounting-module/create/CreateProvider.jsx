@@ -26,8 +26,8 @@ const CreateProvider = ({ closeCallback, initialState }) => {
     reference: '',
     contactData: {
       name: '',
-      contactPhone: EmptyPhone,
-      contactEmail: EmptyEmail,
+      phone: EmptyPhone,
+      email: EmptyEmail,
     },
     fiscalData: {
       name: '',
@@ -259,6 +259,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    disabled
                     required
                     type="number"
                     name="tributationData.retentionPercentage"
@@ -270,6 +271,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    disabled
                     required
                     type="number"
                     name="tributationData.personalDiscount"

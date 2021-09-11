@@ -96,11 +96,21 @@ const EntitiesTable = ({ entities, isClient }) => {
             <TableRow key={entity.id}>
               <TableCell>{entity.nif}</TableCell>
               <TableCell>{entity.name}</TableCell>
-              <TableCell>{entity.trimester1}</TableCell>
-              <TableCell>{entity.trimester2}</TableCell>
-              <TableCell>{entity.trimester3}</TableCell>
-              <TableCell>{entity.trimester4}</TableCell>
-              <TableCell>{entity.total}</TableCell>
+              <TableCell>
+                {parseFloat(entity.trimester1).toFixed(numberOfDecimals)}
+              </TableCell>
+              <TableCell>
+                {parseFloat(entity.trimester2).toFixed(numberOfDecimals)}
+              </TableCell>
+              <TableCell>
+                {parseFloat(entity.trimester3).toFixed(numberOfDecimals)}
+              </TableCell>
+              <TableCell>
+                {parseFloat(entity.trimester4).toFixed(numberOfDecimals)}
+              </TableCell>
+              <TableCell>
+                {parseFloat(entity.total).toFixed(numberOfDecimals)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

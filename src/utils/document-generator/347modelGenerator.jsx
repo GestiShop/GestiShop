@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import { Grid } from '@material-ui/core';
 import { Header, EntitiesTable } from './components/347model';
-import { Provider } from '../../model/ProviderModel';
 
 const MIN_TOTAL = 3005.06;
 
