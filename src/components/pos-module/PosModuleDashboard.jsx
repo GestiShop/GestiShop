@@ -13,13 +13,15 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import AirportShuttleOutlinedIcon from '@material-ui/icons/AirportShuttleOutlined';
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import DrawerLayout from '../ui/DrawerLayout';
 import Sales from './sections/Sales';
 import EditSales from './sections/EditSales';
 import CloseCash from './sections/CloseCash';
 import Clients from './sections/Clients';
 import Providers from './sections/Providers';
-import Stock from './sections/Stock';
+import Products from './sections/Products';
+import Stats from './sections/Stats';
 
 const PosModuleDashboard = () => {
   const { t } = useTranslation();
@@ -45,41 +47,16 @@ const PosModuleDashboard = () => {
     ],
     [
       {
-        text: t('pos_module.menu.clients'),
-        icon: <PeopleIcon />,
-        href: `${url}/clients`,
-      },
-      {
-        text: t('pos_module.menu.providers'),
-        icon: <AirportShuttleOutlinedIcon />,
-        href: `${url}/providers`,
-      },
-      {
-        text: t('pos_module.menu.stock'),
+        text: t('pos_module.menu.products'),
         icon: <AssignmentOutlinedIcon />,
-        href: `${url}/stock`,
+        href: `${url}/products`,
       },
     ],
     [
       {
-        text: t('pos_module.menu.client_bills'),
-        icon: <DescriptionIcon />,
-        href: `${url}/client_bills`,
-      },
-      {
-        text: t('pos_module.menu.provider_bills'),
-        icon: <DescriptionOutlinedIcon />,
-        href: `${url}/provider_bills`,
-      },
-      {
-        text: t('pos_module.menu.client_budgets'),
-        icon: <ReceiptIcon />,
-        href: `${url}/client_budgets`,
-      },
-      {
-        text: t('pos_module.menu.provider_budgets'),
-        icon: <ReceiptOutlinedIcon />,
-        href: `${url}/provider_budgets`,
+        text: t('pos_module.menu.stats'),
+        icon: <AssessmentIcon />,
+        href: `${url}/stats`,
       },
     ],
   ];
@@ -101,11 +78,14 @@ const PosModuleDashboard = () => {
       <Route exact path={`${path}/providers`}>
         <Providers />
       </Route>
-      <Route exact path={`${path}/stock`}>
-        <Stock />
+      <Route exact path={`${path}/products`}>
+        <Products />
+      </Route>
+      <Route exact path={`${path}/stats`}>
+        <Stats />
       </Route>
       <Route exact path={`${path}`}>
-        <Redirect to={`${path}/calendar`} />
+        <Redirect to={`${path}/sales`} />
       </Route>
     </Switch>
   );

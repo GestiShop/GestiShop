@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Avatar,
-  Box, Button,
+  Box,
+  Button,
   Grid,
   ListItem,
   ListItemAvatar,
@@ -18,6 +19,15 @@ import EuroIcon from '@material-ui/icons/Euro';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import Divider from '@material-ui/core/Divider';
+import {
+  ArgumentAxis,
+  ValueAxis,
+  Chart,
+  LineSeries,
+  PieSeries,
+  Legend,
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation } from '@devexpress/dx-react-chart';
 
 const CloseCash = () => {
   const items = [
@@ -35,6 +45,21 @@ const CloseCash = () => {
     },
   ];
 
+  const items2 = [
+    {
+      name: 'Efectiu',
+      total: 10,
+    },
+    {
+      name: 'Tarjeta',
+      total: 15,
+    },
+    {
+      name: 'Altres',
+      total: 2,
+    },
+  ];
+
   return (
     <Box m={2}>
       <Grid container justify="space-between">
@@ -43,9 +68,9 @@ const CloseCash = () => {
             <Grid item>
               <TextField
                 id="date"
-                label="Data tancament"
+                label="Data inici"
                 type="date"
-                defaultValue="2021-09-07"
+                defaultValue="2021-09-06"
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -54,32 +79,31 @@ const CloseCash = () => {
             <Grid item>
               <TextField
                 id="date"
-                label="Data ultim tancament"
+                label="Data fi"
                 type="date"
                 defaultValue="2021-09-07"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                disabled
               />
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
-          <Button variant="contained" color="primary">
-            Tancar caixa
+          <Button variant="contained" color="primary" onClick={() => {window.print()}}>
+            Imprimir
           </Button>
         </Grid>
       </Grid>
       <Box mt={2}>
         <Paper mt={2}>
-          <Grid container alignItems="center" spacing={2}>
+          <Grid container spacing={2}>
             <Grid item sm={4}>
               <List
                 component="nav"
                 aria-label="secondary mailbox folders"
                 subheader={
-                  <ListSubheader>Tancaments diaris anteriors</ListSubheader>
+                  <ListSubheader>Tancaments diaris</ListSubheader>
                 }
                 fullWidth
               >
@@ -101,49 +125,56 @@ const CloseCash = () => {
               </List>
             </Grid>
             <Divider orientation="vertical" flexItem />
+            <Grid item sm={7}>
+              <Chart
+                data={items}
+              >
+                <ArgumentAxis />
+                <ValueAxis />
+                <LineSeries argumentField="name" valueField="total" />
+              </Chart>
+            </Grid>
+          </Grid>
+          <Divider />
+          <Grid container spacing={2}>
             <Grid item sm={4}>
               <List
                 component="nav"
                 aria-label="secondary mailbox folders"
                 subheader={
-                  <ListSubheader>Mètodes de pagament tancament actual</ListSubheader>
+                  <ListSubheader>Mètodes de pagament</ListSubheader>
                 }
                 fullWidth
               >
-                <ListItem button>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <EuroIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Pagaments en efectiu"
-                    secondary="56.75 €"
-                  />
-                </ListItem>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <CreditCardIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Pagaments amb tarjeta"
-                    secondary="87.35 €"
-                  />
-                </ListItem>
-                <ListItem button>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <ReceiptIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Total pagaments"
-                    secondary="144.10 €"
-                  />
-                </ListItem>
+                {items2.map((item) => {
+                  return (
+                    <ListItem button key={item.name}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <EuroIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={item.name}
+                        secondary={item.total}
+                      />
+                    </ListItem>
+                  );
+                })}
               </List>
+            </Grid>
+            <Divider orientation="vertical" flexItem />
+            <Grid item sm={7}>
+              <Chart
+                data={items2}
+              >
+                <PieSeries
+                  valueField="total"
+                  argumentField="name"
+                />
+                <Legend />
+                <Animation />
+              </Chart>
             </Grid>
           </Grid>
         </Paper>
