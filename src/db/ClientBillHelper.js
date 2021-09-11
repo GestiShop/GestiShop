@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { ClientBill } from '../model/BillModel';
-import { addBill } from './ClientHelper';
+import { addBill, removeBill } from './ClientHelper';
 
 const addClientBill = (clientBill, errorCallback, resultCallback) => {
   const dbClientBill = new ClientBill(clientBill);
@@ -44,13 +44,30 @@ const updateClientBill = (clientBill, errorCallback, resultCallback) => {
 };
 
 const deleteClientBills = (ids, errorCallback, resultCallback) => {
-  const query = { _id: ids };
-  return ClientBill.deleteMany(query, (err) => {
-    if (err) {
-      errorCallback(err);
-    } else {
-      resultCallback();
-    }
+  ids.forEach((billId) => {
+    const query = { _id: billId };
+    ClientBill.findById(query, (err1, bill) => {
+      if (err1) {
+        errorCallback(err1);
+      } else {
+        ClientBill.deleteOne(query, (err2) => {
+          if (err2) {
+            errorCallback(err2);
+          } else {
+            removeBill(
+              bill.entityData.entity,
+              billId,
+              (err3) => {
+                errorCallback(err3);
+              },
+              (docs) => {
+                resultCallback();
+              }
+            );
+          }
+        });
+      }
+    });
   });
 };
 

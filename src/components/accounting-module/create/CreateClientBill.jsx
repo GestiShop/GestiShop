@@ -31,38 +31,6 @@ import {
 import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 
-const encodeProduct = (data) => {
-  return {
-    product: data.product.value,
-    reference: data.reference,
-    name: data.name,
-    basePricePerUnit: data.basePricePerUnit,
-    unitType: data.unitType,
-    discountPercentage: data.discountPercentage,
-    taxPercentage: data.taxPercentage,
-    quantity: data.quantity,
-  };
-};
-
-const encodeClientBill = (data) => {
-  return {
-    billNumberPreamble: data.billNumberPreamble,
-    billNumber: data.billNumber,
-    date: data.date,
-    entityData: {
-      entity: data.entityData.entity.value,
-      fiscalData: data.entityData.fiscalData,
-    },
-    products: data.products.map(encodeProduct),
-    notes: data.notes,
-    basePrice: data.basePrice,
-    generalDiscount: data.generalDiscount,
-    pvp: data.pvp,
-    paymentData: data.paymentData,
-    isPaid: data.isPaid,
-  };
-};
-
 const CreateClient = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const isMounted = useIsMounted();
@@ -78,6 +46,57 @@ const CreateClient = ({ closeCallback, initialState }) => {
   );
   const [billProducts, setBillProducts] = useState([]);
   const [generalDiscount, setGeneralDiscount] = useState(0);
+
+  const encodeProduct = (data, i) => {
+    return {
+      product: data.product.value,
+      reference: data.reference,
+      name: data.name,
+      basePricePerUnit: billProducts[i].basePricePerUnit,
+      unitType: data.unitType,
+      discountPercentage: billProducts[i].discountPercentage,
+      taxPercentage: billProducts[i].taxPercentage,
+      quantity: billProducts[i].quantity,
+    };
+  };
+
+  const encodeClientBill = (data) => {
+    return {
+      billNumberPreamble: data.billNumberPreamble,
+      billNumber: data.billNumber,
+      date: data.date,
+      entityData: {
+        entity: data.entityData.entity.value,
+        fiscalData: data.entityData.fiscalData,
+      },
+      products: data.products.map(encodeProduct),
+      notes: data.notes,
+      basePrice:
+        billProducts
+          .map(
+            (product) =>
+              product.basePricePerUnit *
+              product.quantity *
+              (1 - product.discountPercentage / 100)
+          )
+          .reduce((acc, product) => acc + product, 0) *
+        (1 - generalDiscount / 100),
+      generalDiscount: data.generalDiscount,
+      pvp:
+        billProducts
+          .map(
+            (product) =>
+              product.basePricePerUnit *
+              product.quantity *
+              (1 - product.discountPercentage / 100) *
+              (1 + product.taxPercentage / 100)
+          )
+          .reduce((acc, product) => acc + product, 0) *
+        (1 - generalDiscount / 100),
+      paymentData: data.paymentData,
+      isPaid: data.isPaid,
+    };
+  };
 
   const fetchData = () => {
     fetchClients(

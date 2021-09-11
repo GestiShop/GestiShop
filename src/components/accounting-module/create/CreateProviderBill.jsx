@@ -246,7 +246,6 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
   const handleSubmit = (data) => {
     const encodedData = encodeProviderBill(data);
-    console.log(encodedData);
 
     if (!initialState) {
       addProviderBill(
