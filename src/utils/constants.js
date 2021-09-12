@@ -39,6 +39,8 @@ export const EmptyBillProduct = {
 
 export const EmptyBudgetProduct = EmptyBillProduct;
 
+export const EmptyDeliveryNoteProduct = EmptyBillProduct;
+
 export const EmptyEfact = {
   accountingOfficeCode: '',
   accountingOfficeName: '',

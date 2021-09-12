@@ -97,6 +97,8 @@
       "provider_bills": "Facturas de proveedores",
       "client_budgets": "Presupuestos a clientes",
       "provider_budgets": "Presupuestos de proveedores",
+      "client_delivery_notes": "Albaranes a clientes",
+      "provider_delivery_notes": "Albaranes de proveedores",
       "documents": "Documentos"
     },
     "product": {
@@ -309,6 +311,39 @@
       "create": "Añadir un presupuesto de proveedor",
       "edit": "Editar presupuesto de proveedor",
       "list": "Lista de presupuestos de proveedores"
+    },
+    "delivery_note": {
+      "creation": {
+        "client_data": "Datos del cliente",
+        "provider_data": "Datos del proveedor",
+        "products": "Productos"
+      },
+      "structure": {
+        "delivery_note_number_preamble": "Preámbulo",
+        "delivery_note_number": "Número de albarán",
+        "date": "Fecha",
+        "client": "Cliente",
+        "provider": "Proveedor",
+        "client_name": "Nombre del cliente",
+        "provider_name": "Nombre del proveedor",
+        "client_nif": "N.I.F. del cliente",
+        "provider_nif": "N.I.F. del proveedor",
+        "product": "Producto",
+        "total_base_price": "Precio base total ({{currency}})",
+        "general_discount": "Descuento general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notas adicionales"
+      }
+    },
+    "client_delivery_note": {
+      "create": "Añadir un albarán a cliente",
+      "edit": "Editar albarán a cliente",
+      "list": "Lista de albarán a clientes"
+    },
+    "provider_delivery_note": {
+      "create": "Añadir un albarán de proveedor",
+      "edit": "Editar albarán de proveedor",
+      "list": "Lista de albarán de proveedores"
     },
     "event": {
       "new": "Nuevo evento",

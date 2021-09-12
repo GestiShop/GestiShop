@@ -65,7 +65,7 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
       budgetNumberPreamble: data.budgetNumberPreamble,
       budgetNumber: data.budgetNumber,
       date: data.date,
-      exoirationDate: data.expirationDate,
+      expirationDate: data.expirationDate,
       entityData: {
         entity: data.entityData.entity.value,
         fiscalData: data.entityData.fiscalData,

@@ -97,6 +97,8 @@
       "provider_bills": "Factures de proveïdors",
       "client_budgets": "Pressupostos a clients",
       "provider_budgets": "Pressupostos de proveïdors",
+      "client_delivery_notes": "Albarans a clients",
+      "provider_delivery_notes": "Albarans de proveïdors",
       "documents": "Documents"
     },
     "product": {
@@ -309,6 +311,39 @@
       "create": "Afegir un pressupost de proveïdor",
       "edit": "Editar pressupost de proveïdor",
       "list": "Llistat de pressupostos de proveïdors"
+    },
+    "delivery_note": {
+      "creation": {
+        "client_data": "Dades del client",
+        "provider_data": "Dades del proveïdor",
+        "products": "Productes"
+      },
+      "structure": {
+        "delivery_note_number_preamble": "Preàmbul",
+        "delivery_note_number": "Número d'albarà",
+        "date": "Data",
+        "client": "Client",
+        "provider": "Proveïdor",
+        "client_name": "Nom del client",
+        "provider_name": "Nom del proveïdor",
+        "client_nif": "N.I.F. del client",
+        "provider_nif": "N.I.F. del proveïdor",
+        "product": "Producte",
+        "total_base_price": "Preu base total ({{currency}})",
+        "general_discount": "Descompte general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notes addicionals"
+      }
+    },
+    "client_delivery_note": {
+      "create": "Afegir un albarà a client",
+      "edit": "Editar albarà a client",
+      "list": "Llistat d'albarans a clients"
+    },
+    "provider_delivery_note": {
+      "create": "Afegir un albarà de proveïdor",
+      "edit": "Editar albarà de proveïdor",
+      "list": "Llistat d'albarans de proveïdors"
     },
     "event": {
       "new": "Nou esdeveniment",

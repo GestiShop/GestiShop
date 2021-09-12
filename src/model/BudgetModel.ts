@@ -5,6 +5,7 @@ const budgetSchema = new Schema({
   budgetNumberPreamble: { type: String, default: '' },
   budgetNumber: { type: Number, required: true },
   date: { type: Date, required: true },
+  expirationDate: { type: Date, required: true },
   entityData: {
     entity: { type: Types.ObjectId, required: true },
     fiscalData: {

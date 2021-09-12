@@ -2,36 +2,40 @@ import { Schema, Types, model } from 'mongoose';
 import { addressSchema } from './AddressModel';
 
 const deliveryNoteSchema = new Schema({
-  deliveryNoteNumber: {
-    type: Number,
-    unique: true,
-    required: true,
-  },
-  date: Date,
+  deliveryNoteNumberPreamble: { type: String, default: '' },
+  deliveryNoteNumber: { type: Number, required: true },
+  date: { type: Date, required: true },
   entityData: {
-    entity: { type: Types.ObjectId },
+    entity: { type: Types.ObjectId, required: true },
     fiscalData: {
-      name: String,
-      nif: String,
+      name: { type: String, required: true },
+      nif: { type: String, required: true },
       address: addressSchema,
     },
   },
   products: [
     {
-      product: { type: Types.ObjectId, ref: 'Product' },
-      reference: String,
-      name: String,
-      basePrice: Number,
-      unitType: String,
-      discountPercentage: Number,
-      taxPercentage: Number,
-      quantity: Number,
+      product: { type: Types.ObjectId, ref: 'Product', required: true },
+      reference: { type: String, required: true },
+      name: { type: String, required: true },
+      basePricePerUnit: { type: Number, required: true },
+      unitType: { type: String, required: true },
+      discountPercentage: { type: Number, required: true },
+      taxPercentage: { type: Number, required: true },
+      quantity: { type: Number, required: true },
     },
   ],
   notes: String,
-  generalDiscount: Number,
+  basePrice: { type: Number, required: true },
+  generalDiscount: { type: Number, required: true },
+  pvp: { type: Number, required: true },
   associatedBill: { type: Types.ObjectId },
 });
+
+deliveryNoteSchema.index(
+  { budgetNumberPreamble: 1, budgetNumber: 1 },
+  { unique: true }
+);
 
 const ClientDeliveryNote = model(
   'ClientDeliveryNote',
