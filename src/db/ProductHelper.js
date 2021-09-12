@@ -50,4 +50,35 @@ const deleteProducts = (ids, errorCallback, resultCallback) => {
   });
 };
 
-export { addProduct, fetchProducts, updateProduct, deleteProducts };
+const incrementStock = (id, quantity, errorCallback, resultCallback) => {
+  const query = { _id: id };
+  const incrementQuery = { $inc: { stock: quantity } };
+  return Product.findOneAndUpdate(query, incrementQuery, (err, docs) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback(docs);
+    }
+  });
+};
+
+const decrementStock = (id, quantity, errorCallback, resultCallback) => {
+  const query = { _id: id };
+  const incrementQuery = { $inc: { stock: -1 * quantity } };
+  return Product.findOneAndUpdate(query, incrementQuery, (err, docs) => {
+    if (err) {
+      errorCallback(err);
+    } else {
+      resultCallback(docs);
+    }
+  });
+};
+
+export {
+  addProduct,
+  fetchProducts,
+  updateProduct,
+  deleteProducts,
+  incrementStock,
+  decrementStock,
+};

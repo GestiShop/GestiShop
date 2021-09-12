@@ -1,23 +1,24 @@
 /* eslint-disable no-underscore-dangle */
 import { ClientBill } from '../model/BillModel';
 import { addBill, removeBill } from './ClientHelper';
+import { incrementStock } from './ProductHelper';
 
 const addClientBill = (clientBill, errorCallback, resultCallback) => {
   const dbClientBill = new ClientBill(clientBill);
-  dbClientBill.save((err, bill) => {
-    if (err) {
-      errorCallback(err);
+  dbClientBill.save((err1, bill) => {
+    if (err1) {
+      errorCallback(err1);
     } else {
-      addBill(
-        clientBill.entityData.entity,
-        bill.id,
-        (error) => {
-          errorCallback(error);
-        },
-        (docs) => {
-          resultCallback();
-        }
-      );
+      addBill(clientBill.entityData.entity, bill.id, errorCallback, (docs) => {
+        clientBill.products.forEach((product) => {
+          incrementStock(
+            product.product,
+            product.quantity,
+            errorCallback,
+            resultCallback
+          );
+        });
+      });
     }
   });
 };

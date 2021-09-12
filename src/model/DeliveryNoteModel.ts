@@ -33,7 +33,7 @@ const deliveryNoteSchema = new Schema({
 });
 
 deliveryNoteSchema.index(
-  { budgetNumberPreamble: 1, budgetNumber: 1 },
+  { deliveryNoteNumberPreamble: 1, deliveryNoteNumber: 1 },
   { unique: true }
 );
 
