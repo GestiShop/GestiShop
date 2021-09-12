@@ -395,14 +395,19 @@ const EnhancedTable = ({
                           break;
                         default:
                           let rowToRender;
-                          if (header.parents) {
+                          if (header.value) {
+                            rowToRender = header.value(row);
+                          } else if (header.parents) {
                             let finalParent = row;
                             for (const headerParent of header.parents) {
                               finalParent = finalParent[headerParent];
                             }
                             rowToRender = finalParent[header.id];
                           } else {
-                            rowToRender = row[header.id];
+                            rowToRender = row;
+                            for (const child of header.id.split('.')) {
+                              rowToRender = rowToRender[child];
+                            }
                           }
 
                           if (rowToRender instanceof Date) {

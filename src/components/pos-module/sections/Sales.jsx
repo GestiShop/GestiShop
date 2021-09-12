@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Box,
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControlLabel,
   FormLabel,
   Grid,
@@ -11,7 +16,7 @@ import {
   RadioGroup,
   Select,
   TextField,
-  Tooltip
+  Tooltip,
 } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import SearchIcon from '@material-ui/icons/Search';
@@ -19,26 +24,101 @@ import DoneIcon from '@material-ui/icons/Done';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Dialog from '@material-ui/core/Dialog';
+import { useTranslation } from 'react-i18next';
 import Table from '../../ui/Table';
+import { fetchProducts } from '../../../db/ProductHelper';
 
 const Sales = () => {
+  const { t } = useTranslation();
+
   const [openDialog, setOpenDialog] = useState(false);
   const [operari, setOperari] = useState('Iscle');
   const [paymentMethod, setPaymentMethod] = useState('cash');
+
+  const [products, setProducts] = useState([]);
+  const [productsLoaded, setProductsLoaded] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [total, setTotal] = useState(0.0);
+  const [change, setChange] = useState(0.0);
+
+  useEffect(() => {
+    // TODO: Fetch next ticket ID
+
+    // TODO: Fetch available users
+
+    // Fetch all products from the database
+    fetchProducts(
+      (err) => {},
+      (data) => {
+        setProducts(data);
+        setProductsLoaded(true);
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    let totalCount = 0.0;
+    selectedProducts.forEach((selectedProduct) => {
+      totalCount +=
+        selectedProduct.product.sellingInfo.basePrice * selectedProduct.count;
+    });
+    setTotal(totalCount);
+  }, [selectedProducts]);
+
+  useEffect(() => setChange(0.0), [paymentMethod]);
 
   const handleOperariChange = (event) => {
     setOperari(event.target.value);
   };
 
   const handleDialogClose = () => {
+    // TODO: Save to db
+
+    // TODO: Update ticket id
+
+    setSelectedProducts([]);
     setOpenDialog(false);
-    // editCallback();
   };
 
-  const headers1 = [
+  const handleSelectProduct = (event, id) => {
+    event.stopPropagation();
+
+    const newSelectedProducts = selectedProducts.slice();
+    const index = newSelectedProducts.findIndex((x) => x.id === id);
+    if (index === -1) {
+      newSelectedProducts.push({
+        id,
+        product: products.find((x) => x.id === id),
+        count: 1,
+      });
+    } else {
+      newSelectedProducts[index].count += 1;
+    }
+    setSelectedProducts(newSelectedProducts);
+  };
+
+  const handleRemoveProduct = (event, id) => {
+    event.stopPropagation();
+
+    const newSelectedProducts = selectedProducts.slice();
+    const index = newSelectedProducts.findIndex((x) => x.product.id === id);
+    if (newSelectedProducts[index].count > 1) {
+      newSelectedProducts[index].count -= 1;
+    } else {
+      newSelectedProducts.splice(index, 1);
+    }
+    setSelectedProducts(newSelectedProducts);
+  };
+
+  const handleFinishTicket = () => {
+    setChange(0.0);
+    setOpenDialog(true);
+  };
+
+  const productHeaders = [
     {
-      id: 'id',
-      label: 'ID',
+      id: 'reference',
+      label: 'Referència',
     },
     {
       id: 'name',
@@ -49,129 +129,48 @@ const Sales = () => {
       label: 'Stock',
     },
     {
-      id: 'price',
-      label: 'Preu/u',
+      id: 'sellingInfo.basePrice',
+      label: 'Preu (€)',
+      numeric: true,
     },
   ];
 
-  const rows1 = [
+  const selectedProductHeaders = [
     {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Samarreta Pull & Bear',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
+      id: 'product.reference',
+      label: 'Referència',
     },
     {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Pantalons G-Star',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
+      id: 'product.name',
+      label: 'Nom',
     },
-    {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Dessuadora SuperDry',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
-    },
-    {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Samarreta Berska',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
-    },
-    {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Polo Mango',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
-    },
-    {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Xandall Inside',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
-    },
-    {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Xancletes Nike',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
-    },
-    {
-      id: Math.floor(Math.random() * 1000000000),
-      name: 'Espardenyes',
-      stock: Math.floor(Math.random() * 100),
-      price: `${(Math.random() * 100).toFixed(2)} €`,
-    },
-  ];
-
-  const headers2 = [
-    headers1[0],
-    headers1[1],
     {
       id: 'count',
       label: 'Quantitat',
     },
     {
       id: 'price',
-      label: 'Preu total',
+      label: 'Preu total (€)',
+      value: (row) => row.product.sellingInfo.basePrice * row.count,
+      numeric: true,
     },
   ];
 
-  const rows2 = [
-    {
-      id: rows1[0].id,
-      name: rows1[0].name,
-      count: Math.floor(Math.random() * 10),
-      price: rows1[0].price,
-    },
-    {
-      id: rows1[2].id,
-      name: rows1[2].name,
-      count: Math.floor(Math.random() * 10),
-      price: rows1[2].price,
-    },
-    {
-      id: rows1[5].id,
-      name: rows1[5].name,
-      count: Math.floor(Math.random() * 10),
-      price: rows1[5].price,
-    },
-  ];
+  const availableProductsButtonView = (
+    <Tooltip title="Cerca">
+      <IconButton aria-label="Cerca">
+        <SearchIcon />
+      </IconButton>
+    </Tooltip>
+  );
 
-  let total = 0.0;
-  rows2.forEach((row) => {
-    const thistotal = (row.price.slice(0, -2) * row.count).toFixed(2);
-    row.price = `${thistotal} €`;
-    total += parseFloat(thistotal);
-  });
-
-  const onFinishTicketClick = () => {
-    setOpenDialog(true);
-  };
-
-  const createCustomButtonView1 = () => {
-    return (
-      <Tooltip title="Cerca">
-        <IconButton aria-label="Cerca">
-          <SearchIcon />
-        </IconButton>
-      </Tooltip>
-    );
-  };
-
-  const createCustomButtonView2 = () => {
-    return (
-      <Tooltip title="Finalitzar ticket">
-        <IconButton
-          aria-label="Finalitzar ticket"
-          onClick={onFinishTicketClick}
-        >
-          <DoneIcon />
-        </IconButton>
-      </Tooltip>
-    );
-  };
+  const addedProductsButtonView = (
+    <Tooltip title="Finalitzar ticket">
+      <IconButton aria-label="Finalitzar ticket" onClick={handleFinishTicket}>
+        <DoneIcon />
+      </IconButton>
+    </Tooltip>
+  );
 
   return (
     <>
@@ -216,15 +215,15 @@ const Sales = () => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Table
-              isDataLoaded
-              headers={headers1}
-              rows={rows1}
+              isDataLoaded={productsLoaded}
+              headers={productHeaders}
+              rows={products}
               title="Productes disponibles"
-              customButtonView={createCustomButtonView1()}
+              customButtonView={availableProductsButtonView}
               customActions={[
                 {
                   title: 'Afegir unitat',
-                  handleClick: () => {},
+                  handleClick: handleSelectProduct,
                   icon: <AddIcon />,
                 },
               ]}
@@ -233,19 +232,19 @@ const Sales = () => {
           <Grid item xs={6}>
             <Table
               isDataLoaded
-              headers={headers2}
-              rows={rows2}
+              headers={selectedProductHeaders}
+              rows={selectedProducts}
               title="Productes afegits"
-              customButtonView={createCustomButtonView2()}
+              customButtonView={addedProductsButtonView}
               customActions={[
                 {
                   title: 'Afegir unitat',
-                  handleClick: () => {},
+                  handleClick: handleSelectProduct,
                   icon: <AddIcon />,
                 },
                 {
                   title: 'Eliminar unitat',
-                  handleClick: () => {},
+                  handleClick: handleRemoveProduct,
                   icon: <RemoveIcon />,
                 },
               ]}
@@ -258,7 +257,7 @@ const Sales = () => {
         onClose={handleDialogClose}
         // TransitionComponent={Transition}
       >
-        <DialogTitle id="alert-dialog-title">{"Finalitzar ticket"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Finalitzar ticket</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Selecciona el mètode de pagament i finalitza el ticket.
@@ -305,8 +304,17 @@ const Sales = () => {
                       id="outlined-basic"
                       label="Entregat"
                       variant="outlined"
+                      type="number"
+                      onChange={(event) => {
+                        const value = parseFloat(event.target.value);
+                        if (value - total > 0) {
+                          setChange(value - total);
+                        } else {
+                          setChange(0.0);
+                        }
+                      }}
                     />
-                    <Box>Canvi: 0.00 €</Box>
+                    <Box>Canvi: {change.toFixed(2)} €</Box>
                   </>
                 )}
               </Box>
