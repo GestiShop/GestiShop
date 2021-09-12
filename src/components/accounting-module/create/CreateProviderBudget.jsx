@@ -14,10 +14,10 @@ import { useSelector } from 'react-redux';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import {
-  addClientBudget,
-  updateClientBudget,
-} from '../../../db/ClientBudgetHelper';
-import { fetchClients } from '../../../db/ClientHelper';
+  addProviderBudget,
+  updateProviderBudget,
+} from '../../../db/ProviderBudgetHelper';
+import { fetchProviders } from '../../../db/ProviderHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import DatePicker from '../../ui/forms/DatePicker';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
@@ -31,11 +31,11 @@ import {
 } from '../../../utils/constants';
 import Button from '../../ui/forms/Button';
 
-const CreateClientBudget = ({ closeCallback, initialState }) => {
+const CreateProviderBudget = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const isMounted = useIsMounted();
-  const [clientList, setClientList] = useState([]);
-  const [clientListOptions, setClientListOptions] = useState([]);
+  const [providerList, setProviderList] = useState([]);
+  const [providerListOptions, setProviderListOptions] = useState([]);
   const [productList, setProductList] = useState([]);
   const [productListOptions, setProductListOptions] = useState([]);
   const [currency, setCurrency] = useState(
@@ -60,7 +60,7 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
     };
   };
 
-  const encodeClientBudget = (data) => {
+  const encodeProviderBudget = (data) => {
     return {
       budgetNumberPreamble: data.budgetNumberPreamble,
       budgetNumber: data.budgetNumber,
@@ -98,19 +98,19 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
   };
 
   const fetchData = () => {
-    fetchClients(
+    fetchProviders(
       (error) => {
         console.log('error', error);
         closeCallback();
       },
       (options) => {
         if (isMounted.current) {
-          setClientList(options);
-          setClientListOptions(
-            options.map((client) => {
+          setProviderList(options);
+          setProviderListOptions(
+            options.map((provider) => {
               return {
-                value: client.id,
-                displayText: `${client.fiscalData.name} [${client.reference}]`,
+                value: provider.id,
+                displayText: `${provider.fiscalData.name} [${provider.reference}]`,
               };
             })
           );
@@ -232,10 +232,10 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
   });
 
   const handleSubmit = (data) => {
-    const encodedData = encodeClientBudget(data);
+    const encodedData = encodeProviderBudget(data);
 
     if (!initialState) {
-      addClientBudget(
+      addProviderBudget(
         encodedData,
         (error) => {
           console.log('error', error);
@@ -247,7 +247,7 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
         }
       );
     } else {
-      updateClientBudget(
+      updateProviderBudget(
         { ...encodedData, _id: initialState._id },
         (error) => {
           console.log('error', error);
@@ -261,55 +261,60 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
     }
   };
 
-  const handleClientSelect = (clientId, setFieldValue) => {
-    const selectedClient = clientList.find((client) => client.id === clientId);
-    if (!selectedClient) return;
+  const handleProviderSelect = (providerId, setFieldValue) => {
+    const selectedProvider = providerList.find(
+      (provider) => provider.id === providerId
+    );
+    if (!selectedProvider) return;
 
-    setFieldValue('entityData.fiscalData.name', selectedClient.fiscalData.name);
-    setFieldValue('entityData.fiscalData.nif', selectedClient.fiscalData.nif);
+    setFieldValue(
+      'entityData.fiscalData.name',
+      selectedProvider.fiscalData.name
+    );
+    setFieldValue('entityData.fiscalData.nif', selectedProvider.fiscalData.nif);
     setFieldValue(
       'entityData.fiscalData.address.roadType',
-      selectedClient.fiscalData.address.roadType
+      selectedProvider.fiscalData.address.roadType
     );
     setFieldValue(
       'entityData.fiscalData.address.street',
-      selectedClient.fiscalData.address.street
+      selectedProvider.fiscalData.address.street
     );
     setFieldValue(
       'entityData.fiscalData.address.number',
-      selectedClient.fiscalData.address.number
+      selectedProvider.fiscalData.address.number
     );
     setFieldValue(
       'entityData.fiscalData.address.floor',
-      selectedClient.fiscalData.address.floor
+      selectedProvider.fiscalData.address.floor
     );
     setFieldValue(
       'entityData.fiscalData.address.door',
-      selectedClient.fiscalData.address.door
+      selectedProvider.fiscalData.address.door
     );
     setFieldValue(
       'entityData.fiscalData.address.extra',
-      selectedClient.fiscalData.address.extra
+      selectedProvider.fiscalData.address.extra
     );
     setFieldValue(
       'entityData.fiscalData.address.zipCode',
-      selectedClient.fiscalData.address.zipCode
+      selectedProvider.fiscalData.address.zipCode
     );
     setFieldValue(
       'entityData.fiscalData.address.city',
-      selectedClient.fiscalData.address.city
+      selectedProvider.fiscalData.address.city
     );
     setFieldValue(
       'entityData.fiscalData.address.province',
-      selectedClient.fiscalData.address.province
+      selectedProvider.fiscalData.address.province
     );
     setFieldValue(
       'entityData.fiscalData.address.state',
-      selectedClient.fiscalData.address.state
+      selectedProvider.fiscalData.address.state
     );
     setFieldValue(
       'entityData.fiscalData.address.country',
-      selectedClient.fiscalData.address.country
+      selectedProvider.fiscalData.address.country
     );
   };
 
@@ -320,10 +325,10 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
 
     const newBudgetProducts = budgetProducts;
     newBudgetProducts[index] = {
-      basePricePerUnit: selectedProduct.sellingInfo.basePrice,
+      basePricePerUnit: selectedProduct.buyingInfo.basePrice,
       unitType: selectedProduct.unitType.unit,
-      discountPercentage: selectedProduct.sellingInfo.discountPercentage,
-      taxPercentage: selectedProduct.sellingInfo.taxPercentage.percentage,
+      discountPercentage: selectedProduct.buyingInfo.discountPercentage,
+      taxPercentage: selectedProduct.buyingInfo.taxPercentage.percentage,
       quantity: 1,
     };
     setBudgetProducts(newBudgetProducts);
@@ -376,7 +381,7 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
 
                   <Grid item xs={12}>
                     <Typography>
-                      {t('accounting_module.budget.creation.client_data')}
+                      {t('accounting_module.budget.creation.provider_data')}
                     </Typography>
                   </Grid>
 
@@ -384,10 +389,10 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
                     <AutocompleteSelect
                       required
                       name="entityData.entity"
-                      label={t('accounting_module.budget.structure.client')}
-                      options={clientListOptions}
-                      onInput={(clientId) =>
-                        handleClientSelect(clientId, setFieldValue)
+                      label={t('accounting_module.budget.structure.provider')}
+                      options={providerListOptions}
+                      onInput={(providerId) =>
+                        handleProviderSelect(providerId, setFieldValue)
                       }
                     />
                   </Grid>
@@ -398,7 +403,7 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
                       required
                       name="entityData.fiscalData.name"
                       label={t(
-                        'accounting_module.budget.structure.client_name'
+                        'accounting_module.budget.structure.provider_name'
                       )}
                     />
                   </Grid>
@@ -408,7 +413,9 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
                       disabled
                       required
                       name="entityData.fiscalData.nif"
-                      label={t('accounting_module.budget.structure.client_nif')}
+                      label={t(
+                        'accounting_module.budget.structure.provider_nif'
+                      )}
                     />
                   </Grid>
 
@@ -794,4 +801,4 @@ const CreateClientBudget = ({ closeCallback, initialState }) => {
   );
 };
 
-export default CreateClientBudget;
+export default CreateProviderBudget;

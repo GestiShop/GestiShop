@@ -50,6 +50,7 @@ import ListClientBills from './list/ListClientBills';
 import DocumentGenerator from './documents/DocumentGenerator';
 import ListProviderBills from './list/ListProviderBills';
 import ListClientBudgets from './list/ListClientBudgets';
+import ListProviderBudgets from './list/ListProviderBudgets';
 
 const DRAWER_WIDTH = 300;
 
@@ -366,7 +367,7 @@ const AccountingModuleDashboard = () => {
               <ListClientBudgets />
             </Route>
             <Route exact path={`${path}/provider_budgets`}>
-              <p>[NOT IMPLEMENTED] Provider budgets</p>
+              <ListProviderBudgets />
             </Route>
             <Route exact path={`${path}/document_generator`}>
               <DocumentGenerator />
