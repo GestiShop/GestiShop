@@ -402,7 +402,7 @@ const EnhancedTable = ({
 
                           if (rowToRender instanceof Date) {
                             rowToRender =
-                              moment(rowToRender).format('DD/MM/YYYY');
+                              moment(rowToRender).format('DD/MM/YYYY HH:mm');
                           } else if (typeof rowToRender === 'boolean') {
                             rowToRender = rowToRender ? (
                               <CheckIcon color="primary" />

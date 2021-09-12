@@ -20,7 +20,6 @@ import {
 } from '../../../db/ProviderBillHelper';
 import { fetchProviders } from '../../../db/ProviderHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
-import DatePicker from '../../ui/forms/DatePicker';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import Select from '../../ui/forms/Select';
@@ -150,7 +149,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     billNumberPreamble: '', // TODO: THIS SHOULD TAKE THE PREAMBLE FROM THE LOCAL CONFIGURATION
     billNumber: '', // TODO: THIS SHOULD TAKE THE NEXT AVAILABLE NUMBER
-    date: moment().format('YYYY-MM-DD'),
+    date: moment().format('YYYY-MM-DDTHH:mm'),
     entityData: {
       entity: '',
       fiscalData: {
@@ -166,7 +165,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
     pvp: 0,
     paymentData: {
       method: '',
-      expirationDate: moment().format('YYYY-MM-DDTHH:MM'),
+      expirationDate: moment().format('YYYY-MM-DDTHH:mm'),
     },
     isPaid: false,
   };
@@ -383,7 +382,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                   </Grid>
 
                   <Grid item xs={4}>
-                    <DatePicker
+                    <DateTimePicker
                       required
                       name="date"
                       label={t('accounting_module.bill.structure.date')}

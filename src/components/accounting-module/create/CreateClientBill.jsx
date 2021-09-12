@@ -17,7 +17,6 @@ import Switch from '../../ui/forms/Switch';
 import { addClientBill, updateClientBill } from '../../../db/ClientBillHelper';
 import { fetchClients } from '../../../db/ClientHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
-import DatePicker from '../../ui/forms/DatePicker';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import Select from '../../ui/forms/Select';
@@ -147,7 +146,7 @@ const CreateClientBill = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     billNumberPreamble: '', // TODO: THIS SHOULD TAKE THE PREAMBLE FROM THE LOCAL CONFIGURATION
     billNumber: '', // TODO: THIS SHOULD TAKE THE NEXT AVAILABLE NUMBER
-    date: moment().format('YYYY-MM-DD'),
+    date: moment().format('YYYY-MM-DDTHH:mm'),
     entityData: {
       entity: '',
       fiscalData: {
@@ -163,7 +162,7 @@ const CreateClientBill = ({ closeCallback, initialState }) => {
     pvp: 0,
     paymentData: {
       method: '',
-      expirationDate: moment().format('YYYY-MM-DDTHH:MM'),
+      expirationDate: moment().format('YYYY-MM-DDTHH:mm'),
     },
     isPaid: false,
   };
@@ -375,7 +374,7 @@ const CreateClientBill = ({ closeCallback, initialState }) => {
                   </Grid>
 
                   <Grid item xs={4}>
-                    <DatePicker
+                    <DateTimePicker
                       required
                       name="date"
                       label={t('accounting_module.bill.structure.date')}

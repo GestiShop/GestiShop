@@ -19,7 +19,6 @@ import {
 } from '../../../db/ProviderDeliveryNoteHelper';
 import { fetchProviders } from '../../../db/ProviderHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
-import DatePicker from '../../ui/forms/DatePicker';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import AddressForm from '../../ui/AddressForm';
@@ -145,7 +144,7 @@ const CreateProviderDeliveryNote = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     deliveryNoteNumberPreamble: '', // TODO: THIS SHOULD TAKE THE PREAMBLE FROM THE LOCAL CONFIGURATION
     deliveryNoteNumber: '', // TODO: THIS SHOULD TAKE THE NEXT AVAILABLE NUMBER
-    date: moment().format('YYYY-MM-DD'),
+    date: moment().format('YYYY-MM-DDTHH:mm'),
     entityData: {
       entity: '',
       fiscalData: {
@@ -368,7 +367,7 @@ const CreateProviderDeliveryNote = ({ closeCallback, initialState }) => {
                   </Grid>
 
                   <Grid item xs={4}>
-                    <DatePicker
+                    <DateTimePicker
                       required
                       name="date"
                       label={t(

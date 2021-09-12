@@ -20,8 +20,8 @@ const CreateEvent = ({ closeCallback, initialState }) => {
 
   const INITIAL_STATE = {
     title: initialState.title,
-    start: moment(initialState.start).format('YYYY-MM-DDTHH:MM'),
-    end: moment(initialState.end).format('YYYY-MM-DDTHH:MM'),
+    start: moment(initialState.start).format('YYYY-MM-DDTHH:mm'),
+    end: moment(initialState.end).format('YYYY-MM-DDTHH:mm'),
     description: initialState.description || '',
     colorCode: initialState.colorCode || 'lightseagreen',
     allDay: initialState.allDay || false,
