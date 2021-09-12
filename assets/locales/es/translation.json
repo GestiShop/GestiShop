@@ -276,6 +276,40 @@
       "edit": "Editar factura de proveedor",
       "list": "Lista de facturas de proveedores"
     },
+    "budget": {
+      "creation": {
+        "client_data": "Datos del cliente",
+        "provider_data": "Datos del proveedor",
+        "products": "Productos"
+      },
+      "structure": {
+        "budget_number_preamble": "Preámbulo",
+        "budget_number": "Número de presupuesto",
+        "date": "Fecha",
+        "client": "Cliente",
+        "provider": "Proveedor",
+        "client_name": "Nombre del cliente",
+        "provider_name": "Nombre del proveedor",
+        "client_nif": "N.I.F. del cliente",
+        "provider_nif": "N.I.F. del proveedor",
+        "product": "Producto",
+        "expiration_date": "Fecha de vencimiento",
+        "total_base_price": "Precio base total ({{currency}})",
+        "general_discount": "Descuento general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notas adicionales"
+      }
+    },
+    "client_budget": {
+      "create": "Añadir un presupuesto a cliente",
+      "edit": "Editar presupuesto a cliente",
+      "list": "Lista de presupuestos a clientes"
+    },
+    "provider_budget": {
+      "create": "Añadir un presupuesto de proveedor",
+      "edit": "Editar presupuesto de proveedor",
+      "list": "Lista de presupuestos de proveedores"
+    },
     "event": {
       "new": "Nuevo evento",
       "edit": "Editar evento",

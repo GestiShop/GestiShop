@@ -15,10 +15,10 @@ import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import Switch from '../../ui/forms/Switch';
 import {
-  addProviderBill,
-  updateProviderBill,
-} from '../../../db/ProviderBillHelper';
-import { fetchProviders } from '../../../db/ProviderHelper';
+  addClientBudget,
+  updateClientBudget,
+} from '../../../db/ClientBudgetHelper';
+import { fetchClients } from '../../../db/ClientHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import DatePicker from '../../ui/forms/DatePicker';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
@@ -28,17 +28,17 @@ import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
 import {
   EmptyAddress,
-  EmptyBillProduct,
+  EmptyBudgetProduct,
   AddressSchemaValidator,
 } from '../../../utils/constants';
 import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 
-const CreateProviderBill = ({ closeCallback, initialState }) => {
+const CreateClientBudget = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const isMounted = useIsMounted();
-  const [providerList, setProviderList] = useState([]);
-  const [providerListOptions, setProviderListOptions] = useState([]);
+  const [clientList, setClientList] = useState([]);
+  const [clientListOptions, setClientListOptions] = useState([]);
   const [productList, setProductList] = useState([]);
   const [productListOptions, setProductListOptions] = useState([]);
   const [currency, setCurrency] = useState(
@@ -47,7 +47,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
   const [numberOfDecimals, setNumberOfDecimals] = useState(
     useSelector((store) => store.configuration.currencyInfo.floatingPositions)
   );
-  const [billProducts, setBillProducts] = useState([]);
+  const [budgetProducts, setBudgetProducts] = useState([]);
   const [generalDiscount, setGeneralDiscount] = useState(0);
 
   const encodeProduct = (data, i) => {
@@ -55,19 +55,20 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
       product: data.product.value,
       reference: data.reference,
       name: data.name,
-      basePricePerUnit: billProducts[i].basePricePerUnit,
+      basePricePerUnit: budgetProducts[i].basePricePerUnit,
       unitType: data.unitType,
-      discountPercentage: billProducts[i].discountPercentage,
-      taxPercentage: billProducts[i].taxPercentage,
-      quantity: billProducts[i].quantity,
+      discountPercentage: budgetProducts[i].discountPercentage,
+      taxPercentage: budgetProducts[i].taxPercentage,
+      quantity: budgetProducts[i].quantity,
     };
   };
 
-  const encodeProviderBill = (data) => {
+  const encodeClientBudget = (data) => {
     return {
-      billNumberPreamble: data.billNumberPreamble,
-      billNumber: data.billNumber,
+      budgetNumberPreamble: data.budgetNumberPreamble,
+      budgetNumber: data.budgetNumber,
       date: data.date,
+      exoirationDate: data.expirationDate,
       entityData: {
         entity: data.entityData.entity.value,
         fiscalData: data.entityData.fiscalData,
@@ -75,7 +76,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
       products: data.products.map(encodeProduct),
       notes: data.notes,
       basePrice:
-        billProducts
+        budgetProducts
           .map(
             (product) =>
               product.basePricePerUnit *
@@ -86,7 +87,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
         (1 - generalDiscount / 100),
       generalDiscount: data.generalDiscount,
       pvp:
-        billProducts
+        budgetProducts
           .map(
             (product) =>
               product.basePricePerUnit *
@@ -96,25 +97,23 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
           )
           .reduce((acc, product) => acc + product, 0) *
         (1 - generalDiscount / 100),
-      paymentData: data.paymentData,
-      isPaid: data.isPaid,
     };
   };
 
   const fetchData = () => {
-    fetchProviders(
+    fetchClients(
       (error) => {
         console.log('error', error);
         closeCallback();
       },
       (options) => {
         if (isMounted.current) {
-          setProviderList(options);
-          setProviderListOptions(
-            options.map((provider) => {
+          setClientList(options);
+          setClientListOptions(
+            options.map((client) => {
               return {
-                value: provider.id,
-                displayText: `${provider.fiscalData.name} [${provider.reference}]`,
+                value: client.id,
+                displayText: `${client.fiscalData.name} [${client.reference}]`,
               };
             })
           );
@@ -148,9 +147,10 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
   }, []);
 
   let INITIAL_STATE = {
-    billNumberPreamble: '', // TODO: THIS SHOULD TAKE THE PREAMBLE FROM THE LOCAL CONFIGURATION
-    billNumber: '', // TODO: THIS SHOULD TAKE THE NEXT AVAILABLE NUMBER
+    budgetNumberPreamble: '', // TODO: THIS SHOULD TAKE THE PREAMBLE FROM THE LOCAL CONFIGURATION
+    budgetNumber: '', // TODO: THIS SHOULD TAKE THE NEXT AVAILABLE NUMBER
     date: moment().format('YYYY-MM-DD'),
+    expirationDate: moment().format('YYYY-MM-DDTHH:MM'),
     entityData: {
       entity: '',
       fiscalData: {
@@ -164,35 +164,30 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
     basePrice: 0,
     generalDiscount: 0,
     pvp: 0,
-    paymentData: {
-      method: '',
-      expirationDate: moment().format('YYYY-MM-DDTHH:MM'),
-    },
-    isPaid: false,
   };
 
   if (initialState) {
     INITIAL_STATE = {
-      billNumberPreamble: initialState.billNumberPreamble,
-      billNumber: initialState.billNumber,
+      budgetNumberPreamble: initialState.budgetNumberPreamble,
+      budgetNumber: initialState.budgetNumber,
       date: initialState.date,
+      expirationDate: initialState.expirationDate,
       entityData: initialState.entityData,
       products: initialState.products,
       notes: initialState.notes,
       basePrice: initialState.basePrice,
       generalDiscount: initialState.generalDiscount,
       pvp: initialState.pvp,
-      paymentData: initialState.paymentData,
-      isPaid: initialState.isPaid,
     };
   }
 
   const FORM_VALIDATION = Yup.object().shape({
-    billNumberPreamble: Yup.string().default(''),
-    billNumber: Yup.number()
+    budgetNumberPreamble: Yup.string().default(''),
+    budgetNumber: Yup.number()
       .typeError(t('form.errors.invalid_number'))
       .required(t('form.errors.required')),
     date: Yup.date().required(t('form.errors.required')),
+    expirationDate: Yup.date(),
     entityData: Yup.object().shape({
       entity: Yup.object().required(t('form.errors.required')),
       fiscalData: Yup.object().shape({
@@ -236,19 +231,14 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
     pvp: Yup.number()
       .typeError(t('form.errors.invalid_number'))
       .required(t('form.errors.required')),
-    paymentData: Yup.object().shape({
-      method: Yup.string().required(t('form.errors.required')),
-      expirationDate: Yup.date().required(t('form.errors.required')),
-    }),
-    isPaid: Yup.bool().required(t('form.errors.required')),
     notes: Yup.string(),
   });
 
   const handleSubmit = (data) => {
-    const encodedData = encodeProviderBill(data);
+    const encodedData = encodeClientBudget(data);
 
     if (!initialState) {
-      addProviderBill(
+      addClientBudget(
         encodedData,
         (error) => {
           console.log('error', error);
@@ -260,7 +250,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
         }
       );
     } else {
-      updateProviderBill(
+      updateClientBudget(
         { ...encodedData, _id: initialState._id },
         (error) => {
           console.log('error', error);
@@ -274,60 +264,55 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
     }
   };
 
-  const handleProviderSelect = (providerId, setFieldValue) => {
-    const selectedProvider = providerList.find(
-      (provider) => provider.id === providerId
-    );
-    if (!selectedProvider) return;
+  const handleClientSelect = (clientId, setFieldValue) => {
+    const selectedClient = clientList.find((client) => client.id === clientId);
+    if (!selectedClient) return;
 
-    setFieldValue(
-      'entityData.fiscalData.name',
-      selectedProvider.fiscalData.name
-    );
-    setFieldValue('entityData.fiscalData.nif', selectedProvider.fiscalData.nif);
+    setFieldValue('entityData.fiscalData.name', selectedClient.fiscalData.name);
+    setFieldValue('entityData.fiscalData.nif', selectedClient.fiscalData.nif);
     setFieldValue(
       'entityData.fiscalData.address.roadType',
-      selectedProvider.fiscalData.address.roadType
+      selectedClient.fiscalData.address.roadType
     );
     setFieldValue(
       'entityData.fiscalData.address.street',
-      selectedProvider.fiscalData.address.street
+      selectedClient.fiscalData.address.street
     );
     setFieldValue(
       'entityData.fiscalData.address.number',
-      selectedProvider.fiscalData.address.number
+      selectedClient.fiscalData.address.number
     );
     setFieldValue(
       'entityData.fiscalData.address.floor',
-      selectedProvider.fiscalData.address.floor
+      selectedClient.fiscalData.address.floor
     );
     setFieldValue(
       'entityData.fiscalData.address.door',
-      selectedProvider.fiscalData.address.door
+      selectedClient.fiscalData.address.door
     );
     setFieldValue(
       'entityData.fiscalData.address.extra',
-      selectedProvider.fiscalData.address.extra
+      selectedClient.fiscalData.address.extra
     );
     setFieldValue(
       'entityData.fiscalData.address.zipCode',
-      selectedProvider.fiscalData.address.zipCode
+      selectedClient.fiscalData.address.zipCode
     );
     setFieldValue(
       'entityData.fiscalData.address.city',
-      selectedProvider.fiscalData.address.city
+      selectedClient.fiscalData.address.city
     );
     setFieldValue(
       'entityData.fiscalData.address.province',
-      selectedProvider.fiscalData.address.province
+      selectedClient.fiscalData.address.province
     );
     setFieldValue(
       'entityData.fiscalData.address.state',
-      selectedProvider.fiscalData.address.state
+      selectedClient.fiscalData.address.state
     );
     setFieldValue(
       'entityData.fiscalData.address.country',
-      selectedProvider.fiscalData.address.country
+      selectedClient.fiscalData.address.country
     );
   };
 
@@ -336,15 +321,15 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
       (product) => product.id === productId
     );
 
-    const newBillProducts = billProducts;
-    newBillProducts[index] = {
-      basePricePerUnit: selectedProduct.buyingInfo.basePrice,
+    const newBudgetProducts = budgetProducts;
+    newBudgetProducts[index] = {
+      basePricePerUnit: selectedProduct.sellingInfo.basePrice,
       unitType: selectedProduct.unitType.unit,
-      discountPercentage: selectedProduct.buyingInfo.discountPercentage,
-      taxPercentage: selectedProduct.buyingInfo.taxPercentage.percentage,
+      discountPercentage: selectedProduct.sellingInfo.discountPercentage,
+      taxPercentage: selectedProduct.sellingInfo.taxPercentage.percentage,
       quantity: 1,
     };
-    setBillProducts(newBillProducts);
+    setBudgetProducts(newBudgetProducts);
 
     setFieldValue(`products.${index}.reference`, selectedProduct.reference);
     setFieldValue(`products.${index}.name`, selectedProduct.name);
@@ -366,9 +351,9 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={2}>
                     <TextField
-                      name="billNumberPreamble"
+                      name="budgetNumberPreamble"
                       label={t(
-                        'accounting_module.bill.structure.bill_number_preamble'
+                        'accounting_module.budget.structure.budget_number_preamble'
                       )}
                     />
                   </Grid>
@@ -377,8 +362,10 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                     <TextField
                       required
                       type="number"
-                      name="billNumber"
-                      label={t('accounting_module.bill.structure.bill_number')}
+                      name="budgetNumber"
+                      label={t(
+                        'accounting_module.budget.structure.budget_number'
+                      )}
                     />
                   </Grid>
 
@@ -386,13 +373,13 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                     <DatePicker
                       required
                       name="date"
-                      label={t('accounting_module.bill.structure.date')}
+                      label={t('accounting_module.budget.structure.date')}
                     />
                   </Grid>
 
                   <Grid item xs={12}>
                     <Typography>
-                      {t('accounting_module.bill.creation.provider_data')}
+                      {t('accounting_module.budget.creation.client_data')}
                     </Typography>
                   </Grid>
 
@@ -400,10 +387,10 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                     <AutocompleteSelect
                       required
                       name="entityData.entity"
-                      label={t('accounting_module.bill.structure.provider')}
-                      options={providerListOptions}
-                      onInput={(providerId) =>
-                        handleProviderSelect(providerId, setFieldValue)
+                      label={t('accounting_module.budget.structure.client')}
+                      options={clientListOptions}
+                      onInput={(clientId) =>
+                        handleClientSelect(clientId, setFieldValue)
                       }
                     />
                   </Grid>
@@ -414,7 +401,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                       required
                       name="entityData.fiscalData.name"
                       label={t(
-                        'accounting_module.bill.structure.provider_name'
+                        'accounting_module.budget.structure.client_name'
                       )}
                     />
                   </Grid>
@@ -424,7 +411,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                       disabled
                       required
                       name="entityData.fiscalData.nif"
-                      label={t('accounting_module.bill.structure.provider_nif')}
+                      label={t('accounting_module.budget.structure.client_nif')}
                     />
                   </Grid>
 
@@ -435,7 +422,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
 
                   <Grid item xs={12}>
                     <Typography>
-                      {t('accounting_module.bill.creation.products')}
+                      {t('accounting_module.budget.creation.products')}
                     </Typography>
                   </Grid>
 
@@ -453,16 +440,16 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                       required
                                       name={`products.${index}.product`}
                                       label={t(
-                                        'accounting_module.bill.structure.product'
+                                        'accounting_module.budget.structure.product'
                                       )}
                                       options={productListOptions}
-                                      onInput={(productId) =>
+                                      onInput={(productId) => {
                                         handleProductSelect(
                                           productId,
                                           index,
                                           setFieldValue
-                                        )
-                                      }
+                                        );
+                                      }}
                                     />
                                   </Grid>
 
@@ -472,9 +459,10 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                       className="h-100"
                                       onClick={() => {
                                         arrayHelpers.remove(index);
-                                        const newBillProducts = billProducts;
-                                        newBillProducts.splice(index, 1);
-                                        setBillProducts(newBillProducts);
+                                        const newBudgetProducts =
+                                          budgetProducts;
+                                        newBudgetProducts.splice(index, 1);
+                                        setBudgetProducts(newBudgetProducts);
                                       }}
                                     >
                                       <DeleteIcon />
@@ -487,15 +475,16 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                       onClick={() => {
                                         arrayHelpers.insert(
                                           index,
-                                          EmptyBillProduct
+                                          EmptyBudgetProduct
                                         );
-                                        const newBillProducts = billProducts;
-                                        newBillProducts.splice(
+                                        const newBudgetProducts =
+                                          budgetProducts;
+                                        newBudgetProducts.splice(
                                           index,
                                           0,
-                                          EmptyBillProduct
+                                          EmptyBudgetProduct
                                         );
-                                        setBillProducts(newBillProducts);
+                                        setBudgetProducts(newBudgetProducts);
                                       }}
                                     >
                                       <AddIcon />
@@ -536,16 +525,18 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                         }
                                       )}
                                       value={
-                                        billProducts[index]
-                                          ? billProducts[index].basePricePerUnit
+                                        budgetProducts[index]
+                                          ? budgetProducts[index]
+                                              .basePricePerUnit
                                           : ''
                                       }
                                       onInput={(event) => {
-                                        const newBillProducts = billProducts;
-                                        newBillProducts[
+                                        const newBudgetProducts =
+                                          budgetProducts;
+                                        newBudgetProducts[
                                           index
                                         ].basePricePerUnit = event.target.value;
-                                        setBillProducts(newBillProducts);
+                                        setBudgetProducts(newBudgetProducts);
                                       }}
                                     />
                                   </Grid>
@@ -559,18 +550,19 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                         'accounting_module.product.structure.discount_percentage'
                                       )}
                                       value={
-                                        billProducts[index]
-                                          ? billProducts[index]
+                                        budgetProducts[index]
+                                          ? budgetProducts[index]
                                               .discountPercentage
                                           : ''
                                       }
                                       onInput={(event) => {
-                                        const newBillProducts = billProducts;
-                                        newBillProducts[
+                                        const newBudgetProducts =
+                                          budgetProducts;
+                                        newBudgetProducts[
                                           index
                                         ].discountPercentage =
                                           event.target.value;
-                                        setBillProducts(newBillProducts);
+                                        setBudgetProducts(newBudgetProducts);
                                       }}
                                     />
                                   </Grid>
@@ -584,15 +576,16 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                         'accounting_module.product.structure.tax_percentage'
                                       )}
                                       value={
-                                        billProducts[index]
-                                          ? billProducts[index].taxPercentage
+                                        budgetProducts[index]
+                                          ? budgetProducts[index].taxPercentage
                                           : ''
                                       }
                                       onInput={(event) => {
-                                        const newBillProducts = billProducts;
-                                        newBillProducts[index].taxPercentage =
+                                        const newBudgetProducts =
+                                          budgetProducts;
+                                        newBudgetProducts[index].taxPercentage =
                                           event.target.value;
-                                        setBillProducts(newBillProducts);
+                                        setBudgetProducts(newBudgetProducts);
                                       }}
                                     />
                                   </Grid>
@@ -606,15 +599,16 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                         'accounting_module.product.structure.quantity'
                                       )}
                                       value={
-                                        billProducts[index]
-                                          ? billProducts[index].quantity
+                                        budgetProducts[index]
+                                          ? budgetProducts[index].quantity
                                           : ''
                                       }
                                       onInput={(event) => {
-                                        const newBillProducts = billProducts;
-                                        newBillProducts[index].quantity =
+                                        const newBudgetProducts =
+                                          budgetProducts;
+                                        newBudgetProducts[index].quantity =
                                           event.target.value;
-                                        setBillProducts(newBillProducts);
+                                        setBudgetProducts(newBudgetProducts);
                                       }}
                                     />
                                   </Grid>
@@ -643,13 +637,13 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                         }
                                       )}
                                       value={
-                                        billProducts[index]
+                                        budgetProducts[index]
                                           ? parseFloat(
-                                              billProducts[index]
+                                              budgetProducts[index]
                                                 .basePricePerUnit *
-                                                billProducts[index].quantity *
+                                                budgetProducts[index].quantity *
                                                 (1 -
-                                                  billProducts[index]
+                                                  budgetProducts[index]
                                                     .discountPercentage /
                                                     100)
                                             ).toFixed(numberOfDecimals)
@@ -671,17 +665,17 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                         }
                                       )}
                                       value={
-                                        billProducts[index]
+                                        budgetProducts[index]
                                           ? parseFloat(
-                                              billProducts[index]
+                                              budgetProducts[index]
                                                 .basePricePerUnit *
-                                                billProducts[index].quantity *
+                                                budgetProducts[index].quantity *
                                                 (1 -
-                                                  billProducts[index]
+                                                  budgetProducts[index]
                                                     .discountPercentage /
                                                     100) *
                                                 (1 +
-                                                  billProducts[index]
+                                                  budgetProducts[index]
                                                     .taxPercentage /
                                                     100)
                                             ).toFixed(numberOfDecimals)
@@ -696,7 +690,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                             <Grid item xs={12}>
                               <Button
                                 onClick={() =>
-                                  arrayHelpers.push(EmptyBillProduct)
+                                  arrayHelpers.push(EmptyBudgetProduct)
                                 }
                               >
                                 {t('accounting_module.product.create')}
@@ -708,46 +702,19 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
-                    <Typography>
-                      {t('accounting_module.bill.creation.payment_data')}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={8}>
-                    <Select
-                      required
-                      name="paymentData.method"
-                      label={t(
-                        'accounting_module.bill.structure.payment_method'
-                      )}
-                      options={PAYMENT_METHODS(t)}
-                    />
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <DateTimePicker
-                      required
-                      name="paymentData.expirationDate"
-                      label={t(
-                        'accounting_module.bill.structure.expiration_date'
-                      )}
-                    />
-                  </Grid>
-
                   <Grid item xs={4}>
                     <TextField
                       disabled
                       name="basePrice"
                       type="number"
                       label={t(
-                        'accounting_module.bill.structure.total_base_price',
+                        'accounting_module.budget.structure.total_base_price',
                         {
                           currency,
                         }
                       )}
                       value={parseFloat(
-                        billProducts
+                        budgetProducts
                           .map(
                             (product) =>
                               product.basePricePerUnit *
@@ -765,7 +732,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                       name="generalDiscount"
                       type="number"
                       label={t(
-                        'accounting_module.bill.structure.general_discount'
+                        'accounting_module.budget.structure.general_discount'
                       )}
                       value={generalDiscount}
                       onInput={(event) =>
@@ -779,11 +746,11 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                       disabled
                       name="pvp"
                       type="number"
-                      label={t('accounting_module.bill.structure.pvp', {
+                      label={t('accounting_module.budget.structure.pvp', {
                         currency,
                       })}
                       value={parseFloat(
-                        billProducts
+                        budgetProducts
                           .map(
                             (product) =>
                               product.basePricePerUnit *
@@ -797,11 +764,12 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                     />
                   </Grid>
 
-                  <Grid item xs={6}>
-                    <Switch
-                      name="isPaid"
-                      label={t('accounting_module.bill.structure.is_paid')}
-                      initialState={INITIAL_STATE.isPaid}
+                  <Grid item xs={12}>
+                    <DateTimePicker
+                      name="expirationDate"
+                      label={t(
+                        'accounting_module.budget.structure.expiration_date'
+                      )}
                     />
                   </Grid>
 
@@ -810,7 +778,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                       multiline
                       rows={5}
                       name="notes"
-                      label={t('accounting_module.bill.structure.notes')}
+                      label={t('accounting_module.budget.structure.notes')}
                     />
                   </Grid>
 
@@ -829,4 +797,4 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
   );
 };
 
-export default CreateProviderBill;
+export default CreateClientBudget;

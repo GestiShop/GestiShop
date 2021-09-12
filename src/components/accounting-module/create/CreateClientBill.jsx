@@ -31,7 +31,7 @@ import {
 import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 
-const CreateClient = ({ closeCallback, initialState }) => {
+const CreateClientBill = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const isMounted = useIsMounted();
   const [clientList, setClientList] = useState([]);
@@ -725,10 +725,6 @@ const CreateClient = ({ closeCallback, initialState }) => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
-                    Payment data form
-                  </Grid>
-
                   <Grid item xs={4}>
                     <TextField
                       disabled
@@ -823,4 +819,4 @@ const CreateClient = ({ closeCallback, initialState }) => {
   );
 };
 
-export default CreateClient;
+export default CreateClientBill;

@@ -37,6 +37,8 @@ export const EmptyBillProduct = {
   pvp: 0,
 };
 
+export const EmptyBudgetProduct = EmptyBillProduct;
+
 export const EmptyEfact = {
   accountingOfficeCode: '',
   accountingOfficeName: '',

@@ -276,6 +276,40 @@
       "edit": "Editar factura de proveïdor",
       "list": "Llistat de factures de proveïdors"
     },
+    "budget": {
+      "creation": {
+        "client_data": "Dades del client",
+        "provider_data": "Dades del proveïdor",
+        "products": "Productes"
+      },
+      "structure": {
+        "budget_number_preamble": "Preàmbul",
+        "budget_number": "Número de pressupost",
+        "date": "Data",
+        "client": "Client",
+        "provider": "Proveïdor",
+        "client_name": "Nom del client",
+        "provider_name": "Nom del proveïdor",
+        "client_nif": "N.I.F. del client",
+        "provider_nif": "N.I.F. del proveïdor",
+        "product": "Producte",
+        "expiration_date": "Data de vencimient",
+        "total_base_price": "Preu base total ({{currency}})",
+        "general_discount": "Descompte general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notes addicionals"
+      }
+    },
+    "client_budget": {
+      "create": "Afegir un pressupost a client",
+      "edit": "Editar pressupost a client",
+      "list": "Llistat de pressupostos a clients"
+    },
+    "provider_budget": {
+      "create": "Afegir un pressupost de proveïdor",
+      "edit": "Editar pressupost de proveïdor",
+      "list": "Llistat de pressupostos de proveïdors"
+    },
     "event": {
       "new": "Nou esdeveniment",
       "edit": "Editar esdeveniment",
