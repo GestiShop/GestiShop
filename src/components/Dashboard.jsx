@@ -16,13 +16,6 @@ const Dashboard = () => {
         <Container maxWidth="md">
           <Grid container spacing={2}>
             <Grid item xs={12} className="d-flex">
-              <Button component={Link} to="/settings" replace>
-                <SettingsIcon className="m-2r font-3r" />
-                {t('settings.title')}
-              </Button>
-            </Grid>
-
-            <Grid item xs={12} className="d-flex">
               <Button component={Link} to="/accounting_module" replace>
                 <FileCopyIcon className="m-2r font-3r" />
                 {t('accounting_module.accounting_module')}
@@ -32,7 +25,7 @@ const Dashboard = () => {
             <Grid item xs={12} className="d-flex">
               <Button component={Link} to="/accounting_module" replace>
                 <AccountTreeIcon className="m-2r font-3r" />
-                [TODO] POS MODULE
+                Mòdul de TPV
               </Button>
             </Grid>
           </Grid>

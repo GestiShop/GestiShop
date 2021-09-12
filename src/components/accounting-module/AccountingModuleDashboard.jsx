@@ -35,6 +35,7 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import CategoryIcon from '@material-ui/icons/Category';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
 import ListUnitTypes from './list/ListUnitTypes';
@@ -251,13 +252,25 @@ const AccountingModuleDashboard = () => {
               {t('accounting_module.accounting_module')}
             </Typography>
 
-            <IconButton
-              color="inherit"
-              edge="end"
-              onClick={() => setOpenSettingsDialog(true)}
-            >
-              <SettingsIcon />
-            </IconButton>
+            <div>
+              <IconButton
+                color="inherit"
+                edge="end"
+                component={Link}
+                to="/dashboard"
+                replace
+              >
+                <ArrowBackIcon />
+              </IconButton>
+
+              <IconButton
+                color="inherit"
+                edge="end"
+                onClick={() => setOpenSettingsDialog(true)}
+              >
+                <SettingsIcon />
+              </IconButton>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
