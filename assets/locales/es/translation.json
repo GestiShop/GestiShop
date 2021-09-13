@@ -401,7 +401,13 @@
     },
     "model": {
       "130": {
-        "title": "Modelo 130"
+        "title": "Modelo 130",
+        "document": {
+          "description": "Descripción",
+          "income": "Ingresos",
+          "expenses": "Gastos",
+          "benefits": "Beneficios"
+        }
       },
       "303": {
         "title": "Modelo 303"

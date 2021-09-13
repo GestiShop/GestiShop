@@ -401,7 +401,13 @@
     },
     "model": {
       "130": {
-        "title": "130 model"
+        "title": "130 model",
+        "document": {
+          "description": "Description",
+          "income": "Income",
+          "expenses": "Expenses",
+          "benefits": "Benefits"
+        }
       },
       "303": {
         "title": "303 model"

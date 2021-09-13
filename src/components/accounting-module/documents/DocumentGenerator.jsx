@@ -6,6 +6,7 @@ import Button from '../../ui/forms/Button';
 import { fetchClientsWithBills } from '../../../db/ClientHelper';
 import { fetchProvidersWithBills } from '../../../db/ProviderHelper';
 import generate347Model from '../../../utils/document-generator/347modelGenerator';
+import generate130Model from '../../../utils/document-generator/130modelGenerator';
 
 const DocumentGenerator = () => {
   const { t } = useTranslation();
@@ -13,7 +14,24 @@ const DocumentGenerator = () => {
   const [contentToPrint, setContentToPrint] = useState(null);
   const [shouldPrint, setShouldPrint] = useState(false);
 
-  const generate130ModelHandler = () => {};
+  const generate130ModelHandler = () => {
+    fetchClientsWithBills(
+      (error) => {
+        console.log('error', error);
+      },
+      (clients) => {
+        fetchProvidersWithBills(
+          (error) => {
+            console.log('error', error);
+          },
+          (providers) => {
+            setContentToPrint(generate130Model(providers, clients));
+            setShouldPrint(true);
+          }
+        );
+      }
+    );
+  };
 
   const generate303ModelHandler = () => {};
 
