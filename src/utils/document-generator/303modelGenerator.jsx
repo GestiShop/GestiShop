@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Grid } from '@material-ui/core';
-import { Header, MoneySummaryTable } from './components/130Model';
+import { Header, MoneySummaryTable } from './components/303Model';
 
 const generateHeader = () => {
   return <Header />;
@@ -18,29 +18,41 @@ const generateBody = (moneySummary) => {
 };
 
 const filterData = (entities) => {
+  const calculateVATForBill = (bill) => {
+    return bill.products
+      .map(
+        (product) =>
+          product.basePricePerUnit *
+          product.quantity *
+          (1 - product.discountPercentage / 100) *
+          (product.taxPercentage / 100)
+      )
+      .reduce((acc, vat) => acc + vat, 0);
+  };
+
   return entities
     .map((entity) => ({
       trimester1: entity.bills
         .filter((bill) => moment(bill.date).month() < 3)
-        .map((bill) => bill.pvp)
+        .map(calculateVATForBill)
         .reduce((acc, bill) => acc + bill, 0),
       trimester2: entity.bills
         .filter(
           (bill) =>
             moment(bill.date).month() >= 3 && moment(bill.date).month() < 6
         )
-        .map((bill) => bill.pvp)
+        .map(calculateVATForBill)
         .reduce((acc, bill) => acc + bill, 0),
       trimester3: entity.bills
         .filter(
           (bill) =>
             moment(bill.date).month() >= 6 && moment(bill.date).month() < 9
         )
-        .map((bill) => bill.pvp)
+        .map(calculateVATForBill)
         .reduce((acc, bill) => acc + bill, 0),
       trimester4: entity.bills
         .filter((bill) => moment(bill.date).month() >= 9)
-        .map((bill) => bill.pvp)
+        .map(calculateVATForBill)
         .reduce((acc, bill) => acc + bill, 0),
     }))
     .map((entity) => ({
@@ -69,13 +81,13 @@ const filterData = (entities) => {
     );
 };
 
-const computeBenefits = (income, expenses) => {
+const computeTotal = (input, output) => {
   return {
-    trimester1: income.trimester1 - expenses.trimester1,
-    trimester2: income.trimester2 - expenses.trimester2,
-    trimester3: income.trimester3 - expenses.trimester3,
-    trimester4: income.trimester4 - expenses.trimester4,
-    total: income.total - expenses.total,
+    trimester1: input.trimester1 - output.trimester1,
+    trimester2: input.trimester2 - output.trimester2,
+    trimester3: input.trimester3 - output.trimester3,
+    trimester4: input.trimester4 - output.trimester4,
+    total: input.total - output.total,
   };
 };
 
@@ -84,12 +96,12 @@ const generateMoneySummary = (providers, clients) => {
 
   moneySummary[0] = filterData(clients);
   moneySummary[1] = filterData(providers);
-  moneySummary[2] = computeBenefits(moneySummary[0], moneySummary[1]);
+  moneySummary[2] = computeTotal(moneySummary[0], moneySummary[1]);
 
   return moneySummary;
 };
 
-const generate130Model = (providers, clients) => {
+const generate303Model = (providers, clients) => {
   const moneySummary = generateMoneySummary(providers, clients);
 
   return (
@@ -104,4 +116,4 @@ const generate130Model = (providers, clients) => {
   );
 };
 
-export default generate130Model;
+export default generate303Model;

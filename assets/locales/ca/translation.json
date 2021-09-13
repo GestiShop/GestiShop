@@ -406,11 +406,17 @@
           "description": "Descripció",
           "income": "Ingressos",
           "expenses": "Despeses",
-          "benefits": "Beneficis"
+          "benefits": "Beneficis",
+          "summary": "Resum"
         }
       },
       "303": {
-        "title": "Model 303"
+        "title": "Model 303",
+        "document": {
+          "inputVAT": "IVA soportado",
+          "outputVAT": "IVA repercutido",
+          "totalVAT": "IVA total"
+        }
       },
       "347": {
         "title": "Model 347",

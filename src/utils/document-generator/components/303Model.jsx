@@ -33,7 +33,7 @@ const Header = () => {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Typography align="left" className="mb-2r bold" paragraph>
-          {t('accounting_module.model.130.title')}
+          {t('accounting_module.model.303.title')}
         </Typography>
       </Grid>
     </Grid>
@@ -82,9 +82,9 @@ const MoneySummaryTable = ({ moneySummary }) => {
   );
 
   const typesTranslations = [
-    t('accounting_module.model.130.document.income'),
-    t('accounting_module.model.130.document.expenses'),
-    t('accounting_module.model.130.document.benefits'),
+    t('accounting_module.model.303.document.inputVAT'),
+    t('accounting_module.model.303.document.outputVAT'),
+    t('accounting_module.model.303.document.totalVAT'),
   ];
 
   return (

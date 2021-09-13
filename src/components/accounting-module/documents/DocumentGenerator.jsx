@@ -7,6 +7,7 @@ import { fetchClientsWithBills } from '../../../db/ClientHelper';
 import { fetchProvidersWithBills } from '../../../db/ProviderHelper';
 import generate347Model from '../../../utils/document-generator/347modelGenerator';
 import generate130Model from '../../../utils/document-generator/130modelGenerator';
+import generate303Model from '../../../utils/document-generator/303modelGenerator';
 
 const DocumentGenerator = () => {
   const { t } = useTranslation();
@@ -33,7 +34,24 @@ const DocumentGenerator = () => {
     );
   };
 
-  const generate303ModelHandler = () => {};
+  const generate303ModelHandler = () => {
+    fetchClientsWithBills(
+      (error) => {
+        console.log('error', error);
+      },
+      (clients) => {
+        fetchProvidersWithBills(
+          (error) => {
+            console.log('error', error);
+          },
+          (providers) => {
+            setContentToPrint(generate303Model(providers, clients));
+            setShouldPrint(true);
+          }
+        );
+      }
+    );
+  };
 
   const generate347ModelHandler = () => {
     fetchClientsWithBills(

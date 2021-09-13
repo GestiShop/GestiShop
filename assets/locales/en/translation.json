@@ -406,11 +406,17 @@
           "description": "Description",
           "income": "Income",
           "expenses": "Expenses",
-          "benefits": "Benefits"
+          "benefits": "Benefits",
+          "summary": "Summary"
         }
       },
       "303": {
-        "title": "303 model"
+        "title": "303 model",
+        "document": {
+          "inputVAT": "Input VAT",
+          "outputVAT": "Output VAT",
+          "totalVAT": "Total VAT"
+        }
       },
       "347": {
         "title": "347 model",
