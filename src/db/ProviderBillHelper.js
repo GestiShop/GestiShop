@@ -80,9 +80,7 @@ const deleteProviderBills = (ids, errorCallback, resultCallback) => {
             removeBill(
               bill.entityData.entity,
               billId,
-              (err3) => {
-                errorCallback(err3);
-              },
+              errorCallback,
               (docs) => {
                 resultCallback();
               }
