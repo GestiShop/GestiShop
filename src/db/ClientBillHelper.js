@@ -1,9 +1,14 @@
+/* eslint-disable no-empty */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
 import { ClientBill } from '../model/BillModel';
 import { addBill, removeBill } from './ClientHelper';
-import { incrementStock } from './ProductHelper';
+import { decrementStock } from './ProductHelper';
 
 const addClientBill = (clientBill, errorCallback, resultCallback) => {
+  let hasErrors = false;
+  let productsViewed = 0;
+
   const dbClientBill = new ClientBill(clientBill);
   dbClientBill.save((err1, bill) => {
     if (err1) {
@@ -11,16 +16,28 @@ const addClientBill = (clientBill, errorCallback, resultCallback) => {
     } else {
       addBill(clientBill.entityData.entity, bill.id, errorCallback, (docs) => {
         clientBill.products.forEach((product) => {
-          incrementStock(
+          decrementStock(
             product.product,
             product.quantity,
-            errorCallback,
-            resultCallback
+            () => {
+              hasErrors = true;
+            },
+            () => {
+              ++productsViewed;
+            }
           );
         });
       });
     }
   });
+
+  while (!hasErrors && productsViewed < clientBill.products.length - 1) {}
+
+  if (hasErrors) {
+    errorCallback();
+  } else {
+    resultCallback();
+  }
 };
 
 const fetchClientBills = (errorCallback, resultCallback) => {

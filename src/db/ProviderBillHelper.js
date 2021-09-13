@@ -1,8 +1,14 @@
+/* eslint-disable no-empty */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
 import { ProviderBill } from '../model/BillModel';
 import { addBill, removeBill } from './ProviderHelper';
+import { incrementStock } from './ProductHelper';
 
 const addProviderBill = (providerBill, errorCallback, resultCallback) => {
+  let hasErrors = false;
+  let productsViewed = 0;
+
   const dbProviderBill = new ProviderBill(providerBill);
   dbProviderBill.save((err, bill) => {
     if (err) {
@@ -11,15 +17,32 @@ const addProviderBill = (providerBill, errorCallback, resultCallback) => {
       addBill(
         providerBill.entityData.entity,
         bill.id,
-        (error) => {
-          errorCallback(error);
-        },
+        errorCallback,
         (docs) => {
-          resultCallback();
+          providerBill.products.forEach((product) => {
+            incrementStock(
+              product.product,
+              product.quantity,
+              () => {
+                hasErrors = true;
+              },
+              () => {
+                ++productsViewed;
+              }
+            );
+          });
         }
       );
     }
   });
+
+  while (!hasErrors && productsViewed < providerBill.products.length - 1) {}
+
+  if (hasErrors) {
+    errorCallback();
+  } else {
+    resultCallback();
+  }
 };
 
 const fetchProviderBills = (errorCallback, resultCallback) => {
