@@ -29,6 +29,7 @@ const ListProviderBudgets = () => {
       id: 'budgetNumber',
       label: t('accounting_module.budget.structure.budget_number'),
       align: 'left',
+      value: (row) => `${row.budgetNumberPreamble}-${row.budgetNumber}`,
     },
     {
       id: 'name',

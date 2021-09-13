@@ -31,6 +31,8 @@ const ListClientDeliveryNotes = () => {
         'accounting_module.delivery_note.structure.delivery_note_number'
       ),
       align: 'left',
+      value: (row) =>
+        `${row.deliveryNoteNumberPreamble}-${row.deliveryNoteNumber}`,
     },
     {
       id: 'name',

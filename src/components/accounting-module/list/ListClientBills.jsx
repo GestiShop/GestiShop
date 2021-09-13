@@ -29,6 +29,7 @@ const ListClientBills = () => {
       id: 'billNumber',
       label: t('accounting_module.bill.structure.bill_number'),
       align: 'left',
+      value: (row) => `${row.billNumberPreamble}-${row.billNumber}`,
     },
     {
       id: 'name',
