@@ -421,5 +421,8 @@
         }
       }
     }
+  },
+  "pos_module": {
+    "name": "Point of sale"
   }
 }

@@ -421,5 +421,16 @@
         }
       }
     }
+  },
+  "pos_module": {
+    "name": "Punt de venta",
+    "menu": {
+      "sales": "Ventes",
+      "edit_sales": "Editar ventes",
+      "close_cash": "Tancament de caixa",
+      "clients":  "Clients",
+      "providers": "Proveidors",
+      "products": "Productes"
+    }
   }
 }

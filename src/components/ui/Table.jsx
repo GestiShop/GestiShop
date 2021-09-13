@@ -196,7 +196,7 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected, title, t, deleteCallback } = props;
+  const { numSelected, title, t, deleteCallback, customButtonView } = props;
 
   return (
     <Toolbar
@@ -231,11 +231,13 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title={t('accounting_module.table.filter_list')}>
-          <IconButton aria-label={t('accounting_module.table.filter_list')}>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        customButtonView || (
+          <Tooltip title={t('accounting_module.table.filter_list')}>
+            <IconButton aria-label={t('accounting_module.table.filter_list')}>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )
       )}
     </Toolbar>
   );
@@ -256,6 +258,8 @@ const EnhancedTable = ({
   editCallback,
   deleteCallback,
   printCallback,
+  customButtonView,
+  customActions,
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -336,6 +340,7 @@ const EnhancedTable = ({
             title={title}
             t={t}
             deleteCallback={handleClickOpen}
+            customButtonView={customButtonView}
           />
           <TableContainer className={classes.container}>
             <Table stickyHeader className={classes.table} size="medium">
@@ -349,7 +354,7 @@ const EnhancedTable = ({
                 rowCount={rows.length}
                 headers={headers}
                 t={t}
-                hasActions={editCallback != null}
+                hasActions={editCallback || printCallback || customActions}
               />
               <TableBody>
                 {stableSort(rows, getComparator(order, orderBy)).map(
@@ -390,14 +395,19 @@ const EnhancedTable = ({
                           break;
                         default:
                           let rowToRender;
-                          if (header.parents) {
+                          if (header.value) {
+                            rowToRender = header.value(row);
+                          } else if (header.parents) {
                             let finalParent = row;
                             for (const headerParent of header.parents) {
                               finalParent = finalParent[headerParent];
                             }
                             rowToRender = finalParent[header.id];
                           } else {
-                            rowToRender = row[header.id];
+                            rowToRender = row;
+                            for (const child of header.id.split('.')) {
+                              rowToRender = rowToRender[child];
+                            }
                           }
 
                           if (rowToRender instanceof Date) {
@@ -426,19 +436,21 @@ const EnhancedTable = ({
                           break;
                       }
                     }
-                    if (editCallback) {
+                    if (editCallback || customActions || printCallback) {
                       headerCells.push(
                         <TableCell key="actions" align="right" padding="normal">
-                          <Tooltip title={t('buttons.edit')}>
-                            <IconButton
-                              aria-label={t('buttons.edit')}
-                              onClick={(event) =>
-                                handleEditClick(event, row.id)
-                              }
-                            >
-                              <EditIcon />
-                            </IconButton>
-                          </Tooltip>
+                          {editCallback && (
+                            <Tooltip title={t('buttons.edit')}>
+                              <IconButton
+                                aria-label={t('buttons.edit')}
+                                onClick={(event) =>
+                                  handleEditClick(event, row.id)
+                                }
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
                           {printCallback && (
                             <Tooltip title={t('buttons.print')}>
                               <IconButton
@@ -451,6 +463,24 @@ const EnhancedTable = ({
                               </IconButton>
                             </Tooltip>
                           )}
+                          {customActions &&
+                            customActions.map((customAction) => {
+                              return (
+                                <Tooltip
+                                  key={customAction.title}
+                                  title={customAction.title}
+                                >
+                                  <IconButton
+                                    aria-label={customAction.title}
+                                    onClick={(event) =>
+                                      customAction.handleClick(event, row.id)
+                                    }
+                                  >
+                                    {customAction.icon}
+                                  </IconButton>
+                                </Tooltip>
+                              );
+                            })}
                         </TableCell>
                       );
                     }
