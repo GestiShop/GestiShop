@@ -354,7 +354,11 @@ const EnhancedTable = ({
                 rowCount={rows.length}
                 headers={headers}
                 t={t}
-                hasActions={editCallback || printCallback || customActions}
+                hasActions={
+                  editCallback != null ||
+                  printCallback != null ||
+                  customActions != null
+                }
               />
               <TableBody>
                 {stableSort(rows, getComparator(order, orderBy)).map(
