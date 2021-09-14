@@ -136,7 +136,9 @@
         "subtotal": "Subtotal ({{currency}})",
         "vat": "I.V.A. (%)",
         "vat_fee": "Cuota de I.V.A. ({{currency}})",
-        "total": "Total factura ({{currency}})"
+        "total_bill": "Total factura ({{currency}})",
+        "total_budget": "Total presupuesto ({{currency}})",
+        "total_delivery_note": "Total albarán ({{currency}})"
       }
     },
     "tax": {

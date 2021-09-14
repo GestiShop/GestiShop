@@ -136,7 +136,9 @@
         "subtotal": "Subtotal ({{currency}})",
         "vat": "I.V.A. (%)",
         "vat_fee": "Quota d'I.V.A. ({{currency}})",
-        "total": "Total factura ({{currency}})"
+        "total_bill": "Total factura ({{currency}})",
+        "total_budget": "Total pressupost ({{currency}})",
+        "total_delivery_note": "Total albarà ({{currency}})"
       }
     },
     "tax": {

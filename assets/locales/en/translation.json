@@ -136,7 +136,9 @@
         "subtotal": "Subtotal ({{currency}})",
         "vat": "V.A.T. (%)",
         "vat_fee": "V.A.T. fee ({{currency}})",
-        "total": "Bill total ({{currency}})"
+        "total_bill": "Bill total ({{currency}})",
+        "total_budget": "Budget total ({{currency}})",
+        "total_delivery_note": "Delivery note total ({{currency}})"
       }
     },
     "tax": {

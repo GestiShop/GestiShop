@@ -223,7 +223,9 @@ const SummaryTable = ({ products }) => {
           })}
           <TableRow>
             <StyledTableCell>
-              {t('accounting_module.product.document.total', { currency })}
+              {t('accounting_module.product.document.total_delivery_note', {
+                currency,
+              })}
             </StyledTableCell>
             <StyledTableCell align="right" colSpan={2}>
               {deliveryNoteTotal.toFixed(numberOfDecimals)}
