@@ -26,8 +26,8 @@ const CreateProvider = ({ closeCallback, initialState }) => {
     reference: '',
     contactData: {
       name: '',
-      contactPhone: EmptyPhone,
-      contactEmail: EmptyEmail,
+      phone: EmptyPhone,
+      email: EmptyEmail,
     },
     fiscalData: {
       name: '',
@@ -82,18 +82,15 @@ const CreateProvider = ({ closeCallback, initialState }) => {
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
     }),
-    eFactData: Yup.object()
-      .notRequired()
-      .default(undefined)
-      .shape({
-        accountingOfficeCode: Yup.string().required(t('form.errors.required')),
-        accountingOfficeName: Yup.string().required(t('form.errors.required')),
-        managementBodyCode: Yup.string().required(t('form.errors.required')),
-        managementBodyName: Yup.string().required(t('form.errors.required')),
-        processingUnitCode: Yup.string().required(t('form.errors.required')),
-        processingUnitName: Yup.string().required(t('form.errors.required')),
-        electronicBillingCode: Yup.string().required(t('form.errors.required')),
-      }),
+    eFactData: Yup.object().shape({
+      accountingOfficeCode: Yup.string(),
+      accountingOfficeName: Yup.string(),
+      managementBodyCode: Yup.string(),
+      managementBodyName: Yup.string(),
+      processingUnitCode: Yup.string(),
+      processingUnitName: Yup.string(),
+      electronicBillingCode: Yup.string(),
+    }),
   });
 
   const handleSubmit = (data) => {
@@ -262,6 +259,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    disabled
                     required
                     type="number"
                     name="tributationData.retentionPercentage"
@@ -273,6 +271,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    disabled
                     required
                     type="number"
                     name="tributationData.personalDiscount"

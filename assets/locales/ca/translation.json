@@ -97,6 +97,8 @@
       "provider_bills": "Factures de proveïdors",
       "client_budgets": "Pressupostos a clients",
       "provider_budgets": "Pressupostos de proveïdors",
+      "client_delivery_notes": "Albarans a clients",
+      "provider_delivery_notes": "Albarans de proveïdors",
       "documents": "Documents"
     },
     "product": {
@@ -134,7 +136,9 @@
         "subtotal": "Subtotal ({{currency}})",
         "vat": "I.V.A. (%)",
         "vat_fee": "Quota d'I.V.A. ({{currency}})",
-        "total": "Total factura ({{currency}})"
+        "total_bill": "Total factura ({{currency}})",
+        "total_budget": "Total pressupost ({{currency}})",
+        "total_delivery_note": "Total albarà ({{currency}})"
       }
     },
     "tax": {
@@ -257,7 +261,7 @@
         "client_nif": "N.I.F. del client",
         "provider_nif": "N.I.F. del proveïdor",
         "product": "Producte",
-        "payment_method": "Mètodo de pagament",
+        "payment_method": "Mètode de pagament",
         "expiration_date": "Data de vencimient",
         "total_base_price": "Preu base total ({{currency}})",
         "general_discount": "Descompte general (%)",
@@ -275,6 +279,73 @@
       "create": "Afegir una factura de proveïdor",
       "edit": "Editar factura de proveïdor",
       "list": "Llistat de factures de proveïdors"
+    },
+    "budget": {
+      "creation": {
+        "client_data": "Dades del client",
+        "provider_data": "Dades del proveïdor",
+        "products": "Productes"
+      },
+      "structure": {
+        "budget_number_preamble": "Preàmbul",
+        "budget_number": "Número de pressupost",
+        "date": "Data",
+        "client": "Client",
+        "provider": "Proveïdor",
+        "client_name": "Nom del client",
+        "provider_name": "Nom del proveïdor",
+        "client_nif": "N.I.F. del client",
+        "provider_nif": "N.I.F. del proveïdor",
+        "product": "Producte",
+        "expiration_date": "Data de vencimient",
+        "total_base_price": "Preu base total ({{currency}})",
+        "general_discount": "Descompte general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notes addicionals"
+      }
+    },
+    "client_budget": {
+      "create": "Afegir un pressupost a client",
+      "edit": "Editar pressupost a client",
+      "list": "Llistat de pressupostos a clients"
+    },
+    "provider_budget": {
+      "create": "Afegir un pressupost de proveïdor",
+      "edit": "Editar pressupost de proveïdor",
+      "list": "Llistat de pressupostos de proveïdors"
+    },
+    "delivery_note": {
+      "creation": {
+        "client_data": "Dades del client",
+        "provider_data": "Dades del proveïdor",
+        "products": "Productes"
+      },
+      "structure": {
+        "delivery_note_number_preamble": "Preàmbul",
+        "delivery_note_number": "Número d'albarà",
+        "date": "Data",
+        "client": "Client",
+        "provider": "Proveïdor",
+        "client_name": "Nom del client",
+        "provider_name": "Nom del proveïdor",
+        "client_nif": "N.I.F. del client",
+        "provider_nif": "N.I.F. del proveïdor",
+        "product": "Producte",
+        "total_base_price": "Preu base total ({{currency}})",
+        "general_discount": "Descompte general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notes addicionals"
+      }
+    },
+    "client_delivery_note": {
+      "create": "Afegir un albarà a client",
+      "edit": "Editar albarà a client",
+      "list": "Llistat d'albarans a clients"
+    },
+    "provider_delivery_note": {
+      "create": "Afegir un albarà de proveïdor",
+      "edit": "Editar albarà de proveïdor",
+      "list": "Llistat d'albarans de proveïdors"
     },
     "event": {
       "new": "Nou esdeveniment",
@@ -331,6 +402,24 @@
       }
     },
     "model": {
+      "130": {
+        "title": "Model 130",
+        "document": {
+          "description": "Descripció",
+          "income": "Ingressos",
+          "expenses": "Despeses",
+          "benefits": "Beneficis",
+          "summary": "Resum"
+        }
+      },
+      "303": {
+        "title": "Model 303",
+        "document": {
+          "inputVAT": "IVA soportado",
+          "outputVAT": "IVA repercutido",
+          "totalVAT": "IVA total"
+        }
+      },
       "347": {
         "title": "Model 347",
         "document": {
@@ -345,6 +434,17 @@
           "total": "Total ({{currency}})"
         }
       }
+    }
+  },
+  "pos_module": {
+    "name": "Punt de venta",
+    "menu": {
+      "sales": "Ventes",
+      "edit_sales": "Editar ventes",
+      "close_cash": "Tancament de caixa",
+      "clients":  "Clients",
+      "providers": "Proveidors",
+      "products": "Productes"
     }
   }
 }

@@ -20,7 +20,6 @@ import {
 } from '../../../db/ProviderBillHelper';
 import { fetchProviders } from '../../../db/ProviderHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
-import DatePicker from '../../ui/forms/DatePicker';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import Select from '../../ui/forms/Select';
@@ -34,39 +33,7 @@ import {
 import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 
-const encodeProduct = (data) => {
-  return {
-    product: data.product.value,
-    reference: data.reference,
-    name: data.name,
-    basePricePerUnit: data.basePricePerUnit,
-    unitType: data.unitType,
-    discountPercentage: data.discountPercentage,
-    taxPercentage: data.taxPercentage,
-    quantity: data.quantity,
-  };
-};
-
-const encodeProviderBill = (data) => {
-  return {
-    billNumberPreamble: data.billNumberPreamble,
-    billNumber: data.billNumber,
-    date: data.date,
-    entityData: {
-      entity: data.entityData.entity.value,
-      fiscalData: data.entityData.fiscalData,
-    },
-    products: data.products.map(encodeProduct),
-    notes: data.notes,
-    basePrice: data.basePrice,
-    generalDiscount: data.generalDiscount,
-    pvp: data.pvp,
-    paymentData: data.paymentData,
-    isPaid: data.isPaid,
-  };
-};
-
-const CreateProvider = ({ closeCallback, initialState }) => {
+const CreateProviderBill = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
   const isMounted = useIsMounted();
   const [providerList, setProviderList] = useState([]);
@@ -76,6 +43,62 @@ const CreateProvider = ({ closeCallback, initialState }) => {
   const [currency, setCurrency] = useState(
     useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
+  const [numberOfDecimals, setNumberOfDecimals] = useState(
+    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
+  );
+  const [billProducts, setBillProducts] = useState([]);
+  const [generalDiscount, setGeneralDiscount] = useState(0);
+
+  const encodeProduct = (data, i) => {
+    return {
+      product: data.product.value,
+      reference: data.reference,
+      name: data.name,
+      basePricePerUnit: billProducts[i].basePricePerUnit,
+      unitType: data.unitType,
+      discountPercentage: billProducts[i].discountPercentage,
+      taxPercentage: billProducts[i].taxPercentage,
+      quantity: billProducts[i].quantity,
+    };
+  };
+
+  const encodeProviderBill = (data) => {
+    return {
+      billNumberPreamble: data.billNumberPreamble,
+      billNumber: data.billNumber,
+      date: data.date,
+      entityData: {
+        entity: data.entityData.entity.value,
+        fiscalData: data.entityData.fiscalData,
+      },
+      products: data.products.map(encodeProduct),
+      notes: data.notes,
+      basePrice:
+        billProducts
+          .map(
+            (product) =>
+              product.basePricePerUnit *
+              product.quantity *
+              (1 - product.discountPercentage / 100)
+          )
+          .reduce((acc, product) => acc + product, 0) *
+        (1 - generalDiscount / 100),
+      generalDiscount: data.generalDiscount,
+      pvp:
+        billProducts
+          .map(
+            (product) =>
+              product.basePricePerUnit *
+              product.quantity *
+              (1 - product.discountPercentage / 100) *
+              (1 + product.taxPercentage / 100)
+          )
+          .reduce((acc, product) => acc + product, 0) *
+        (1 - generalDiscount / 100),
+      paymentData: data.paymentData,
+      isPaid: data.isPaid,
+    };
+  };
 
   const fetchData = () => {
     fetchProviders(
@@ -126,7 +149,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     billNumberPreamble: '', // TODO: THIS SHOULD TAKE THE PREAMBLE FROM THE LOCAL CONFIGURATION
     billNumber: '', // TODO: THIS SHOULD TAKE THE NEXT AVAILABLE NUMBER
-    date: moment().format('YYYY-MM-DD'),
+    date: moment().format('YYYY-MM-DDTHH:mm'),
     entityData: {
       entity: '',
       fiscalData: {
@@ -142,7 +165,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
     pvp: 0,
     paymentData: {
       method: '',
-      expirationDate: moment().format('YYYY-MM-DDTHH:MM'),
+      expirationDate: moment().format('YYYY-MM-DDTHH:mm'),
     },
     isPaid: false,
   };
@@ -203,9 +226,15 @@ const CreateProvider = ({ closeCallback, initialState }) => {
           .required(t('form.errors.required')),
       })
     ),
-    basePrice: Yup.number().typeError(t('form.errors.invalid_number')),
-    generalDiscount: Yup.number().typeError(t('form.errors.invalid_number')),
-    pvp: Yup.number().typeError(t('form.errors.invalid_number')),
+    basePrice: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
+    generalDiscount: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
+    pvp: Yup.number()
+      .typeError(t('form.errors.invalid_number'))
+      .required(t('form.errors.required')),
     paymentData: Yup.object().shape({
       method: Yup.string().required(t('form.errors.required')),
       expirationDate: Yup.date().required(t('form.errors.required')),
@@ -306,21 +335,19 @@ const CreateProvider = ({ closeCallback, initialState }) => {
       (product) => product.id === productId
     );
 
+    const newBillProducts = billProducts;
+    newBillProducts[index] = {
+      basePricePerUnit: selectedProduct.buyingInfo.basePrice,
+      unitType: selectedProduct.unitType.unit,
+      discountPercentage: selectedProduct.buyingInfo.discountPercentage,
+      taxPercentage: selectedProduct.buyingInfo.taxPercentage.percentage,
+      quantity: 1,
+    };
+    setBillProducts(newBillProducts);
+
     setFieldValue(`products.${index}.reference`, selectedProduct.reference);
     setFieldValue(`products.${index}.name`, selectedProduct.name);
     setFieldValue(`products.${index}.unitType`, selectedProduct.unitType.unit);
-    setFieldValue(
-      `products.${index}.basePricePerUnit`,
-      selectedProduct.sellingInfo.basePrice
-    );
-    setFieldValue(
-      `products.${index}.discountPercentage`,
-      selectedProduct.sellingInfo.discountPercentage
-    );
-    setFieldValue(
-      `products.${index}.taxPercentage`,
-      selectedProduct.sellingInfo.taxPercentage.percentage
-    );
   };
 
   return (
@@ -338,7 +365,6 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={2}>
                     <TextField
-                      required
                       name="billNumberPreamble"
                       label={t(
                         'accounting_module.bill.structure.bill_number_preamble'
@@ -356,7 +382,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                   </Grid>
 
                   <Grid item xs={4}>
-                    <DatePicker
+                    <DateTimePicker
                       required
                       name="date"
                       label={t('accounting_module.bill.structure.date')}
@@ -443,7 +469,12 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                     <Button
                                       color="secondary"
                                       className="h-100"
-                                      onClick={() => arrayHelpers.remove(index)}
+                                      onClick={() => {
+                                        arrayHelpers.remove(index);
+                                        const newBillProducts = billProducts;
+                                        newBillProducts.splice(index, 1);
+                                        setBillProducts(newBillProducts);
+                                      }}
                                     >
                                       <DeleteIcon />
                                     </Button>
@@ -452,12 +483,19 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                   <Grid item xs={1}>
                                     <Button
                                       className="h-100"
-                                      onClick={() =>
+                                      onClick={() => {
                                         arrayHelpers.insert(
                                           index,
                                           EmptyBillProduct
-                                        )
-                                      }
+                                        );
+                                        const newBillProducts = billProducts;
+                                        newBillProducts.splice(
+                                          index,
+                                          0,
+                                          EmptyBillProduct
+                                        );
+                                        setBillProducts(newBillProducts);
+                                      }}
                                     >
                                       <AddIcon />
                                     </Button>
@@ -496,6 +534,18 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                           currency,
                                         }
                                       )}
+                                      value={
+                                        billProducts[index]
+                                          ? billProducts[index].basePricePerUnit
+                                          : ''
+                                      }
+                                      onInput={(event) => {
+                                        const newBillProducts = billProducts;
+                                        newBillProducts[
+                                          index
+                                        ].basePricePerUnit = event.target.value;
+                                        setBillProducts(newBillProducts);
+                                      }}
                                     />
                                   </Grid>
 
@@ -507,6 +557,20 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                       label={t(
                                         'accounting_module.product.structure.discount_percentage'
                                       )}
+                                      value={
+                                        billProducts[index]
+                                          ? billProducts[index]
+                                              .discountPercentage
+                                          : ''
+                                      }
+                                      onInput={(event) => {
+                                        const newBillProducts = billProducts;
+                                        newBillProducts[
+                                          index
+                                        ].discountPercentage =
+                                          event.target.value;
+                                        setBillProducts(newBillProducts);
+                                      }}
                                     />
                                   </Grid>
 
@@ -518,6 +582,17 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                       label={t(
                                         'accounting_module.product.structure.tax_percentage'
                                       )}
+                                      value={
+                                        billProducts[index]
+                                          ? billProducts[index].taxPercentage
+                                          : ''
+                                      }
+                                      onInput={(event) => {
+                                        const newBillProducts = billProducts;
+                                        newBillProducts[index].taxPercentage =
+                                          event.target.value;
+                                        setBillProducts(newBillProducts);
+                                      }}
                                     />
                                   </Grid>
 
@@ -529,11 +604,23 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                       label={t(
                                         'accounting_module.product.structure.quantity'
                                       )}
+                                      value={
+                                        billProducts[index]
+                                          ? billProducts[index].quantity
+                                          : ''
+                                      }
+                                      onInput={(event) => {
+                                        const newBillProducts = billProducts;
+                                        newBillProducts[index].quantity =
+                                          event.target.value;
+                                        setBillProducts(newBillProducts);
+                                      }}
                                     />
                                   </Grid>
 
                                   <Grid item xs={3}>
                                     <TextField
+                                      disabled
                                       required
                                       name={`products.${index}.unitType`}
                                       label={t(
@@ -544,6 +631,7 @@ const CreateProvider = ({ closeCallback, initialState }) => {
 
                                   <Grid item xs={3}>
                                     <TextField
+                                      disabled
                                       required
                                       type="number"
                                       name={`products.${index}.basePrice`}
@@ -553,11 +641,25 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                           currency,
                                         }
                                       )}
+                                      value={
+                                        billProducts[index]
+                                          ? parseFloat(
+                                              billProducts[index]
+                                                .basePricePerUnit *
+                                                billProducts[index].quantity *
+                                                (1 -
+                                                  billProducts[index]
+                                                    .discountPercentage /
+                                                    100)
+                                            ).toFixed(numberOfDecimals)
+                                          : ''
+                                      }
                                     />
                                   </Grid>
 
                                   <Grid item xs={3}>
                                     <TextField
+                                      disabled
                                       required
                                       type="number"
                                       name={`products.${index}.pvp`}
@@ -567,6 +669,23 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                                           currency,
                                         }
                                       )}
+                                      value={
+                                        billProducts[index]
+                                          ? parseFloat(
+                                              billProducts[index]
+                                                .basePricePerUnit *
+                                                billProducts[index].quantity *
+                                                (1 -
+                                                  billProducts[index]
+                                                    .discountPercentage /
+                                                    100) *
+                                                (1 +
+                                                  billProducts[index]
+                                                    .taxPercentage /
+                                                    100)
+                                            ).toFixed(numberOfDecimals)
+                                          : ''
+                                      }
                                     />
                                   </Grid>
                                 </Grid>
@@ -615,10 +734,6 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
-                    Payment data form
-                  </Grid>
-
                   <Grid item xs={4}>
                     <TextField
                       disabled
@@ -630,6 +745,17 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                           currency,
                         }
                       )}
+                      value={parseFloat(
+                        billProducts
+                          .map(
+                            (product) =>
+                              product.basePricePerUnit *
+                              product.quantity *
+                              (1 - product.discountPercentage / 100)
+                          )
+                          .reduce((acc, product) => acc + product, 0) *
+                          (1 - generalDiscount / 100)
+                      ).toFixed(numberOfDecimals)}
                     />
                   </Grid>
 
@@ -640,6 +766,10 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                       label={t(
                         'accounting_module.bill.structure.general_discount'
                       )}
+                      value={generalDiscount}
+                      onInput={(event) =>
+                        setGeneralDiscount(event.target.value)
+                      }
                     />
                   </Grid>
 
@@ -651,6 +781,18 @@ const CreateProvider = ({ closeCallback, initialState }) => {
                       label={t('accounting_module.bill.structure.pvp', {
                         currency,
                       })}
+                      value={parseFloat(
+                        billProducts
+                          .map(
+                            (product) =>
+                              product.basePricePerUnit *
+                              product.quantity *
+                              (1 - product.discountPercentage / 100) *
+                              (1 + product.taxPercentage / 100)
+                          )
+                          .reduce((acc, product) => acc + product, 0) *
+                          (1 - generalDiscount / 100)
+                      ).toFixed(numberOfDecimals)}
                     />
                   </Grid>
 
@@ -686,4 +828,4 @@ const CreateProvider = ({ closeCallback, initialState }) => {
   );
 };
 
-export default CreateProvider;
+export default CreateProviderBill;

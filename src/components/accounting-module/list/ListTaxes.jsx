@@ -21,6 +21,7 @@ const ListTaxes = () => {
       id: 'percentage',
       label: t('accounting_module.tax.structure.percentage'),
       align: 'right',
+      numeric: true,
     },
   ];
 

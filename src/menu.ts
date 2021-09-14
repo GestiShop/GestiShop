@@ -26,8 +26,6 @@ export default class MenuBuilder {
       this.setupDevelopmentEnvironment();
     }
 
-    this.mainWindow.webContents.toggleDevTools();
-
     const template =
       process.platform === 'darwin'
         ? this.buildDarwinTemplate()

@@ -36,8 +36,7 @@ const billSchema = new Schema({
   isPaid: { type: Boolean, required: true },
 });
 
-// TODO: FIX THIS
-// billSchema.index({ billNumberPreamble: 1, billNumber: 1 }, { unique: true });
+billSchema.index({ billNumberPreamble: 1, billNumber: 1 }, { unique: true });
 
 const ClientBill = model('ClientBill', billSchema, 'clientBills');
 const ProviderBill = model('ProviderBill', billSchema, 'providerBills');

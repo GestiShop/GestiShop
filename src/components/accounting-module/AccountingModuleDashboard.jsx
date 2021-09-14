@@ -35,6 +35,9 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
 import CategoryIcon from '@material-ui/icons/Category';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
 import ListUnitTypes from './list/ListUnitTypes';
@@ -48,6 +51,10 @@ import ListProviders from './list/ListProviders';
 import ListClientBills from './list/ListClientBills';
 import DocumentGenerator from './documents/DocumentGenerator';
 import ListProviderBills from './list/ListProviderBills';
+import ListClientBudgets from './list/ListClientBudgets';
+import ListProviderBudgets from './list/ListProviderBudgets';
+import ListClientDeliveryNotes from './list/ListClientDeliveryNotes';
+import ListProviderDeliveryNotes from './list/ListProviderDeliveryNotes';
 
 const DRAWER_WIDTH = 300;
 
@@ -195,6 +202,16 @@ const AccountingModuleDashboard = () => {
         icon: <ReceiptOutlinedIcon />,
         linkTo: `${url}/provider_budgets`,
       },
+      {
+        text: t('accounting_module.menu.client_delivery_notes'),
+        icon: <AssignmentIcon />,
+        linkTo: `${url}/client_delivery_notes`,
+      },
+      {
+        text: t('accounting_module.menu.provider_delivery_notes'),
+        icon: <AssignmentOutlinedIcon />,
+        linkTo: `${url}/provider_delivery_notes`,
+      },
     ],
     [
       {
@@ -251,13 +268,25 @@ const AccountingModuleDashboard = () => {
               {t('accounting_module.accounting_module')}
             </Typography>
 
-            <IconButton
-              color="inherit"
-              edge="end"
-              onClick={() => setOpenSettingsDialog(true)}
-            >
-              <SettingsIcon />
-            </IconButton>
+            <div>
+              <IconButton
+                color="inherit"
+                edge="end"
+                component={Link}
+                to="/dashboard"
+                replace
+              >
+                <ArrowBackIcon />
+              </IconButton>
+
+              <IconButton
+                color="inherit"
+                edge="end"
+                onClick={() => setOpenSettingsDialog(true)}
+              >
+                <SettingsIcon />
+              </IconButton>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -349,10 +378,16 @@ const AccountingModuleDashboard = () => {
               <ListProviderBills />
             </Route>
             <Route exact path={`${path}/client_budgets`}>
-              <p>[NOT IMPLEMENTED] Client budgets</p>
+              <ListClientBudgets />
             </Route>
             <Route exact path={`${path}/provider_budgets`}>
-              <p>[NOT IMPLEMENTED] Provider budgets</p>
+              <ListProviderBudgets />
+            </Route>
+            <Route exact path={`${path}/client_delivery_notes`}>
+              <ListClientDeliveryNotes />
+            </Route>
+            <Route exact path={`${path}/provider_delivery_notes`}>
+              <ListProviderDeliveryNotes />
             </Route>
             <Route exact path={`${path}/document_generator`}>
               <DocumentGenerator />

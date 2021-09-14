@@ -33,8 +33,8 @@ const updateTax = (tax, errorCallback, resultCallback) => {
   });
 };
 
-const deleteTaxes = (taxes, errorCallback, resultCallback) => {
-  const query = { _id: taxes.map((x) => x._id) };
+const deleteTaxes = (ids, errorCallback, resultCallback) => {
+  const query = { _id: ids };
   return Tax.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);

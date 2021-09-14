@@ -97,6 +97,8 @@
       "provider_bills": "Bills from providers",
       "client_budgets": "Budgets to clients",
       "provider_budgets": "Budgets from providers",
+      "client_delivery_notes": "Delivery notes to clients",
+      "provider_delivery_notes": "Delivery notes from providers",
       "documents": "Documents"
     },
     "product": {
@@ -134,7 +136,9 @@
         "subtotal": "Subtotal ({{currency}})",
         "vat": "V.A.T. (%)",
         "vat_fee": "V.A.T. fee ({{currency}})",
-        "total": "Bill total ({{currency}})"
+        "total_bill": "Bill total ({{currency}})",
+        "total_budget": "Budget total ({{currency}})",
+        "total_delivery_note": "Delivery note total ({{currency}})"
       }
     },
     "tax": {
@@ -276,6 +280,73 @@
       "edit": "Edit provider bill",
       "list": "Provider bill list"
     },
+    "budget": {
+      "creation": {
+        "client_data": "Client data",
+        "provider_data": "Provider data",
+        "products": "Products"
+      },
+      "structure": {
+        "budget_number_preamble": "Preamble",
+        "budget_number": "Budget number",
+        "date": "Date",
+        "client": "Client",
+        "provider": "Provider",
+        "client_name": "Client name",
+        "provider_name": "Provider name",
+        "client_nif": "Client N.I.F.",
+        "provider_nif": "Provider N.I.F.",
+        "product": "Product",
+        "expiration_date": "Expiration date",
+        "total_base_price": "Total base price ({{currency}})",
+        "general_discount": "General discount (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Extra notes"
+      }
+    },
+    "client_budget": {
+      "create": "Add new client budget",
+      "edit": "Edit client budget",
+      "list": "Client budget list"
+    },
+    "provider_budget": {
+      "create": "Add new provider budget",
+      "edit": "Edit provider budget",
+      "list": "Provider budget list"
+    },
+    "delivery_note": {
+      "creation": {
+        "client_data": "Client data",
+        "provider_data": "Provider data",
+        "products": "Products"
+      },
+      "structure": {
+        "delivery_note_number_preamble": "Preamble",
+        "delivery_note_number": "Delivery note number",
+        "date": "Date",
+        "client": "Client",
+        "provider": "Provider",
+        "client_name": "Client name",
+        "provider_name": "Provider name",
+        "client_nif": "Client N.I.F.",
+        "provider_nif": "Provider N.I.F.",
+        "product": "Product",
+        "total_base_price": "Total base price ({{currency}})",
+        "general_discount": "General discount (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Extra notes"
+      }
+    },
+    "client_delivery_note": {
+      "create": "Add new client delivery note",
+      "edit": "Edit client delivery note",
+      "list": "Client delivery notes list"
+    },
+    "provider_delivery_notes": {
+      "create": "Add new provider delivery notes",
+      "edit": "Edit provider delivery notes",
+      "list": "Provider delivery notes list"
+    },
     "event": {
       "new": "New event",
       "edit": "Edit event",
@@ -331,6 +402,24 @@
       }
     },
     "model": {
+      "130": {
+        "title": "130 model",
+        "document": {
+          "description": "Description",
+          "income": "Income",
+          "expenses": "Expenses",
+          "benefits": "Benefits",
+          "summary": "Summary"
+        }
+      },
+      "303": {
+        "title": "303 model",
+        "document": {
+          "inputVAT": "Input VAT",
+          "outputVAT": "Output VAT",
+          "totalVAT": "Total VAT"
+        }
+      },
       "347": {
         "title": "347 model",
         "document": {
@@ -346,5 +435,8 @@
         }
       }
     }
+  },
+  "pos_module": {
+    "name": "Point of sale"
   }
 }

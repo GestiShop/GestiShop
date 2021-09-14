@@ -97,6 +97,8 @@
       "provider_bills": "Facturas de proveedores",
       "client_budgets": "Presupuestos a clientes",
       "provider_budgets": "Presupuestos de proveedores",
+      "client_delivery_notes": "Albaranes a clientes",
+      "provider_delivery_notes": "Albaranes de proveedores",
       "documents": "Documentos"
     },
     "product": {
@@ -134,7 +136,9 @@
         "subtotal": "Subtotal ({{currency}})",
         "vat": "I.V.A. (%)",
         "vat_fee": "Cuota de I.V.A. ({{currency}})",
-        "total": "Total factura ({{currency}})"
+        "total_bill": "Total factura ({{currency}})",
+        "total_budget": "Total presupuesto ({{currency}})",
+        "total_delivery_note": "Total albarán ({{currency}})"
       }
     },
     "tax": {
@@ -276,6 +280,73 @@
       "edit": "Editar factura de proveedor",
       "list": "Lista de facturas de proveedores"
     },
+    "budget": {
+      "creation": {
+        "client_data": "Datos del cliente",
+        "provider_data": "Datos del proveedor",
+        "products": "Productos"
+      },
+      "structure": {
+        "budget_number_preamble": "Preámbulo",
+        "budget_number": "Número de presupuesto",
+        "date": "Fecha",
+        "client": "Cliente",
+        "provider": "Proveedor",
+        "client_name": "Nombre del cliente",
+        "provider_name": "Nombre del proveedor",
+        "client_nif": "N.I.F. del cliente",
+        "provider_nif": "N.I.F. del proveedor",
+        "product": "Producto",
+        "expiration_date": "Fecha de vencimiento",
+        "total_base_price": "Precio base total ({{currency}})",
+        "general_discount": "Descuento general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notas adicionales"
+      }
+    },
+    "client_budget": {
+      "create": "Añadir un presupuesto a cliente",
+      "edit": "Editar presupuesto a cliente",
+      "list": "Lista de presupuestos a clientes"
+    },
+    "provider_budget": {
+      "create": "Añadir un presupuesto de proveedor",
+      "edit": "Editar presupuesto de proveedor",
+      "list": "Lista de presupuestos de proveedores"
+    },
+    "delivery_note": {
+      "creation": {
+        "client_data": "Datos del cliente",
+        "provider_data": "Datos del proveedor",
+        "products": "Productos"
+      },
+      "structure": {
+        "delivery_note_number_preamble": "Preámbulo",
+        "delivery_note_number": "Número de albarán",
+        "date": "Fecha",
+        "client": "Cliente",
+        "provider": "Proveedor",
+        "client_name": "Nombre del cliente",
+        "provider_name": "Nombre del proveedor",
+        "client_nif": "N.I.F. del cliente",
+        "provider_nif": "N.I.F. del proveedor",
+        "product": "Producto",
+        "total_base_price": "Precio base total ({{currency}})",
+        "general_discount": "Descuento general (%)",
+        "pvp": "P.V.P. ({{currency}})",
+        "notes": "Notas adicionales"
+      }
+    },
+    "client_delivery_note": {
+      "create": "Añadir un albarán a cliente",
+      "edit": "Editar albarán a cliente",
+      "list": "Lista de albarán a clientes"
+    },
+    "provider_delivery_note": {
+      "create": "Añadir un albarán de proveedor",
+      "edit": "Editar albarán de proveedor",
+      "list": "Lista de albarán de proveedores"
+    },
     "event": {
       "new": "Nuevo evento",
       "edit": "Editar evento",
@@ -331,6 +402,24 @@
       }
     },
     "model": {
+      "130": {
+        "title": "Modelo 130",
+        "document": {
+          "description": "Descripción",
+          "income": "Ingresos",
+          "expenses": "Gastos",
+          "benefits": "Beneficios",
+          "summary": "Resumen"
+        }
+      },
+      "303": {
+        "title": "Modelo 303",
+        "document": {
+          "inputVAT": "IVA suportat",
+          "outputVAT": "IVA repercutit",
+          "totalVAT": "IVA total"
+        }
+      },
       "347": {
         "title": "Modelo 347",
         "document": {
@@ -346,5 +435,8 @@
         }
       }
     }
+  },
+  "pos_module": {
+    "name": "Punto de venta"
   }
 }

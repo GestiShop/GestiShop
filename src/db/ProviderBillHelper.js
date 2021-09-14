@@ -1,15 +1,48 @@
+/* eslint-disable no-empty */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
 import { ProviderBill } from '../model/BillModel';
+import { addBill, removeBill } from './ProviderHelper';
+import { incrementStock } from './ProductHelper';
 
 const addProviderBill = (providerBill, errorCallback, resultCallback) => {
+  let hasErrors = false;
+  let productsViewed = 0;
+
   const dbProviderBill = new ProviderBill(providerBill);
-  dbProviderBill.save((err) => {
+  dbProviderBill.save((err, bill) => {
     if (err) {
       errorCallback(err);
     } else {
-      resultCallback();
+      addBill(
+        providerBill.entityData.entity,
+        bill.id,
+        errorCallback,
+        (docs) => {
+          providerBill.products.forEach((product) => {
+            incrementStock(
+              product.product,
+              product.quantity,
+              () => {
+                hasErrors = true;
+              },
+              () => {
+                ++productsViewed;
+              }
+            );
+          });
+        }
+      );
     }
   });
+
+  while (!hasErrors && productsViewed < providerBill.products.length - 1) {}
+
+  if (hasErrors) {
+    errorCallback();
+  } else {
+    resultCallback();
+  }
 };
 
 const fetchProviderBills = (errorCallback, resultCallback) => {
@@ -33,14 +66,29 @@ const updateProviderBill = (providerBill, errorCallback, resultCallback) => {
   });
 };
 
-const deleteProviderBills = (providerBills, errorCallback, resultCallback) => {
-  const query = { _id: providerBills.map((x) => x._id) };
-  return ProviderBill.deleteMany(query, (err) => {
-    if (err) {
-      errorCallback(err);
-    } else {
-      resultCallback();
-    }
+const deleteProviderBills = (ids, errorCallback, resultCallback) => {
+  ids.forEach((billId) => {
+    const query = { _id: billId };
+    ProviderBill.findById(query, (err1, bill) => {
+      if (err1) {
+        errorCallback(err1);
+      } else {
+        ProviderBill.deleteOne(query, (err2) => {
+          if (err2) {
+            errorCallback(err2);
+          } else {
+            removeBill(
+              bill.entityData.entity,
+              billId,
+              errorCallback,
+              (docs) => {
+                resultCallback();
+              }
+            );
+          }
+        });
+      }
+    });
   });
 };
 

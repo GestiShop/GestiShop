@@ -2,12 +2,12 @@ import * as Yup from 'yup';
 
 export const EmptyEmail = {
   description: '',
-  address: '',
+  email: '',
 };
 
 export const EmptyPhone = {
   description: '',
-  number: '',
+  phone: '',
 };
 
 export const EmptyAddress = {
@@ -36,6 +36,10 @@ export const EmptyBillProduct = {
   quantity: 0,
   pvp: 0,
 };
+
+export const EmptyBudgetProduct = EmptyBillProduct;
+
+export const EmptyDeliveryNoteProduct = EmptyBillProduct;
 
 export const EmptyEfact = {
   accountingOfficeCode: '',

@@ -4,6 +4,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -195,7 +196,7 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected, title, t, deleteCallback } = props;
+  const { numSelected, title, t, deleteCallback, customButtonView } = props;
 
   return (
     <Toolbar
@@ -230,11 +231,13 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title={t('accounting_module.table.filter_list')}>
-          <IconButton aria-label={t('accounting_module.table.filter_list')}>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        customButtonView || (
+          <Tooltip title={t('accounting_module.table.filter_list')}>
+            <IconButton aria-label={t('accounting_module.table.filter_list')}>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )
       )}
     </Toolbar>
   );
@@ -255,6 +258,8 @@ const EnhancedTable = ({
   editCallback,
   deleteCallback,
   printCallback,
+  customButtonView,
+  customActions,
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -262,6 +267,9 @@ const EnhancedTable = ({
   const [orderBy, setOrderBy] = useState(headers[0].id);
   const [selected, setSelected] = useState([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [numberOfDecimals, setNumberOfDecimals] = useState(
+    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
+  );
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -332,6 +340,7 @@ const EnhancedTable = ({
             title={title}
             t={t}
             deleteCallback={handleClickOpen}
+            customButtonView={customButtonView}
           />
           <TableContainer className={classes.container}>
             <Table stickyHeader className={classes.table} size="medium">
@@ -345,7 +354,11 @@ const EnhancedTable = ({
                 rowCount={rows.length}
                 headers={headers}
                 t={t}
-                hasActions={editCallback != null}
+                hasActions={
+                  editCallback != null ||
+                  printCallback != null ||
+                  customActions != null
+                }
               />
               <TableBody>
                 {stableSort(rows, getComparator(order, orderBy)).map(
@@ -386,25 +399,33 @@ const EnhancedTable = ({
                           break;
                         default:
                           let rowToRender;
-                          if (header.parents) {
+                          if (header.value) {
+                            rowToRender = header.value(row);
+                          } else if (header.parents) {
                             let finalParent = row;
                             for (const headerParent of header.parents) {
                               finalParent = finalParent[headerParent];
                             }
                             rowToRender = finalParent[header.id];
                           } else {
-                            rowToRender = row[header.id];
+                            rowToRender = row;
+                            for (const child of header.id.split('.')) {
+                              rowToRender = rowToRender[child];
+                            }
                           }
 
                           if (rowToRender instanceof Date) {
                             rowToRender =
-                              moment(rowToRender).format('DD/MM/YYYY');
+                              moment(rowToRender).format('DD/MM/YYYY HH:mm');
                           } else if (typeof rowToRender === 'boolean') {
                             rowToRender = rowToRender ? (
                               <CheckIcon color="primary" />
                             ) : (
                               <ClearIcon color="secondary" />
                             );
+                          } else if (header.numeric) {
+                            rowToRender =
+                              parseFloat(rowToRender).toFixed(numberOfDecimals);
                           }
 
                           headerCells.push(
@@ -419,19 +440,21 @@ const EnhancedTable = ({
                           break;
                       }
                     }
-                    if (editCallback) {
+                    if (editCallback || customActions || printCallback) {
                       headerCells.push(
                         <TableCell key="actions" align="right" padding="normal">
-                          <Tooltip title={t('buttons.edit')}>
-                            <IconButton
-                              aria-label={t('buttons.edit')}
-                              onClick={(event) =>
-                                handleEditClick(event, row.id)
-                              }
-                            >
-                              <EditIcon />
-                            </IconButton>
-                          </Tooltip>
+                          {editCallback && (
+                            <Tooltip title={t('buttons.edit')}>
+                              <IconButton
+                                aria-label={t('buttons.edit')}
+                                onClick={(event) =>
+                                  handleEditClick(event, row.id)
+                                }
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </Tooltip>
+                          )}
                           {printCallback && (
                             <Tooltip title={t('buttons.print')}>
                               <IconButton
@@ -444,6 +467,24 @@ const EnhancedTable = ({
                               </IconButton>
                             </Tooltip>
                           )}
+                          {customActions &&
+                            customActions.map((customAction) => {
+                              return (
+                                <Tooltip
+                                  key={customAction.title}
+                                  title={customAction.title}
+                                >
+                                  <IconButton
+                                    aria-label={customAction.title}
+                                    onClick={(event) =>
+                                      customAction.handleClick(event, row.id)
+                                    }
+                                  >
+                                    {customAction.icon}
+                                  </IconButton>
+                                </Tooltip>
+                              );
+                            })}
                         </TableCell>
                       );
                     }

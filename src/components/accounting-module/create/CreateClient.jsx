@@ -259,6 +259,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    disabled
                     required
                     type="number"
                     name="tributationData.retentionPercentage"
@@ -270,6 +271,7 @@ const CreateClient = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={6}>
                   <TextField
+                    disabled
                     required
                     type="number"
                     name="tributationData.personalDiscount"
