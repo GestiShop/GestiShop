@@ -22,22 +22,11 @@ const CreateCategory = ({ closeCallback, initialState }) => {
   const [categoriesOptions, setCategoriesOptions] = useState([]);
   const isMounted = useIsMounted();
 
-  let INITIAL_STATE = {
-    reference: '',
-    name: '',
-    parent: '',
+  const INITIAL_STATE = {
+    reference: initialState?.reference ?? '',
+    name: initialState?.name ?? '',
+    parent: initialState?.parent?.id ?? '',
   };
-
-  if (initialState) {
-    INITIAL_STATE = {
-      reference: initialState.reference,
-      name: initialState.name,
-      parent:
-        initialState.parent && initialState.parent.id
-          ? initialState.parent.id
-          : '',
-    };
-  }
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
