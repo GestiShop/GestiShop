@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
-import { ClientBill } from './model/Bill';
+import { ClientBill } from './mongoose-model/Bill';
 import { addBill, removeBill } from './ClientHelper';
 import { decrementStock } from './ProductHelper';
 

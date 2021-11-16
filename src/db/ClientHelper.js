@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Client } from './model/Client';
+import { Client } from './mongoose-model/Client';
 
 const addClient = (client, errorCallback, resultCallback) => {
   const dbClient = new Client(client);

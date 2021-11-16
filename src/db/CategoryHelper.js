@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Category } from './model/Category';
+import { Category } from './mongoose-model/Category';
 
 const addCategory = (category, errorCallback, resultCallback) => {
   const dbCategory = new Category(category);

@@ -1,11 +1,11 @@
-import LocalConfiguration from '../utils/localConfiguration';
+import LocalConfiguration from '../localConfiguration';
 import {
   CURRENCY_LIST,
   DECIMAL_MODES,
   FLOATING_POINT_OPTIONS,
   LANGUAGE_LIST,
-} from '../../assets/config/config';
-import { EmptyAddress } from '../utils/constants';
+} from '../../../assets/config/config';
+import { EmptyAddress } from '../constants';
 
 const initialState = {
   lang: LocalConfiguration.getLocalLang() || LANGUAGE_LIST[0],

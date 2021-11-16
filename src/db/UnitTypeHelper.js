@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { UnitType } from './model/UnitType';
+import { UnitType } from './mongoose-model/UnitType';
 
 const addUnitType = (unitType, errorCallback, resultCallback) => {
   const dbUnitType = new UnitType(unitType);

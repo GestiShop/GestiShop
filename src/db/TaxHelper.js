@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Tax } from './model/Tax';
+import { Tax } from './mongoose-model/Tax';
 
 const addTax = (tax, errorCallback, resultCallback) => {
   const dbTax = new Tax(tax);

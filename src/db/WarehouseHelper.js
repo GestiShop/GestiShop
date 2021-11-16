@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Warehouse } from './model/Warehouse';
+import { Warehouse } from './mongoose-model/Warehouse';
 
 const addWarehouse = (warehouse, errorCallback, resultCallback) => {
   const dbWarehouse = new Warehouse(warehouse);

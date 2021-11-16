@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Container, Grid } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import LocalConfiguration from '../../utils/localConfiguration';
-import { setDefaultBusinessInfo } from '../../redux/configuration';
+import { setDefaultBusinessInfo } from '../../utils/redux/configuration';
 import Textfield from '../ui/forms/TextField';
 import SubmitButton from '../ui/forms/SubmitButton';
 import { AddressSchemaValidator, EmptyAddress } from '../../utils/constants';

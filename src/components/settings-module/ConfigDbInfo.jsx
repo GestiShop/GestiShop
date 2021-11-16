@@ -6,7 +6,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setDefaultDatabaseInfo } from '../../redux/configuration';
+import { setDefaultDatabaseInfo } from '../../utils/redux/configuration';
 
 const useStyles = makeStyles((theme) =>
   createStyles({

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Provider } from './model/Provider';
+import { Provider } from './mongoose-model/Provider';
 
 const addProvider = (provider, errorCallback, resultCallback) => {
   const dbProvider = new Provider(provider);

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Product } from './model/Product';
+import { Product } from './mongoose-model/Product';
 
 const addProduct = (product, errorCallback, resultCallback) => {
   const dbProduct = new Product(product);

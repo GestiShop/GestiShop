@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
+import { ClassNameMap } from '@material-ui/styles';
 import { connectDb } from '../db/db';
 import logo from '../../assets/gestishop_logo.png';
 
@@ -22,7 +23,7 @@ const useStyles = makeStyles(() => ({
 const Home = (): ReactElement => {
   const { t } = useTranslation();
   const history = useHistory();
-  const classes = useStyles();
+  const classes: ClassNameMap<string> = useStyles();
   const [text, setText] = useState(t('home.loading'));
 
   useEffect(() => {

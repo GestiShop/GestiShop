@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { ProviderDeliveryNote } from './model/DeliveryNote';
+import { ProviderDeliveryNote } from './mongoose-model/DeliveryNote';
 
 const addProviderDeliveryNote = (
   providerDeliveryNote,

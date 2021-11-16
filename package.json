@@ -279,6 +279,7 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-to-print": "^2.13.0",
+    "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.9",
     "source-map-support": "^0.5.19",

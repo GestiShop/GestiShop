@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { ClientBudget } from './model/Budget';
+import { ClientBudget } from './mongoose-model/Budget';
 
 const addClientBudget = (clientBudget, errorCallback, resultCallback) => {
   const dbClientBudget = new ClientBudget(clientBudget);

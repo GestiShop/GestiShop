@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { ProviderBudget } from './model/Budget';
+import { ProviderBudget } from './mongoose-model/Budget';
 
 const addProviderBudget = (providerBudget, errorCallback, resultCallback) => {
   const dbProviderBudget = new ProviderBudget(providerBudget);

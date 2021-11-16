@@ -10,7 +10,7 @@ import {
   setDefaultCurrency,
   setDefaultDecimalMode,
   setDefaultFloatingPositions,
-} from '../../redux/configuration';
+} from '../../utils/redux/configuration';
 import {
   CURRENCY_LIST,
   DECIMAL_MODES,

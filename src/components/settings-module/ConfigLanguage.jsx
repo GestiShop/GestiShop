@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LocalConfiguration from '../../utils/localConfiguration';
 import Select from '../ui/forms/Select';
 import { LANGUAGE_LIST } from '../../../assets/config/config';
-import { setDefaultLang } from '../../redux/configuration';
+import { setDefaultLang } from '../../utils/redux/configuration';
 
 const ConfigLanguage = () => {
   const { t, i18n } = useTranslation();
