@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { addressSchema } from './AddressModel';
+import { addressSchema } from './Address';
 
 const warehouseSchema = new Schema({
   reference: { type: String, unique: true, required: true },

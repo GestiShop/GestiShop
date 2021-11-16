@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Product } from '../model/ProductModel';
+import { Product } from './model/Product';
 
 const addProduct = (product, errorCallback, resultCallback) => {
   const dbProduct = new Product(product);

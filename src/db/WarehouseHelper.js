@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Warehouse } from '../model/WarehouseModel';
+import { Warehouse } from './model/Warehouse';
 
 const addWarehouse = (warehouse, errorCallback, resultCallback) => {
   const dbWarehouse = new Warehouse(warehouse);

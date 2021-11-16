@@ -1,8 +1,8 @@
 import { Schema, Types, model } from 'mongoose';
-import { phoneSchema } from './PhoneModel';
-import { emailSchema } from './EmailModel';
-import { addressSchema } from './AddressModel';
-import { eFactSchema } from './EFactModel';
+import { phoneSchema } from './Phone';
+import { emailSchema } from './Email';
+import { addressSchema } from './Address';
+import { eFactSchema } from './EFact';
 
 const providerSchema = new Schema({
   reference: { type: String, unique: true, required: true },

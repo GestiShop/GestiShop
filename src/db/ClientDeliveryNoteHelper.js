@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { ClientDeliveryNote } from '../model/DeliveryNoteModel';
+import { ClientDeliveryNote } from './model/DeliveryNote';
 
 const addClientDeliveryNote = (
   clientDeliveryNote,

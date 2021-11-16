@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
-import { ProviderBill } from '../model/BillModel';
+import { ProviderBill } from './model/Bill';
 import { addBill, removeBill } from './ProviderHelper';
 import { incrementStock } from './ProductHelper';
 

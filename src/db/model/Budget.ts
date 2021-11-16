@@ -1,5 +1,5 @@
 import { Schema, Types, model } from 'mongoose';
-import { addressSchema } from './AddressModel';
+import { addressSchema } from './Address';
 
 const budgetSchema = new Schema({
   budgetNumberPreamble: { type: String, default: '' },

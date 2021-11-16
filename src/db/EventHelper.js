@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Event } from '../model/EventModel';
+import { Event } from './model/Event';
 
 const addEvent = (event, errorCallback, resultCallback) => {
   const dbEvent = new Event(event);

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { UnitType } from '../model/UnitTypeModel';
+import { UnitType } from './model/UnitType';
 
 const addUnitType = (unitType, errorCallback, resultCallback) => {
   const dbUnitType = new UnitType(unitType);
