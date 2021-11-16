@@ -7,8 +7,8 @@ import translationEN from '../assets/locales/en/translation.json';
 import translationES from '../assets/locales/es/translation.json';
 import translationCA from '../assets/locales/ca/translation.json';
 
-const fallbackLng = ['en'];
-const availableLanguages = ['en', 'es', 'ca'];
+const availableLanguages: Array<string> = ['en', 'es', 'ca'];
+const fallbackLng: Array<string> = [availableLanguages[0]];
 
 const resources = {
   en: {
@@ -20,7 +20,7 @@ const resources = {
   ca: {
     translation: translationCA,
   },
-};
+} as const;
 
 i18n
   .use(Backend)
@@ -29,10 +29,6 @@ i18n
   .init({
     resources,
     fallbackLng,
-
-    detection: {
-      checkWhitelist: true,
-    },
 
     debug: false,
 

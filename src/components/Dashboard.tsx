@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import Button from './ui/forms/Button';
 
-const Dashboard = () => {
+const Dashboard = (): ReactElement => {
   const { t } = useTranslation();
 
   return (

@@ -1,10 +1,12 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable import/prefer-default-export */
 import { connect, Mongoose } from 'mongoose';
 import { config } from 'dotenv';
 
 config();
 
-const { DATABASE_URL, DATABASE_PASSWORD } = process.env;
+const DATABASE_URL: string | undefined = process.env.DATABASE_URL;
+const DATABASE_PASSWORD: string | undefined = process.env.DATABASE_PASSWORD;
 
 export const connectDb = (): Promise<Mongoose> => {
   if (DATABASE_URL == null || DATABASE_PASSWORD == null) {

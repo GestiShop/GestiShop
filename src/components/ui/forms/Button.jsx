@@ -1,13 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Button } from '@material-ui/core';
 
-const ButtonWrapper = ({ children, color, className, ...otherProps }) => {
+const ButtonWrapper = ({
+  children,
+  color = 'primary',
+  className = '',
+  ...otherProps
+}): ReactElement => {
   const configButton = {
     ...otherProps,
     variant: 'contained',
-    color: color || 'primary',
+    color,
     fullWidth: true,
     className: `m-auto br-20px ${className}`,
   };
