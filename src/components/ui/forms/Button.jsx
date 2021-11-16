@@ -8,7 +8,7 @@ const ButtonWrapper = ({
   color = 'primary',
   className = '',
   ...otherProps
-}): ReactElement => {
+}) => {
   const configButton = {
     ...otherProps,
     variant: 'contained',
