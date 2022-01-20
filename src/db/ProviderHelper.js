@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { Provider } from './mongoose-model/Provider';
+import { DBProvider } from '../model/types';
 
 const addProvider = (provider, errorCallback, resultCallback) => {
-  const dbProvider = new Provider(provider);
+  const dbProvider = new DBProvider(provider);
   dbProvider.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addProvider = (provider, errorCallback, resultCallback) => {
 };
 
 const fetchProviders = (errorCallback, resultCallback) => {
-  return Provider.find({}, (err, docs) => {
+  return DBProvider.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -23,7 +23,7 @@ const fetchProviders = (errorCallback, resultCallback) => {
 };
 
 const fetchProvidersWithBills = (errorCallback, resultCallback) => {
-  return Provider.find({})
+  return DBProvider.find({})
     .populate('bills')
     .exec((err, docs) => {
       if (err) {
@@ -36,7 +36,7 @@ const fetchProvidersWithBills = (errorCallback, resultCallback) => {
 
 const updateProvider = (provider, errorCallback, resultCallback) => {
   const query = { _id: provider._id };
-  return Provider.findOneAndUpdate(query, provider, (err, docs) => {
+  return DBProvider.findOneAndUpdate(query, provider, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -46,7 +46,7 @@ const updateProvider = (provider, errorCallback, resultCallback) => {
 };
 
 const addBill = (providerId, billId, errorCallback, resultCallback) => {
-  return Provider.findOneAndUpdate(
+  return DBProvider.findOneAndUpdate(
     { _id: providerId },
     { $push: { bills: billId } },
     (err, docs) => {
@@ -60,7 +60,7 @@ const addBill = (providerId, billId, errorCallback, resultCallback) => {
 };
 
 const removeBill = (providerId, billId, errorCallback, resultCallback) => {
-  return Provider.findOneAndUpdate(
+  return DBProvider.findOneAndUpdate(
     { _id: providerId },
     { $pullAll: { bills: [billId] } },
     (err, docs) => {
@@ -75,7 +75,7 @@ const removeBill = (providerId, billId, errorCallback, resultCallback) => {
 
 const deleteProviders = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return Provider.deleteMany(query, (err) => {
+  return DBProvider.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

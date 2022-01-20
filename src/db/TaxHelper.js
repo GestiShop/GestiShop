@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { Tax } from './mongoose-model/Tax';
+import { DBTax } from '../model/types';
 
 const addTax = (tax, errorCallback, resultCallback) => {
-  const dbTax = new Tax(tax);
+  const dbTax = new DBTax(tax);
   dbTax.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addTax = (tax, errorCallback, resultCallback) => {
 };
 
 const fetchTaxes = (errorCallback, resultCallback) => {
-  return Tax.find({}, (err, docs) => {
+  return DBTax.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -24,7 +24,7 @@ const fetchTaxes = (errorCallback, resultCallback) => {
 
 const updateTax = (tax, errorCallback, resultCallback) => {
   const query = { _id: tax._id };
-  return Tax.findOneAndUpdate(query, tax, (err, docs) => {
+  return DBTax.findOneAndUpdate(query, tax, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -35,7 +35,7 @@ const updateTax = (tax, errorCallback, resultCallback) => {
 
 const deleteTaxes = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return Tax.deleteMany(query, (err) => {
+  return DBTax.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

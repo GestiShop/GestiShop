@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { Category } from './mongoose-model/Category';
+import { DBCategory } from '../model/types';
 
 const addCategory = (category, errorCallback, resultCallback) => {
-  const dbCategory = new Category(category);
+  const dbCategory = new DBCategory(category);
   dbCategory.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addCategory = (category, errorCallback, resultCallback) => {
 };
 
 const fetchCategories = (errorCallback, resultCallback) => {
-  return Category.find({})
+  return DBCategory.find({})
     .populate('parent')
     .exec((err, docs) => {
       if (err) {
@@ -26,7 +26,7 @@ const fetchCategories = (errorCallback, resultCallback) => {
 
 const updateCategory = (category, errorCallback, resultCallback) => {
   const query = { _id: category._id };
-  return Category.findOneAndUpdate(query, category, (err, docs) => {
+  return DBCategory.findOneAndUpdate(query, category, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -37,7 +37,7 @@ const updateCategory = (category, errorCallback, resultCallback) => {
 
 const deleteCategories = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return Category.deleteMany(query, (err) => {
+  return DBCategory.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

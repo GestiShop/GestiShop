@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { ProviderBudget } from './mongoose-model/Budget';
+import { DBProviderBudget } from '../model/types';
 
 const addProviderBudget = (providerBudget, errorCallback, resultCallback) => {
-  const dbProviderBudget = new ProviderBudget(providerBudget);
+  const dbProviderBudget = new DBProviderBudget(providerBudget);
   dbProviderBudget.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addProviderBudget = (providerBudget, errorCallback, resultCallback) => {
 };
 
 const fetchProviderBudgets = (errorCallback, resultCallback) => {
-  return ProviderBudget.find({}, (err, docs) => {
+  return DBProviderBudget.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -28,18 +28,22 @@ const updateProviderBudget = (
   resultCallback
 ) => {
   const query = { _id: providerBudget._id };
-  return ProviderBudget.findOneAndUpdate(query, providerBudget, (err, docs) => {
-    if (err) {
-      errorCallback(err);
-    } else {
-      resultCallback(docs);
+  return DBProviderBudget.findOneAndUpdate(
+    query,
+    providerBudget,
+    (err, docs) => {
+      if (err) {
+        errorCallback(err);
+      } else {
+        resultCallback(docs);
+      }
     }
-  });
+  );
 };
 
 const deleteProviderBudgets = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return ProviderBudget.deleteMany(query, (err) => {
+  return DBProviderBudget.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

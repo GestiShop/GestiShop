@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { ClientBudget } from './mongoose-model/Budget';
+import { DBClientBudget } from '../model/types';
 
 const addClientBudget = (clientBudget, errorCallback, resultCallback) => {
-  const dbClientBudget = new ClientBudget(clientBudget);
+  const dbClientBudget = new DBClientBudget(clientBudget);
   dbClientBudget.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addClientBudget = (clientBudget, errorCallback, resultCallback) => {
 };
 
 const fetchClientBudgets = (errorCallback, resultCallback) => {
-  return ClientBudget.find({}, (err, docs) => {
+  return DBClientBudget.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -24,7 +24,7 @@ const fetchClientBudgets = (errorCallback, resultCallback) => {
 
 const updateClientBudget = (clientBudget, errorCallback, resultCallback) => {
   const query = { _id: clientBudget._id };
-  return ClientBudget.findOneAndUpdate(query, clientBudget, (err, docs) => {
+  return DBClientBudget.findOneAndUpdate(query, clientBudget, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -35,7 +35,7 @@ const updateClientBudget = (clientBudget, errorCallback, resultCallback) => {
 
 const deleteClientBudgets = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return ClientBudget.deleteMany(query, (err) => {
+  return DBClientBudget.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

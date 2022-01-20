@@ -9,7 +9,7 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import LocalConfiguration from '../../../utils/localConfiguration';
 import FullScreenDialog from '../../ui/FullscreenDialog';
-import { addEvent, fetchEvents, updateEvent } from '../../../db/EventHelper';
+import { upsertEvent, fetchEvents } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
 import CreateEvent from '../create/CreateEvent';
 import EVENT_COLOR_LIST from '../../../../assets/event_colors';
@@ -17,10 +17,8 @@ import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.c
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
 
 const localLang = LocalConfiguration.getLocalLang();
-if (localLang) {
-  let langPath = localLang.value;
-  langPath += langPath === 'en' ? '-gb' : '';
-
+if (localLang != null) {
+  const langPath = `${localLang.value}${localLang.value === 'en' ? '-gb' : ''}`;
   import(`moment/locale/${langPath}`);
 }
 
@@ -35,43 +33,28 @@ const EventCalendar = () => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const isMounted = useIsMounted();
 
-  const fetchData = () => {
-    fetchEvents(
-      (error) => {
-        console.log('error', error);
-      },
-      (events) => {
-        if (isMounted.current) setState({ ...state, events });
+  const fetchData = async () => {
+    const response = await fetchEvents();
+    if (response.error !== null) {
+      console.log(response.error);
+    } else {
+      if (isMounted.current) {
+        setState({
+          ...state,
+          events: response.result,
+        });
       }
-    );
+    }
   };
 
-  const updateData = (updatedEvent) => {
-    updateEvent(
-      updatedEvent,
-      (error) => {
-        console.log('error', error);
-      },
-      () => {
-        if (isMounted.current) {
-          fetchData();
-        }
-      }
-    );
+  const updateData = async (updatedEvent) => {
+    await upsertEvent(updatedEvent);
+    fetchData();
   };
 
-  const addData = (newEvent) => {
-    addEvent(
-      newEvent,
-      (error) => {
-        console.log('error', error);
-      },
-      () => {
-        if (isMounted.current) {
-          fetchData();
-        }
-      }
-    );
+  const addData = async (newEvent) => {
+    await upsertEvent(newEvent);
+    fetchData();
   };
 
   useEffect(() => {
@@ -79,11 +62,17 @@ const EventCalendar = () => {
   }, []);
 
   const handleDragStart = (event) => {
-    setState({ ...state, draggedEvent: event });
+    setState({
+      ...state,
+      draggedEvent: event,
+    });
   };
 
   const handleOnSelectEvent = (event) => {
-    setState({ ...state, selectedEvent: event });
+    setState({
+      ...state,
+      selectedEvent: event,
+    });
     setOpenEditDialog(true);
   };
 
@@ -102,7 +91,12 @@ const EventCalendar = () => {
       allDay = false;
     }
 
-    updateData({ ...event._doc, start, end, allDay });
+    updateData({
+      id: event.id,
+      start,
+      end,
+      allDay,
+    });
   };
 
   const onDropFromOutside = ({ start, end, allDay }) => {

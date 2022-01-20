@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { Client } from './mongoose-model/Client';
+import { DBClient } from '../model/types';
 
 const addClient = (client, errorCallback, resultCallback) => {
-  const dbClient = new Client(client);
+  const dbClient = new DBClient(client);
   dbClient.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addClient = (client, errorCallback, resultCallback) => {
 };
 
 const fetchClients = (errorCallback, resultCallback) => {
-  return Client.find({}, (err, docs) => {
+  return DBClient.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -23,7 +23,7 @@ const fetchClients = (errorCallback, resultCallback) => {
 };
 
 const fetchClientsWithBills = (errorCallback, resultCallback) => {
-  return Client.find({})
+  return DBClient.find({})
     .populate('bills')
     .exec((err, docs) => {
       if (err) {
@@ -36,7 +36,7 @@ const fetchClientsWithBills = (errorCallback, resultCallback) => {
 
 const updateClient = (client, errorCallback, resultCallback) => {
   const query = { _id: client._id };
-  return Client.findOneAndUpdate(query, client, (err, docs) => {
+  return DBClient.findOneAndUpdate(query, client, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -46,7 +46,7 @@ const updateClient = (client, errorCallback, resultCallback) => {
 };
 
 const addBill = (clientId, billId, errorCallback, resultCallback) => {
-  return Client.findOneAndUpdate(
+  return DBClient.findOneAndUpdate(
     { _id: clientId },
     { $push: { bills: billId } },
     (err, docs) => {
@@ -60,7 +60,7 @@ const addBill = (clientId, billId, errorCallback, resultCallback) => {
 };
 
 const removeBill = (clientId, billId, errorCallback, resultCallback) => {
-  return Client.findOneAndUpdate(
+  return DBClient.findOneAndUpdate(
     { _id: clientId },
     { $pullAll: { bills: [billId] } },
     (err, docs) => {
@@ -75,7 +75,7 @@ const removeBill = (clientId, billId, errorCallback, resultCallback) => {
 
 const deleteClients = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return Client.deleteMany(query, (err) => {
+  return DBClient.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

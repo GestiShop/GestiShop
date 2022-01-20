@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { Product } from './mongoose-model/Product';
+import { DBProduct } from '../model/types';
 
 const addProduct = (product, errorCallback, resultCallback) => {
-  const dbProduct = new Product(product);
+  const dbProduct = new DBProduct(product);
   dbProduct.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addProduct = (product, errorCallback, resultCallback) => {
 };
 
 const fetchProducts = (errorCallback, resultCallback) => {
-  return Product.find({})
+  return DBProduct.find({})
     .populate('buyingInfo.taxPercentage')
     .populate('sellingInfo.taxPercentage')
     .populate('unitType')
@@ -30,7 +30,7 @@ const fetchProducts = (errorCallback, resultCallback) => {
 
 const updateProduct = (product, errorCallback, resultCallback) => {
   const query = { _id: product._id };
-  return Product.findOneAndUpdate(query, product, (err, docs) => {
+  return DBProduct.findOneAndUpdate(query, product, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -41,7 +41,7 @@ const updateProduct = (product, errorCallback, resultCallback) => {
 
 const deleteProducts = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return Product.deleteMany(query, (err) => {
+  return DBProduct.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -53,7 +53,7 @@ const deleteProducts = (ids, errorCallback, resultCallback) => {
 const incrementStock = (id, quantity, errorCallback, resultCallback) => {
   const query = { _id: id };
   const incrementQuery = { $inc: { stock: quantity } };
-  return Product.findOneAndUpdate(query, incrementQuery, (err, docs) => {
+  return DBProduct.findOneAndUpdate(query, incrementQuery, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -65,7 +65,7 @@ const incrementStock = (id, quantity, errorCallback, resultCallback) => {
 const decrementStock = (id, quantity, errorCallback, resultCallback) => {
   const query = { _id: id };
   const incrementQuery = { $inc: { stock: -1 * quantity } };
-  return Product.findOneAndUpdate(query, incrementQuery, (err, docs) => {
+  return DBProduct.findOneAndUpdate(query, incrementQuery, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {

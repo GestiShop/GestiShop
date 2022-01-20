@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { Warehouse } from './mongoose-model/Warehouse';
+import { DBWarehouse } from '../model/types';
 
 const addWarehouse = (warehouse, errorCallback, resultCallback) => {
-  const dbWarehouse = new Warehouse(warehouse);
+  const dbWarehouse = new DBWarehouse(warehouse);
   dbWarehouse.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addWarehouse = (warehouse, errorCallback, resultCallback) => {
 };
 
 const fetchWarehouses = (errorCallback, resultCallback) => {
-  return Warehouse.find({}, (err, docs) => {
+  return DBWarehouse.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -24,7 +24,7 @@ const fetchWarehouses = (errorCallback, resultCallback) => {
 
 const updateWarehouse = (warehouse, errorCallback, resultCallback) => {
   const query = { _id: warehouse._id };
-  return Warehouse.findOneAndUpdate(query, warehouse, (err, docs) => {
+  return DBWarehouse.findOneAndUpdate(query, warehouse, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -35,7 +35,7 @@ const updateWarehouse = (warehouse, errorCallback, resultCallback) => {
 
 const deleteWarehouses = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return Warehouse.deleteMany(query, (err) => {
+  return DBWarehouse.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

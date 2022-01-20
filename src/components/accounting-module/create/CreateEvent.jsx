@@ -8,7 +8,7 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import { deleteEvent, updateEvent } from '../../../db/EventHelper';
+import { deleteEvent, upsertEvent } from '../../../db';
 import DateTimePicker from '../../ui/forms/DateTimePicker';
 import Switch from '../../ui/forms/Switch';
 import Button from '../../ui/forms/Button';
@@ -27,35 +27,18 @@ const CreateEvent = ({ closeCallback, initialState }) => {
     allDay: initialState.allDay || false,
   };
 
-  const handleSubmit = (data) => {
-    updateEvent(
-      {
-        ...data,
-        _id: initialState._id,
-      },
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      () => {
-        console.log('NO ERROR');
-        closeCallback();
-      }
-    );
+  const handleSubmit = async (data) => {
+    await upsertEvent({
+      ...data,
+      id: initialState.id,
+    });
+
+    closeCallback();
   };
 
-  const deleteData = () => {
-    deleteEvent(
-      initialState._id,
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      () => {
-        console.log('NO ERROR');
-        closeCallback();
-      }
-    );
+  const deleteData = async () => {
+    await deleteEvent(initialState.id);
+    closeCallback();
   };
 
   const FORM_VALIDATION = Yup.object().shape({

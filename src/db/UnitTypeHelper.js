@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { UnitType } from './mongoose-model/UnitType';
+import { DBUnitType } from '../model/types';
 
 const addUnitType = (unitType, errorCallback, resultCallback) => {
-  const dbUnitType = new UnitType(unitType);
+  const dbUnitType = new DBUnitType(unitType);
   dbUnitType.save((err) => {
     if (err) {
       errorCallback(err);
@@ -13,7 +13,7 @@ const addUnitType = (unitType, errorCallback, resultCallback) => {
 };
 
 const fetchUnitTypes = (errorCallback, resultCallback) => {
-  return UnitType.find({}, (err, docs) => {
+  return DBUnitType.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -24,7 +24,7 @@ const fetchUnitTypes = (errorCallback, resultCallback) => {
 
 const updateUnitType = (unitType, errorCallback, resultCallback) => {
   const query = { _id: unitType._id };
-  return UnitType.findOneAndUpdate(query, unitType, (err, docs) => {
+  return DBUnitType.findOneAndUpdate(query, unitType, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -35,7 +35,7 @@ const updateUnitType = (unitType, errorCallback, resultCallback) => {
 
 const deleteUnitTypes = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return UnitType.deleteMany(query, (err) => {
+  return DBUnitType.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

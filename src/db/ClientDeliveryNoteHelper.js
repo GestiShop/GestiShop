@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import { ClientDeliveryNote } from './mongoose-model/DeliveryNote';
+import { DBClientDeliveryNote } from '../model/types';
 
 const addClientDeliveryNote = (
   clientDeliveryNote,
   errorCallback,
   resultCallback
 ) => {
-  const dbClientDeliveryNote = new ClientDeliveryNote(clientDeliveryNote);
+  const dbClientDeliveryNote = new DBClientDeliveryNote(clientDeliveryNote);
   dbClientDeliveryNote.save((err) => {
     if (err) {
       errorCallback(err);
@@ -17,7 +17,7 @@ const addClientDeliveryNote = (
 };
 
 const fetchClientDeliveryNotes = (errorCallback, resultCallback) => {
-  return ClientDeliveryNote.find({}, (err, docs) => {
+  return DBClientDeliveryNote.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -32,7 +32,7 @@ const updateClientDeliveryNote = (
   resultCallback
 ) => {
   const query = { _id: clientDeliveryNote._id };
-  return ClientDeliveryNote.findOneAndUpdate(
+  return DBClientDeliveryNote.findOneAndUpdate(
     query,
     clientDeliveryNote,
     (err, docs) => {
@@ -47,7 +47,7 @@ const updateClientDeliveryNote = (
 
 const deleteClientDeliveryNotes = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return ClientDeliveryNote.deleteMany(query, (err) => {
+  return DBClientDeliveryNote.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {

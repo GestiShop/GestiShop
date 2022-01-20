@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
-import { ClientBill } from './mongoose-model/Bill';
+import { DBClientBill } from '../model/types';
 import { addBill, removeBill } from './ClientHelper';
 import { decrementStock } from './ProductHelper';
 
@@ -9,7 +9,7 @@ const addClientBill = (clientBill, errorCallback, resultCallback) => {
   let hasErrors = false;
   let productsViewed = 0;
 
-  const dbClientBill = new ClientBill(clientBill);
+  const dbClientBill = new DBClientBill(clientBill);
   dbClientBill.save((err1, bill) => {
     if (err1) {
       errorCallback(err1);
@@ -41,7 +41,7 @@ const addClientBill = (clientBill, errorCallback, resultCallback) => {
 };
 
 const fetchClientBills = (errorCallback, resultCallback) => {
-  return ClientBill.find({}, (err, docs) => {
+  return DBClientBill.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -52,7 +52,7 @@ const fetchClientBills = (errorCallback, resultCallback) => {
 
 const updateClientBill = (clientBill, errorCallback, resultCallback) => {
   const query = { _id: clientBill._id };
-  return ClientBill.findOneAndUpdate(query, clientBill, (err, docs) => {
+  return DBClientBill.findOneAndUpdate(query, clientBill, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -64,11 +64,11 @@ const updateClientBill = (clientBill, errorCallback, resultCallback) => {
 const deleteClientBills = (ids, errorCallback, resultCallback) => {
   ids.forEach((billId) => {
     const query = { _id: billId };
-    ClientBill.findById(query, (err1, bill) => {
+    DBClientBill.findById(query, (err1, bill) => {
       if (err1) {
         errorCallback(err1);
       } else {
-        ClientBill.deleteOne(query, (err2) => {
+        DBClientBill.deleteOne(query, (err2) => {
           if (err2) {
             errorCallback(err2);
           } else {

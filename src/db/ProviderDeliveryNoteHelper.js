@@ -1,12 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-import { ProviderDeliveryNote } from './mongoose-model/DeliveryNote';
+import { DBProviderDeliveryNote } from '../model/types';
 
 const addProviderDeliveryNote = (
   providerDeliveryNote,
   errorCallback,
   resultCallback
 ) => {
-  const dbProviderDeliveryNote = new ProviderDeliveryNote(providerDeliveryNote);
+  const dbProviderDeliveryNote = new DBProviderDeliveryNote(
+    providerDeliveryNote
+  );
   dbProviderDeliveryNote.save((err) => {
     if (err) {
       errorCallback(err);
@@ -17,7 +19,7 @@ const addProviderDeliveryNote = (
 };
 
 const fetchProviderDeliveryNotes = (errorCallback, resultCallback) => {
-  return ProviderDeliveryNote.find({}, (err, docs) => {
+  return DBProviderDeliveryNote.find({}, (err, docs) => {
     if (err) {
       errorCallback(err);
     } else {
@@ -32,7 +34,7 @@ const updateProviderDeliveryNote = (
   resultCallback
 ) => {
   const query = { _id: providerDeliveryNote._id };
-  return ProviderDeliveryNote.findOneAndUpdate(
+  return DBProviderDeliveryNote.findOneAndUpdate(
     query,
     providerDeliveryNote,
     (err, docs) => {
@@ -47,7 +49,7 @@ const updateProviderDeliveryNote = (
 
 const deleteProviderDeliveryNotes = (ids, errorCallback, resultCallback) => {
   const query = { _id: ids };
-  return ProviderDeliveryNote.deleteMany(query, (err) => {
+  return DBProviderDeliveryNote.deleteMany(query, (err) => {
     if (err) {
       errorCallback(err);
     } else {
