@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { Box, Grid, IconButton, InputLabel, MenuItem, Select, TextField, Tooltip } from '@material-ui/core';
-import Table from '../../ui/Table';
+import {
+  Box,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Tooltip,
+} from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import SearchIcon from '@material-ui/icons/Search';
-import FullScreenDialog from '../../ui/FullscreenDialog';
-import CreateEvent from '../../accounting-module/create/CreateEvent';
 import FormControl from '@material-ui/core/FormControl';
+import Table from '../../ui/Table';
+import FullScreenDialog from '../../ui/FullscreenDialog';
+import CreateCalendarEvent from '../../accounting-module/create/CreateCalendarEvent';
 
 const EditSales = () => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -71,18 +80,16 @@ const EditSales = () => {
   ];
 
   const customButtonView = (
-      <Tooltip title="Buscar">
-        <IconButton
-          aria-label="Buscar"
-        >
-          <SearchIcon />
-        </IconButton>
-      </Tooltip>
+    <Tooltip title="Buscar">
+      <IconButton aria-label="Buscar">
+        <SearchIcon />
+      </IconButton>
+    </Tooltip>
   );
 
   const editCallback = (event, i) => {
-    setOpenEditDialog(true)
-  }
+    setOpenEditDialog(true);
+  };
 
   const headers2 = [
     {
@@ -174,15 +181,13 @@ const EditSales = () => {
           headers={headers2}
           rows={rows2}
           title="Productes afegits"
-          customButtonView={(
+          customButtonView={
             <Tooltip title="Afegir">
-              <IconButton
-                aria-label="Afegir"
-              >
+              <IconButton aria-label="Afegir">
                 <AddIcon />
               </IconButton>
             </Tooltip>
-          )}
+          }
           customActions={[
             {
               title: 'Afegir unitat',
@@ -215,12 +220,12 @@ const EditSales = () => {
       <FullScreenDialog
         open={openEditDialog}
         closeCallback={handleCloseEditDialog}
-        title={'Editar tiquet 123456789'}
+        title="Editar tiquet 123456789"
         childComponent={ticketEditComponent}
         initialState={{}}
       />
     </>
-  )
+  );
 };
 
 export default EditSales;

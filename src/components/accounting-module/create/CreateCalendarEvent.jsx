@@ -15,7 +15,7 @@ import Button from '../../ui/forms/Button';
 import ColoredSelect from '../../ui/forms/ColoredSelect';
 import EVENT_COLOR_LIST from '../../../../assets/event_colors';
 
-const CreateEvent = ({ closeCallback, initialState }) => {
+const CreateCalendarEvent = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
 
   const INITIAL_STATE = {
@@ -132,4 +132,4 @@ const CreateEvent = ({ closeCallback, initialState }) => {
   );
 };
 
-export default CreateEvent;
+export default CreateCalendarEvent;

@@ -3,9 +3,21 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
+import { Types } from 'mongoose';
 import Button from '../../ui/forms/Button';
 import Table from '../../ui/Table';
 import FullScreenDialog from '../../ui/FullscreenDialog';
+
+type Props = {
+  isDataLoaded: any;
+  rows: any;
+  headers: any;
+  editCallback?: any;
+  deleteCallback?: any;
+  printCallback?: any;
+  texts: any;
+  creationComponent: any;
+};
 
 const GenericListComponent = ({
   isDataLoaded,
@@ -16,17 +28,17 @@ const GenericListComponent = ({
   printCallback,
   texts,
   creationComponent,
-}) => {
+}: Props): JSX.Element => {
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
-  const [initialState, setInitialState] = useState(false);
+  const [initialState, setInitialState] = useState(null);
   const [filteredRows, setFilteredRows] = useState(rows);
 
-  const handlePrint = (id) => {
-    printCallback(rows.find((row) => row._id == id));
+  const handlePrint = (id: Types.ObjectId) => {
+    printCallback(rows.find((row: any) => row.id == id));
   };
 
-  const handleEdit = (id) => {
-    setInitialState(rows.find((row) => row._id == id));
+  const handleEdit = (id: Types.ObjectId) => {
+    setInitialState(rows.find((row: any) => row.id == id));
     setOpenCreationDialog(true);
   };
 
@@ -81,6 +93,12 @@ const GenericListComponent = ({
       />
     </>
   );
+};
+
+GenericListComponent.defaultProps = {
+  editCallback = undefined,
+  deleteCallback = undefined,
+  printCallback = undefined,
 };
 
 export default GenericListComponent;

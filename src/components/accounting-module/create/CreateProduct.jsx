@@ -13,7 +13,7 @@ import Select from '../../ui/forms/Select';
 import MultiSelect from '../../ui/forms/MultiSelect';
 import Switch from '../../ui/forms/Switch';
 import { addProduct, updateProduct } from '../../../db/ProductHelper';
-import { fetchTaxes } from '../../../db/TaxHelper';
+import { fetchTaxes } from '../../../db/helpers/tax-helper';
 import useIsMounted from '../../../utils/useIsMounted';
 import { fetchUnitTypes } from '../../../db/UnitTypeHelper';
 import { fetchWarehouses } from '../../../db/WarehouseHelper';

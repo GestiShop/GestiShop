@@ -7,9 +7,15 @@ import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import { addTax, updateTax } from '../../../db/TaxHelper';
+import { upsertTax } from '../../../db';
+import { Tax } from '../../../model/types';
 
-const CreateTax = ({ closeCallback, initialState }) => {
+type Props = {
+  closeCallback?: any;
+  initialState?: Tax;
+};
+
+const CreateTax = ({ closeCallback, initialState }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   let INITIAL_STATE = {
@@ -17,7 +23,7 @@ const CreateTax = ({ closeCallback, initialState }) => {
     percentage: 0.0,
   };
 
-  if (initialState) {
+  if (initialState !== undefined) {
     INITIAL_STATE = {
       reference: initialState.reference,
       percentage: initialState.percentage,
@@ -31,32 +37,9 @@ const CreateTax = ({ closeCallback, initialState }) => {
       .required(t('form.errors.required')),
   });
 
-  const handleSubmit = (data) => {
-    if (!initialState) {
-      addTax(
-        data,
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    } else {
-      updateTax(
-        { ...data, _id: initialState._id },
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    }
+  const handleSubmit = async (data: Tax) => {
+    await upsertTax({ ...data, id: initialState?.id });
+    closeCallback();
   };
 
   return (
@@ -101,6 +84,11 @@ const CreateTax = ({ closeCallback, initialState }) => {
       </Grid>
     </Grid>
   );
+};
+
+CreateTax.defaultProps = {
+  closeCallback: undefined,
+  initialState: undefined,
 };
 
 export default CreateTax;

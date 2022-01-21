@@ -11,7 +11,7 @@ import LocalConfiguration from '../../../utils/localConfiguration';
 import FullScreenDialog from '../../ui/FullscreenDialog';
 import { upsertEvent, fetchEvents } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
-import CreateEvent from '../create/CreateEvent';
+import CreateCalendarEvent from '../create/CreateCalendarEvent';
 import EVENT_COLOR_LIST from '../../../../assets/event_colors';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -37,13 +37,11 @@ const EventCalendar = () => {
     const response = await fetchEvents();
     if (response.error !== null) {
       console.log(response.error);
-    } else {
-      if (isMounted.current) {
-        setState({
-          ...state,
-          events: response.result,
-        });
-      }
+    } else if (isMounted.current) {
+      setState({
+        ...state,
+        events: response.result,
+      });
     }
   };
 
@@ -172,7 +170,7 @@ const EventCalendar = () => {
         open={openEditDialog}
         closeCallback={handleCloseEditDialog}
         title={t('accounting_module.event.edit')}
-        childComponent={<CreateEvent />}
+        childComponent={<CreateCalendarEvent />}
         initialState={state.selectedEvent}
       />
     </>

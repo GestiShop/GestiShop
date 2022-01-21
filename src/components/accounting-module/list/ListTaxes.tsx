@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CreateTax from '../create/CreateTax';
-import { deleteTaxes, fetchTaxes } from '../../../db/TaxHelper';
+import { deleteTaxes, fetchTaxes } from '../../../db/helpers/tax-helper';
 import GenericListComponent from './GenericListComponent';
 import useIsMounted from '../../../utils/useIsMounted';
+import { Types } from 'mongoose';
 
-const ListTaxes = () => {
+const ListTaxes = (): JSX.Element => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -25,30 +26,21 @@ const ListTaxes = () => {
     },
   ];
 
-  const fetchData = () => {
-    fetchTaxes(
-      (error) => {
-        console.log('error', error);
-      },
-      (data) => {
-        if (isMounted.current) {
-          setRows(data);
-          setIsDataLoaded(true);
-        }
+  const fetchData = async () => {
+    const response = await fetchTaxes();
+    if (response.error !== null) {
+      console.log(response.error);
+    } else {
+      if (isMounted.current) {
+        setRows(response.result);
+        setIsDataLoaded(true);
       }
-    );
+    }
   };
 
-  const deleteData = (ids) => {
-    deleteTaxes(
-      ids,
-      (error) => {
-        console.log('error', error);
-      },
-      () => {
-        fetchData();
-      }
-    );
+  const deleteData = async (ids: Array<Types.ObjectId>) => {
+    await deleteTaxes(ids);
+    fetchData();
   };
 
   useEffect(() => {
@@ -59,8 +51,7 @@ const ListTaxes = () => {
     fetchData();
   };
 
-  const handleDelete = (ids) => {
-    console.log('Delete rows:', ids);
+  const handleDelete = (ids: Array<Types.ObjectId>) => {
     deleteData(ids);
   };
 

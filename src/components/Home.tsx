@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { ClassNameMap } from '@material-ui/styles';
-import { connectDb } from '../db/db';
+import { connectDb } from '../db';
 import logo from '../../assets/gestishop_logo.png';
 
 const useStyles = makeStyles(() => ({
