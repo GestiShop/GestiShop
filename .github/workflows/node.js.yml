@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Build & test
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,5 +21,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+    - run: yarn install
+    - run: |
+        cd ./src
+        yarn install
+        cd ..
     - run: yarn build
     - run: yarn test
