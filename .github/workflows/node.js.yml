@@ -23,4 +23,4 @@ jobs:
         cache: 'yarn'
     - run: yarn install && cd ./src && yarn install && cd ..
     - run: yarn build
-    - run: yarn test
+#    - run: yarn test
