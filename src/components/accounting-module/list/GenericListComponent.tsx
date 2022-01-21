@@ -96,9 +96,9 @@ const GenericListComponent = ({
 };
 
 GenericListComponent.defaultProps = {
-  editCallback = undefined,
-  deleteCallback = undefined,
-  printCallback = undefined,
+  editCallback: undefined,
+  deleteCallback: undefined,
+  printCallback: undefined,
 };
 
 export default GenericListComponent;
