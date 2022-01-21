@@ -21,10 +21,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: yarn install
-    - run: |
-        cd ./src
-        yarn install
-        cd ..
+    - run: yarn install && cd ./src && yarn install && cd ..
     - run: yarn build
     - run: yarn test
