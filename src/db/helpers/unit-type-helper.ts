@@ -1,25 +1,21 @@
 /* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
-import { decodeCalendarEvent } from '../../model/decoders';
-import {
-  CalendarEvent,
-  DBCalendarEvent,
-  DBHelperResponse,
-} from '../../model/types';
+import { DBHelperResponse, DBUnitType, UnitType } from '../../model/types';
+import { decodeUnitType } from '../../model/decoders';
 
-export const upsertEvent = (
-  event: CalendarEvent
+export const upsertUnitType = (
+  unitType: UnitType
 ): Promise<DBHelperResponse<boolean>> => {
   let queryPromise;
-  if (event.id == null) {
+  if (unitType.id == null) {
     // Insert
-    const dbEvent = new DBCalendarEvent(event);
-    queryPromise = dbEvent.save();
+    const dbUnitType = new DBUnitType(unitType);
+    queryPromise = dbUnitType.save();
   } else {
     // Update
-    queryPromise = DBCalendarEvent.findOneAndUpdate(
-      { _id: event.id },
-      event
+    queryPromise = DBUnitType.findOneAndUpdate(
+      { _id: unitType.id },
+      unitType
     ).exec();
   }
 
@@ -41,19 +37,19 @@ export const upsertEvent = (
     });
 };
 
-export const fetchEvents = (): Promise<
-  DBHelperResponse<Array<CalendarEvent>>
+export const fetchUnitTypes = (): Promise<
+  DBHelperResponse<Array<UnitType>>
 > => {
-  return DBCalendarEvent.find({})
+  return DBUnitType.find({})
     .exec()
     .then((data: any) => {
-      const eventList: Array<CalendarEvent> = data.map((x: any) =>
-        decodeCalendarEvent(x)
+      const unitTypeList: Array<UnitType> = data.map((x: any) =>
+        decodeUnitType(x)
       );
 
       return {
         error: null,
-        result: eventList,
+        result: unitTypeList,
       };
     })
     .catch((error: any) => {
@@ -67,10 +63,10 @@ export const fetchEvents = (): Promise<
     });
 };
 
-export const deleteEvent = (
-  id: Types.ObjectId
+export const deleteUnitTypes = (
+  unitTypeIds: Array<Types.ObjectId>
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBCalendarEvent.findByIdAndDelete(id)
+  return DBUnitType.deleteMany({ _id: unitTypeIds })
     .exec()
     .then((_: any) => {
       return {

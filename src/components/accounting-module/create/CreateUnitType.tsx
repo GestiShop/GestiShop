@@ -1,60 +1,34 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import { addUnitType, updateUnitType } from '../../../db/UnitTypeHelper';
+import { upsertUnitType } from '../../../db';
+import { UnitType } from '../../../model/types';
+import { EMPTY_UNIT_TYPE } from '../../../model/samples';
 
-const CreateUnitType = ({ closeCallback, initialState }) => {
+type Props = {
+  closeCallback?: any;
+  initialState?: UnitType;
+};
+
+const CreateUnitType = ({
+  closeCallback,
+  initialState,
+}: Props): ReactElement => {
   const { t } = useTranslation();
-
-  let INITIAL_STATE = {
-    reference: '',
-    unit: '',
-  };
-
-  if (initialState) {
-    INITIAL_STATE = {
-      reference: initialState.reference,
-      unit: initialState.unit,
-    };
-  }
+  const INITIAL_STATE: UnitType = initialState ?? EMPTY_UNIT_TYPE;
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
     unit: Yup.string().required(t('form.errors.required')),
   });
 
-  const handleSubmit = (data) => {
-    if (!initialState) {
-      addUnitType(
-        data,
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    } else {
-      updateUnitType(
-        { ...data, _id: initialState._id },
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    }
+  const handleSubmit = async (data: UnitType): Promise<void> => {
+    await upsertUnitType({ ...data, id: initialState?.id });
+    closeCallback();
   };
 
   return (
@@ -98,6 +72,11 @@ const CreateUnitType = ({ closeCallback, initialState }) => {
       </Grid>
     </Grid>
   );
+};
+
+CreateUnitType.defaultProps = {
+  closeCallback: undefined,
+  initialState: undefined,
 };
 
 export default CreateUnitType;

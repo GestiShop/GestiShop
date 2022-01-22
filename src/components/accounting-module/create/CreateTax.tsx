@@ -1,6 +1,4 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@material-ui/core';
@@ -16,9 +14,8 @@ type Props = {
   initialState?: Tax;
 };
 
-const CreateTax = ({ closeCallback, initialState }: Props): JSX.Element => {
+const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
   const { t } = useTranslation();
-
   const INITIAL_STATE: Tax = initialState ?? EMPTY_TAX;
 
   const FORM_VALIDATION = Yup.object().shape({
@@ -28,7 +25,7 @@ const CreateTax = ({ closeCallback, initialState }: Props): JSX.Element => {
       .required(t('form.errors.required')),
   });
 
-  const handleSubmit = async (data: Tax) => {
+  const handleSubmit = async (data: Tax): Promise<void> => {
     await upsertTax({ ...data, id: initialState?.id });
     closeCallback();
   };

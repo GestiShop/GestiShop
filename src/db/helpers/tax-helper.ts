@@ -32,7 +32,7 @@ export const upsertTax = (tax: Tax): Promise<DBHelperResponse<boolean>> => {
     });
 };
 
-export const fetchTaxes = () => {
+export const fetchTaxes = (): Promise<DBHelperResponse<Array<Tax>>> => {
   return DBTax.find({})
     .exec()
     .then((data: any) => {

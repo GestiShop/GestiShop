@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Types } from 'mongoose';
 import CreateTax from '../create/CreateTax';
@@ -7,10 +7,10 @@ import GenericListComponent from './GenericListComponent';
 import useIsMounted from '../../../utils/useIsMounted';
 import { Tax } from '../../../model/types';
 
-const ListTaxes = (): JSX.Element => {
+const ListTaxes = (): ReactElement => {
   const { t } = useTranslation();
-  const [rows, setRows] = useState(new Array<Tax>());
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [rows, setRows] = useState<Array<Tax>>([]);
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const isMounted = useIsMounted();
 
   const headers = [
@@ -27,30 +27,32 @@ const ListTaxes = (): JSX.Element => {
     },
   ];
 
-  const fetchData = async () => {
+  const fetchData = async (): Promise<void> => {
     const response = await fetchTaxes();
     if (response.error !== null) {
       console.log(response.error);
     } else if (isMounted.current) {
-      setRows(response.result);
-      setIsDataLoaded(true);
+      if (response.result !== null) {
+        setRows(response.result);
+        setIsDataLoaded(true);
+      }
     }
   };
 
-  const deleteData = async (ids: Array<Types.ObjectId>) => {
+  const deleteData = async (ids: Array<Types.ObjectId>): Promise<void> => {
     await deleteTaxes(ids);
     fetchData();
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     fetchData();
   }, []);
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     fetchData();
   };
 
-  const handleDelete = (ids: Array<Types.ObjectId>) => {
+  const handleDelete = (ids: Array<Types.ObjectId>): void => {
     deleteData(ids);
   };
 

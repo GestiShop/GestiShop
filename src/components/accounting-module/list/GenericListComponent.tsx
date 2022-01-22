@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable eqeqeq */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import { Types } from 'mongoose';
 import Button from '../../ui/forms/Button';
@@ -27,7 +27,7 @@ const GenericListComponent = ({
   printCallback,
   texts,
   creationComponent,
-}: Props): JSX.Element => {
+}: Props): ReactElement => {
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
   const [initialState, setInitialState] = useState(null);
   const [filteredRows, setFilteredRows] = useState(rows);
