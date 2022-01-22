@@ -9,6 +9,7 @@ import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import { upsertTax } from '../../../db';
 import { Tax } from '../../../model/types';
+import { EMPTY_TAX } from '../../../model/samples';
 
 type Props = {
   closeCallback?: any;
@@ -18,17 +19,7 @@ type Props = {
 const CreateTax = ({ closeCallback, initialState }: Props): JSX.Element => {
   const { t } = useTranslation();
 
-  let INITIAL_STATE = {
-    reference: '',
-    percentage: 0.0,
-  };
-
-  if (initialState !== undefined) {
-    INITIAL_STATE = {
-      reference: initialState.reference,
-      percentage: initialState.percentage,
-    };
-  }
+  const INITIAL_STATE: Tax = initialState ?? EMPTY_TAX;
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -74,7 +65,9 @@ const CreateTax = ({ closeCallback, initialState }: Props): JSX.Element => {
 
                 <Grid item xs={12}>
                   <SubmitButton>
-                    {initialState ? t('buttons.save') : t('buttons.create')}
+                    {initialState !== undefined
+                      ? t('buttons.save')
+                      : t('buttons.create')}
                   </SubmitButton>
                 </Grid>
               </Grid>

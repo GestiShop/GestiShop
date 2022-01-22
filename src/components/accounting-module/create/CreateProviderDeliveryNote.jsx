@@ -23,12 +23,12 @@ import DateTimePicker from '../../ui/forms/DateTimePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
-import {
-  EmptyAddress,
-  EmptyDeliveryNoteProduct,
-  AddressSchemaValidator,
-} from '../../../utils/constants';
+import { AddressSchemaValidator } from '../../../utils/constants';
 import Button from '../../ui/forms/Button';
+import {
+  EMPTY_ADDRESS,
+  EMPTY_PRODUCT_IN_DELIVERY_NOTE,
+} from '../../../model/samples';
 
 const CreateProviderDeliveryNote = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -150,7 +150,7 @@ const CreateProviderDeliveryNote = ({ closeCallback, initialState }) => {
       fiscalData: {
         name: '',
         nif: '',
-        address: EmptyAddress,
+        address: EMPTY_ADDRESS,
       },
     },
     products: [],
@@ -485,14 +485,14 @@ const CreateProviderDeliveryNote = ({ closeCallback, initialState }) => {
                                       onClick={() => {
                                         arrayHelpers.insert(
                                           index,
-                                          EmptyDeliveryNoteProduct
+                                          EMPTY_PRODUCT_IN_DELIVERY_NOTE
                                         );
                                         const newDeliveryNoteProducts =
                                           deliveryNoteProducts;
                                         newDeliveryNoteProducts.splice(
                                           index,
                                           0,
-                                          EmptyDeliveryNoteProduct
+                                          EMPTY_PRODUCT_IN_DELIVERY_NOTE
                                         );
                                         setDeliveryNoteProducts(
                                           newDeliveryNoteProducts
@@ -715,7 +715,9 @@ const CreateProviderDeliveryNote = ({ closeCallback, initialState }) => {
                             <Grid item xs={12}>
                               <Button
                                 onClick={() =>
-                                  arrayHelpers.push(EmptyDeliveryNoteProduct)
+                                  arrayHelpers.push(
+                                    EMPTY_PRODUCT_IN_DELIVERY_NOTE
+                                  )
                                 }
                               >
                                 {t('accounting_module.product.create')}

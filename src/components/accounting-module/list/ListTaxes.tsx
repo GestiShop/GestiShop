@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Types } from 'mongoose';
 import CreateTax from '../create/CreateTax';
-import { deleteTaxes, fetchTaxes } from '../../../db/helpers/tax-helper';
+import { deleteTaxes, fetchTaxes } from '../../../db';
 import GenericListComponent from './GenericListComponent';
 import useIsMounted from '../../../utils/useIsMounted';
-import { Types } from 'mongoose';
+import { Tax } from '../../../model/types';
 
 const ListTaxes = (): JSX.Element => {
   const { t } = useTranslation();
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(new Array<Tax>());
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const isMounted = useIsMounted();
 
@@ -30,11 +31,9 @@ const ListTaxes = (): JSX.Element => {
     const response = await fetchTaxes();
     if (response.error !== null) {
       console.log(response.error);
-    } else {
-      if (isMounted.current) {
-        setRows(response.result);
-        setIsDataLoaded(true);
-      }
+    } else if (isMounted.current) {
+      setRows(response.result);
+      setIsDataLoaded(true);
     }
   };
 

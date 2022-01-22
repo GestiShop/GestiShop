@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import { Types } from 'mongoose';
 import Button from '../../ui/forms/Button';
-import Table from '../../ui/Table';
 import FullScreenDialog from '../../ui/FullscreenDialog';
 
 type Props = {
@@ -70,15 +69,15 @@ const GenericListComponent = ({
               <Grid item xs={9} />
 
               <Grid item xs={12}>
-                <Table
-                  isDataLoaded={isDataLoaded}
-                  rows={filteredRows}
-                  headers={headers}
-                  title={texts.title}
-                  editCallback={handleEdit}
-                  deleteCallback={deleteCallback}
-                  printCallback={printCallback ? handlePrint : undefined}
-                />
+                {/* <Table */}
+                {/*   isDataLoaded={isDataLoaded} */}
+                {/*   rows={filteredRows} */}
+                {/*   headers={headers} */}
+                {/*   title={texts.title} */}
+                {/*   editCallback={handleEdit} */}
+                {/*   deleteCallback={deleteCallback} */}
+                {/*   printCallback={printCallback ? handlePrint : undefined} */}
+                {/* /> */}
               </Grid>
             </Grid>
           </Container>

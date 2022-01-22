@@ -12,12 +12,13 @@ import { addClient, updateClient } from '../../../db/ClientHelper';
 import {
   AddressSchemaValidator,
   EmailSchemaValidator,
-  EmptyAddress,
-  EmptyEfact,
-  EmptyEmail,
-  EmptyPhone,
   PhoneSchemaValidator,
 } from '../../../utils/constants';
+import {
+  EMPTY_PHONE,
+  EMPTY_EMAIL,
+  EMPTY_ADDRESS,
+} from '../../../model/samples';
 
 const CreateClient = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -26,18 +27,18 @@ const CreateClient = ({ closeCallback, initialState }) => {
     reference: '',
     contactData: {
       name: '',
-      phone: EmptyPhone,
-      email: EmptyEmail,
+      phone: EMPTY_PHONE,
+      email: EMPTY_EMAIL,
     },
     fiscalData: {
       name: '',
       nif: '',
-      address: EmptyAddress,
+      address: EMPTY_ADDRESS,
     },
     postalData: {
       name: '',
-      email: EmptyEmail,
-      address: EmptyAddress,
+      email: EMPTY_EMAIL,
+      address: EMPTY_ADDRESS,
     },
     tributationData: {
       retentionPercentage: 0,

@@ -23,12 +23,9 @@ import DateTimePicker from '../../ui/forms/DateTimePicker';
 import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
-import {
-  EmptyAddress,
-  EmptyBudgetProduct,
-  AddressSchemaValidator,
-} from '../../../utils/constants';
+import { AddressSchemaValidator } from '../../../utils/constants';
 import Button from '../../ui/forms/Button';
+import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BUDGET } from '../../../model/samples';
 
 const CreateProviderBudget = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -152,7 +149,7 @@ const CreateProviderBudget = ({ closeCallback, initialState }) => {
       fiscalData: {
         name: '',
         nif: '',
-        address: EmptyAddress,
+        address: EMPTY_ADDRESS,
       },
     },
     products: [],
@@ -478,14 +475,14 @@ const CreateProviderBudget = ({ closeCallback, initialState }) => {
                                       onClick={() => {
                                         arrayHelpers.insert(
                                           index,
-                                          EmptyBudgetProduct
+                                          EMPTY_PRODUCT_IN_BUDGET
                                         );
                                         const newBudgetProducts =
                                           budgetProducts;
                                         newBudgetProducts.splice(
                                           index,
                                           0,
-                                          EmptyBudgetProduct
+                                          EMPTY_PRODUCT_IN_BUDGET
                                         );
                                         setBudgetProducts(newBudgetProducts);
                                       }}
@@ -693,7 +690,7 @@ const CreateProviderBudget = ({ closeCallback, initialState }) => {
                             <Grid item xs={12}>
                               <Button
                                 onClick={() =>
-                                  arrayHelpers.push(EmptyBudgetProduct)
+                                  arrayHelpers.push(EMPTY_PRODUCT_IN_BUDGET)
                                 }
                               >
                                 {t('accounting_module.product.create')}

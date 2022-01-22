@@ -25,13 +25,10 @@ import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
 import Select from '../../ui/forms/Select';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
-import {
-  EmptyAddress,
-  EmptyBillProduct,
-  AddressSchemaValidator,
-} from '../../../utils/constants';
+import { AddressSchemaValidator } from '../../../utils/constants';
 import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
+import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BILL } from '../../../model/samples';
 
 const CreateProviderBill = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -155,7 +152,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
       fiscalData: {
         name: '',
         nif: '',
-        address: EmptyAddress,
+        address: EMPTY_ADDRESS,
       },
     },
     products: [],
@@ -486,13 +483,13 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                                       onClick={() => {
                                         arrayHelpers.insert(
                                           index,
-                                          EmptyBillProduct
+                                          EMPTY_PRODUCT_IN_BILL
                                         );
                                         const newBillProducts = billProducts;
                                         newBillProducts.splice(
                                           index,
                                           0,
-                                          EmptyBillProduct
+                                          EMPTY_PRODUCT_IN_BILL
                                         );
                                         setBillProducts(newBillProducts);
                                       }}
@@ -695,7 +692,7 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
                             <Grid item xs={12}>
                               <Button
                                 onClick={() =>
-                                  arrayHelpers.push(EmptyBillProduct)
+                                  arrayHelpers.push(EMPTY_PRODUCT_IN_BILL)
                                 }
                               >
                                 {t('accounting_module.product.create')}

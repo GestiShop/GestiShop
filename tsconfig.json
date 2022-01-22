@@ -23,7 +23,8 @@
     "allowJs": true,
     /* Extra */
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "noUncheckedIndexedAccess": true
   },
   "exclude": [
     "test",

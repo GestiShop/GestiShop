@@ -12,12 +12,14 @@ import { addProvider, updateProvider } from '../../../db/ProviderHelper';
 import {
   AddressSchemaValidator,
   EmailSchemaValidator,
-  EmptyAddress,
-  EmptyEfact,
-  EmptyEmail,
-  EmptyPhone,
   PhoneSchemaValidator,
 } from '../../../utils/constants';
+import {
+  EMPTY_ADDRESS,
+  EMPTY_EFACT,
+  EMPTY_EMAIL,
+  EMPTY_PHONE,
+} from '../../../model/samples';
 
 const CreateProvider = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -26,24 +28,24 @@ const CreateProvider = ({ closeCallback, initialState }) => {
     reference: '',
     contactData: {
       name: '',
-      phone: EmptyPhone,
-      email: EmptyEmail,
+      phone: EMPTY_PHONE,
+      email: EMPTY_EMAIL,
     },
     fiscalData: {
       name: '',
       nif: '',
-      address: EmptyAddress,
+      address: EMPTY_ADDRESS,
     },
     postalData: {
       name: '',
-      email: EmptyEmail,
-      address: EmptyAddress,
+      email: EMPTY_EMAIL,
+      address: EMPTY_ADDRESS,
     },
     tributationData: {
       retentionPercentage: 0,
       personalDiscount: 0,
     },
-    eFactData: EmptyEfact,
+    eFactData: EMPTY_EFACT,
   };
 
   if (initialState) {

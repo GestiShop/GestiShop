@@ -5,7 +5,7 @@ import {
   FLOATING_POINT_OPTIONS,
   LANGUAGE_LIST,
 } from '../../../assets/config/config';
-import { EmptyAddress } from '../constants';
+import { EMPTY_ADDRESS } from '../../model/samples';
 
 const initialState = {
   lang: LocalConfiguration.getLocalLang() || LANGUAGE_LIST[0],
@@ -24,7 +24,7 @@ const initialState = {
   businessInfo: LocalConfiguration.getLocalBusinessInfo() || {
     name: '',
     nif: '',
-    address: EmptyAddress,
+    address: EMPTY_ADDRESS,
   },
 };
 

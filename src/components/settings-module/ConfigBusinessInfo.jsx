@@ -8,8 +8,9 @@ import LocalConfiguration from '../../utils/localConfiguration';
 import { setDefaultBusinessInfo } from '../../utils/redux/configuration';
 import Textfield from '../ui/forms/TextField';
 import SubmitButton from '../ui/forms/SubmitButton';
-import { AddressSchemaValidator, EmptyAddress } from '../../utils/constants';
+import { AddressSchemaValidator } from '../../utils/constants';
 import AddressForm from '../ui/AddressForm';
+import { EMPTY_ADDRESS } from '../../model/samples';
 
 const ConfigBusinessInfo = () => {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ const ConfigBusinessInfo = () => {
     address:
       initialValues && initialValues.address
         ? initialValues.address
-        : EmptyAddress,
+        : EMPTY_ADDRESS,
   };
 
   const handleSubmit = (data) => {

@@ -34,7 +34,7 @@ export type Address = {
 };
 
 export type ProductInBill = {
-  product: Types.ObjectId;
+  product?: Types.ObjectId;
   reference: string;
   name: string;
   basePricePerUnit: number;

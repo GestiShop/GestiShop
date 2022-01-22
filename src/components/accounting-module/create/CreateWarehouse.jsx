@@ -8,8 +8,9 @@ import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
 import { addWarehouse, updateWarehouse } from '../../../db/WarehouseHelper';
-import { AddressSchemaValidator, EmptyAddress } from '../../../utils/constants';
+import { AddressSchemaValidator } from '../../../utils/constants';
 import AddressForm from '../../ui/AddressForm';
+import { EMPTY_ADDRESS } from '../../../model/samples';
 
 const CreateWarehouse = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
   let INITIAL_STATE = {
     reference: '',
     description: '',
-    address: EmptyAddress,
+    address: EMPTY_ADDRESS,
   };
 
   if (initialState) {

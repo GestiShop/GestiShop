@@ -1,56 +1,5 @@
 import * as Yup from 'yup';
 
-export const EmptyEmail = {
-  description: '',
-  email: '',
-};
-
-export const EmptyPhone = {
-  description: '',
-  phone: '',
-};
-
-export const EmptyAddress = {
-  roadType: '',
-  street: '',
-  number: '',
-  floor: '',
-  door: '',
-  extra: '',
-  zipCode: '',
-  city: '',
-  province: '',
-  state: '',
-  country: '',
-};
-
-export const EmptyBillProduct = {
-  product: '',
-  reference: '',
-  name: '',
-  basePricePerUnit: 0,
-  basePrice: 0,
-  unitType: '',
-  discountPercentage: 0,
-  taxPercentage: 0,
-  quantity: 0,
-  pvp: 0,
-};
-
-export const EmptyBudgetProduct = EmptyBillProduct;
-
-export const EmptyDeliveryNoteProduct = EmptyBillProduct;
-
-export const EmptyEfact = {
-  accountingOfficeCode: '',
-  accountingOfficeName: '',
-  managementBodyCode: '',
-  managementBodyName: '',
-  processingUnitCode: '',
-  processingUnitName: '',
-  electronicBillingCode: '',
-};
-
 export const AddressSchemaValidator = (t) => {
   return {
     roadType: Yup.string().required(t('form.errors.required')),
