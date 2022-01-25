@@ -6,6 +6,7 @@ import {
   ProductInBill,
   Tax,
   UnitType,
+  Warehouse,
 } from '../types';
 
 /* ----- ----- AUXILIAR TYPES ----- ----- */
@@ -68,4 +69,11 @@ export const EMPTY_TAX: Tax = {
 export const EMPTY_UNIT_TYPE: UnitType = {
   reference: '',
   unit: '',
+};
+
+/* ----- ----- WAREHOUSE ----- ----- */
+export const EMPTY_WAREHOUSE: Warehouse = {
+  reference: '',
+  description: '',
+  address: EMPTY_ADDRESS,
 };

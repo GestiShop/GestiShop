@@ -218,10 +218,10 @@ export type UnitType = {
   unit: string;
 };
 
-/* ----- ----- PROVIDER ----- ----- */
+/* ----- ----- WAREHOUSE ----- ----- */
 export type Warehouse = {
   id?: Types.ObjectId;
   reference: string;
   description: string;
-  address: string;
+  address: Address;
 };

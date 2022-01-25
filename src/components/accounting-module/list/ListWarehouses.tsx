@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Types } from 'mongoose';
 import GenericListComponent from './GenericListComponent';
-import { deleteWarehouses, fetchWarehouses } from '../../../db/WarehouseHelper';
+import { deleteWarehouses, fetchWarehouses } from '../../../db';
 import CreateWarehouse from '../create/CreateWarehouse';
 import useIsMounted from '../../../utils/useIsMounted';
+import { Warehouse } from '../../../model/types';
 
-const ListWarehouses = () => {
+const ListWarehouses = (): ReactElement => {
   const { t } = useTranslation();
-  const [rows, setRows] = useState([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [rows, setRows] = useState<Array<Warehouse>>([]);
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const isMounted = useIsMounted();
 
   const headers = [
@@ -24,30 +26,21 @@ const ListWarehouses = () => {
     },
   ];
 
-  const fetchData = () => {
-    fetchWarehouses(
-      (error) => {
-        console.log('error', error);
-      },
-      (data) => {
-        if (isMounted.current) {
-          setRows(data);
-          setIsDataLoaded(true);
-        }
+  const fetchData = async (): Promise<void> => {
+    const response = await fetchWarehouses();
+    if (response.error !== null) {
+      console.log(response.error);
+    } else if (isMounted.current) {
+      if (response.result !== null) {
+        setRows(response.result);
+        setIsDataLoaded(true);
       }
-    );
+    }
   };
 
-  const deleteData = (ids) => {
-    deleteWarehouses(
-      ids,
-      (error) => {
-        console.log('error', error);
-      },
-      () => {
-        fetchData();
-      }
-    );
+  const deleteData = async (ids: Array<Types.ObjectId>): Promise<void> => {
+    await deleteWarehouses(ids);
+    fetchData();
   };
 
   useEffect(() => {
@@ -58,8 +51,7 @@ const ListWarehouses = () => {
     fetchData();
   };
 
-  const handleDelete = (ids) => {
-    console.log('Delete rows:', ids);
+  const handleDelete = (ids: Array<Types.ObjectId>): void => {
     deleteData(ids);
   };
 

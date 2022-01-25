@@ -15,7 +15,7 @@ import Switch from '../../ui/forms/Switch';
 import { addProduct, updateProduct } from '../../../db/ProductHelper';
 import { fetchTaxes, fetchUnitTypes } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
-import { fetchWarehouses } from '../../../db/WarehouseHelper';
+import { fetchWarehouses } from '../../../db/helpers/warehouse-helper';
 import { fetchCategories } from '../../../db/CategoryHelper';
 
 const CreateProduct = ({ closeCallback, initialState }) => {

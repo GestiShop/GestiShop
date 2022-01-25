@@ -1,6 +1,22 @@
 /* eslint-disable no-underscore-dangle */
 
-import { CalendarEvent, Tax, UnitType } from '../types';
+import { Address, CalendarEvent, Tax, UnitType, Warehouse } from '../types';
+
+export const decodeAddress = (data: any): Address => {
+  return {
+    roadType: data.roadType,
+    street: data.street,
+    number: data.nuber,
+    floor: data.floor,
+    door: data.door,
+    extra: data.extra,
+    zipCode: data.zipCode,
+    city: data.city,
+    province: data.province,
+    state: data.state,
+    country: data.country,
+  };
+};
 
 export const decodeCalendarEvent = (dbEvent: any): CalendarEvent => {
   return {
@@ -27,5 +43,14 @@ export const decodeUnitType = (dbUnitType: any): UnitType => {
     id: dbUnitType._id,
     reference: dbUnitType.reference,
     unit: dbUnitType.unit,
+  };
+};
+
+export const decodeWarehouse = (dbWarehouse: any): Warehouse => {
+  return {
+    id: dbWarehouse._id,
+    reference: dbWarehouse.reference,
+    description: dbWarehouse.description,
+    address: decodeAddress(dbWarehouse.address),
   };
 };

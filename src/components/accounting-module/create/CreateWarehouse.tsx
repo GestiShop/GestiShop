@@ -1,45 +1,29 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import { addWarehouse, updateWarehouse } from '../../../db/WarehouseHelper';
+import { upsertWarehouse } from '../../../db';
 import { AddressSchemaValidator } from '../../../utils/constants';
 import AddressForm from '../../ui/AddressForm';
-import { EMPTY_ADDRESS } from '../../../model/samples';
+import { EMPTY_WAREHOUSE } from '../../../model/samples';
+import { Warehouse } from '../../../model/types';
 
-const CreateWarehouse = ({ closeCallback, initialState }) => {
+type Props = {
+  closeCallback?: any;
+  initialState?: Warehouse;
+};
+
+const CreateWarehouse = ({
+  closeCallback,
+  initialState,
+}: Props): ReactElement => {
   const { t } = useTranslation();
-
-  let INITIAL_STATE = {
-    reference: '',
-    description: '',
-    address: EMPTY_ADDRESS,
-  };
-
-  if (initialState) {
-    INITIAL_STATE = {
-      reference: initialState.reference,
-      description: initialState.description,
-      address: {
-        roadType: initialState.address.roadType,
-        street: initialState.address.street,
-        number: initialState.address.number,
-        floor: initialState.address.floor,
-        door: initialState.address.door,
-        extra: initialState.address.extra,
-        zipCode: initialState.address.zipCode,
-        city: initialState.address.city,
-        province: initialState.address.province,
-        state: initialState.address.state,
-        country: initialState.address.country,
-      },
-    };
-  }
+  const INITIAL_STATE: Warehouse = initialState ?? EMPTY_WAREHOUSE;
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -47,32 +31,9 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
     address: Yup.object().shape(AddressSchemaValidator(t)),
   });
 
-  const handleSubmit = (data) => {
-    if (!initialState) {
-      addWarehouse(
-        data,
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    } else {
-      updateWarehouse(
-        { ...data, _id: initialState._id },
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    }
+  const handleSubmit = async (data: Warehouse): Promise<void> => {
+    await upsertWarehouse({ ...data, id: initialState?.id });
+    closeCallback();
   };
 
   return (
@@ -124,6 +85,11 @@ const CreateWarehouse = ({ closeCallback, initialState }) => {
       </Grid>
     </Grid>
   );
+};
+
+CreateWarehouse.defaultProps = {
+  closeCallback: undefined,
+  initialState: undefined,
 };
 
 export default CreateWarehouse;
