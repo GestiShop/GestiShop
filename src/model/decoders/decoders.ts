@@ -1,6 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-
-import { Address, CalendarEvent, Tax, UnitType, Warehouse } from '../types';
+import {
+  Address,
+  CalendarEvent,
+  Category,
+  Tax,
+  UnitType,
+  Warehouse,
+} from '../types';
 
 export const decodeAddress = (data: any): Address => {
   return {
@@ -52,5 +58,14 @@ export const decodeWarehouse = (dbWarehouse: any): Warehouse => {
     reference: dbWarehouse.reference,
     description: dbWarehouse.description,
     address: decodeAddress(dbWarehouse.address),
+  };
+};
+
+export const decodeCategory = (dbCategory: any): Category => {
+  return {
+    id: dbCategory._id,
+    reference: dbCategory.reference,
+    name: dbCategory.name,
+    parent: dbCategory.parent,
   };
 };

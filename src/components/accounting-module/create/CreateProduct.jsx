@@ -13,10 +13,13 @@ import Select from '../../ui/forms/Select';
 import MultiSelect from '../../ui/forms/MultiSelect';
 import Switch from '../../ui/forms/Switch';
 import { addProduct, updateProduct } from '../../../db/ProductHelper';
-import { fetchTaxes, fetchUnitTypes } from '../../../db';
+import {
+  fetchTaxes,
+  fetchUnitTypes,
+  fetchWarehouses,
+  fetchCategories,
+} from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
-import { fetchWarehouses } from '../../../db/helpers/warehouse-helper';
-import { fetchCategories } from '../../../db/CategoryHelper';
 
 const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';

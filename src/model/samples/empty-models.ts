@@ -1,5 +1,6 @@
 import {
   Address,
+  Category,
   EFact,
   Email,
   Phone,
@@ -76,4 +77,10 @@ export const EMPTY_WAREHOUSE: Warehouse = {
   reference: '',
   description: '',
   address: EMPTY_ADDRESS,
+};
+
+/* ----- ----- CATEGORY ----- ----- */
+export const EMPTY_CATEGORY: Category = {
+  reference: '',
+  name: '',
 };

@@ -43,11 +43,11 @@ const ListWarehouses = (): ReactElement => {
     fetchData();
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     fetchData();
   }, []);
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     fetchData();
   };
 

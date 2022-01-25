@@ -1,7 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
@@ -9,24 +5,25 @@ import { Container, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';
-import {
-  addCategory,
-  updateCategory,
-  fetchCategories,
-} from '../../../db/CategoryHelper';
+import { upsertCategory, fetchCategories } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
 import Select from '../../ui/forms/Select';
+import { Category } from '../../../model/types';
+import { EMPTY_CATEGORY } from '../../../model/samples';
 
-const CreateCategory = ({ closeCallback, initialState }) => {
+type Props = {
+  closeCallback?: any;
+  initialState?: Category;
+};
+
+const CreateCategory = ({ closeCallback, initialState }: Props) => {
   const { t } = useTranslation();
-  const [categoriesOptions, setCategoriesOptions] = useState([]);
+  const [categoriesOptions, setCategoriesOptions] = useState<Array<Category>>(
+    []
+  );
   const isMounted = useIsMounted();
 
-  const INITIAL_STATE = {
-    reference: initialState?.reference ?? '',
-    name: initialState?.name ?? '',
-    parent: initialState?.parent?.id ?? '',
-  };
+  const INITIAL_STATE: Category = initialState ?? EMPTY_CATEGORY;
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -34,62 +31,35 @@ const CreateCategory = ({ closeCallback, initialState }) => {
     parent: Yup.string(),
   });
 
-  const handleSubmit = (data) => {
-    const parentCategory = categoriesOptions.find((x) => x._id == data.parent);
-    const dataToSubmit = {
+  const handleSubmit = async (data: Category): Promise<void> => {
+    await upsertCategory({
       ...data,
-      parent: parentCategory ? parentCategory._id : null,
-    };
-
-    if (!initialState) {
-      addCategory(
-        dataToSubmit,
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    } else {
-      updateCategory(
-        { ...dataToSubmit, _id: initialState._id },
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    }
+      id: initialState?.id,
+    });
+    closeCallback();
   };
 
-  const fetchData = () => {
-    fetchCategories(
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      (options) => {
-        let categoriesToDisplay = options;
+  const fetchData = async (): Promise<void> => {
+    const response = await fetchCategories();
+    if (response.error !== null) {
+      console.log(response.error);
+    } else if (isMounted.current) {
+      if (response.result !== null) {
+        let categoriesToDisplay = response.result;
 
         if (initialState) {
-          categoriesToDisplay = options.filter(
-            (option) =>
-              JSON.stringify(option._id) !== JSON.stringify(initialState._id)
+          categoriesToDisplay = categoriesToDisplay.filter(
+            (category: Category) =>
+              JSON.stringify(category.id) !== JSON.stringify(initialState.id)
           );
         }
 
-        if (isMounted.current) setCategoriesOptions(categoriesToDisplay);
+        setCategoriesOptions(categoriesToDisplay);
       }
-    );
+    }
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     fetchData();
   }, []);
 
@@ -146,6 +116,11 @@ const CreateCategory = ({ closeCallback, initialState }) => {
       </Grid>
     </Grid>
   );
+};
+
+CreateCategory.defaultProps = {
+  closeCallback: undefined,
+  initialState: undefined,
 };
 
 export default CreateCategory;
