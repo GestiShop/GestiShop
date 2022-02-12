@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -128,13 +126,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AccountingModuleDashboard = () => {
+const AccountingModuleDashboard = (): ReactElement => {
   const { t } = useTranslation();
   const { path, url } = useRouteMatch();
+  const classes = useStyles();
+  const theme = useTheme();
 
-  const [openSettingsDialog, setOpenSettingsDialog] = useState(false);
-
-  const DRAWER_ITEMS = [
+  const DRAWER_ITEMS: Array<
+    Array<{
+      text: string;
+      icon: ReactElement;
+      linkTo: string;
+    }>
+  > = [
     [
       {
         text: t('accounting_module.menu.schedule'),
@@ -222,23 +226,22 @@ const AccountingModuleDashboard = () => {
     ],
   ];
 
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(true);
-  const [indexes, setIndexes] = useState({
+  const [openSettingsDialog, setOpenSettingsDialog] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
+  const [indexes, setIndexes] = useState<{ i: number; j: number }>({
     i: 0,
     j: 0,
   });
 
-  const handleDrawerOpen = () => {
+  const handleDrawerOpen = (): void => {
     setOpen(true);
   };
 
-  const handleDrawerClose = () => {
+  const handleDrawerClose = (): void => {
     setOpen(false);
   };
 
-  const isItemSelected = (i, j) => {
+  const isItemSelected = (i: number, j: number): boolean => {
     return indexes.i === i && indexes.j === j;
   };
 
@@ -336,6 +339,7 @@ const AccountingModuleDashboard = () => {
 
               if (i !== DRAWER_ITEMS.length - 1) {
                 itemList = itemList.concat(
+                  // eslint-disable-next-line react/no-array-index-key
                   <Divider key={`elementlist-${i}`} />
                 );
               }
