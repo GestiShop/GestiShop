@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createTheme, MuiThemeProvider } from '@material-ui/core';
+import { createTheme, ThemeProvider } from '@mui/material';
 import '@fontsource/roboto';
 import App from './App';
 import './i18n';
@@ -30,8 +30,8 @@ const theme = createTheme({
 });
 
 render(
-  <MuiThemeProvider theme={theme}>
+  <ThemeProvider theme={theme}>
     <App />
-  </MuiThemeProvider>,
+  </ThemeProvider>,
   document.getElementById('root')
 );
