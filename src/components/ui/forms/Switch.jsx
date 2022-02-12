@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import { FormControlLabel, Switch } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
 const SwitchWrapper = ({

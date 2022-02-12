@@ -1,12 +1,11 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { ClassNameMap } from '@material-ui/styles';
+import { Box } from '@mui/material';
 import { connectDb } from '../db';
 import logo from '../../assets/gestishop_logo.png';
 
-const useStyles = makeStyles(() => ({
+const classes = {
   floatCenter: {
     height: '100%',
     width: '100%',
@@ -18,12 +17,11 @@ const useStyles = makeStyles(() => ({
   logo: {
     width: '750px',
   },
-}));
+};
 
 const Home = (): ReactElement => {
   const { t } = useTranslation();
   const history = useHistory();
-  const classes: ClassNameMap<string> = useStyles();
   const [text, setText] = useState(t('home.loading'));
 
   useEffect(() => {
@@ -36,10 +34,10 @@ const Home = (): ReactElement => {
   }, []);
 
   return (
-    <div className={classes.floatCenter}>
-      <img className={classes.logo} src={logo} alt="GestiShop" />
+    <Box sx={classes.floatCenter}>
+      <Box component="img" sx={classes.logo} src={logo} alt="GestiShop" />
       <p>{text}</p>
-    </div>
+    </Box>
   );
 };
 

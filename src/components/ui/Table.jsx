@@ -7,8 +7,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import {
+  lighten,
   Button,
   Checkbox,
   Dialog,
@@ -29,7 +30,7 @@ import {
   Tooltip,
   Typography,
   CircularProgress,
-} from '@material-ui/core';
+} from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';

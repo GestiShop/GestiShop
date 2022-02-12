@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';

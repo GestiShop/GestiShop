@@ -2,7 +2,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { MenuItem, TextField, makeStyles } from '@material-ui/core';
+import { MenuItem, TextField } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { useField, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import GenericListComponent from './GenericListComponent';
 import {
   deleteClientBills,

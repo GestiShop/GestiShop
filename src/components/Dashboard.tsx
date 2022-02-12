@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { FileCopy as FileCopyIcon } from '@mui/icons-material';
 import Button from './ui/forms/Button';
 
 const Dashboard = (): ReactElement => {

@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link, useRouteMatch, Route, Switch, Redirect } from 'react-router-dom';
 import {
   Drawer,
@@ -15,27 +14,31 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import EventIcon from '@material-ui/icons/Event';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import StoreIcon from '@material-ui/icons/Store';
-import PeopleIcon from '@material-ui/icons/People';
-import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
-import DescriptionIcon from '@material-ui/icons/Description';
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import ReceiptOutlinedIcon from '@material-ui/icons/ReceiptOutlined';
-import CategoryIcon from '@material-ui/icons/Category';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+  useTheme,
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import {
+  Menu as MenuIcon,
+  Settings as SettingsIcon,
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
+  Event as EventIcon,
+  ShoppingBasket as ShoppingBasketIcon,
+  AccountBalance as AccountBalanceIcon,
+  Timeline as TimelineIcon,
+  Store as StoreIcon,
+  People as PeopleIcon,
+  PeopleOutlineOutlined as PeopleOutlineOutlinedIcon,
+  Description as DescriptionIcon,
+  DescriptionOutlined as DescriptionOutlinedIcon,
+  Receipt as ReceiptIcon,
+  ReceiptOutlined as ReceiptOutlinedIcon,
+  Category as CategoryIcon,
+  InsertDriveFile as InsertDriveFileIcon,
+  Assignment as AssignmentIcon,
+  AssignmentOutlined as AssignmentOutlinedIcon,
+  ArrowBack as ArrowBackIcon,
+} from '@mui/icons-material';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
 import ListUnitTypes from './list/ListUnitTypes';

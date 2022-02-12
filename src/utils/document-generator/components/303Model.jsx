@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { withStyles } from '@material-ui/styles';
 import {
   Table,
   TableBody,
@@ -12,19 +11,25 @@ import {
   TableRow,
   Grid,
   Typography,
-} from '@material-ui/core';
+  Box,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const StyledTableCell = withStyles(() => ({
-  head: {
-    backgroundColor: '#E1E1E1',
-    fontWeight: 'bold',
-  },
-  body: {
-    backgroundColor: '#E1E1E1',
-    fontWeight: 'bold',
-  },
-}))(TableCell);
+const StyledTableCell = (
+  <Box
+    sx={{
+      head: {
+        backgroundColor: '#E1E1E1',
+        fontWeight: 'bold',
+      },
+      body: {
+        backgroundColor: '#E1E1E1',
+        fontWeight: 'bold',
+      },
+    }}
+    component={TableCell}
+  />
+);
 
 const Header = () => {
   const { t } = useTranslation();

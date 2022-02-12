@@ -1,9 +1,12 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { Grid } from '@material-ui/core';
+import {
+  createStyles,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Grid,
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setDefaultDatabaseInfo } from '../../utils/redux/configuration';

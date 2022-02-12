@@ -2,8 +2,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Tabs, Tab, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Tabs, Tab, Box } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import ConfigLanguage from './ConfigLanguage';
 import ConfigCurrencyInfo from './ConfigCurrencyInfo';

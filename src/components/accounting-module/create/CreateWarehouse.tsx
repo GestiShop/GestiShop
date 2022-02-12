@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import TextField from '../../ui/forms/TextField';
 import SubmitButton from '../../ui/forms/SubmitButton';

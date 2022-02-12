@@ -6,12 +6,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  MenuItem,
+  ListItemText,
+  Select,
+  Checkbox,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
 import { useField, useFormikContext } from 'formik';
-import { FormControl, InputLabel } from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

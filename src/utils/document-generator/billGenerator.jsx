@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { BillHeader, ProductsTable, SummaryTable } from './components/Bill';
 
 const generateHeader = (billNumberPreamble, billNumber, date, clientData) => {

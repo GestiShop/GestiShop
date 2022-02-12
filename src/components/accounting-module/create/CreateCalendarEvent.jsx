@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Grid, Container } from '@material-ui/core';
+import { Grid, Container } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';

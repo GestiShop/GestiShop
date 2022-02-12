@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import { Container, Grid, Box } from '@material-ui/core';
+import { Container, Grid, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import Button from '../../ui/forms/Button';
 import { fetchClientsWithBills } from '../../../db/ClientHelper';

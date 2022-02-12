@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React, { ReactElement } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const ButtonWrapper = ({
   children,

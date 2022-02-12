@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { Header, MoneySummaryTable } from './components/303Model';
 
 const generateHeader = () => {

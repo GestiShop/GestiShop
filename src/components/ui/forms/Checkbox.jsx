@@ -7,7 +7,7 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
 const CheckboxWrapper = ({ name, label, legend }) => {

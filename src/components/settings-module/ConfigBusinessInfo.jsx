@@ -2,7 +2,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
 import LocalConfiguration from '../../utils/localConfiguration';
 import { setDefaultBusinessInfo } from '../../utils/redux/configuration';
