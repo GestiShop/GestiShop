@@ -19,11 +19,20 @@
     "title": "Configuración",
     "language_config": {
       "title": "Selección del idioma",
-      "language": "Idioma"
+      "language": "Idioma",
+      "language_list": {
+        "en": "English",
+        "es": "Español",
+        "ca": "Català"
+      }
     },
     "currency_config": {
       "title": "Selección de la divisa",
       "currency": "Divisa",
+      "currency_list": {
+        "eur": "€",
+        "usd": "$"
+      },
       "decimal_mode": "Modo de decimales",
       "floating_positions": "Número de decimales"
     },

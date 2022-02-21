@@ -12,11 +12,11 @@ import FullScreenDialog from '../../ui/FullscreenDialog';
 import { upsertEvent, fetchEvents } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
 import CreateCalendarEvent from '../create/CreateCalendarEvent';
-import EVENT_COLOR_LIST from '../../../../assets/event_colors';
+import { DEFAULT_EVENT_COLOR_CODE } from '../../../../assets/config/config';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
 
-const localLang = LocalConfiguration.getLocalLang();
+const localLang = LocalConfiguration.getLocalLangCode();
 if (localLang != null) {
   const langPath = `${localLang.value}${localLang.value === 'en' ? '-gb' : ''}`;
   import(`moment/locale/${langPath}`);
@@ -134,11 +134,9 @@ const EventCalendar = () => {
 
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
-      backgroundColor: event.colorCode ? event.colorCode : EVENT_COLOR_LIST[0],
-      color:
-        !event.colorCode || event.colorCode == 'lightseagreen'
-          ? 'white'
-          : 'darkslategray',
+      backgroundColor:
+        event.colorCode.background ?? DEFAULT_EVENT_COLOR_CODE.background,
+      color: event.colorCode.text ?? DEFAULT_EVENT_COLOR_CODE.text,
     };
     return {
       style,

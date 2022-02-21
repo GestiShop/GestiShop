@@ -3,28 +3,28 @@ import * as Yup from 'yup';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import LocalConfiguration from '../../utils/localConfiguration';
-import Select from '../ui/forms/Select';
-import { LANGUAGE_LIST } from '../../../assets/config/config';
-import { setDefaultLang } from '../../utils/redux/configuration';
+import LocalConfiguration from '../../../utils/localConfiguration';
+import Select from '../../ui/forms/Select';
+import {
+  LANGUAGE_LIST,
+  PlatformLanguageCode,
+} from '../../../../assets/config/config';
+import {
+  setDefaultLang,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../utils/redux';
 
 const ConfigLanguage = () => {
   const { t, i18n } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const initialValue = useSelector((store) => store.configuration.lang);
-
-  const INITIAL_STATE = initialValue
-    ? {
-        lang: initialValue.value,
-      }
-    : {
-        lang: LANGUAGE_LIST[0].value,
-      };
+  const INITIAL_STATE: { langCode: PlatformLanguageCode } = {
+    langCode: useAppSelector((store) => store.configuration.langCode),
+  };
 
   const FORM_VALIDATION = Yup.object().shape({
-    lang: Yup.string().required(t('form.errors.required')),
+    langCode: Yup.string().required(t('form.errors.required')),
   });
 
   return (
@@ -39,21 +39,25 @@ const ConfigLanguage = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Select
-                    name="lang"
+                    name="langCode"
                     label={t('settings.language_config.language')}
                     options={LANGUAGE_LIST.map((x) => {
                       return {
-                        displayText: x.label,
-                        value: x.value,
+                        displayText: t(
+                          `settings.language_config.language_list.${x}`
+                        ),
+                        value: x,
                       };
                     })}
-                    onInput={(event) => {
-                      const newLang = LANGUAGE_LIST.filter(
-                        (x) => x.value === event.target.value
-                      )[0];
+                    onInput={(event: {
+                      target: {
+                        value: PlatformLanguageCode;
+                      };
+                    }) => {
+                      const newLang: PlatformLanguageCode = event.target.value;
 
                       LocalConfiguration.setLocalLang(newLang);
-                      i18n.changeLanguage(newLang.value);
+                      i18n.changeLanguage(newLang);
                       dispatch(setDefaultLang(newLang));
                     }}
                   />

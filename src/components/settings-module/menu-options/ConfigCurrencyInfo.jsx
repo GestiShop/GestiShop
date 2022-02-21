@@ -4,18 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
-import LocalConfiguration from '../../utils/localConfiguration';
-import Select from '../ui/forms/Select';
+import LocalConfiguration from '../../../utils/localConfiguration';
+import Select from '../../ui/forms/Select';
 import {
-  setDefaultCurrency,
-  setDefaultDecimalMode,
+  setDefaultCurrencyCode,
+  setDefaultDecimalModeCode,
   setDefaultFloatingPositions,
-} from '../../utils/redux/configuration';
+} from '../../../utils/redux/configuration';
 import {
   CURRENCY_LIST,
   DECIMAL_MODES,
-  FLOATING_POINT_OPTIONS,
-} from '../../../assets/config/config';
+  DEFAULT_CURRENCY_CODE,
+  DEFAULT_DECIMAL_MODE_CODE,
+  DEFAULT_FLOATING_POSITION_OPTION_CODE,
+  FLOATING_POSITION_OPTIONS,
+} from '../../../../assets/config/config';
 
 const ConfigCurrencyInfo = () => {
   const { t } = useTranslation();
@@ -25,26 +28,19 @@ const ConfigCurrencyInfo = () => {
     (store) => store.configuration.currencyInfo
   );
 
+  const INITIAL_STATE = {
+    currencyCode: initialValues?.currencyCode ?? DEFAULT_CURRENCY_CODE,
+    decimalModeCode:
+      initialValues?.decimalModeCode ?? DEFAULT_DECIMAL_MODE_CODE,
+    floatingPositions:
+      initialValues?.floatingPositions ?? DEFAULT_FLOATING_POSITION_OPTION_CODE,
+  };
+
   const FORM_VALIDATION = Yup.object().shape({
-    currency: Yup.string().required(t('form.errors.required')),
-    decimalMode: Yup.string().required(t('form.errors.required')),
+    currencyCode: Yup.string().required(t('form.errors.required')),
+    decimalModeCode: Yup.string().required(t('form.errors.required')),
     floatingPositions: Yup.string().required(t('form.errors.required')),
   });
-
-  const INITIAL_STATE = {
-    currency:
-      initialValues && initialValues.currency && initialValues.currency.value
-        ? initialValues.currency.value
-        : CURRENCY_LIST[0],
-    decimalMode:
-      initialValues && initialValues.decimalMode
-        ? initialValues.decimalMode
-        : DECIMAL_MODES[0],
-    floatingPositions:
-      initialValues && initialValues.floatingPositions != null
-        ? initialValues.floatingPositions
-        : FLOATING_POINT_OPTIONS[0],
-  };
 
   return (
     <Grid container>
@@ -58,28 +54,28 @@ const ConfigCurrencyInfo = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Select
-                    name="currency"
+                    name="currencyCode"
                     label={t('settings.currency_config.currency')}
-                    options={CURRENCY_LIST.map((x) => {
+                    options={CURRENCY_LIST.map((currencyCode) => {
                       return {
-                        displayText: `${x.value} [${x.label}]`,
-                        value: x.value,
+                        displayText: `${currencyCode} [${t(
+                          `settings.currency_config.currency_list.${currencyCode}`
+                        )}]`,
+                        value: currencyCode,
                       };
                     })}
                     onInput={(event) => {
-                      LocalConfiguration.setLocalCurrency(
-                        CURRENCY_LIST.filter(
-                          (x) => x.value === event.target.value
-                        )[0]
+                      LocalConfiguration.setLocalCurrencyCode(
+                        event.target.value
                       );
-                      dispatch(setDefaultCurrency(event.target.value));
+                      dispatch(setDefaultCurrencyCode(event.target.value));
                     }}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <Select
-                    name="decimalMode"
+                    name="decimalModeCode"
                     label={t('settings.currency_config.decimal_mode')}
                     options={DECIMAL_MODES.map((x) => {
                       return {
@@ -88,10 +84,10 @@ const ConfigCurrencyInfo = () => {
                       };
                     })}
                     onInput={(event) => {
-                      LocalConfiguration.setLocalDecimalMode(
+                      LocalConfiguration.setLocalDecimalModeCode(
                         event.target.value
                       );
-                      dispatch(setDefaultDecimalMode(event.target.value));
+                      dispatch(setDefaultDecimalModeCode(event.target.value));
                     }}
                   />
                 </Grid>
@@ -100,7 +96,7 @@ const ConfigCurrencyInfo = () => {
                   <Select
                     name="floatingPositions"
                     label={t('settings.currency_config.floating_positions')}
-                    options={FLOATING_POINT_OPTIONS.map((x) => {
+                    options={FLOATING_POSITION_OPTIONS.map((x) => {
                       return {
                         displayText: `${x}`,
                         value: x,

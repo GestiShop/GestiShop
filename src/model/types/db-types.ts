@@ -58,7 +58,10 @@ const calendarEventSchema = new Schema<CalendarEvent>({
   title: { type: String, required: true },
   description: String,
   allDay: Boolean,
-  colorCode: String,
+  colorCode: {
+    background: { type: String, required: true },
+    text: { type: String, required: true },
+  },
 });
 
 export const DBCalendarEvent = model<CalendarEvent>(

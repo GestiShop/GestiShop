@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Grid, Container } from '@mui/material';
@@ -13,18 +12,23 @@ import DateTimePicker from '../../ui/forms/DateTimePicker';
 import Switch from '../../ui/forms/Switch';
 import Button from '../../ui/forms/Button';
 import ColoredSelect from '../../ui/forms/ColoredSelect';
-import EVENT_COLOR_LIST from '../../../../assets/event_colors';
+import {
+  DEFAULT_EVENT_COLOR_CODE,
+  EVENT_COLOR_LIST,
+} from '../../../../assets/config/config';
 
 const CreateCalendarEvent = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
 
   const INITIAL_STATE = {
-    title: initialState.title,
+    title: initialState?.title ?? '',
     start: moment(initialState.start).format('YYYY-MM-DDTHH:mm'),
     end: moment(initialState.end).format('YYYY-MM-DDTHH:mm'),
-    description: initialState.description || '',
-    colorCode: initialState.colorCode || 'lightseagreen',
-    allDay: initialState.allDay || false,
+    description: initialState?.description ?? '',
+    colorCode:
+      initialState?.colorCode?.background ??
+      DEFAULT_EVENT_COLOR_CODE.background,
+    allDay: initialState?.allDay ?? false,
   };
 
   const handleSubmit = async (data) => {
@@ -102,7 +106,7 @@ const CreateCalendarEvent = ({ closeCallback, initialState }) => {
                   <ColoredSelect
                     name="colorCode"
                     label={t('accounting_module.event.structure.color')}
-                    options={EVENT_COLOR_LIST}
+                    options={EVENT_COLOR_LIST.map((x) => x.background)}
                   />
                 </Grid>
 

@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
-import LocalConfiguration from '../../utils/localConfiguration';
-import { setDefaultBusinessInfo } from '../../utils/redux/configuration';
-import Textfield from '../ui/forms/TextField';
-import SubmitButton from '../ui/forms/SubmitButton';
-import { AddressSchemaValidator } from '../../utils/constants';
-import AddressForm from '../ui/AddressForm';
-import { EMPTY_ADDRESS } from '../../model/samples';
+import LocalConfiguration from '../../../utils/localConfiguration';
+import { setDefaultBusinessInfo } from '../../../utils/redux/configuration';
+import Textfield from '../../ui/forms/TextField';
+import SubmitButton from '../../ui/forms/SubmitButton';
+import { AddressSchemaValidator } from '../../../utils/constants';
+import AddressForm from '../../ui/AddressForm';
+import { EMPTY_ADDRESS } from '../../../model/samples';
 
 const ConfigBusinessInfo = () => {
   const { t } = useTranslation();

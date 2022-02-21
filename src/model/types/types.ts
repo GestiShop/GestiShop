@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { PlatformEventColorCode } from '../../../assets/config/config';
 
 export type DBHelperResponse<T> = {
   error: {
@@ -80,7 +81,7 @@ export type CalendarEvent = {
   title: string;
   description?: string;
   allDay?: boolean;
-  colorCode?: string;
+  colorCode?: PlatformEventColorCode;
 };
 
 /* ----- ----- BILL ----- ----- */

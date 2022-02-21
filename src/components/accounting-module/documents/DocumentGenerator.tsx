@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, ReactElement } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { Container, Grid, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -9,77 +9,48 @@ import generate347Model from '../../../utils/document-generator/347modelGenerato
 import generate130Model from '../../../utils/document-generator/130modelGenerator';
 import generate303Model from '../../../utils/document-generator/303modelGenerator';
 
-const DocumentGenerator = () => {
+const DocumentGenerator = (): ReactElement => {
   const { t } = useTranslation();
   const componentRef = useRef();
-  const [contentToPrint, setContentToPrint] = useState(null);
-  const [shouldPrint, setShouldPrint] = useState(false);
+  const [contentToPrint, setContentToPrint] = useState<ReactElement | null>(
+    null
+  );
+  const [shouldPrint, setShouldPrint] = useState<boolean>(false);
 
-  const generate130ModelHandler = () => {
-    fetchClientsWithBills(
-      (error) => {
-        console.log('error', error);
-      },
-      (clients) => {
-        fetchProvidersWithBills(
-          (error) => {
-            console.log('error', error);
-          },
-          (providers) => {
-            setContentToPrint(generate130Model(providers, clients));
-            setShouldPrint(true);
-          }
-        );
-      }
-    );
+  const generate130ModelHandler = async (): Promise<void> => {
+    const clients = await fetchClientsWithBills();
+    const providers = await fetchProvidersWithBills();
+
+    setContentToPrint(generate130Model(providers, clients));
+    setShouldPrint(true);
   };
 
-  const generate303ModelHandler = () => {
-    fetchClientsWithBills(
-      (error) => {
-        console.log('error', error);
-      },
-      (clients) => {
-        fetchProvidersWithBills(
-          (error) => {
-            console.log('error', error);
-          },
-          (providers) => {
-            setContentToPrint(generate303Model(providers, clients));
-            setShouldPrint(true);
-          }
-        );
-      }
-    );
+  const generate303ModelHandler = async (): Promise<void> => {
+    const clients = await fetchClientsWithBills();
+    const providers = await fetchProvidersWithBills();
+
+    setContentToPrint(generate303Model(providers, clients));
+    setShouldPrint(true);
   };
 
-  const generate347ModelHandler = () => {
-    fetchClientsWithBills(
-      (error) => {
-        console.log('error', error);
-      },
-      (clients) => {
-        fetchProvidersWithBills(
-          (error) => {
-            console.log('error', error);
-          },
-          (providers) => {
-            setContentToPrint(generate347Model(providers, clients));
-            setShouldPrint(true);
-          }
-        );
-      }
-    );
+  const generate347ModelHandler = async (): Promise<void> => {
+    const clients = await fetchClientsWithBills();
+    const providers = await fetchProvidersWithBills();
+
+    setContentToPrint(generate347Model(providers, clients));
+    setShouldPrint(true);
   };
 
   const printHandler = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => componentRef?.current ?? null,
     removeAfterPrint: true,
     suppressErrors: true,
   });
 
-  useEffect(() => {
-    if (!shouldPrint) return;
+  useEffect((): void => {
+    if (!shouldPrint) {
+      return;
+    }
 
     printHandler();
     setShouldPrint(false);

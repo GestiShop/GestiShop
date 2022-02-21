@@ -9,7 +9,7 @@ import {
 import { makeStyles } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setDefaultDatabaseInfo } from '../../utils/redux/configuration';
+import { setDefaultDatabaseInfo } from '../../../utils/redux/configuration';
 
 const useStyles = makeStyles((theme) =>
   createStyles({

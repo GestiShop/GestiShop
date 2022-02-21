@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
@@ -11,4 +10,7 @@ const rootReducer = combineReducers({
 const generateStore = () =>
   createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk)));
 
-export default generateStore;
+export const store = generateStore();
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
