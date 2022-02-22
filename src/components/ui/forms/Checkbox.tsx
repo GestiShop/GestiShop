@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   Checkbox,
   FormControl,
@@ -10,13 +9,22 @@ import {
 } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
-const CheckboxWrapper = ({ name, label, legend }) => {
+type Props = {
+  name: string;
+  label: string;
+  legend: string;
+};
+
+const CheckboxWrapper = ({ name, label, legend }: Props): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
-  const handleChange = (evt) => {
-    const { checked } = evt.target;
-    setFieldValue(name, checked);
+  const handleChange = (event: {
+    target: {
+      checked: boolean;
+    };
+  }): void => {
+    setFieldValue(name, event.target.checked);
   };
 
   const configCheckbox = {
@@ -24,8 +32,11 @@ const CheckboxWrapper = ({ name, label, legend }) => {
     onChange: handleChange,
   };
 
-  const configFormControl = {};
-  if (meta && meta.touched && meta.error) {
+  const configFormControl = {
+    error: false,
+  };
+
+  if (meta?.touched && meta?.error) {
     configFormControl.error = true;
   }
 

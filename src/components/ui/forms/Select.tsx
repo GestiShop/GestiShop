@@ -1,31 +1,61 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { MenuItem, TextField } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
+type OptionType = {
+  value: any;
+  displayText: string;
+};
+
+type Props = {
+  name: string;
+  label: string;
+  options: Array<OptionType>;
+  onInput: (arg0: any) => void;
+  acceptNone: boolean;
+  required: boolean;
+};
+
+type SelectProps = {
+  name: string;
+  label: string;
+  select: boolean;
+  variant: 'outlined';
+  fullWidth: boolean;
+  onChange: (arg0: { target: { value: any } }) => void;
+  InputLabelProps: {
+    required: boolean;
+  };
+  error: boolean;
+  helperText: string;
+};
+
 const SelectWrapper = ({
   name,
+  label,
   options,
   onInput,
   acceptNone,
   required,
   ...otherProps
-}) => {
+}: Props): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: any } }): void => {
     setFieldValue(name, event.target.value);
     if (onInput) {
-      onInput(event);
+      onInput(event.target.value);
     }
   };
 
-  const configSelect = {
+  const configSelect: SelectProps = {
     ...field,
     ...otherProps,
+    label,
+    name,
     select: true,
     variant: 'outlined',
     fullWidth: true,
@@ -33,20 +63,18 @@ const SelectWrapper = ({
     InputLabelProps: {
       required,
     },
+    error: false,
+    helperText: '',
   };
 
-  if (meta && meta.touched && meta.error) {
+  if (meta?.touched && meta?.error) {
     configSelect.error = true;
     configSelect.helperText = meta.error;
   }
 
   return (
     <TextField {...configSelect}>
-      {acceptNone && (
-        <MenuItem key={-1} value="">
-          -
-        </MenuItem>
-      )}
+      {acceptNone && <MenuItem key={-1}>-</MenuItem>}
 
       {options.map((item, pos) => (
         <MenuItem key={pos} value={item.value}>

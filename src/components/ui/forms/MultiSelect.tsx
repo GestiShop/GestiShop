@@ -1,11 +1,6 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-undef */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import {
   MenuItem,
   ListItemText,
@@ -15,6 +10,37 @@ import {
   InputLabel,
 } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
+
+type OptionType = {
+  value: any;
+  displayText: string;
+};
+
+type Props = {
+  name: string;
+  label: string;
+  options: Array<OptionType>;
+  initialValue: any;
+};
+
+type MultiSelectProps = {
+  labelId: string;
+  label: string;
+  name: string;
+  multiple: boolean;
+  MenuProps: {
+    PaperProps: {
+      style: {
+        maxHeight: number;
+        width: number;
+      };
+    };
+    getContentAnchorEl: () => null;
+  };
+  onChange: (arg0: { target: { value: any } }) => void;
+  error: boolean;
+  helperText: string;
+};
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,29 +60,32 @@ const MultiSelectWrapper = ({
   options,
   initialValue,
   ...otherProps
-}) => {
+}: Props): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
   const [value, setValue] = useState(initialValue);
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: any } }): void => {
     setValue(event.target.value);
     setFieldValue(name, event.target.value);
   };
 
   const labelId = `multi-select-label-${label}`;
 
-  const configMultiSelect = {
+  const configMultiSelect: MultiSelectProps = {
     ...field,
     ...otherProps,
     labelId,
     label,
+    name,
     multiple: true,
     MenuProps,
     onChange: handleChange,
+    error: false,
+    helperText: '',
   };
 
-  if (meta && meta.touched && meta.error) {
+  if (meta?.touched && meta?.error) {
     configMultiSelect.error = true;
     configMultiSelect.helperText = meta.error;
   }

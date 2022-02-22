@@ -39,6 +39,7 @@ const ConfigLanguage = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Select
+                    acceptNone={false}
                     name="langCode"
                     label={t('settings.language_config.language')}
                     options={LANGUAGE_LIST.map((x) => {
@@ -49,13 +50,7 @@ const ConfigLanguage = () => {
                         value: x,
                       };
                     })}
-                    onInput={(event: {
-                      target: {
-                        value: PlatformLanguageCode;
-                      };
-                    }) => {
-                      const newLang: PlatformLanguageCode = event.target.value;
-
+                    onInput={(newLang: PlatformLanguageCode) => {
                       LocalConfiguration.setLocalLang(newLang);
                       i18n.changeLanguage(newLang);
                       dispatch(setDefaultLang(newLang));

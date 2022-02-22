@@ -1,13 +1,19 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { useFormikContext } from 'formik';
 import Button from './Button';
 
-const SubmitButtonWrapper = ({ children, ...otherProps }) => {
+type Props = {
+  children: ReactNode;
+};
+
+const SubmitButtonWrapper = ({
+  children,
+  ...otherProps
+}: Props): ReactElement => {
   const { submitForm } = useFormikContext();
 
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     submitForm();
   };
 

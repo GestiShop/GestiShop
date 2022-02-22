@@ -1,10 +1,35 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { TextField } from '@mui/material';
 import { Autocomplete } from '@mui/lab';
 import { useField, useFormikContext } from 'formik';
+
+type OptionType = {
+  displayText: string;
+  value: any;
+};
+
+type Props = {
+  name: string;
+  label: string;
+  required: boolean;
+  acceptNone: boolean;
+  onInput: (arg0: OptionType) => void;
+  options: Array<OptionType>;
+};
+
+type TextFieldProps = {
+  variant: 'outlined';
+  fullWidth: boolean;
+  label: string;
+  InputLabelProps: {
+    shrink: boolean;
+    required: boolean;
+  };
+  error: boolean;
+  helperText: string;
+};
 
 const AutocompleteSelectWrapper = ({
   name,
@@ -14,13 +39,21 @@ const AutocompleteSelectWrapper = ({
   required,
   acceptNone,
   ...otherProps
-}) => {
+}: Props): ReactElement => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (
+    _event: any,
+    newValue: OptionType | Array<OptionType> | null
+  ): void => {
+    if (Array.isArray(newValue)) {
+      return;
+    }
+
     setFieldValue(name, newValue);
-    if (onInput && newValue && newValue.value) {
+
+    if (onInput && newValue?.value) {
       onInput(newValue.value);
     }
   };
@@ -32,14 +65,14 @@ const AutocompleteSelectWrapper = ({
     autoComplete: true,
     autoHighlight: true,
     autoSelect: true,
-    groupBy: (option) => option.displayText[0].toUpperCase(),
-    getOptionLabel: (option) =>
-      option && option.displayText ? option.displayText : '',
-    getOptionSelected: (option, value) => option.value === value.value,
+    groupBy: (option: OptionType) => option.displayText.toUpperCase(),
+    getOptionLabel: (option: OptionType) => option.displayText ?? '',
+    getOptionSelected: (option: OptionType, value: OptionType) =>
+      option.value === value.value,
     onChange: handleChange,
   };
 
-  const configTextField = {
+  const configTextField: TextFieldProps = {
     variant: 'outlined',
     fullWidth: true,
     label,
@@ -47,9 +80,11 @@ const AutocompleteSelectWrapper = ({
       shrink: true,
       required,
     },
+    error: false,
+    helperText: '',
   };
 
-  if (meta && meta.touched && meta.error) {
+  if (meta?.touched && meta?.error) {
     configTextField.error = true;
     configTextField.helperText = meta.error;
   }
@@ -59,9 +94,9 @@ const AutocompleteSelectWrapper = ({
       {...configSelect}
       options={options.sort(
         (a, b) =>
-          -b.displayText[0]
+          -b.displayText
             .toUpperCase()
-            .localeCompare(a.displayText[0].toUpperCase())
+            .localeCompare(a.displayText.toUpperCase())
       )}
       renderInput={(params) => <TextField {...params} {...configTextField} />}
     />

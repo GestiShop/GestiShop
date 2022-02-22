@@ -1,11 +1,25 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { MenuItem, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useField, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
+
+type Props = {
+  name: string;
+  options: Array<string>;
+};
+
+type SelectProps = {
+  name: string;
+  select: boolean;
+  variant: 'outlined';
+  fullWidth: boolean;
+  onChange: (arg0: { target: { value: string } }) => void;
+  error: boolean;
+  helperText: string;
+};
 
 const useStyles = makeStyles(() => ({
   dot: {
@@ -24,26 +38,33 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ColoredSelect = ({ name, options, ...otherProps }) => {
+const ColoredSelect = ({
+  name,
+  options,
+  ...otherProps
+}: Props): ReactElement => {
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
   const classes = useStyles();
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: string } }): void => {
     setFieldValue(name, event.target.value);
   };
 
-  const configSelect = {
+  const configSelect: SelectProps = {
     ...field,
     ...otherProps,
+    name,
     select: true,
     variant: 'outlined',
     fullWidth: true,
     onChange: handleChange,
+    error: false,
+    helperText: '',
   };
 
-  if (meta && meta.touched && meta.error) {
+  if (meta?.touched && meta?.error) {
     configSelect.error = true;
     configSelect.helperText = meta.error;
   }
