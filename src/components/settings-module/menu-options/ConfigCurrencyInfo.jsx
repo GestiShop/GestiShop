@@ -20,7 +20,7 @@ import {
   FLOATING_POSITION_OPTIONS,
 } from '../../../../assets/config/config';
 
-const ConfigCurrencyInfo = () => {
+export const ConfigCurrencyInfo = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -118,5 +118,3 @@ const ConfigCurrencyInfo = () => {
     </Grid>
   );
 };
-
-export default ConfigCurrencyInfo;

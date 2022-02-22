@@ -1,5 +1,4 @@
 /* eslint-disable prefer-destructuring */
-/* eslint-disable import/prefer-default-export */
 import { connect, Mongoose } from 'mongoose';
 import { config } from 'dotenv';
 

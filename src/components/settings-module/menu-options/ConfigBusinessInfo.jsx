@@ -12,7 +12,7 @@ import { AddressSchemaValidator } from '../../../utils/constants';
 import AddressForm from '../../ui/AddressForm';
 import { EMPTY_ADDRESS } from '../../../model/samples';
 
-const ConfigBusinessInfo = () => {
+export const ConfigBusinessInfo = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -78,5 +78,3 @@ const ConfigBusinessInfo = () => {
     </Grid>
   );
 };
-
-export default ConfigBusinessInfo;

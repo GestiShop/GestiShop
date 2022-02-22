@@ -3,14 +3,13 @@
 import React, { ReactElement, useState } from 'react';
 import { Tabs, Tab, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-// import ConfigDbInfo from './menu-options/ConfigDbInfo';
-// import ConfigUsers from './menu-options/ConfigUsers';
-// import ConfigInputMode from './menu-options/ConfigInputMode';
-// import ConfigModules from './menu-options/ConfigModules';
-// import ConfigAdvanced from './menu-options/ConfigAdvanced';
-import ConfigLanguage from './menu-options/ConfigLanguage';
-// import ConfigCurrencyInfo from './menu-options/ConfigCurrencyInfo';
-// import ConfigBusinessInfo from './menu-options/ConfigBusinessInfo';
+import {
+  ConfigLanguage,
+  ConfigUsers,
+  ConfigInputMode,
+  ConfigModules,
+  ConfigAdvanced,
+} from './menu-options';
 
 function TabPanel(props: {
   index: number;
@@ -67,22 +66,22 @@ const Settings = (): ReactElement => {
     //   label: t('settings.database_config.database'),
     //   component: <ConfigDbInfo />,
     // },
-    // {
-    //   label: t('settings.users_config.users'),
-    //   component: <ConfigUsers />,
-    // },
-    // {
-    //   label: t('settings.input_mode_config.input_mode'),
-    //   component: <ConfigInputMode />,
-    // },
-    // {
-    //   label: t('settings.modules_config.modules'),
-    //   component: <ConfigModules />,
-    // },
-    // {
-    //   label: t('settings.advanced_config.advanced'),
-    //   component: <ConfigAdvanced />,
-    // },
+    {
+      label: t('settings.users_config.users'),
+      component: <ConfigUsers />,
+    },
+    {
+      label: t('settings.input_mode_config.input_mode'),
+      component: <ConfigInputMode />,
+    },
+    {
+      label: t('settings.modules_config.modules'),
+      component: <ConfigModules />,
+    },
+    {
+      label: t('settings.advanced_config.advanced'),
+      component: <ConfigAdvanced />,
+    },
   ];
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {

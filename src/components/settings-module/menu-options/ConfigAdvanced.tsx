@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 
-const ConfigAdvanced = (): ReactElement => {
+export const ConfigAdvanced = (): ReactElement => {
   return <p>Config advanced</p>;
 };
-
-export default ConfigAdvanced;

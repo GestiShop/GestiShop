@@ -15,7 +15,7 @@ import {
   useAppSelector,
 } from '../../../utils/redux';
 
-const ConfigLanguage = () => {
+export const ConfigLanguage = () => {
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -34,12 +34,12 @@ const ConfigLanguage = () => {
           <Formik
             initialValues={{ ...INITIAL_STATE }}
             validationSchema={FORM_VALIDATION}
+            onSubmit={() => {}}
           >
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Select
-                    acceptNone={false}
                     name="langCode"
                     label={t('settings.language_config.language')}
                     options={LANGUAGE_LIST.map((x) => {
@@ -65,5 +65,3 @@ const ConfigLanguage = () => {
     </Grid>
   );
 };
-
-export default ConfigLanguage;

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const ConfigDbInfo = () => {
+export const ConfigDbInfo = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -143,5 +143,3 @@ const ConfigDbInfo = () => {
     </Grid>
   );
 };
-
-export default ConfigDbInfo;
