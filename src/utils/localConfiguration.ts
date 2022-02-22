@@ -1,16 +1,19 @@
 import ElectronStore from 'electron-store';
 import {
+  DEFAULT_CURRENCY_INFO,
   DEFAULT_LANG_CODE,
+  PlatformCurrencyInfo,
   PlatformLanguageCode,
 } from '../../assets/config/config';
 
 type LocalStorageType = {
   langCode: PlatformLanguageCode;
+  currencyInfo: PlatformCurrencyInfo;
 };
 
 const defaultLocalStorage: LocalStorageType = {
   langCode: DEFAULT_LANG_CODE,
-  // currencyInfo: {},
+  currencyInfo: DEFAULT_CURRENCY_INFO,
   // databaseInfo: {},
   // businessInfo: {},
 };
@@ -28,25 +31,14 @@ const LocalConfiguration = {
     store.set('langCode', langCode);
   },
 
-  // getLocalCurrencyInfo() {
-  //   return store.get('currencyInfo');
-  // },
-  //
-  // // TODO: MAKE THIS MORE STRICT
-  // setLocalCurrency(currencyCode: string) {
-  //   store.set('currencyInfo.currencyCode', currencyCode);
-  // },
-  //
-  // // TODO: MAKE THIS MORE STRICT
-  // setLocalDecimalMode(decimalModeCode: string) {
-  //   store.set('currencyInfo.decimalModeCode', decimalModeCode);
-  // },
-  //
-  // // TODO: MAKE THIS MORE STRICT
-  // setLocalFloatingPositions(floatingPositions: number) {
-  //   store.set('currencyInfo.floatingPositions', floatingPositions);
-  // },
-  //
+  getLocalCurrencyInfo(): PlatformCurrencyInfo {
+    return store.get('currencyInfo');
+  },
+
+  setLocalCurrencyInfo(currencyInfo: PlatformCurrencyInfo) {
+    store.set('currencyInfo', currencyInfo);
+  },
+
   // getLocalDatabaseInfo() {
   //   return store.get('databaseInfo');
   // },

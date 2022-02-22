@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { ReactElement, useState } from 'react';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
 import LocalConfiguration from '../../../utils/localConfiguration';
 import Select from '../../ui/forms/Select';
 import {
-  setDefaultCurrencyCode,
-  setDefaultDecimalModeCode,
-  setDefaultFloatingPositions,
-} from '../../../utils/redux/configuration';
+  setDefaultCurrencyInfo,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../utils/redux';
 import {
   CURRENCY_LIST,
   DECIMAL_MODES,
@@ -18,13 +17,14 @@ import {
   DEFAULT_DECIMAL_MODE_CODE,
   DEFAULT_FLOATING_POSITION_OPTION_CODE,
   FLOATING_POSITION_OPTIONS,
+  PlatformCurrencyInfo,
 } from '../../../../assets/config/config';
 
-export const ConfigCurrencyInfo = () => {
+export const ConfigCurrencyInfo = (): ReactElement => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const initialValues = useSelector(
+  const initialValues = useAppSelector(
     (store) => store.configuration.currencyInfo
   );
 
@@ -35,6 +35,8 @@ export const ConfigCurrencyInfo = () => {
     floatingPositions:
       initialValues?.floatingPositions ?? DEFAULT_FLOATING_POSITION_OPTION_CODE,
   };
+
+  const [state, setState] = useState<PlatformCurrencyInfo>(INITIAL_STATE);
 
   const FORM_VALIDATION = Yup.object().shape({
     currencyCode: Yup.string().required(t('form.errors.required')),
@@ -49,6 +51,7 @@ export const ConfigCurrencyInfo = () => {
           <Formik
             initialValues={{ ...INITIAL_STATE }}
             validationSchema={FORM_VALIDATION}
+            onSubmit={() => {}}
           >
             <Form>
               <Grid container spacing={2}>
@@ -64,11 +67,14 @@ export const ConfigCurrencyInfo = () => {
                         value: currencyCode,
                       };
                     })}
-                    onInput={(event) => {
-                      LocalConfiguration.setLocalCurrencyCode(
-                        event.target.value
-                      );
-                      dispatch(setDefaultCurrencyCode(event.target.value));
+                    onInput={(currencyCode) => {
+                      const newState: PlatformCurrencyInfo = {
+                        ...state,
+                        currencyCode,
+                      };
+                      setState(newState);
+                      LocalConfiguration.setLocalCurrencyInfo(newState);
+                      dispatch(setDefaultCurrencyInfo(newState));
                     }}
                   />
                 </Grid>
@@ -83,11 +89,14 @@ export const ConfigCurrencyInfo = () => {
                         value: x,
                       };
                     })}
-                    onInput={(event) => {
-                      LocalConfiguration.setLocalDecimalModeCode(
-                        event.target.value
-                      );
-                      dispatch(setDefaultDecimalModeCode(event.target.value));
+                    onInput={(decimalModeCode) => {
+                      const newState: PlatformCurrencyInfo = {
+                        ...state,
+                        decimalModeCode,
+                      };
+                      setState(newState);
+                      LocalConfiguration.setLocalCurrencyInfo(newState);
+                      dispatch(setDefaultCurrencyInfo(newState));
                     }}
                   />
                 </Grid>
@@ -102,11 +111,14 @@ export const ConfigCurrencyInfo = () => {
                         value: x,
                       };
                     })}
-                    onInput={(event) => {
-                      LocalConfiguration.setLocalFloatingPositions(
-                        event.target.value
-                      );
-                      dispatch(setDefaultFloatingPositions(event.target.value));
+                    onInput={(floatingPositions) => {
+                      const newState: PlatformCurrencyInfo = {
+                        ...state,
+                        floatingPositions,
+                      };
+                      setState(newState);
+                      LocalConfiguration.setLocalCurrencyInfo(newState);
+                      dispatch(setDefaultCurrencyInfo(newState));
                     }}
                   />
                 </Grid>

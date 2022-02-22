@@ -17,6 +17,17 @@ export type PlatformFloatingPositionOption =
 export const DEFAULT_FLOATING_POSITION_OPTION_CODE: PlatformFloatingPositionOption =
   FLOATING_POSITION_OPTIONS[0];
 
+export type PlatformCurrencyInfo = {
+  currencyCode: PlatformCurrencyCode;
+  decimalModeCode: PlatformDecimalModeCode;
+  floatingPositions: PlatformFloatingPositionOption;
+};
+export const DEFAULT_CURRENCY_INFO: PlatformCurrencyInfo = {
+  currencyCode: DEFAULT_CURRENCY_CODE,
+  decimalModeCode: DEFAULT_DECIMAL_MODE_CODE,
+  floatingPositions: DEFAULT_FLOATING_POSITION_OPTION_CODE,
+};
+
 export const EVENT_COLOR_LIST = [
   {
     background: 'lightseagreen',

@@ -9,6 +9,7 @@ import {
   ConfigInputMode,
   ConfigModules,
   ConfigAdvanced,
+  ConfigCurrencyInfo,
 } from './menu-options';
 
 function TabPanel(props: {
@@ -54,10 +55,10 @@ const Settings = (): ReactElement => {
       label: t('settings.language_config.language'),
       component: <ConfigLanguage />,
     },
-    // {
-    //   label: t('settings.currency_config.currency'),
-    //   component: <ConfigCurrencyInfo />,
-    // },
+    {
+      label: t('settings.currency_config.currency'),
+      component: <ConfigCurrencyInfo />,
+    },
     // {
     //   label: t('settings.business_config.business'),
     //   component: <ConfigBusinessInfo />,
