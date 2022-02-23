@@ -28,6 +28,21 @@ export const DEFAULT_CURRENCY_INFO: PlatformCurrencyInfo = {
   floatingPositions: DEFAULT_FLOATING_POSITION_OPTION_CODE,
 };
 
+export type PlatformDatabaseInfo = {
+  url: string;
+  port: string;
+  name: string;
+  user: string;
+  password: string;
+};
+export const DEFAULT_DATABASE_INFO: PlatformDatabaseInfo = {
+  url: 'localhost',
+  port: '27017',
+  name: 'gestishop',
+  user: 'root',
+  password: '',
+};
+
 export const EVENT_COLOR_LIST = [
   {
     background: 'lightseagreen',

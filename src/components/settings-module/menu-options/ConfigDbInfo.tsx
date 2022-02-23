@@ -1,44 +1,29 @@
-import React from 'react';
-import {
-  createStyles,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  Grid,
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement, useState } from 'react';
+import { FormControl, InputLabel, OutlinedInput, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { setDefaultDatabaseInfo } from '../../../utils/redux/configuration';
+import {
+  setDefaultDatabaseInfo,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../utils/redux';
+import { PlatformDatabaseInfo } from '../../../../assets/config/config';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    number: {
-      '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button':
-        {
-          '-webkit-appearance': 'none',
-          margin: 0,
-        },
-    },
-    w100: {
-      width: '100%',
-    },
-  })
-);
-
-export const ConfigDbInfo = () => {
+export const ConfigDbInfo = (): ReactElement => {
   const { t } = useTranslation();
 
-  const dispatch = useDispatch();
-  const defaultDatabaseInfo = useSelector(
+  const dispatch = useAppDispatch();
+  const defaultDatabaseInfo = useAppSelector(
     (store) => store.configuration.databaseInfo
   );
 
-  const classes = useStyles();
+  const [state, setState] = useState<PlatformDatabaseInfo>(defaultDatabaseInfo);
 
-  const [state, setState] = React.useState(defaultDatabaseInfo);
-
-  const handleChange = (event) => {
+  const handleChange = (event: {
+    target: {
+      name: string;
+      value: string;
+    };
+  }): void => {
     const newState = {
       ...state,
       [event.target.name]: event.target.value,
@@ -51,7 +36,7 @@ export const ConfigDbInfo = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={9}>
-        <FormControl variant="outlined" className={classes.w100}>
+        <FormControl variant="outlined" className="w-100">
           <InputLabel htmlFor="url">
             {t('settings.database_config.url')}
           </InputLabel>
@@ -69,7 +54,7 @@ export const ConfigDbInfo = () => {
       </Grid>
 
       <Grid item xs={3}>
-        <FormControl variant="outlined" className={classes.w100}>
+        <FormControl variant="outlined" className="w-100">
           <InputLabel htmlFor="port">
             {t('settings.database_config.port')}
           </InputLabel>
@@ -81,14 +66,13 @@ export const ConfigDbInfo = () => {
             label={t('settings.database_config.port')}
             name="port"
             type="number"
-            className={classes.number}
             required
           />
         </FormControl>
       </Grid>
 
       <Grid item xs={12}>
-        <FormControl variant="outlined" className={classes.w100}>
+        <FormControl variant="outlined" className="w-100">
           <InputLabel htmlFor="name">
             {t('settings.database_config.name')}
           </InputLabel>
@@ -106,7 +90,7 @@ export const ConfigDbInfo = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <FormControl variant="outlined" className={classes.w100}>
+        <FormControl variant="outlined" className="w-100">
           <InputLabel htmlFor="user">
             {t('settings.database_config.user')}
           </InputLabel>
@@ -124,7 +108,7 @@ export const ConfigDbInfo = () => {
       </Grid>
 
       <Grid item xs={12}>
-        <FormControl variant="outlined" className={classes.w100}>
+        <FormControl variant="outlined" className="w-100">
           <InputLabel htmlFor="password">
             {t('settings.database_config.password')}
           </InputLabel>

@@ -10,6 +10,7 @@ import {
   ConfigModules,
   ConfigAdvanced,
   ConfigCurrencyInfo,
+  ConfigDbInfo,
 } from './menu-options';
 
 function TabPanel(props: {
@@ -63,10 +64,10 @@ const Settings = (): ReactElement => {
     //   label: t('settings.business_config.business'),
     //   component: <ConfigBusinessInfo />,
     // },
-    // {
-    //   label: t('settings.database_config.database'),
-    //   component: <ConfigDbInfo />,
-    // },
+    {
+      label: t('settings.database_config.database'),
+      component: <ConfigDbInfo />,
+    },
     {
       label: t('settings.users_config.users'),
       component: <ConfigUsers />,

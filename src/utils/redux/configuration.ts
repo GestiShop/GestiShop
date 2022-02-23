@@ -3,6 +3,7 @@ import {
   DEFAULT_CURRENCY_INFO,
   DEFAULT_LANG_CODE,
   PlatformCurrencyInfo,
+  PlatformDatabaseInfo,
   PlatformLanguageCode,
 } from '../../../assets/config/config';
 
@@ -10,13 +11,8 @@ const initialState = {
   langCode: LocalConfiguration.getLocalLangCode() ?? DEFAULT_LANG_CODE,
   currencyInfo:
     LocalConfiguration.getLocalCurrencyInfo() ?? DEFAULT_CURRENCY_INFO,
-  // databaseInfo: LocalConfiguration.getLocalDatabaseInfo() ?? {
-  //   url: 'localhost',
-  //   port: '27017',
-  //   name: 'gestishop',
-  //   user: 'root',
-  //   password: '',
-  // },
+  databaseInfo:
+    LocalConfiguration.getLocalDatabaseInfo() ?? DEFAULT_DATABASE_INFO,
   // businessInfo: LocalConfiguration.getLocalBusinessInfo() ?? {
   //   name: '',
   //   nif: '',
@@ -33,8 +29,11 @@ namespace ActionValues {
   export type SetCurrencyInfo = 'SET_CURRENCY_INFO';
   export const SET_CURRENCY_INFO = 'SET_CURRENCY_INFO';
 
-  // export const SET_DATABASE = 'SET_DATABASE';
-  // export const SET_BUSINESS_INFO = 'SET_BUSINESS_INFO';
+  export type SetDatabaseInfo = 'SET_DATABASE_INFO';
+  export const SET_DATABASE_INFO: SetDatabaseInfo = 'SET_DATABASE_INFO';
+
+  export type SetBusinessInfo = 'SET_BUSINESS_INFO';
+  export const SET_BUSINESS_INFO: SetBusinessInfo = 'SET_BUSINESS_INFO';
 }
 
 type ReducerActionType =
@@ -45,6 +44,10 @@ type ReducerActionType =
   | {
       payload: PlatformCurrencyInfo;
       type: ActionValues.SetCurrencyInfo;
+    }
+  | {
+      payload: PlatformDatabaseInfo;
+      type: ActionValues.SetDatabaseInfo;
     };
 
 // Reducer
@@ -64,31 +67,13 @@ export default function configurationReducer(
         ...state,
         currencyInfo: action.payload,
       };
-    //
-    // case ActionValues.SET_DECIMAL_MODE_CODE:
-    //   return {
-    //     ...state,
-    //     currencyInfo: {
-    //       ...state.currencyInfo,
-    //       decimalMode: action.payload,
-    //     },
-    //   };
-    //
-    // case ActionValues.SET_FLOATING_POSITIONS:
-    //   return {
-    //     ...state,
-    //     currencyInfo: {
-    //       ...state.currencyInfo,
-    //       floatingPositions: action.payload,
-    //     },
-    //   };
-    //
-    // case ActionValues.SET_DATABASE:
-    //   return {
-    //     ...state,
-    //     databaseInfo: action.payload,
-    //   };
-    //
+
+    case ActionValues.SET_DATABASE_INFO:
+      return {
+        ...state,
+        databaseInfo: action.payload,
+      };
+
     // case ActionValues.SET_BUSINESS_INFO:
     //   return {
     //     ...state,
@@ -115,15 +100,13 @@ export const setDefaultCurrencyInfo = (
   payload: currencyInfo,
 });
 
-// export const setDefaultDatabaseInfo =
-//   (databaseInfo) =>
-//   (dispatch): void => {
-//     dispatch({
-//       type: ActionValues.SET_DATABASE,
-//       payload: databaseInfo,
-//     });
-//   };
-//
+export const setDefaultDatabaseInfo = (
+  databaseInfo: PlatformDatabaseInfo
+): ReducerActionType => ({
+  type: ActionValues.SET_DATABASE_INFO,
+  payload: databaseInfo,
+});
+
 // export const setDefaultBusinessInfo =
 //   (businessInfo) =>
 //   (dispatch): void => {
