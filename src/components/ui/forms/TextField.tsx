@@ -7,7 +7,7 @@ type Props = {
   name: string;
   label: string;
   type?: string;
-  onInput?: (arg0: string) => void;
+  onInput?: (arg0: string, arg1: string) => void;
   required?: boolean;
   disabled?: boolean;
 };
@@ -26,7 +26,7 @@ type TextFieldProps = {
   disabled: boolean;
   error: boolean;
   helperText: string;
-  onChange: (arg0: { target: { value: string } }) => void;
+  onChange: (arg0: { target: { name: string; value: string } }) => void;
 };
 
 export const TextFieldWrapper = ({
@@ -41,10 +41,12 @@ export const TextFieldWrapper = ({
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
-  const handleChange = (event: { target: { value: string } }): void => {
+  const handleChange = (event: {
+    target: { name: string; value: string };
+  }): void => {
     setFieldValue(name, event.target.value);
     if (onInput) {
-      onInput(event.target.value);
+      onInput(event.target.name, event.target.value);
     }
   };
 

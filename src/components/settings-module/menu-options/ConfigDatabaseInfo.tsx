@@ -21,6 +21,16 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
   const [state, setState] = useState<PlatformDatabaseInfo>(savedDatabaseInfo);
 
+  const handleChange = (name: string, value: string) => {
+    const newState = {
+      ...state,
+      [name]: value,
+    };
+
+    setState(newState);
+    dispatch(setStoredDatabaseInfo(newState));
+  };
+
   const FORM_VALIDATION = Yup.object().shape({
     url: Yup.string().required(t('form.errors.required')),
     port: Yup.number()
@@ -48,14 +58,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
                     label={t('settings.database_config.url')}
                     required
                     type="url"
-                    onInput={(url) => {
-                      const newState = {
-                        ...state,
-                        url,
-                      };
-                      setState(newState);
-                      dispatch(setStoredDatabaseInfo(newState));
-                    }}
+                    onInput={handleChange}
                   />
                 </Grid>
 
@@ -65,14 +68,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
                     label={t('settings.database_config.port')}
                     required
                     type="number"
-                    onInput={(port) => {
-                      const newState = {
-                        ...state,
-                        port,
-                      };
-                      setState(newState);
-                      dispatch(setStoredDatabaseInfo(newState));
-                    }}
+                    onInput={handleChange}
                   />
                 </Grid>
 
@@ -81,14 +77,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
                     name="name"
                     label={t('settings.database_config.name')}
                     required
-                    onInput={(name) => {
-                      const newState = {
-                        ...state,
-                        name,
-                      };
-                      setState(newState);
-                      dispatch(setStoredDatabaseInfo(newState));
-                    }}
+                    onInput={handleChange}
                   />
                 </Grid>
 
@@ -97,14 +86,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
                     name="user"
                     label={t('settings.database_config.user')}
                     required
-                    onInput={(user) => {
-                      const newState = {
-                        ...state,
-                        user,
-                      };
-                      setState(newState);
-                      dispatch(setStoredDatabaseInfo(newState));
-                    }}
+                    onInput={handleChange}
                   />
                 </Grid>
 
@@ -114,14 +96,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
                     label={t('settings.database_config.password')}
                     required
                     type="password"
-                    onInput={(password) => {
-                      const newState = {
-                        ...state,
-                        password,
-                      };
-                      setState(newState);
-                      dispatch(setStoredDatabaseInfo(newState));
-                    }}
+                    onInput={handleChange}
                   />
                 </Grid>
               </Grid>

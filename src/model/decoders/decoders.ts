@@ -1,9 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import {
   Address,
+  Bill,
   CalendarEvent,
   Category,
+  Client,
+  FullClient,
   FullProduct,
+  FullProvider,
+  ProductInBill,
+  Provider,
   Tax,
   UnitType,
   Warehouse,
@@ -95,5 +101,89 @@ export const decodeFullProduct = (dbProduct: any): FullProduct => {
     ),
     minStock: dbProduct.minStock,
     stockAlert: dbProduct.stockAlert,
+  };
+};
+
+const productInBillDecoder = (dbProduct: any): ProductInBill => {
+  return {
+    product: dbProduct.product,
+    reference: dbProduct.reference,
+    name: dbProduct.name,
+    basePricePerUnit: dbProduct.basePricePerUnit,
+    unitType: dbProduct.unitType,
+    discountPercentage: dbProduct.discountPercentage,
+    taxPercentage: dbProduct.taxPercentage,
+    quantity: dbProduct.quantity,
+  };
+};
+
+export const decodeBill = (dbBill: any): Bill => {
+  return {
+    id: dbBill._id,
+    billNumberPreamble: dbBill.billNumberPreamble,
+    billNumber: dbBill.billNumber,
+    date: dbBill.date,
+    entityData: dbBill.entityData,
+    products: dbBill.products.map((product: any) =>
+      productInBillDecoder(product)
+    ),
+    notes: dbBill.notes,
+    basePrice: dbBill.basePrice,
+    generalDiscount: dbBill.generalDiscount,
+    pvp: dbBill.pvp,
+    paymentData: dbBill.paymentData,
+    isPaid: dbBill.isPaid,
+  };
+};
+
+export const decodeClient = (dbClient: any): Client => {
+  return {
+    id: dbClient._id,
+    reference: dbClient.reference,
+    contactData: dbClient.contactData,
+    fiscalData: dbClient.fiscalData,
+    postalData: dbClient.postalData,
+    tributationData: dbClient.tributationData,
+    eFactData: dbClient.eFactData,
+    bills: dbClient.bills,
+  };
+};
+
+export const decodeFullClient = (dbClient: any): FullClient => {
+  return {
+    id: dbClient._id,
+    reference: dbClient.reference,
+    contactData: dbClient.contactData,
+    fiscalData: dbClient.fiscalData,
+    postalData: dbClient.postalData,
+    tributationData: dbClient.tributationData,
+    eFactData: dbClient.eFactData,
+    bills: dbClient.bills.map((bill: any) => decodeBill(bill)),
+  };
+};
+
+export const decodeProvider = (dbProvider: any): Provider => {
+  return {
+    id: dbProvider._id,
+    reference: dbProvider.reference,
+    contactData: dbProvider.contactData,
+    fiscalData: dbProvider.fiscalData,
+    postalData: dbProvider.postalData,
+    tributationData: dbProvider.tributationData,
+    eFactData: dbProvider.eFactData,
+    bills: dbProvider.bills,
+  };
+};
+
+export const decodeFullProvider = (dbProvider: any): FullProvider => {
+  return {
+    id: dbProvider._id,
+    reference: dbProvider.reference,
+    contactData: dbProvider.contactData,
+    fiscalData: dbProvider.fiscalData,
+    postalData: dbProvider.postalData,
+    tributationData: dbProvider.tributationData,
+    eFactData: dbProvider.eFactData,
+    bills: dbProvider.bills.map((bill: any) => decodeBill(bill)),
   };
 };

@@ -1,21 +1,26 @@
 /* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
-import { DBHelperResponse, DBProduct, Product } from '../../model/types';
-import { decodeFullProduct } from '../../model/decoders';
+import {
+  DBHelperResponse,
+  DBProvider,
+  Provider,
+  FullProvider,
+} from '../../model/types';
+import { decodeFullProvider, decodeProvider } from '../../model/decoders';
 
-export const upsertProduct = (
-  product: Product
+export const upsertProvider = (
+  provider: Provider
 ): Promise<DBHelperResponse<boolean>> => {
   let queryPromise;
-  if (product.id == null) {
+  if (provider.id == null) {
     // Insert
-    const dbProduct = new DBProduct(product);
-    queryPromise = dbProduct.save();
+    const dbProvider = new DBProvider(provider);
+    queryPromise = dbProvider.save();
   } else {
     // Update
-    queryPromise = DBProduct.findOneAndUpdate(
-      { _id: product.id },
-      product
+    queryPromise = DBProvider.findOneAndUpdate(
+      { _id: provider.id },
+      provider
     ).exec();
   }
 
@@ -37,24 +42,19 @@ export const upsertProduct = (
     });
 };
 
-export const fetchFullProducts = (): Promise<
-  DBHelperResponse<Array<Product>>
+export const fetchProviders = (): Promise<
+  DBHelperResponse<Array<Provider>>
 > => {
-  return DBProduct.find({})
-    .populate('buyingInfo.taxPercentage')
-    .populate('sellingInfo.taxPercentage')
-    .populate('unitType')
-    .populate('warehouse')
-    .populate('categories')
+  return DBProvider.find({})
     .exec()
     .then((data: any) => {
-      const productList: Array<Product> = data.map((x: any) =>
-        decodeFullProduct(x)
+      const providerList: Array<Provider> = data.map((x: any) =>
+        decodeProvider(x)
       );
 
       return {
         error: null,
-        result: productList,
+        result: providerList,
       };
     })
     .catch((error: any) => {
@@ -68,15 +68,20 @@ export const fetchFullProducts = (): Promise<
     });
 };
 
-export const deleteProducts = (
-  productIds: Array<Types.ObjectId>
-): Promise<DBHelperResponse<boolean>> => {
-  return DBProduct.deleteMany({ _id: productIds })
+export const fetchFullProviders = (): Promise<
+  DBHelperResponse<Array<FullProvider>>
+> => {
+  return DBProvider.find({})
+    .populate('bills')
     .exec()
-    .then((_: any) => {
+    .then((data: any) => {
+      const providerList: Array<FullProvider> = data.map((x: any) =>
+        decodeFullProvider(x)
+      );
+
       return {
         error: null,
-        result: true,
+        result: providerList,
       };
     })
     .catch((error: any) => {
@@ -90,15 +95,10 @@ export const deleteProducts = (
     });
 };
 
-export const updateStock = (
-  id: Types.ObjectId,
-  quantity: number,
-  updateType: 'inc' | 'dec'
+export const deleteProviders = (
+  providerIds: Array<Types.ObjectId>
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBProduct.findOneAndUpdate(
-    { _id: id },
-    { $inc: { stock: quantity * (updateType === 'dec' ? -1 : 1) } }
-  )
+  return DBProvider.deleteMany({ _id: providerIds })
     .exec()
     .then((_: any) => {
       return {

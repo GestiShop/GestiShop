@@ -12,7 +12,7 @@ import {
   AddressSchemaValidator,
   EmailSchemaValidator,
   PhoneSchemaValidator,
-} from '../../../utils/constants';
+} from '../../../utils/form-validations';
 import {
   EMPTY_PHONE,
   EMPTY_EMAIL,

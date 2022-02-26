@@ -24,7 +24,7 @@ import { fetchClients } from '../../../db/ClientHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
-import { AddressSchemaValidator } from '../../../utils/constants';
+import { AddressSchemaValidator } from '../../../utils/form-validations';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BILL } from '../../../model/samples';
 

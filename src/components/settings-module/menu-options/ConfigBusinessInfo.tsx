@@ -8,8 +8,8 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../utils/redux';
-import { TextField, SubmitButton } from '../../ui/forms';
-import { AddressSchemaValidator } from '../../../utils/constants';
+import { TextField } from '../../ui/forms';
+import { AddressSchemaValidator } from '../../../utils/form-validations';
 import AddressForm from '../../ui/AddressForm';
 import { PlatformBusinessInfo } from '../../../../assets/config/config';
 
@@ -23,10 +23,31 @@ export const ConfigBusinessInfo = (): ReactElement => {
 
   const [state, setState] = useState<PlatformBusinessInfo>(savedBusinessInfo);
 
+  const handleChange = (name: string, value: string, isAddress: boolean) => {
+    let newState;
+    if (isAddress) {
+      newState = {
+        ...state,
+        address: {
+          ...state.address,
+          [name.split('.').pop()!]: value,
+        },
+      };
+    } else {
+      newState = {
+        ...state,
+        [name]: value,
+      };
+    }
+
+    setState(newState);
+    dispatch(setStoredBusinessInfo(newState));
+  };
+
   const FORM_VALIDATION = Yup.object().shape({
     name: Yup.string().required(t('form.errors.required')),
     nif: Yup.string().required(t('form.errors.required')),
-    address: Yup.object().shape(AddressSchemaValidator),
+    address: Yup.object().shape(AddressSchemaValidator(t)),
   });
 
   return (
@@ -45,14 +66,7 @@ export const ConfigBusinessInfo = (): ReactElement => {
                     name="name"
                     label={t('settings.business_config.name')}
                     required
-                    onInput={(name: string) => {
-                      const newState = {
-                        ...state,
-                        name,
-                      };
-                      setState(newState);
-                      dispatch(setStoredBusinessInfo(newState));
-                    }}
+                    onInput={(name, value) => handleChange(name, value, false)}
                   />
                 </Grid>
 
@@ -61,22 +75,14 @@ export const ConfigBusinessInfo = (): ReactElement => {
                     name="nif"
                     label={t('settings.business_config.nif')}
                     required
-                    onInput={(nif: string) => {
-                      const newState = {
-                        ...state,
-                        nif,
-                      };
-                      setState(newState);
-                      dispatch(setStoredBusinessInfo(newState));
-                    }}
+                    onInput={(name, value) => handleChange(name, value, false)}
                   />
                 </Grid>
 
-                <AddressForm parent="address" />
-
-                <Grid item xs={12}>
-                  <SubmitButton>{t('buttons.save')}</SubmitButton>
-                </Grid>
+                <AddressForm
+                  parent="address"
+                  onInput={(name, value) => handleChange(name, value, true)}
+                />
               </Grid>
             </Form>
           </Formik>

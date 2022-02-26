@@ -166,6 +166,20 @@ export type Client = {
   bills: Array<Types.ObjectId>;
 };
 
+export type FullClient = {
+  id?: Types.ObjectId;
+  reference: string;
+  contactData: ContactData;
+  fiscalData: FiscalData;
+  postalData: PostalData;
+  tributationData: {
+    retentionPercentage: number;
+    personalDiscount: number;
+  };
+  eFactData: EFact;
+  bills: Array<Bill>;
+};
+
 /* ----- ----- PROVIDER ----- ----- */
 export type Provider = {
   id?: Types.ObjectId;
@@ -179,6 +193,20 @@ export type Provider = {
   };
   eFactData: EFact;
   bills: Array<Types.ObjectId>;
+};
+
+export type FullProvider = {
+  id?: Types.ObjectId;
+  reference: string;
+  contactData: ContactData;
+  fiscalData: FiscalData;
+  postalData: PostalData;
+  tributationData: {
+    retentionPercentage: number;
+    personalDiscount: number;
+  };
+  eFactData: EFact;
+  bills: Array<Bill>;
 };
 
 /* ----- ----- PRODUCT ----- ----- */

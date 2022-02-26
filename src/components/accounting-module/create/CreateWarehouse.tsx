@@ -5,7 +5,7 @@ import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TextField, SubmitButton } from '../../ui/forms';
 import { upsertWarehouse } from '../../../db';
-import { AddressSchemaValidator } from '../../../utils/constants';
+import { AddressSchemaValidator } from '../../../utils/form-validations';
 import AddressForm from '../../ui/AddressForm';
 import { EMPTY_WAREHOUSE } from '../../../model/samples';
 import { Warehouse } from '../../../model/types';

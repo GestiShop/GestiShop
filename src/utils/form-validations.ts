@@ -1,6 +1,9 @@
+import { TFunction } from 'react-i18next';
 import * as Yup from 'yup';
 
-export const AddressSchemaValidator = (t) => {
+export const AddressSchemaValidator = (
+  t: TFunction<'translation', undefined>
+) => {
   return {
     roadType: Yup.string().required(t('form.errors.required')),
     street: Yup.string().required(t('form.errors.required')),
@@ -16,7 +19,9 @@ export const AddressSchemaValidator = (t) => {
   };
 };
 
-export const EmailSchemaValidator = (t) => {
+export const EmailSchemaValidator = (
+  t: TFunction<'translation', undefined>
+) => {
   return {
     description: Yup.string(),
     email: Yup.string()
@@ -25,7 +30,9 @@ export const EmailSchemaValidator = (t) => {
   };
 };
 
-export const PhoneSchemaValidator = (t) => {
+export const PhoneSchemaValidator = (
+  t: TFunction<'translation', undefined>
+) => {
   return {
     description: Yup.string(),
     phone: Yup.string().required(t('form.errors.required')),

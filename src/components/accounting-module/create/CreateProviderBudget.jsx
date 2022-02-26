@@ -25,7 +25,7 @@ import { fetchProviders } from '../../../db/ProviderHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
-import { AddressSchemaValidator } from '../../../utils/constants';
+import { AddressSchemaValidator } from '../../../utils/form-validations';
 import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BUDGET } from '../../../model/samples';
 
 const CreateProviderBudget = ({ closeCallback, initialState }) => {

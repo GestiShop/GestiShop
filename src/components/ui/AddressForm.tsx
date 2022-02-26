@@ -6,9 +6,14 @@ import { TextField } from './forms';
 type Props = {
   parent: string;
   disabled?: boolean;
+  onInput?: (arg0: string, arg1: string) => void;
 };
 
-const AddressForm = ({ parent, disabled = false }: Props) => {
+const AddressForm = ({
+  parent,
+  disabled = false,
+  onInput = undefined,
+}: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -16,6 +21,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
       <Grid item xs={3}>
         <TextField
           required
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.roadType`}
           label={t('accounting_module.address.road_type')}
@@ -25,6 +31,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
       <Grid item xs={9}>
         <TextField
           required
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.street`}
           label={t('accounting_module.address.street')}
@@ -34,6 +41,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
       <Grid item xs={4}>
         <TextField
           required
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.number`}
           label={t('accounting_module.address.number')}
@@ -42,6 +50,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
 
       <Grid item xs={4}>
         <TextField
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.floor`}
           label={t('accounting_module.address.floor')}
@@ -50,6 +59,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
 
       <Grid item xs={4}>
         <TextField
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.door`}
           label={t('accounting_module.address.door')}
@@ -58,6 +68,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
 
       <Grid item xs={12}>
         <TextField
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.extra`}
           label={t('accounting_module.address.extra')}
@@ -67,6 +78,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
       <Grid item xs={4}>
         <TextField
           required
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.zipCode`}
           label={t('accounting_module.address.zip_code')}
@@ -76,6 +88,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
       <Grid item xs={4}>
         <TextField
           required
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.city`}
           label={t('accounting_module.address.city')}
@@ -85,6 +98,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
       <Grid item xs={4}>
         <TextField
           required
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.province`}
           label={t('accounting_module.address.province')}
@@ -93,6 +107,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
 
       <Grid item xs={6}>
         <TextField
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.state`}
           label={t('accounting_module.address.state')}
@@ -102,6 +117,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
       <Grid item xs={6}>
         <TextField
           required
+          onInput={onInput}
           disabled={disabled}
           name={`${parent}.country`}
           label={t('accounting_module.address.country')}
@@ -113,6 +129,7 @@ const AddressForm = ({ parent, disabled = false }: Props) => {
 
 AddressForm.defaultProps = {
   disabled: false,
+  onInput: undefined,
 };
 
 export default AddressForm;
