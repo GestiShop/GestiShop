@@ -8,7 +8,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../../utils/redux';
-import { PlatformDatabaseInfo } from '../../../../assets/config/config';
+import { PlatformDatabaseInfo } from '../../../model/types';
 import { TextField } from '../../ui/forms';
 
 export const ConfigDatabaseInfo = (): ReactElement => {

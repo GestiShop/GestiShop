@@ -14,10 +14,8 @@ import {
   ColoredSelect,
 } from '../../ui/forms';
 import { deleteEvent, upsertEvent } from '../../../db';
-import {
-  DEFAULT_EVENT_COLOR_CODE,
-  EVENT_COLOR_LIST,
-} from '../../../../assets/config/config';
+import { EVENT_COLOR_LIST } from '../../../model/types';
+import { DEFAULT_EVENT_COLOR_CODE } from '../../../model/samples';
 
 const CreateCalendarEvent = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

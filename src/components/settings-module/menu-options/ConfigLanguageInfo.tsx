@@ -9,7 +9,7 @@ import {
   LANGUAGE_LIST,
   PlatformLanguageCode,
   PlatformLanguageInfo,
-} from '../../../../assets/config/config';
+} from '../../../model/types';
 import {
   setStoredLanguageInfo,
   useAppDispatch,

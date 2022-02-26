@@ -1,9 +1,23 @@
 import {
   Address,
   Category,
+  CURRENCY_LIST,
+  DECIMAL_MODES,
   EFact,
   Email,
+  EVENT_COLOR_LIST,
+  FLOATING_POSITION_OPTIONS,
+  LANGUAGE_LIST,
   Phone,
+  PlatformBusinessInfo,
+  PlatformCurrencyCode,
+  PlatformCurrencyInfo,
+  PlatformDatabaseInfo,
+  PlatformDecimalModeCode,
+  PlatformEventColorCode,
+  PlatformFloatingPositionOption,
+  PlatformLanguageCode,
+  PlatformLanguageInfo,
   ProductInBill,
   Tax,
   UnitType,
@@ -84,3 +98,44 @@ export const EMPTY_CATEGORY: Category = {
   reference: '',
   name: '',
 };
+
+/* ----- ----- PLATFORM PARAMETERS ----- ----- */
+// Language info:
+export const DEFAULT_LANGUAGE_CODE: PlatformLanguageCode = LANGUAGE_LIST[0];
+
+export const DEFAULT_LANGUAGE_INFO: PlatformLanguageInfo = {
+  languageCode: DEFAULT_LANGUAGE_CODE,
+};
+
+// Currency info:
+export const DEFAULT_CURRENCY_CODE: PlatformCurrencyCode = CURRENCY_LIST[0];
+export const DEFAULT_DECIMAL_MODE_CODE: PlatformDecimalModeCode =
+  DECIMAL_MODES[0];
+export const DEFAULT_FLOATING_POSITION_OPTION_CODE: PlatformFloatingPositionOption =
+  FLOATING_POSITION_OPTIONS[0];
+
+export const DEFAULT_CURRENCY_INFO: PlatformCurrencyInfo = {
+  currencyCode: DEFAULT_CURRENCY_CODE,
+  decimalModeCode: DEFAULT_DECIMAL_MODE_CODE,
+  floatingPositions: DEFAULT_FLOATING_POSITION_OPTION_CODE,
+};
+
+// Database info:
+export const DEFAULT_DATABASE_INFO: PlatformDatabaseInfo = {
+  url: 'localhost',
+  port: '27017',
+  name: 'gestishop',
+  user: 'root',
+  password: '',
+};
+
+// Business info:
+export const DEFAULT_BUSINESS_INFO: PlatformBusinessInfo = {
+  name: '',
+  nif: '',
+  address: EMPTY_ADDRESS,
+};
+
+// Event colors:
+export const DEFAULT_EVENT_COLOR_CODE: PlatformEventColorCode =
+  EVENT_COLOR_LIST[0];

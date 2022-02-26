@@ -12,7 +12,7 @@ import FullScreenDialog from '../../ui/FullscreenDialog';
 import { upsertEvent, fetchEvents } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
 import CreateCalendarEvent from '../create/CreateCalendarEvent';
-import { DEFAULT_EVENT_COLOR_CODE } from '../../../../assets/config/config';
+import { DEFAULT_EVENT_COLOR_CODE } from '../../../model/samples';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
 
