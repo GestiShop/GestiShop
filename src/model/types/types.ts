@@ -205,6 +205,29 @@ export type Product = {
   stockAlert: boolean;
 };
 
+export type FullProduct = {
+  id?: Types.ObjectId;
+  reference: string;
+  name: string;
+  description?: string;
+  buyingInfo: {
+    basePrice: number;
+    discountPercentage: number;
+    taxPercentage: Tax;
+  };
+  sellingInfo: {
+    basePrice: number;
+    discountPercentage: number;
+    taxPercentage: Tax;
+  };
+  unitType: UnitType;
+  stock: number;
+  warehouse: Warehouse;
+  categories?: Array<Category>;
+  minStock?: number;
+  stockAlert: boolean;
+};
+
 /* ----- ----- TAX ----- ----- */
 export type Tax = {
   id?: Types.ObjectId;

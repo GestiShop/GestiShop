@@ -3,6 +3,7 @@ import {
   Address,
   CalendarEvent,
   Category,
+  FullProduct,
   Tax,
   UnitType,
   Warehouse,
@@ -67,5 +68,32 @@ export const decodeCategory = (dbCategory: any): Category => {
     reference: dbCategory.reference,
     name: dbCategory.name,
     parent: dbCategory.parent,
+  };
+};
+
+export const decodeFullProduct = (dbProduct: any): FullProduct => {
+  return {
+    id: dbProduct._id,
+    reference: dbProduct.reference,
+    name: dbProduct.name,
+    description: dbProduct.description,
+    buyingInfo: {
+      basePrice: dbProduct.buyingInfo.basePrice,
+      discountPercentage: dbProduct.buyingInfo.discountPercentage,
+      taxPercentage: decodeTax(dbProduct.buyingInfo.taxPercentage),
+    },
+    sellingInfo: {
+      basePrice: dbProduct.sellingInfo.basePrice,
+      discountPercentage: dbProduct.sellingInfo.discountPercentage,
+      taxPercentage: decodeTax(dbProduct.sellingInfo.taxPercentage),
+    },
+    unitType: decodeUnitType(dbProduct.unitType),
+    stock: dbProduct.stock,
+    warehouse: decodeWarehouse(dbProduct.warehouse),
+    categories: dbProduct.categories.map((category: any) =>
+      decodeCategory(category)
+    ),
+    minStock: dbProduct.minStock,
+    stockAlert: dbProduct.stockAlert,
   };
 };
