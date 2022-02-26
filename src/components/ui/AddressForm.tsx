@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TextField } from './forms';
 
-const AddressForm = ({ parent, disabled }) => {
+type Props = {
+  parent: string;
+  disabled?: boolean;
+};
+
+const AddressForm = ({ parent, disabled = false }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -105,11 +109,6 @@ const AddressForm = ({ parent, disabled }) => {
       </Grid>
     </>
   );
-};
-
-AddressForm.propTypes = {
-  parent: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
 };
 
 AddressForm.defaultProps = {
