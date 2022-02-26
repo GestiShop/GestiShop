@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ColoredSelect = ({
+export const ColoredSelect = ({
   name,
   options,
   ...otherProps
@@ -92,5 +92,3 @@ const ColoredSelect = ({
     </TextField>
   );
 };
-
-export default ColoredSelect;

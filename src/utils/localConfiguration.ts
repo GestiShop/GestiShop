@@ -2,23 +2,26 @@ import ElectronStore from 'electron-store';
 import {
   DEFAULT_CURRENCY_INFO,
   DEFAULT_DATABASE_INFO,
-  DEFAULT_LANG_CODE,
+  DEFAULT_LANGUAGE_INFO,
+  DEFAULT_BUSINESS_INFO,
   PlatformCurrencyInfo,
   PlatformDatabaseInfo,
-  PlatformLanguageCode,
+  PlatformLanguageInfo,
+  PlatformBusinessInfo,
 } from '../../assets/config/config';
 
-type LocalStorageType = {
-  langCode: PlatformLanguageCode;
+export type LocalStorageType = {
+  languageInfo: PlatformLanguageInfo;
   currencyInfo: PlatformCurrencyInfo;
   databaseInfo: PlatformDatabaseInfo;
+  businessInfo: PlatformBusinessInfo;
 };
 
 const defaultLocalStorage: LocalStorageType = {
-  langCode: DEFAULT_LANG_CODE,
+  languageInfo: DEFAULT_LANGUAGE_INFO,
   currencyInfo: DEFAULT_CURRENCY_INFO,
   databaseInfo: DEFAULT_DATABASE_INFO,
-  // businessInfo: {},
+  businessInfo: DEFAULT_BUSINESS_INFO,
 };
 
 const store = new ElectronStore<LocalStorageType>({
@@ -26,12 +29,12 @@ const store = new ElectronStore<LocalStorageType>({
 });
 
 const LocalConfiguration = {
-  getLocalLangCode(): PlatformLanguageCode {
-    return store.get('langCode');
+  getLocalLanguageInfo(): PlatformLanguageInfo {
+    return store.get('languageInfo');
   },
 
-  setLocalLang(langCode: PlatformLanguageCode): void {
-    store.set('langCode', langCode);
+  setLocalLang(languageInfo: PlatformLanguageInfo): void {
+    store.set('languageInfo', languageInfo);
   },
 
   getLocalCurrencyInfo(): PlatformCurrencyInfo {
@@ -50,13 +53,13 @@ const LocalConfiguration = {
     store.set('databaseInfo', databaseInfo);
   },
 
-  // getLocalBusinessInfo() {
-  //   return store.get('businessInfo');
-  // },
-  //
-  // setLocalBusinessInfo(businessInfo) {
-  //   store.set('businessInfo', businessInfo);
-  // },
+  getLocalBusinessInfo(): PlatformBusinessInfo {
+    return store.get('businessInfo');
+  },
+
+  setLocalBusinessInfo(businessInfo: PlatformBusinessInfo): void {
+    store.set('businessInfo', businessInfo);
+  },
 };
 
 export default LocalConfiguration;

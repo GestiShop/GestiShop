@@ -7,11 +7,13 @@ import { Form, Formik } from 'formik';
 import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import TextField from '../../ui/forms/TextField';
-import SubmitButton from '../../ui/forms/SubmitButton';
-import Select from '../../ui/forms/Select';
-import MultiSelect from '../../ui/forms/MultiSelect';
-import Switch from '../../ui/forms/Switch';
+import {
+  TextField,
+  SubmitButton,
+  Select,
+  MultiSelect,
+  Switch,
+} from '../../ui/forms';
 import { addProduct, updateProduct } from '../../../db/ProductHelper';
 import {
   fetchTaxes,

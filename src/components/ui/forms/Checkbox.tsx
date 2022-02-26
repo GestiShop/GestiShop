@@ -15,7 +15,11 @@ type Props = {
   legend: string;
 };
 
-const CheckboxWrapper = ({ name, label, legend }: Props): ReactElement => {
+export const CheckboxWrapper = ({
+  name,
+  label,
+  legend,
+}: Props): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
@@ -52,5 +56,3 @@ const CheckboxWrapper = ({ name, label, legend }: Props): ReactElement => {
     </FormControl>
   );
 };
-
-export default CheckboxWrapper;

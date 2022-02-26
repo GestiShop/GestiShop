@@ -54,7 +54,7 @@ const MenuProps = {
   getContentAnchorEl: () => null,
 };
 
-const MultiSelectWrapper = ({
+export const MultiSelectWrapper = ({
   name,
   label,
   options,
@@ -113,5 +113,3 @@ const MultiSelectWrapper = ({
     </FormControl>
   );
 };
-
-export default MultiSelectWrapper;

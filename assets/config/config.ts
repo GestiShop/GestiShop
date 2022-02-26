@@ -1,10 +1,20 @@
-export const CURRENCY_LIST = ['eur', 'usd'] as const;
-export type PlatformCurrencyCode = typeof CURRENCY_LIST[number];
-export const DEFAULT_CURRENCY_CODE: PlatformCurrencyCode = CURRENCY_LIST[0];
+import { Address } from '../../src/model/types';
+import { EMPTY_ADDRESS } from '../../src/model/samples';
 
 export const LANGUAGE_LIST = ['en', 'es', 'ca'] as const;
 export type PlatformLanguageCode = typeof LANGUAGE_LIST[number];
-export const DEFAULT_LANG_CODE: PlatformLanguageCode = LANGUAGE_LIST[0];
+export const DEFAULT_LANGUAGE_CODE: PlatformLanguageCode = LANGUAGE_LIST[0];
+
+export type PlatformLanguageInfo = {
+  languageCode: PlatformLanguageCode;
+};
+export const DEFAULT_LANGUAGE_INFO: PlatformLanguageInfo = {
+  languageCode: DEFAULT_LANGUAGE_CODE,
+};
+
+export const CURRENCY_LIST = ['eur', 'usd'] as const;
+export type PlatformCurrencyCode = typeof CURRENCY_LIST[number];
+export const DEFAULT_CURRENCY_CODE: PlatformCurrencyCode = CURRENCY_LIST[0];
 
 export const DECIMAL_MODES = ['trunk', 'round-up', 'round-down'] as const;
 export type PlatformDecimalModeCode = typeof DECIMAL_MODES[number];
@@ -41,6 +51,18 @@ export const DEFAULT_DATABASE_INFO: PlatformDatabaseInfo = {
   name: 'gestishop',
   user: 'root',
   password: '',
+};
+
+export type PlatformBusinessInfo = {
+  name: string;
+  nif: string;
+  address: Address;
+};
+
+export const DEFAULT_BUSINESS_INFO: PlatformBusinessInfo = {
+  name: '',
+  nif: '',
+  address: EMPTY_ADDRESS,
 };
 
 export const EVENT_COLOR_LIST = [

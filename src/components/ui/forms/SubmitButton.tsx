@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactElement, ReactNode } from 'react';
 import { useFormikContext } from 'formik';
-import Button from './Button';
+import { ButtonWrapper as Button } from './Button';
 
 type Props = {
   children: ReactNode;
 };
 
-const SubmitButtonWrapper = ({
+export const SubmitButtonWrapper = ({
   children,
   ...otherProps
 }: Props): ReactElement => {
@@ -24,5 +24,3 @@ const SubmitButtonWrapper = ({
 
   return <Button {...configButton}>{children}</Button>;
 };
-
-export default SubmitButtonWrapper;

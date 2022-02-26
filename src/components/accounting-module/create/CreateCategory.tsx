@@ -3,11 +3,9 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import TextField from '../../ui/forms/TextField';
-import SubmitButton from '../../ui/forms/SubmitButton';
+import { TextField, SubmitButton, Select } from '../../ui/forms';
 import { upsertCategory, fetchCategories } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
-import Select from '../../ui/forms/Select';
 import { Category } from '../../../model/types';
 import { EMPTY_CATEGORY } from '../../../model/samples';
 

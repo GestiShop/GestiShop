@@ -10,19 +10,21 @@ import { Container, Grid, Typography } from '@mui/material';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import TextField from '../../ui/forms/TextField';
-import SubmitButton from '../../ui/forms/SubmitButton';
-import Switch from '../../ui/forms/Switch';
+import {
+  Button,
+  TextField,
+  SubmitButton,
+  Switch,
+  DateTimePicker,
+  AutocompleteSelect,
+  Select,
+} from '../../ui/forms';
 import { addClientBill, updateClientBill } from '../../../db/ClientBillHelper';
 import { fetchClients } from '../../../db/ClientHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
-import DateTimePicker from '../../ui/forms/DateTimePicker';
-import AutocompleteSelect from '../../ui/forms/AutocompleteSelect';
-import Select from '../../ui/forms/Select';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
 import { AddressSchemaValidator } from '../../../utils/constants';
-import Button from '../../ui/forms/Button';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BILL } from '../../../model/samples';
 

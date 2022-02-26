@@ -26,7 +26,7 @@ type ButtonProps = {
   className: string;
 };
 
-const ButtonWrapper = ({
+export const ButtonWrapper = ({
   children,
   color = 'primary',
   className = '',
@@ -47,5 +47,3 @@ ButtonWrapper.defaultProps = {
   color: 'primary',
   className: '',
 };
-
-export default ButtonWrapper;

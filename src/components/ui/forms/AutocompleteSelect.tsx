@@ -31,7 +31,7 @@ type TextFieldProps = {
   helperText: string;
 };
 
-const AutocompleteSelectWrapper = ({
+export const AutocompleteSelectWrapper = ({
   name,
   label,
   options,
@@ -89,18 +89,23 @@ const AutocompleteSelectWrapper = ({
     configTextField.helperText = meta.error;
   }
 
+  const displayedOptions: Array<OptionType> = options.sort(
+    (a, b) =>
+      -b.displayText.toUpperCase().localeCompare(a.displayText.toUpperCase())
+  );
+
+  if (acceptNone) {
+    displayedOptions.unshift({
+      displayText: '-',
+      value: null,
+    });
+  }
+
   return (
     <Autocomplete
       {...configSelect}
-      options={options.sort(
-        (a, b) =>
-          -b.displayText
-            .toUpperCase()
-            .localeCompare(a.displayText.toUpperCase())
-      )}
+      options={displayedOptions}
       renderInput={(params) => <TextField {...params} {...configTextField} />}
     />
   );
 };
-
-export default AutocompleteSelectWrapper;

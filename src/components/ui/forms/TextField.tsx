@@ -1,11 +1,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactElement } from 'react';
 import { TextField } from '@mui/material';
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
+
+type Props = {
+  name: string;
+  label: string;
+  type?: string;
+  onInput?: (arg0: string) => void;
+  required?: boolean;
+};
 
 type TextFieldVariant = 'outlined';
 
 type TextFieldProps = {
+  name: string;
+  label: string;
+  type: string;
   fullWidth: boolean;
   variant: TextFieldVariant;
   InputLabelProps: {
@@ -13,23 +24,34 @@ type TextFieldProps = {
   };
   error: boolean;
   helperText: string;
+  onChange: (arg0: { target: { value: string } }) => void;
 };
 
-type Props = {
-  name: string;
-  required: boolean;
-};
-
-const TextfieldWrapper = ({
+export const TextFieldWrapper = ({
   name,
-  required,
+  label,
+  onInput,
+  type = 'text',
+  required = false,
   ...otherProps
 }: Props): ReactElement => {
+  const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
-  const configTextfield: TextFieldProps = {
+  const handleChange = (event: { target: { value: string } }): void => {
+    setFieldValue(name, event.target.value);
+    if (onInput) {
+      onInput(event.target.value);
+    }
+  };
+
+  const configTextField: TextFieldProps = {
     ...field,
     ...otherProps,
+    name,
+    label,
+    type,
+    onChange: handleChange,
     fullWidth: true,
     variant: 'outlined',
     InputLabelProps: { required },
@@ -38,11 +60,15 @@ const TextfieldWrapper = ({
   };
 
   if (meta?.touched && meta?.error) {
-    configTextfield.error = true;
-    configTextfield.helperText = meta.error;
+    configTextField.error = true;
+    configTextField.helperText = meta.error;
   }
 
-  return <TextField {...configTextfield} />;
+  return <TextField {...configTextField} />;
 };
 
-export default TextfieldWrapper;
+TextFieldWrapper.defaultProps = {
+  type: 'text',
+  required: false,
+  onInput: undefined,
+};

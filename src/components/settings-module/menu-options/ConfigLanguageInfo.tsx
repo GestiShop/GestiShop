@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import LocalConfiguration from '../../../utils/localConfiguration';
-import Select from '../../ui/forms/Select';
+import { Select } from '../../ui/forms';
 import {
   LANGUAGE_LIST,
   PlatformLanguageCode,
+  PlatformLanguageInfo,
 } from '../../../../assets/config/config';
 import {
-  setDefaultLang,
+  setStoredLanguageInfo,
   useAppDispatch,
   useAppSelector,
 } from '../../../utils/redux';
 
-export const ConfigLanguage = () => {
+export const ConfigLanguageInfo = () => {
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const INITIAL_STATE: { langCode: PlatformLanguageCode } = {
-    langCode: useAppSelector((store) => store.configuration.langCode),
-  };
+  const savedLanguageInfo: PlatformLanguageInfo = useAppSelector(
+    (store) => store.configuration.languageInfo
+  );
+
+  const [state, setState] = useState<PlatformLanguageInfo>(savedLanguageInfo);
 
   const FORM_VALIDATION = Yup.object().shape({
-    langCode: Yup.string().required(t('form.errors.required')),
+    languageCode: Yup.string().required(t('form.errors.required')),
   });
 
   return (
@@ -32,7 +35,7 @@ export const ConfigLanguage = () => {
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
-            initialValues={{ ...INITIAL_STATE }}
+            initialValues={{ ...savedLanguageInfo }}
             validationSchema={FORM_VALIDATION}
             onSubmit={() => {}}
           >
@@ -40,7 +43,7 @@ export const ConfigLanguage = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Select
-                    name="langCode"
+                    name="languageCode"
                     label={t('settings.language_config.language')}
                     options={LANGUAGE_LIST.map((x) => {
                       return {
@@ -50,10 +53,15 @@ export const ConfigLanguage = () => {
                         value: x,
                       };
                     })}
-                    onInput={(newLang: PlatformLanguageCode) => {
-                      LocalConfiguration.setLocalLang(newLang);
-                      i18n.changeLanguage(newLang);
-                      dispatch(setDefaultLang(newLang));
+                    onInput={(languageCode: PlatformLanguageCode) => {
+                      const newState: PlatformLanguageInfo = {
+                        ...state,
+                        languageCode,
+                      };
+                      i18n.changeLanguage(languageCode);
+                      setState(newState);
+                      LocalConfiguration.setLocalLang(newState);
+                      dispatch(setStoredLanguageInfo(newState));
                     }}
                   />
                 </Grid>

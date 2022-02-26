@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { ReactElement, useState } from 'react';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
-import LocalConfiguration from '../../../utils/localConfiguration';
-import { setDefaultBusinessInfo } from '../../../utils/redux/configuration';
-import Textfield from '../../ui/forms/TextField';
-import SubmitButton from '../../ui/forms/SubmitButton';
+import {
+  setStoredBusinessInfo,
+  useAppDispatch,
+  useAppSelector,
+} from '../../../utils/redux';
+import { TextField, SubmitButton } from '../../ui/forms';
 import { AddressSchemaValidator } from '../../../utils/constants';
 import AddressForm from '../../ui/AddressForm';
-import { EMPTY_ADDRESS } from '../../../model/samples';
+import { PlatformBusinessInfo } from '../../../../assets/config/config';
 
-export const ConfigBusinessInfo = () => {
+export const ConfigBusinessInfo = (): ReactElement => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const initialValues = useSelector(
+  const savedBusinessInfo = useAppSelector(
     (store) => store.configuration.businessInfo
   );
+
+  const [state, setState] = useState<PlatformBusinessInfo>(savedBusinessInfo);
 
   const FORM_VALIDATION = Yup.object().shape({
     name: Yup.string().required(t('form.errors.required')),
@@ -26,42 +29,46 @@ export const ConfigBusinessInfo = () => {
     address: Yup.object().shape(AddressSchemaValidator),
   });
 
-  const INITIAL_STATE = {
-    name: initialValues && initialValues.name ? initialValues.name : '',
-    nif: initialValues && initialValues.nif ? initialValues.nif : '',
-    address:
-      initialValues && initialValues.address
-        ? initialValues.address
-        : EMPTY_ADDRESS,
-  };
-
-  const handleSubmit = (data) => {
-    LocalConfiguration.setLocalBusinessInfo(data);
-    dispatch(setDefaultBusinessInfo(data));
-  };
-
   return (
     <Grid container>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
-            initialValues={{ ...INITIAL_STATE }}
+            initialValues={{ ...savedBusinessInfo }}
             validationSchema={FORM_VALIDATION}
-            onSubmit={handleSubmit}
+            onSubmit={() => {}}
           >
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Textfield
+                  <TextField
                     name="name"
                     label={t('settings.business_config.name')}
+                    required
+                    onInput={(name: string) => {
+                      const newState = {
+                        ...state,
+                        name,
+                      };
+                      setState(newState);
+                      dispatch(setStoredBusinessInfo(newState));
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Textfield
+                  <TextField
                     name="nif"
                     label={t('settings.business_config.nif')}
+                    required
+                    onInput={(nif: string) => {
+                      const newState = {
+                        ...state,
+                        nif,
+                      };
+                      setState(newState);
+                      dispatch(setStoredBusinessInfo(newState));
+                    }}
                   />
                 </Grid>
 

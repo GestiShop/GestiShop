@@ -4,39 +4,31 @@ import { useTranslation } from 'react-i18next';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
 import LocalConfiguration from '../../../utils/localConfiguration';
-import Select from '../../ui/forms/Select';
+import { Select } from '../../ui/forms';
 import {
-  setDefaultCurrencyInfo,
+  setStoredCurrencyInfo,
   useAppDispatch,
   useAppSelector,
 } from '../../../utils/redux';
 import {
   CURRENCY_LIST,
   DECIMAL_MODES,
-  DEFAULT_CURRENCY_CODE,
-  DEFAULT_DECIMAL_MODE_CODE,
-  DEFAULT_FLOATING_POSITION_OPTION_CODE,
   FLOATING_POSITION_OPTIONS,
+  PlatformCurrencyCode,
   PlatformCurrencyInfo,
+  PlatformDecimalModeCode,
+  PlatformFloatingPositionOption,
 } from '../../../../assets/config/config';
 
 export const ConfigCurrencyInfo = (): ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const initialValues = useAppSelector(
+  const savedCurrencyInfo: PlatformCurrencyInfo = useAppSelector(
     (store) => store.configuration.currencyInfo
   );
 
-  const INITIAL_STATE = {
-    currencyCode: initialValues?.currencyCode ?? DEFAULT_CURRENCY_CODE,
-    decimalModeCode:
-      initialValues?.decimalModeCode ?? DEFAULT_DECIMAL_MODE_CODE,
-    floatingPositions:
-      initialValues?.floatingPositions ?? DEFAULT_FLOATING_POSITION_OPTION_CODE,
-  };
-
-  const [state, setState] = useState<PlatformCurrencyInfo>(INITIAL_STATE);
+  const [state, setState] = useState<PlatformCurrencyInfo>(savedCurrencyInfo);
 
   const FORM_VALIDATION = Yup.object().shape({
     currencyCode: Yup.string().required(t('form.errors.required')),
@@ -49,7 +41,7 @@ export const ConfigCurrencyInfo = (): ReactElement => {
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
-            initialValues={{ ...INITIAL_STATE }}
+            initialValues={{ ...savedCurrencyInfo }}
             validationSchema={FORM_VALIDATION}
             onSubmit={() => {}}
           >
@@ -67,14 +59,14 @@ export const ConfigCurrencyInfo = (): ReactElement => {
                         value: currencyCode,
                       };
                     })}
-                    onInput={(currencyCode) => {
+                    onInput={(currencyCode: PlatformCurrencyCode) => {
                       const newState: PlatformCurrencyInfo = {
                         ...state,
                         currencyCode,
                       };
                       setState(newState);
                       LocalConfiguration.setLocalCurrencyInfo(newState);
-                      dispatch(setDefaultCurrencyInfo(newState));
+                      dispatch(setStoredCurrencyInfo(newState));
                     }}
                   />
                 </Grid>
@@ -89,14 +81,14 @@ export const ConfigCurrencyInfo = (): ReactElement => {
                         value: x,
                       };
                     })}
-                    onInput={(decimalModeCode) => {
+                    onInput={(decimalModeCode: PlatformDecimalModeCode) => {
                       const newState: PlatformCurrencyInfo = {
                         ...state,
                         decimalModeCode,
                       };
                       setState(newState);
                       LocalConfiguration.setLocalCurrencyInfo(newState);
-                      dispatch(setDefaultCurrencyInfo(newState));
+                      dispatch(setStoredCurrencyInfo(newState));
                     }}
                   />
                 </Grid>
@@ -111,14 +103,16 @@ export const ConfigCurrencyInfo = (): ReactElement => {
                         value: x,
                       };
                     })}
-                    onInput={(floatingPositions) => {
+                    onInput={(
+                      floatingPositions: PlatformFloatingPositionOption
+                    ) => {
                       const newState: PlatformCurrencyInfo = {
                         ...state,
                         floatingPositions,
                       };
                       setState(newState);
                       LocalConfiguration.setLocalCurrencyInfo(newState);
-                      dispatch(setDefaultCurrencyInfo(newState));
+                      dispatch(setStoredCurrencyInfo(newState));
                     }}
                   />
                 </Grid>

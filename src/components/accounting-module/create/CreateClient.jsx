@@ -6,8 +6,7 @@ import { Form, Formik } from 'formik';
 import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import AddressForm from '../../ui/AddressForm';
-import TextField from '../../ui/forms/TextField';
-import SubmitButton from '../../ui/forms/SubmitButton';
+import { TextField, SubmitButton } from '../../ui/forms';
 import { addClient, updateClient } from '../../../db/ClientHelper';
 import {
   AddressSchemaValidator,

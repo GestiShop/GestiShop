@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { FileCopy as FileCopyIcon } from '@mui/icons-material';
-import Button from './ui/forms/Button';
+import { Button } from './ui/forms';
 
 const Dashboard = (): ReactElement => {
   const { t } = useTranslation();

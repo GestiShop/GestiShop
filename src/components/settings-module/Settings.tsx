@@ -4,21 +4,22 @@ import React, { ReactElement, useState } from 'react';
 import { Tabs, Tab, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import {
-  ConfigLanguage,
+  ConfigLanguageInfo,
   ConfigUsers,
   ConfigInputMode,
   ConfigModules,
   ConfigAdvanced,
   ConfigCurrencyInfo,
-  ConfigDbInfo,
+  ConfigDatabaseInfo,
+  ConfigBusinessInfo,
 } from './menu-options';
 
-function TabPanel(props: {
+const TabPanel = (props: {
   index: number;
   value: number;
   children: ReactElement;
-}) {
-  const { index, value, children, ...other } = props;
+}): ReactElement => {
+  const { index, value, children } = props;
 
   return (
     <div
@@ -26,7 +27,6 @@ function TabPanel(props: {
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
-      {...other}
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
@@ -35,7 +35,7 @@ function TabPanel(props: {
       )}
     </div>
   );
-}
+};
 
 const a11yProps = (index: number) => {
   return {
@@ -54,19 +54,19 @@ const Settings = (): ReactElement => {
   }> = [
     {
       label: t('settings.language_config.language'),
-      component: <ConfigLanguage />,
+      component: <ConfigLanguageInfo />,
     },
     {
       label: t('settings.currency_config.currency'),
       component: <ConfigCurrencyInfo />,
     },
-    // {
-    //   label: t('settings.business_config.business'),
-    //   component: <ConfigBusinessInfo />,
-    // },
+    {
+      label: t('settings.business_config.business'),
+      component: <ConfigBusinessInfo />,
+    },
     {
       label: t('settings.database_config.database'),
-      component: <ConfigDbInfo />,
+      component: <ConfigDatabaseInfo />,
     },
     {
       label: t('settings.users_config.users'),

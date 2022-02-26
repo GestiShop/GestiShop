@@ -5,13 +5,15 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import TextField from '../../ui/forms/TextField';
-import SubmitButton from '../../ui/forms/SubmitButton';
+import {
+  TextField,
+  SubmitButton,
+  DateTimePicker,
+  Switch,
+  Button,
+  ColoredSelect,
+} from '../../ui/forms';
 import { deleteEvent, upsertEvent } from '../../../db';
-import DateTimePicker from '../../ui/forms/DateTimePicker';
-import Switch from '../../ui/forms/Switch';
-import Button from '../../ui/forms/Button';
-import ColoredSelect from '../../ui/forms/ColoredSelect';
 import {
   DEFAULT_EVENT_COLOR_CODE,
   EVENT_COLOR_LIST,

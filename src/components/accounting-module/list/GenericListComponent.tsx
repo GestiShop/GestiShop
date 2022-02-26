@@ -4,7 +4,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Container, Grid } from '@mui/material';
 import { Types } from 'mongoose';
-import Button from '../../ui/forms/Button';
+import { Button } from '../../ui/forms';
 import FullScreenDialog from '../../ui/FullscreenDialog';
 
 type Props = {

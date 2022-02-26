@@ -32,7 +32,7 @@ type SelectProps = {
   helperText: string;
 };
 
-const SelectWrapper = ({
+export const SelectWrapper = ({
   name,
   label,
   options,
@@ -89,5 +89,3 @@ SelectWrapper.defaultProps = {
   required: false,
   acceptNone: false,
 };
-
-export default SelectWrapper;

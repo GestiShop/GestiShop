@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import TextField from './forms/TextField';
+import { TextField } from './forms';
 
 const AddressForm = ({ parent, disabled }) => {
   const { t } = useTranslation();

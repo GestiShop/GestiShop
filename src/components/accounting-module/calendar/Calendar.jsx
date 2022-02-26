@@ -16,7 +16,7 @@ import { DEFAULT_EVENT_COLOR_CODE } from '../../../../assets/config/config';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/styles.css';
 
-const localLang = LocalConfiguration.getLocalLangCode();
+const localLang = LocalConfiguration.getLocalLanguageInfo();
 if (localLang != null) {
   const langPath = `${localLang.value}${localLang.value === 'en' ? '-gb' : ''}`;
   import(`moment/locale/${langPath}`);

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactElement } from 'react';
 import { useField } from 'formik';
-import TextField from './TextField';
+import { TextFieldWrapper as TextField } from './TextField';
 
 type Props = {
   name: string;
@@ -10,6 +10,7 @@ type Props = {
 
 type DatePickerProps = {
   name: string;
+  label: string;
   required: boolean;
   type: string;
   variant: string;
@@ -22,7 +23,11 @@ type DatePickerProps = {
   helperText: string;
 };
 
-const DatePicker = ({ name, required, ...otherProps }: Props): ReactElement => {
+export const DatePicker = ({
+  name,
+  required,
+  ...otherProps
+}: Props): ReactElement => {
   const [field, meta] = useField(name);
 
   const configDatePicker: DatePickerProps = {
@@ -30,6 +35,7 @@ const DatePicker = ({ name, required, ...otherProps }: Props): ReactElement => {
     ...otherProps,
     name,
     required,
+    label: '',
     type: 'date',
     variant: 'outlined',
     fullWidth: true,
@@ -48,5 +54,3 @@ const DatePicker = ({ name, required, ...otherProps }: Props): ReactElement => {
 
   return <TextField {...configDatePicker} />;
 };
-
-export default DatePicker;

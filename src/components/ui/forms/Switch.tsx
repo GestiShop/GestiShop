@@ -31,7 +31,7 @@ type SwitchProps = {
   helperText: string;
 };
 
-const SwitchWrapper = ({
+export const SwitchWrapper = ({
   name,
   label,
   initialState,
@@ -71,5 +71,3 @@ const SwitchWrapper = ({
     />
   );
 };
-
-export default SwitchWrapper;

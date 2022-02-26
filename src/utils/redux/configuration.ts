@@ -1,30 +1,23 @@
-import LocalConfiguration from '../localConfiguration';
+import LocalConfiguration, { LocalStorageType } from '../localConfiguration';
 import {
-  DEFAULT_CURRENCY_INFO,
-  DEFAULT_LANG_CODE,
+  PlatformBusinessInfo,
   PlatformCurrencyInfo,
   PlatformDatabaseInfo,
-  PlatformLanguageCode,
+  PlatformLanguageInfo,
 } from '../../../assets/config/config';
 
-const initialState = {
-  langCode: LocalConfiguration.getLocalLangCode() ?? DEFAULT_LANG_CODE,
-  currencyInfo:
-    LocalConfiguration.getLocalCurrencyInfo() ?? DEFAULT_CURRENCY_INFO,
-  databaseInfo:
-    LocalConfiguration.getLocalDatabaseInfo() ?? DEFAULT_DATABASE_INFO,
-  // businessInfo: LocalConfiguration.getLocalBusinessInfo() ?? {
-  //   name: '',
-  //   nif: '',
-  //   address: EMPTY_ADDRESS,
-  // },
+const initialState: LocalStorageType = {
+  languageInfo: LocalConfiguration.getLocalLanguageInfo(),
+  currencyInfo: LocalConfiguration.getLocalCurrencyInfo(),
+  databaseInfo: LocalConfiguration.getLocalDatabaseInfo(),
+  businessInfo: LocalConfiguration.getLocalBusinessInfo(),
 };
 
 // Types
 // eslint-disable-next-line @typescript-eslint/no-namespace
 namespace ActionValues {
-  export type SetLangCode = 'SET_LANG_CODE';
-  export const SET_LANG_CODE: SetLangCode = 'SET_LANG_CODE';
+  export type SetLanguageInfo = 'SET_LANGUAGE_INFO';
+  export const SET_LANGUAGE_INFO: SetLanguageInfo = 'SET_LANGUAGE_INFO';
 
   export type SetCurrencyInfo = 'SET_CURRENCY_INFO';
   export const SET_CURRENCY_INFO = 'SET_CURRENCY_INFO';
@@ -38,8 +31,8 @@ namespace ActionValues {
 
 type ReducerActionType =
   | {
-      payload: PlatformLanguageCode;
-      type: ActionValues.SetLangCode;
+      payload: PlatformLanguageInfo;
+      type: ActionValues.SetLanguageInfo;
     }
   | {
       payload: PlatformCurrencyInfo;
@@ -48,6 +41,10 @@ type ReducerActionType =
   | {
       payload: PlatformDatabaseInfo;
       type: ActionValues.SetDatabaseInfo;
+    }
+  | {
+      payload: PlatformBusinessInfo;
+      type: ActionValues.SetBusinessInfo;
     };
 
 // Reducer
@@ -56,10 +53,10 @@ export default function configurationReducer(
   action: ReducerActionType
 ) {
   switch (action.type) {
-    case ActionValues.SET_LANG_CODE:
+    case ActionValues.SET_LANGUAGE_INFO:
       return {
         ...state,
-        lang: action.payload,
+        languageInfo: action.payload,
       };
 
     case ActionValues.SET_CURRENCY_INFO:
@@ -74,11 +71,11 @@ export default function configurationReducer(
         databaseInfo: action.payload,
       };
 
-    // case ActionValues.SET_BUSINESS_INFO:
-    //   return {
-    //     ...state,
-    //     businessInfo: action.payload,
-    //   };
+    case ActionValues.SET_BUSINESS_INFO:
+      return {
+        ...state,
+        businessInfo: action.payload,
+      };
 
     default:
       return state;
@@ -86,32 +83,30 @@ export default function configurationReducer(
 }
 
 // Actions
-export const setDefaultLang = (
-  langCode: PlatformLanguageCode
+export const setStoredLanguageInfo = (
+  languageInfo: PlatformLanguageInfo
 ): ReducerActionType => ({
-  type: ActionValues.SET_LANG_CODE,
-  payload: langCode,
+  type: ActionValues.SET_LANGUAGE_INFO,
+  payload: languageInfo,
 });
 
-export const setDefaultCurrencyInfo = (
+export const setStoredCurrencyInfo = (
   currencyInfo: PlatformCurrencyInfo
 ): ReducerActionType => ({
   type: ActionValues.SET_CURRENCY_INFO,
   payload: currencyInfo,
 });
 
-export const setDefaultDatabaseInfo = (
+export const setStoredDatabaseInfo = (
   databaseInfo: PlatformDatabaseInfo
 ): ReducerActionType => ({
   type: ActionValues.SET_DATABASE_INFO,
   payload: databaseInfo,
 });
 
-// export const setDefaultBusinessInfo =
-//   (businessInfo) =>
-//   (dispatch): void => {
-//     dispatch({
-//       type: ActionValues.SET_BUSINESS_INFO,
-//       payload: businessInfo,
-//     });
-//   };
+export const setStoredBusinessInfo = (
+  businessInfo: PlatformBusinessInfo
+): ReducerActionType => ({
+  type: ActionValues.SET_BUSINESS_INFO,
+  payload: businessInfo,
+});

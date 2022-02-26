@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, ReactElement } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { Container, Grid, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import Button from '../../ui/forms/Button';
+import { Button } from '../../ui/forms';
 import { fetchClientsWithBills } from '../../../db/ClientHelper';
 import { fetchProvidersWithBills } from '../../../db/ProviderHelper';
 import generate347Model from '../../../utils/document-generator/347modelGenerator';
