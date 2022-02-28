@@ -5,8 +5,8 @@ import {
   DBClientBill,
   DBProviderBill,
   Bill,
-} from '../../model/types';
-import { decodeBill } from '../../model/decoders';
+  decodeBill,
+} from '../../model';
 
 // TODO: FINISH LOGIC
 export const upsertBill = (

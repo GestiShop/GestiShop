@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { TextField, SubmitButton, Select } from '../../ui/forms';
 import { upsertCategory, fetchCategories } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
-import { Category } from '../../../model/types';
-import { EMPTY_CATEGORY } from '../../../model/samples';
+import { Category, EMPTY_CATEGORY } from '../../../model';
 
 type Props = {
   closeCallback?: any;

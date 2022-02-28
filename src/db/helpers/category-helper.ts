@@ -1,7 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
-import { Category, DBCategory, DBHelperResponse } from '../../model/types';
-import { decodeCategory } from '../../model/decoders';
+import {
+  Category,
+  DBCategory,
+  DBHelperResponse,
+  decodeCategory,
+} from '../../model';
 
 export const upsertCategory = (
   category: Category

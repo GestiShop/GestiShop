@@ -13,11 +13,7 @@ import {
   EmailSchemaValidator,
   PhoneSchemaValidator,
 } from '../../../utils/form-validations';
-import {
-  EMPTY_PHONE,
-  EMPTY_EMAIL,
-  EMPTY_ADDRESS,
-} from '../../../model/samples';
+import { EMPTY_PHONE, EMPTY_EMAIL, EMPTY_ADDRESS } from '../../../model';
 
 const CreateClient = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

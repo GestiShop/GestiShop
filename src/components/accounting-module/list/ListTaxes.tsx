@@ -5,7 +5,7 @@ import CreateTax from '../create/CreateTax';
 import { deleteTaxes, fetchTaxes } from '../../../db';
 import GenericListComponent from './GenericListComponent';
 import useIsMounted from '../../../utils/useIsMounted';
-import { Tax } from '../../../model/types';
+import { Tax } from '../../../model';
 
 const ListTaxes = (): ReactElement => {
   const { t } = useTranslation();

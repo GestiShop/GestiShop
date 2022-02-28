@@ -1,7 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
-import { DBHelperResponse, DBWarehouse, Warehouse } from '../../model/types';
-import { decodeWarehouse } from '../../model/decoders';
+import {
+  DBHelperResponse,
+  DBWarehouse,
+  Warehouse,
+  decodeWarehouse,
+} from '../../model';
 
 export const upsertWarehouse = (
   warehouse: Warehouse

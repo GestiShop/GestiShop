@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { DBClientBudget } from '../model/types';
+import { DBClientBudget } from '../model';
 
 const addClientBudget = (clientBudget, errorCallback, resultCallback) => {
   const dbClientBudget = new DBClientBudget(clientBudget);

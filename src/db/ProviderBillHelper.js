@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
-import { DBProviderBill } from '../model/types';
+import { DBProviderBill } from '../model';
 import { addBill, removeBill } from './ProviderHelper';
 import { incrementStock } from './ProductHelper';
 

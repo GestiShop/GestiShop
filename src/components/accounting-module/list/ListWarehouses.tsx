@@ -5,7 +5,7 @@ import GenericListComponent from './GenericListComponent';
 import { deleteWarehouses, fetchWarehouses } from '../../../db';
 import CreateWarehouse from '../create/CreateWarehouse';
 import useIsMounted from '../../../utils/useIsMounted';
-import { Warehouse } from '../../../model/types';
+import { Warehouse } from '../../../model';
 
 const ListWarehouses = (): ReactElement => {
   const { t } = useTranslation();

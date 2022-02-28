@@ -5,8 +5,9 @@ import {
   DBProvider,
   Provider,
   FullProvider,
-} from '../../model/types';
-import { decodeFullProvider, decodeProvider } from '../../model/decoders';
+  decodeProvider,
+  decodeFullProvider,
+} from '../../model';
 
 export const upsertProvider = (
   provider: Provider

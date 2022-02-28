@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { DBProviderBudget } from '../model/types';
+import { DBProviderBudget } from '../model';
 
 const addProviderBudget = (providerBudget, errorCallback, resultCallback) => {
   const dbProviderBudget = new DBProviderBudget(providerBudget);

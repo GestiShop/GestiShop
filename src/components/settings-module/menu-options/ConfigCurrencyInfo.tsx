@@ -18,7 +18,7 @@ import {
   PlatformCurrencyInfo,
   PlatformDecimalModeCode,
   PlatformFloatingPositionOption,
-} from '../../../model/types';
+} from '../../../model';
 
 export const ConfigCurrencyInfo = (): ReactElement => {
   const { t } = useTranslation();

@@ -5,7 +5,7 @@ import GenericListComponent from './GenericListComponent';
 import { deleteCategories, fetchCategories } from '../../../db';
 import CreateCategory from '../create/CreateCategory';
 import useIsMounted from '../../../utils/useIsMounted';
-import { Category } from '../../../model/types';
+import { Category } from '../../../model';
 
 const ListCategories = () => {
   const { t } = useTranslation();

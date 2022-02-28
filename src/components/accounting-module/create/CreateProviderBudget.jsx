@@ -26,7 +26,7 @@ import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
-import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BUDGET } from '../../../model/samples';
+import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BUDGET } from '../../../model';
 
 const CreateProviderBudget = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

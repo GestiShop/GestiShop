@@ -5,7 +5,7 @@ import GenericListComponent from './GenericListComponent';
 import { deleteUnitTypes, fetchUnitTypes } from '../../../db';
 import CreateUnitType from '../create/CreateUnitType';
 import useIsMounted from '../../../utils/useIsMounted';
-import { UnitType } from '../../../model/types';
+import { UnitType } from '../../../model';
 
 const ListUnitTypes = (): ReactElement => {
   const { t } = useTranslation();

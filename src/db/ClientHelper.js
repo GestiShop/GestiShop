@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { DBClient } from '../model/types';
+import { DBClient } from '../model';
 
 const addClient = (client, errorCallback, resultCallback) => {
   const dbClient = new DBClient(client);

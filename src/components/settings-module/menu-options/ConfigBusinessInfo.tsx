@@ -11,7 +11,7 @@ import {
 import { TextField } from '../../ui/forms';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import AddressForm from '../../ui/AddressForm';
-import { PlatformBusinessInfo } from '../../../model/types';
+import { PlatformBusinessInfo } from '../../../model';
 
 export const ConfigBusinessInfo = (): ReactElement => {
   const { t } = useTranslation();

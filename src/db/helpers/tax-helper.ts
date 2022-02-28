@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
-import { decodeTax } from '../../model/decoders';
-import { DBHelperResponse, DBTax, Tax } from '../../model/types';
+import { decodeTax, DBHelperResponse, DBTax, Tax } from '../../model';
 
 export const upsertTax = (tax: Tax): Promise<DBHelperResponse<boolean>> => {
   let queryPromise;

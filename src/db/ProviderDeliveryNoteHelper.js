@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { DBProviderDeliveryNote } from '../model/types';
+import { DBProviderDeliveryNote } from '../model';
 
 const addProviderDeliveryNote = (
   providerDeliveryNote,

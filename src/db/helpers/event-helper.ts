@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
-import { decodeCalendarEvent } from '../../model/decoders';
 import {
   CalendarEvent,
   DBCalendarEvent,
   DBHelperResponse,
-} from '../../model/types';
+  decodeCalendarEvent,
+} from '../../model';
 
 export const upsertEvent = (
   event: CalendarEvent

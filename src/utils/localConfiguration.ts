@@ -8,7 +8,7 @@ import {
   PlatformDatabaseInfo,
   PlatformLanguageInfo,
   PlatformBusinessInfo,
-} from '../model/types';
+} from '../model';
 
 export type LocalStorageType = {
   languageInfo: PlatformLanguageInfo;

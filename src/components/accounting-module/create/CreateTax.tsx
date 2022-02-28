@@ -5,8 +5,7 @@ import { Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TextField, SubmitButton } from '../../ui/forms';
 import { upsertTax } from '../../../db';
-import { Tax } from '../../../model/types';
-import { EMPTY_TAX } from '../../../model/samples';
+import { Tax, EMPTY_TAX } from '../../../model';
 
 type Props = {
   closeCallback?: any;

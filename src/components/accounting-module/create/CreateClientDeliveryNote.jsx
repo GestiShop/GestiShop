@@ -26,10 +26,7 @@ import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
-import {
-  EMPTY_ADDRESS,
-  EMPTY_PRODUCT_IN_DELIVERY_NOTE,
-} from '../../../model/samples';
+import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_DELIVERY_NOTE } from '../../../model';
 
 const CreateClientDeliveryNote = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

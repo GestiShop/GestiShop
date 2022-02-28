@@ -1,7 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
-import { DBHelperResponse, DBUnitType, UnitType } from '../../model/types';
-import { decodeUnitType } from '../../model/decoders';
+import {
+  DBHelperResponse,
+  DBUnitType,
+  UnitType,
+  decodeUnitType,
+} from '../../model';
 
 export const upsertUnitType = (
   unitType: UnitType

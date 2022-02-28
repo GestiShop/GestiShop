@@ -5,8 +5,9 @@ import {
   DBClient,
   Client,
   FullClient,
-} from '../../model/types';
-import { decodeFullClient, decodeClient } from '../../model/decoders';
+  decodeClient,
+  decodeFullClient,
+} from '../../model';
 
 export const upsertClient = (
   client: Client

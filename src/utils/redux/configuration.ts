@@ -4,7 +4,7 @@ import {
   PlatformCurrencyInfo,
   PlatformDatabaseInfo,
   PlatformLanguageInfo,
-} from '../../model/types';
+} from '../../model';
 
 const initialState: LocalStorageType = {
   languageInfo: LocalConfiguration.getLocalLanguageInfo(),

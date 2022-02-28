@@ -18,7 +18,7 @@ import {
   EMPTY_EFACT,
   EMPTY_EMAIL,
   EMPTY_PHONE,
-} from '../../../model/samples';
+} from '../../../model';
 
 const CreateProvider = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

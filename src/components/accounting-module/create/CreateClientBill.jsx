@@ -26,7 +26,7 @@ import AddressForm from '../../ui/AddressForm';
 import useIsMounted from '../../../utils/useIsMounted';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
-import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BILL } from '../../../model/samples';
+import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BILL } from '../../../model';
 
 const CreateClientBill = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

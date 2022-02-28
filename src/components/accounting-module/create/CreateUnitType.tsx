@@ -5,8 +5,7 @@ import { Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TextField, SubmitButton } from '../../ui/forms';
 import { upsertUnitType } from '../../../db';
-import { UnitType } from '../../../model/types';
-import { EMPTY_UNIT_TYPE } from '../../../model/samples';
+import { UnitType, EMPTY_UNIT_TYPE } from '../../../model';
 
 type Props = {
   closeCallback?: any;

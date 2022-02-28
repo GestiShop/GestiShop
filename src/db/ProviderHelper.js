@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { DBProvider } from '../model/types';
+import { DBProvider } from '../model';
 
 const addProvider = (provider, errorCallback, resultCallback) => {
   const dbProvider = new DBProvider(provider);
