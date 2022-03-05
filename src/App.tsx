@@ -5,7 +5,7 @@ import { store } from './utils/redux';
 import Settings from './components/settings-module/Settings';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import AccountingModuleDashboard from './components/accounting-module/AccountingModuleDashboard';
+import { AccountingModuleDashboard } from './components/accounting-module/AccountingModuleDashboard';
 
 const App = () => {
   return (

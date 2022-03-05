@@ -1,139 +1,144 @@
 import React, { ReactElement, useState } from 'react';
-import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
-import { Link, useRouteMatch, Route, Switch, Redirect } from 'react-router-dom';
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import {
-  Drawer,
-  AppBar,
+  Box,
+  Drawer as MuiDrawer,
   Toolbar,
   List,
   CssBaseline,
   Typography,
   Divider,
   IconButton,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
-  useTheme,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {
   Menu as MenuIcon,
-  Settings as SettingsIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
+  ArrowBack as ArrowBackIcon,
+  Settings as SettingsIcon,
   Event as EventIcon,
   ShoppingBasket as ShoppingBasketIcon,
   AccountBalance as AccountBalanceIcon,
   Timeline as TimelineIcon,
   Store as StoreIcon,
+  Category as CategoryIcon,
   People as PeopleIcon,
   PeopleOutlineOutlined as PeopleOutlineOutlinedIcon,
   Description as DescriptionIcon,
   DescriptionOutlined as DescriptionOutlinedIcon,
   Receipt as ReceiptIcon,
   ReceiptOutlined as ReceiptOutlinedIcon,
-  Category as CategoryIcon,
-  InsertDriveFile as InsertDriveFileIcon,
   Assignment as AssignmentIcon,
   AssignmentOutlined as AssignmentOutlinedIcon,
-  ArrowBack as ArrowBackIcon,
+  InsertDriveFile as InsertDriveFileIcon,
 } from '@mui/icons-material';
+import { Link, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import Settings from '../settings-module/Settings';
+import { FullScreenDialog } from '../ui/FullscreenDialog';
+import Calendar from './calendar/Calendar';
 import ListProducts from './list/ListProducts';
 import ListTaxes from './list/ListTaxes';
 import ListUnitTypes from './list/ListUnitTypes';
 import ListWarehouses from './list/ListWarehouses';
-import Calendar from './calendar/Calendar';
 import ListCategories from './list/ListCategories';
-import { FullScreenDialog } from '../ui/FullscreenDialog';
-import Settings from '../settings-module/Settings';
 import ListClients from './list/ListClients';
 import ListProviders from './list/ListProviders';
 import ListClientBills from './list/ListClientBills';
-import DocumentGenerator from './documents/DocumentGenerator';
 import ListProviderBills from './list/ListProviderBills';
 import ListClientBudgets from './list/ListClientBudgets';
 import ListProviderBudgets from './list/ListProviderBudgets';
 import ListClientDeliveryNotes from './list/ListClientDeliveryNotes';
 import ListProviderDeliveryNotes from './list/ListProviderDeliveryNotes';
+import DocumentGenerator from './documents/DocumentGenerator';
 
 const DRAWER_WIDTH = 300;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: DRAWER_WIDTH,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
     marginLeft: DRAWER_WIDTH,
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: DRAWER_WIDTH,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    width: DRAWER_WIDTH,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    height: '100%',
-    display: 'flex',
-    flexFlow: 'column',
-    '& .rbc-calendar': {
-      overflow: 'auto',
-    },
-  },
-  navbar: {
-    justifyContent: 'space-between',
-  },
+  }),
 }));
 
-const AccountingModuleDashboard = (): ReactElement => {
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  width: DRAWER_WIDTH,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}));
+
+export const AccountingModuleDashboard = (): ReactElement => {
   const { t } = useTranslation();
   const { path, url } = useRouteMatch();
-  const classes = useStyles();
+
   const theme = useTheme();
+
+  const [openSettingsDialog, setOpenSettingsDialog] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
+  const [indexes, setIndexes] = useState<{ i: number; j: number }>({
+    i: 0,
+    j: 0,
+  });
 
   const DRAWER_ITEMS: Array<
     Array<{
@@ -229,18 +234,11 @@ const AccountingModuleDashboard = (): ReactElement => {
     ],
   ];
 
-  const [openSettingsDialog, setOpenSettingsDialog] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(true);
-  const [indexes, setIndexes] = useState<{ i: number; j: number }>({
-    i: 0,
-    j: 0,
-  });
-
-  const handleDrawerOpen = (): void => {
+  const handleDrawerOpen = () => {
     setOpen(true);
   };
 
-  const handleDrawerClose = (): void => {
+  const handleDrawerClose = () => {
     setOpen(false);
   };
 
@@ -250,31 +248,28 @@ const AccountingModuleDashboard = (): ReactElement => {
 
   return (
     <>
-      <div className={classes.root}>
+      <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar className={classes.navbar}>
+        <AppBar position="fixed" open={open}>
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
             <IconButton
               color="inherit"
+              aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
-              className={clsx(classes.menuButton, {
-                [classes.hide]: open,
-              })}
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }),
+              }}
             >
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" noWrap>
+            <Typography variant="h6" noWrap component="div">
               {t('accounting_module.accounting_module')}
             </Typography>
 
-            <div>
+            <Box component="div">
               <IconButton
                 color="inherit"
                 edge="end"
@@ -292,23 +287,11 @@ const AccountingModuleDashboard = (): ReactElement => {
               >
                 <SettingsIcon />
               </IconButton>
-            </div>
+            </Box>
           </Toolbar>
         </AppBar>
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}
-        >
-          <div className={classes.toolbar}>
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? (
                 <ChevronRightIcon />
@@ -316,14 +299,13 @@ const AccountingModuleDashboard = (): ReactElement => {
                 <ChevronLeftIcon />
               )}
             </IconButton>
-          </div>
+          </DrawerHeader>
           <Divider />
           <List>
             {DRAWER_ITEMS.map((elementList, i) => {
               let itemList = elementList.map((element, j) => (
-                <ListItem
+                <ListItemButton
                   selected={isItemSelected(i, j)}
-                  button
                   key={element.text}
                   component={Link}
                   to={element.linkTo}
@@ -335,9 +317,20 @@ const AccountingModuleDashboard = (): ReactElement => {
                     })
                   }
                 >
-                  <ListItemIcon>{element.icon}</ListItemIcon>
-                  <ListItemText primary={element.text} />
-                </ListItem>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {element.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={element.text}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
               ));
 
               if (i !== DRAWER_ITEMS.length - 1) {
@@ -351,8 +344,17 @@ const AccountingModuleDashboard = (): ReactElement => {
             })}
           </List>
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            height: '100%',
+            display: 'flex',
+            flexFlow: 'column',
+          }}
+        >
+          <DrawerHeader />
           <Switch>
             <Route exact path={`${path}/calendar`}>
               <Calendar />
@@ -403,8 +405,8 @@ const AccountingModuleDashboard = (): ReactElement => {
               <Redirect to={`${path}/calendar`} />
             </Route>
           </Switch>
-        </main>
-      </div>
+        </Box>
+      </Box>
       <FullScreenDialog
         open={openSettingsDialog}
         closeCallback={() => setOpenSettingsDialog(false)}
@@ -414,5 +416,3 @@ const AccountingModuleDashboard = (): ReactElement => {
     </>
   );
 };
-
-export default AccountingModuleDashboard;
