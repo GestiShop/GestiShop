@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { ReactElement, forwardRef, Ref } from 'react';
 import {
+  Box,
   Dialog,
   AppBar,
   Toolbar,
@@ -9,35 +9,33 @@ import {
   Typography,
   Slide,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { Close as CloseIcon } from '@mui/icons-material';
+import { TransitionProps } from '@mui/material/transitions';
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'sticky',
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & {
+    children: ReactElement;
   },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-  },
-  contentContainer: {
-    padding: '1%',
-  },
-}));
-
-const Transition = React.forwardRef(function Transition(props, ref) {
+  ref: Ref<unknown>
+) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const FullScreenDialog = ({
-  open,
-  closeCallback,
-  title,
-  childComponent,
-  initialState,
-}) => {
-  const classes = useStyles();
+type Props = {
+  open: boolean;
+  title: string;
+  closeCallback: () => void;
+  childComponent: ReactElement;
+  initialState?: any;
+};
 
+export const FullScreenDialog = ({
+  open,
+  title,
+  closeCallback,
+  childComponent,
+  initialState = undefined,
+}: Props): ReactElement => {
   const componentToRender = React.cloneElement(childComponent, {
     initialState,
     closeCallback,
@@ -50,7 +48,7 @@ const FullScreenDialog = ({
       onClose={closeCallback}
       TransitionComponent={Transition}
     >
-      <AppBar className={classes.appBar}>
+      <AppBar sx={{ position: 'sticky' }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -60,14 +58,18 @@ const FullScreenDialog = ({
           >
             <CloseIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
             {title}
           </Typography>
         </Toolbar>
       </AppBar>
-      <div className={classes.contentContainer}>{componentToRender}</div>
+      <Box sx={{ padding: '1%' }} component="div">
+        {componentToRender}
+      </Box>
     </Dialog>
   );
 };
 
-export default FullScreenDialog;
+FullScreenDialog.defaultProps = {
+  initialState: undefined,
+};

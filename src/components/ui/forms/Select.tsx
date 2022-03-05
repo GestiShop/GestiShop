@@ -13,7 +13,7 @@ type Props = {
   name: string;
   label: string;
   options: Array<OptionType>;
-  onInput: (arg0: any) => void;
+  onInput?: (arg0: any) => void;
   acceptNone?: boolean;
   required?: boolean;
 };
@@ -88,4 +88,5 @@ export const SelectWrapper = ({
 SelectWrapper.defaultProps = {
   required: false,
   acceptNone: false,
+  onInput: undefined,
 };

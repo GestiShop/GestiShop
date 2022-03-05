@@ -45,7 +45,7 @@ import ListUnitTypes from './list/ListUnitTypes';
 import ListWarehouses from './list/ListWarehouses';
 import Calendar from './calendar/Calendar';
 import ListCategories from './list/ListCategories';
-import FullScreenDialog from '../ui/FullscreenDialog';
+import { FullScreenDialog } from '../ui/FullscreenDialog';
 import Settings from '../settings-module/Settings';
 import ListClients from './list/ListClients';
 import ListProviders from './list/ListProviders';

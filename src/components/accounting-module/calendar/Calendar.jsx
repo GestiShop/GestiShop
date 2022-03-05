@@ -8,7 +8,7 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import LocalConfiguration from '../../../utils/localConfiguration';
-import FullScreenDialog from '../../ui/FullscreenDialog';
+import { FullScreenDialog } from '../../ui/FullscreenDialog';
 import { upsertEvent, fetchEvents } from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
 import CreateCalendarEvent from '../create/CreateCalendarEvent';
@@ -47,16 +47,16 @@ const EventCalendar = () => {
 
   const updateData = async (updatedEvent) => {
     await upsertEvent(updatedEvent);
-    fetchData();
+    await fetchData();
   };
 
   const addData = async (newEvent) => {
     await upsertEvent(newEvent);
-    fetchData();
+    await fetchData();
   };
 
-  useEffect(() => {
-    fetchData();
+  useEffect(async () => {
+    await fetchData();
   }, []);
 
   const handleDragStart = (event) => {
