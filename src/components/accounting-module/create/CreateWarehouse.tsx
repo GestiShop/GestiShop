@@ -1,17 +1,19 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Types } from 'mongoose';
 import { TextField, SubmitButton } from '../../ui/forms';
-import { upsertWarehouse } from '../../../db';
+import { fetchWarehouseById, upsertWarehouse } from '../../../db';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import AddressForm from '../../ui/AddressForm';
 import { Warehouse, EMPTY_WAREHOUSE } from '../../../model';
+import useIsMounted from '../../../utils/useIsMounted';
 
 type Props = {
   closeCallback?: any;
-  initialState?: Warehouse;
+  initialState?: Types.ObjectId;
 };
 
 const CreateWarehouse = ({
@@ -19,7 +21,9 @@ const CreateWarehouse = ({
   initialState,
 }: Props): ReactElement => {
   const { t } = useTranslation();
-  const INITIAL_STATE: Warehouse = initialState ?? EMPTY_WAREHOUSE;
+  const isMounted = useIsMounted();
+  const [existingWarehouse, setExistingWarehouse] =
+    useState<Warehouse>(EMPTY_WAREHOUSE);
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -28,16 +32,34 @@ const CreateWarehouse = ({
   });
 
   const handleSubmit = async (data: Warehouse): Promise<void> => {
-    await upsertWarehouse({ ...data, id: initialState?.id });
+    await upsertWarehouse({ ...data, id: initialState });
     closeCallback();
   };
+
+  const fetchData = async (id: Types.ObjectId): Promise<void> => {
+    const response = await fetchWarehouseById(id);
+    if (response.error !== null) {
+      console.log(response.error);
+    } else if (isMounted.current) {
+      if (response.result !== null) {
+        setExistingWarehouse(response.result);
+      }
+    }
+  };
+
+  useEffect((): void => {
+    if (initialState) {
+      fetchData(initialState);
+    }
+  }, []);
 
   return (
     <Grid container>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
-            initialValues={{ ...INITIAL_STATE }}
+            initialValues={existingWarehouse}
+            enableReinitialize
             validationSchema={FORM_VALIDATION}
             onSubmit={(values) => handleSubmit(values)}
           >

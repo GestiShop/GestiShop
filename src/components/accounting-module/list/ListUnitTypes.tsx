@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Types } from 'mongoose';
+import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteUnitTypes, fetchUnitTypes } from '../../../db';
 import CreateUnitType from '../create/CreateUnitType';
@@ -10,19 +11,18 @@ import { UnitType } from '../../../model';
 const ListUnitTypes = (): ReactElement => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<UnitType>>([]);
-  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const isMounted = useIsMounted();
 
-  const headers = [
+  const columns: Array<GridColDef> = [
     {
-      id: 'reference',
-      label: t('accounting_module.unit_type.structure.reference'),
-      align: 'left',
+      field: 'reference',
+      headerName: t('accounting_module.unit_type.structure.reference'),
+      flex: 1,
     },
     {
-      id: 'unit',
-      label: t('accounting_module.unit_type.structure.unit'),
-      align: 'left',
+      field: 'unit',
+      headerName: t('accounting_module.unit_type.structure.unit'),
+      flex: 1,
     },
   ];
 
@@ -33,7 +33,6 @@ const ListUnitTypes = (): ReactElement => {
     } else if (isMounted.current) {
       if (response.result !== null) {
         setRows(response.result);
-        setIsDataLoaded(true);
       }
     }
   };
@@ -57,9 +56,8 @@ const ListUnitTypes = (): ReactElement => {
 
   return (
     <GenericListComponent
-      isDataLoaded={isDataLoaded}
       rows={rows}
-      headers={headers}
+      columns={columns}
       editCallback={handleEdit}
       deleteCallback={handleDelete}
       texts={{

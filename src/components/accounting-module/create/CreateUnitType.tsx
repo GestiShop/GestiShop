@@ -1,15 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Types } from 'mongoose';
 import { TextField, SubmitButton } from '../../ui/forms';
-import { upsertUnitType } from '../../../db';
+import { fetchUnitTypeById, upsertUnitType } from '../../../db';
 import { UnitType, EMPTY_UNIT_TYPE } from '../../../model';
+import useIsMounted from '../../../utils/useIsMounted';
 
 type Props = {
   closeCallback?: any;
-  initialState?: UnitType;
+  initialState?: Types.ObjectId;
 };
 
 const CreateUnitType = ({
@@ -17,7 +19,9 @@ const CreateUnitType = ({
   initialState,
 }: Props): ReactElement => {
   const { t } = useTranslation();
-  const INITIAL_STATE: UnitType = initialState ?? EMPTY_UNIT_TYPE;
+  const isMounted = useIsMounted();
+  const [existingUnitType, setexistingUnitType] =
+    useState<UnitType>(EMPTY_UNIT_TYPE);
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -25,18 +29,34 @@ const CreateUnitType = ({
   });
 
   const handleSubmit = async (data: UnitType): Promise<void> => {
-    await upsertUnitType({ ...data, id: initialState?.id });
+    await upsertUnitType({ ...data, id: initialState });
     closeCallback();
   };
+
+  const fetchData = async (id: Types.ObjectId): Promise<void> => {
+    const response = await fetchUnitTypeById(id);
+    if (response.error !== null) {
+      console.log(response.error);
+    } else if (isMounted.current) {
+      if (response.result !== null) {
+        setexistingUnitType(response.result);
+      }
+    }
+  };
+
+  useEffect((): void => {
+    if (initialState) {
+      fetchData(initialState);
+    }
+  }, []);
 
   return (
     <Grid container>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
-            initialValues={{
-              ...INITIAL_STATE,
-            }}
+            initialValues={existingUnitType}
+            enableReinitialize
             validationSchema={FORM_VALIDATION}
             onSubmit={(values) => handleSubmit(values)}
           >

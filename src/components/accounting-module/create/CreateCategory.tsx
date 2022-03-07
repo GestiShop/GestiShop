@@ -3,14 +3,19 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Types } from 'mongoose';
 import { TextField, SubmitButton, Select } from '../../ui/forms';
-import { upsertCategory, fetchCategories } from '../../../db';
+import {
+  upsertCategory,
+  fetchCategories,
+  fetchCategoryById,
+} from '../../../db';
 import useIsMounted from '../../../utils/useIsMounted';
 import { Category, EMPTY_CATEGORY } from '../../../model';
 
 type Props = {
   closeCallback?: any;
-  initialState?: Category;
+  initialState?: Types.ObjectId;
 };
 
 const CreateCategory = ({ closeCallback, initialState }: Props) => {
@@ -19,8 +24,8 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
     []
   );
   const isMounted = useIsMounted();
-
-  const INITIAL_STATE: Category = initialState ?? EMPTY_CATEGORY;
+  const [existingCategory, setExistingCategory] =
+    useState<Category>(EMPTY_CATEGORY);
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -36,7 +41,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
     closeCallback();
   };
 
-  const fetchData = async (): Promise<void> => {
+  const fetchAllCategories = async (): Promise<void> => {
     const response = await fetchCategories();
     if (response.error !== null) {
       console.log(response.error);
@@ -56,8 +61,22 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
     }
   };
 
+  const fetchData = async (id: Types.ObjectId): Promise<void> => {
+    const response = await fetchCategoryById(id);
+    if (response.error !== null) {
+      console.log(response.error);
+    } else if (isMounted.current) {
+      if (response.result !== null) {
+        setExistingCategory(response.result);
+      }
+    }
+  };
+
   useEffect((): void => {
-    fetchData();
+    fetchAllCategories();
+    if (initialState) {
+      fetchData(initialState);
+    }
   }, []);
 
   return (
@@ -65,7 +84,8 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
-            initialValues={{ ...INITIAL_STATE }}
+            initialValues={existingCategory}
+            enableReinitialize
             validationSchema={FORM_VALIDATION}
             onSubmit={(values) => handleSubmit(values)}
           >

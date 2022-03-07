@@ -67,6 +67,30 @@ export const fetchCategories = (): Promise<
     });
 };
 
+export const fetchCategoryById = (
+  id: Types.ObjectId
+): Promise<DBHelperResponse<Category>> => {
+  return DBCategory.findById(id)
+    .exec()
+    .then((data: any) => {
+      const category: Category = decodeCategory(data);
+
+      return {
+        error: null,
+        result: category,
+      };
+    })
+    .catch((error: any) => {
+      return {
+        error: {
+          code: -1,
+          message: error,
+        },
+        result: null,
+      };
+    });
+};
+
 export const deleteCategories = (
   categoryIds: Array<Types.ObjectId>
 ): Promise<DBHelperResponse<boolean>> => {

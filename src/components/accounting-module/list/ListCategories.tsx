@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Types } from 'mongoose';
+import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteCategories, fetchCategories } from '../../../db';
 import CreateCategory from '../create/CreateCategory';
@@ -10,24 +11,23 @@ import { Category } from '../../../model';
 const ListCategories = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<Category>>([]);
-  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
   const isMounted = useIsMounted();
 
-  const headers = [
+  const columns: Array<GridColDef> = [
     {
-      id: 'reference',
-      label: t('accounting_module.category.structure.reference'),
-      align: 'left',
+      field: 'reference',
+      headerName: t('accounting_module.category.structure.reference'),
+      flex: 1,
     },
     {
-      id: 'name',
-      label: t('accounting_module.category.structure.name'),
-      align: 'left',
+      field: 'name',
+      headerName: t('accounting_module.category.structure.name'),
+      flex: 1,
     },
     {
-      id: 'parent',
-      label: t('accounting_module.category.structure.parent'),
-      align: 'left',
+      field: 'parent',
+      headerName: t('accounting_module.category.structure.parent'),
+      flex: 1,
     },
   ];
 
@@ -38,7 +38,6 @@ const ListCategories = () => {
     } else if (isMounted.current) {
       if (response.result !== null) {
         setRows(response.result);
-        setIsDataLoaded(true);
       }
     }
   };
@@ -62,9 +61,8 @@ const ListCategories = () => {
 
   return (
     <GenericListComponent
-      isDataLoaded={isDataLoaded}
       rows={rows}
-      headers={headers}
+      columns={columns}
       editCallback={handleEdit}
       deleteCallback={handleDelete}
       texts={{

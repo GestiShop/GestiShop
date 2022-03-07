@@ -67,6 +67,30 @@ export const fetchWarehouses = (): Promise<
     });
 };
 
+export const fetchWarehouseById = (
+  id: Types.ObjectId
+): Promise<DBHelperResponse<Warehouse>> => {
+  return DBWarehouse.findById(id)
+    .exec()
+    .then((data: any) => {
+      const warehouse: Warehouse = decodeWarehouse(data);
+
+      return {
+        error: null,
+        result: warehouse,
+      };
+    })
+    .catch((error: any) => {
+      return {
+        error: {
+          code: -1,
+          message: error,
+        },
+        result: null,
+      };
+    });
+};
+
 export const deleteWarehouses = (
   warehouseIds: Array<Types.ObjectId>
 ): Promise<DBHelperResponse<boolean>> => {

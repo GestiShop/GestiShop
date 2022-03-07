@@ -17,6 +17,7 @@ type Props = {
   children: ReactNode;
   color?: ButtonColor;
   className?: string;
+  onClick: () => void;
 };
 
 type ButtonProps = {
@@ -24,18 +25,21 @@ type ButtonProps = {
   color: ButtonColor;
   fullWidth: boolean;
   className: string;
+  onClick: () => void;
 };
 
 export const ButtonWrapper = ({
   children,
   color = 'primary',
   className = '',
+  onClick,
   ...otherProps
 }: Props): ReactElement => {
   const configButton: ButtonProps = {
     ...otherProps,
     variant: 'contained',
     color,
+    onClick,
     fullWidth: true,
     className: `m-auto br-20px ${className}`,
   };

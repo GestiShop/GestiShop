@@ -53,6 +53,30 @@ export const fetchTaxes = (): Promise<DBHelperResponse<Array<Tax>>> => {
     });
 };
 
+export const fetchTaxById = (
+  id: Types.ObjectId
+): Promise<DBHelperResponse<Tax>> => {
+  return DBTax.findById(id)
+    .exec()
+    .then((data: any) => {
+      const tax: Tax = decodeTax(data);
+
+      return {
+        error: null,
+        result: tax,
+      };
+    })
+    .catch((error: any) => {
+      return {
+        error: {
+          code: -1,
+          message: error,
+        },
+        result: null,
+      };
+    });
+};
+
 export const deleteTaxes = (
   taxIds: Array<Types.ObjectId>
 ): Promise<DBHelperResponse<boolean>> => {

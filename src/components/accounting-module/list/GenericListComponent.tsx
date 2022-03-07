@@ -1,54 +1,110 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable eqeqeq */
-/* eslint-disable react/prop-types */
-import React, { ReactElement, useEffect, useState } from 'react';
-import { Container, Grid } from '@mui/material';
+import React, { ReactElement, useState } from 'react';
+import {
+  Box,
+  Container,
+  Grid,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { Types } from 'mongoose';
+import { GridColDef } from '@mui/x-data-grid';
+import { Edit as EditIcon, Print as PrintIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../ui/forms';
 import { FullScreenDialog } from '../../ui/FullscreenDialog';
+import { Table } from '../../ui/Table';
 
 type Props = {
-  isDataLoaded: any;
-  rows: any;
-  headers: any;
-  editCallback?: any;
-  deleteCallback?: any;
-  printCallback?: any;
-  texts: any;
-  creationComponent: any;
+  rows: Array<any>;
+  columns: Array<GridColDef>;
+  texts: {
+    create: string;
+    edit: string;
+    title: string;
+  };
+  creationComponent: ReactElement;
+  editCallback?: () => void;
+  printCallback?: () => void;
+  deleteCallback?: (arg0: Array<Types.ObjectId>) => void;
 };
 
 const GenericListComponent = ({
-  isDataLoaded,
   rows,
-  headers,
+  columns,
+  texts,
+  creationComponent,
   editCallback,
   deleteCallback,
   printCallback,
-  texts,
-  creationComponent,
 }: Props): ReactElement => {
+  const { t } = useTranslation();
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
-  const [initialState, setInitialState] = useState(null);
-  const [filteredRows, setFilteredRows] = useState(rows);
+  const [initialState, setInitialState] = useState<Types.ObjectId | undefined>(
+    undefined
+  );
 
-  const handlePrint = (id: Types.ObjectId) => {
-    printCallback(rows.find((row: any) => row.id == id));
+  const handleEdit = (
+    event: MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: Types.ObjectId
+  ) => {
+    event.stopPropagation();
+    setInitialState(id);
+    setOpenCreationDialog(true);
   };
 
-  const handleEdit = (id: Types.ObjectId) => {
-    setInitialState(rows.find((row: any) => row.id == id));
-    setOpenCreationDialog(true);
+  const handlePrint = (
+    event: MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: Types.ObjectId
+  ) => {
+    event.stopPropagation();
+    printCallback?.();
   };
 
   const handleDialogClose = () => {
     setOpenCreationDialog(false);
-    editCallback();
+    if (editCallback) {
+      editCallback();
+    }
   };
 
-  useEffect(() => {
-    setFilteredRows(rows);
-  }, [rows]);
+  columns.push({
+    field: 'actions',
+    headerName: t('accounting_module.table.actions'),
+    sortable: false,
+    filterable: false,
+    disableExport: true,
+    flex: 1,
+    align: 'right',
+    renderCell: (params) => (
+      <Box
+        component="div"
+        className="d-flex justify-content-between align-items-center"
+      >
+        {editCallback && (
+          <Tooltip title={t('buttons.edit') as string}>
+            <IconButton
+              aria-label={t('buttons.edit')}
+              onClick={(event) => handleEdit(event, params.row.id)}
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        {printCallback && (
+          <Tooltip title={t('buttons.print') as string}>
+            <IconButton
+              aria-label={t('buttons.print')}
+              onClick={(event) => handlePrint(event, params.row.id)}
+            >
+              <PrintIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Box>
+    ),
+  });
 
   return (
     <>
@@ -56,28 +112,29 @@ const GenericListComponent = ({
         <Grid item xs={12}>
           <Container maxWidth={false}>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Paper elevation={2} sx={{ padding: '1rem' }}>
+                  <Typography variant="h6" component="div">
+                    {texts.title}
+                  </Typography>
+                </Paper>
+              </Grid>
+
               <Grid item xs={3} className="d-flex">
                 <Button
                   onClick={() => {
-                    setInitialState(null);
+                    setInitialState(undefined);
                     setOpenCreationDialog(true);
                   }}
                 >
                   {texts.create}
                 </Button>
               </Grid>
+
               <Grid item xs={9} />
 
               <Grid item xs={12}>
-                {/* <Table */}
-                {/*   isDataLoaded={isDataLoaded} */}
-                {/*   rows={filteredRows} */}
-                {/*   headers={headers} */}
-                {/*   title={texts.title} */}
-                {/*   editCallback={handleEdit} */}
-                {/*   deleteCallback={deleteCallback} */}
-                {/*   printCallback={printCallback ? handlePrint : undefined} */}
-                {/* /> */}
+                <Table columns={columns} rows={rows} />
               </Grid>
             </Grid>
           </Container>

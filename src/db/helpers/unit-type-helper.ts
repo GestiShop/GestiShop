@@ -67,6 +67,30 @@ export const fetchUnitTypes = (): Promise<
     });
 };
 
+export const fetchUnitTypeById = (
+  id: Types.ObjectId
+): Promise<DBHelperResponse<UnitType>> => {
+  return DBUnitType.findById(id)
+    .exec()
+    .then((data: any) => {
+      const unitType: UnitType = decodeUnitType(data);
+
+      return {
+        error: null,
+        result: unitType,
+      };
+    })
+    .catch((error: any) => {
+      return {
+        error: {
+          code: -1,
+          message: error,
+        },
+        result: null,
+      };
+    });
+};
+
 export const deleteUnitTypes = (
   unitTypeIds: Array<Types.ObjectId>
 ): Promise<DBHelperResponse<boolean>> => {
