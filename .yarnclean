@@ -1,8 +1,8 @@
 # test directories
-__tests__
-test
-tests
-powered-test
+#__tests__
+#test
+#tests
+#powered-test
 
 # asset directories
 docs

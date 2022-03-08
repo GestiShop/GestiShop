@@ -1,3 +1,6 @@
+# Tests
+e2e-tests/screenshots
+
 # Logs
 logs
 *.log

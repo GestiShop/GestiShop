@@ -9,7 +9,7 @@ const Dashboard = (): ReactElement => {
   const { t } = useTranslation();
 
   return (
-    <Grid container className="h-100 center-content">
+    <Grid container className="h-100 center-content" id="dashboard-page">
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Grid container spacing={2}>
