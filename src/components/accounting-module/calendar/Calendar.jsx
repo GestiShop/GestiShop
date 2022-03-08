@@ -7,6 +7,7 @@ import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import { Box } from '@mui/material';
 import LocalConfiguration from '../../../utils/localConfiguration';
 import { FullScreenDialog } from '../../ui/FullscreenDialog';
 import { upsertEvent, fetchEvents } from '../../../db';
@@ -144,7 +145,7 @@ const EventCalendar = () => {
   };
 
   return (
-    <>
+    <Box id="calendar-container">
       <DragAndDropCalendar
         selectable
         popup
@@ -171,7 +172,7 @@ const EventCalendar = () => {
         childComponent={<CreateCalendarEvent />}
         initialState={state.selectedEvent}
       />
-    </>
+    </Box>
   );
 };
 

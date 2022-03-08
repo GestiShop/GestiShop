@@ -14,7 +14,12 @@ const Dashboard = (): ReactElement => {
         <Container maxWidth="md">
           <Grid container spacing={2}>
             <Grid item xs={12} className="d-flex">
-              <Button component={Link} to="/accounting_module" replace>
+              <Button
+                component={Link}
+                to="/accounting_module"
+                replace
+                id="accounting-module-btn"
+              >
                 <FileCopyIcon className="m-2r font-3r" />
                 {t('accounting_module.accounting_module')}
               </Button>

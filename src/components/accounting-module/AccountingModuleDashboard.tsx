@@ -248,7 +248,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
 
   return (
     <>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex' }} id="accounting-module-container">
         <CssBaseline />
         <AppBar position="fixed" open={open}>
           <Toolbar sx={{ justifyContent: 'space-between' }}>
