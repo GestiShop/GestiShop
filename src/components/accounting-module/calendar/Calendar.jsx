@@ -19,7 +19,9 @@ import '!style-loader!css-loader!react-big-calendar/lib/addons/dragAndDrop/style
 
 const localLang = LocalConfiguration.getLocalLanguageInfo();
 if (localLang != null) {
-  const langPath = `${localLang.value}${localLang.value === 'en' ? '-gb' : ''}`;
+  const langPath = `${localLang.languageCode}${
+    localLang.languageCode === 'en' ? '-gb' : ''
+  }`;
   import(`moment/locale/${langPath}`);
 }
 
@@ -145,7 +147,7 @@ const EventCalendar = () => {
   };
 
   return (
-    <Box id="calendar-container">
+    <Box id="calendar-container" sx={{ height: '100%' }}>
       <DragAndDropCalendar
         selectable
         popup
