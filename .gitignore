@@ -1,5 +1,5 @@
 # Tests
-e2e-tests/screenshots
+tests/e2e-tests/screenshots
 
 # Logs
 logs

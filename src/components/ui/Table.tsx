@@ -17,7 +17,7 @@ export const Table = ({ columns, rows }: Props): ReactElement => {
         }}
         rows={rows}
         columns={columns}
-        pageSize={5}
+        pageSize={10}
         rowsPerPageOptions={[10, 50, 100]}
         checkboxSelection
         autoHeight
