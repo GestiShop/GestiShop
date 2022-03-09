@@ -61,6 +61,7 @@ const ListCategories = () => {
 
   return (
     <GenericListComponent
+      id="category-list--container"
       rows={rows}
       columns={columns}
       editCallback={handleEdit}

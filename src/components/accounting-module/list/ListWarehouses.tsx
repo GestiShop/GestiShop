@@ -56,6 +56,7 @@ const ListWarehouses = (): ReactElement => {
 
   return (
     <GenericListComponent
+      id="warehouse-list--container"
       rows={rows}
       columns={columns}
       editCallback={handleEdit}

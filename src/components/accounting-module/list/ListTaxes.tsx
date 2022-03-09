@@ -57,6 +57,7 @@ const ListTaxes = (): ReactElement => {
 
   return (
     <GenericListComponent
+      id="tax-list--container"
       rows={rows}
       columns={columns}
       editCallback={handleEdit}

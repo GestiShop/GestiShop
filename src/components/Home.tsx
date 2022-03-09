@@ -34,7 +34,7 @@ const Home = (): ReactElement => {
   }, []);
 
   return (
-    <Box sx={classes.floatCenter} id="loading-page">
+    <Box sx={classes.floatCenter} id="loading-page--container">
       <Box component="img" sx={classes.logo} src={logo} alt="GestiShop" />
       <p>{text}</p>
     </Box>

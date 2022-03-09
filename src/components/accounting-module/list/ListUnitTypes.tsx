@@ -56,6 +56,7 @@ const ListUnitTypes = (): ReactElement => {
 
   return (
     <GenericListComponent
+      id="unit-type-list--container"
       rows={rows}
       columns={columns}
       editCallback={handleEdit}

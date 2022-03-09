@@ -9,7 +9,11 @@ const Dashboard = (): ReactElement => {
   const { t } = useTranslation();
 
   return (
-    <Grid container className="h-100 center-content" id="dashboard-page">
+    <Grid
+      container
+      className="h-100 center-content"
+      id="dashboard-page--container"
+    >
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Grid container spacing={2}>
@@ -18,7 +22,7 @@ const Dashboard = (): ReactElement => {
                 component={Link}
                 to="/accounting_module"
                 replace
-                id="accounting-module-btn"
+                id="accounting-module--btn"
               >
                 <FileCopyIcon className="m-2r font-3r" />
                 {t('accounting_module.accounting_module')}

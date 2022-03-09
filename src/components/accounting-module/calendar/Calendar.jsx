@@ -147,7 +147,7 @@ const EventCalendar = () => {
   };
 
   return (
-    <Box id="calendar-container" sx={{ height: '100%' }}>
+    <Box id="calendar--container" sx={{ height: '100%' }}>
       <DragAndDropCalendar
         selectable
         popup

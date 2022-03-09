@@ -17,6 +17,7 @@ import { FullScreenDialog } from '../../ui/FullscreenDialog';
 import { Table } from '../../ui/Table';
 
 type Props = {
+  id: string;
   rows: Array<any>;
   columns: Array<GridColDef>;
   texts: {
@@ -31,6 +32,7 @@ type Props = {
 };
 
 const GenericListComponent = ({
+  id,
   rows,
   columns,
   texts,
@@ -107,7 +109,7 @@ const GenericListComponent = ({
   });
 
   return (
-    <>
+    <Box component="div" id={id}>
       <Grid container>
         <Grid item xs={12}>
           <Container maxWidth={false}>
@@ -147,7 +149,7 @@ const GenericListComponent = ({
         childComponent={creationComponent}
         initialState={initialState}
       />
-    </>
+    </Box>
   );
 };
 

@@ -142,6 +142,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
 
   const DRAWER_ITEMS: Array<
     Array<{
+      id: string;
       text: string;
       icon: ReactElement;
       linkTo: string;
@@ -149,6 +150,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
   > = [
     [
       {
+        id: 'calendar--link',
         text: t('accounting_module.menu.schedule'),
         icon: <EventIcon />,
         linkTo: `${url}/calendar`,
@@ -156,26 +158,31 @@ export const AccountingModuleDashboard = (): ReactElement => {
     ],
     [
       {
+        id: 'products--link',
         text: t('accounting_module.menu.products'),
         icon: <ShoppingBasketIcon />,
         linkTo: `${url}/products`,
       },
       {
+        id: 'taxes--link',
         text: t('accounting_module.menu.taxes'),
         icon: <AccountBalanceIcon />,
         linkTo: `${url}/taxes`,
       },
       {
+        id: 'unit-types--link',
         text: t('accounting_module.menu.unit_types'),
         icon: <TimelineIcon />,
         linkTo: `${url}/unit_types`,
       },
       {
+        id: 'warehouses--link',
         text: t('accounting_module.menu.warehouses'),
         icon: <StoreIcon />,
         linkTo: `${url}/warehouses`,
       },
       {
+        id: 'categories--link',
         text: t('accounting_module.menu.categories'),
         icon: <CategoryIcon />,
         linkTo: `${url}/categories`,
@@ -183,11 +190,13 @@ export const AccountingModuleDashboard = (): ReactElement => {
     ],
     [
       {
+        id: 'clients--link',
         text: t('accounting_module.menu.clients'),
         icon: <PeopleIcon />,
         linkTo: `${url}/clients`,
       },
       {
+        id: 'providers--link',
         text: t('accounting_module.menu.providers'),
         icon: <PeopleOutlineOutlinedIcon />,
         linkTo: `${url}/providers`,
@@ -195,31 +204,37 @@ export const AccountingModuleDashboard = (): ReactElement => {
     ],
     [
       {
+        id: 'client-bills--link',
         text: t('accounting_module.menu.client_bills'),
         icon: <DescriptionIcon />,
         linkTo: `${url}/client_bills`,
       },
       {
+        id: 'provider-bills--link',
         text: t('accounting_module.menu.provider_bills'),
         icon: <DescriptionOutlinedIcon />,
         linkTo: `${url}/provider_bills`,
       },
       {
+        id: 'client-budgets--link',
         text: t('accounting_module.menu.client_budgets'),
         icon: <ReceiptIcon />,
         linkTo: `${url}/client_budgets`,
       },
       {
+        id: 'provider-budgets--link',
         text: t('accounting_module.menu.provider_budgets'),
         icon: <ReceiptOutlinedIcon />,
         linkTo: `${url}/provider_budgets`,
       },
       {
+        id: 'client-delivery-notes--link',
         text: t('accounting_module.menu.client_delivery_notes'),
         icon: <AssignmentIcon />,
         linkTo: `${url}/client_delivery_notes`,
       },
       {
+        id: 'provider-delivery-notes--link',
         text: t('accounting_module.menu.provider_delivery_notes'),
         icon: <AssignmentOutlinedIcon />,
         linkTo: `${url}/provider_delivery_notes`,
@@ -227,6 +242,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
     ],
     [
       {
+        id: 'documents--link',
         text: t('accounting_module.menu.documents'),
         icon: <InsertDriveFileIcon />,
         linkTo: `${url}/document_generator`,
@@ -248,7 +264,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
 
   return (
     <>
-      <Box sx={{ display: 'flex' }} id="accounting-module-container">
+      <Box sx={{ display: 'flex' }} id="accounting-module--container">
         <CssBaseline />
         <AppBar position="fixed" open={open}>
           <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -305,6 +321,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
             {DRAWER_ITEMS.map((elementList, i) => {
               let itemList = elementList.map((element, j) => (
                 <ListItemButton
+                  id={element.id}
                   selected={isItemSelected(i, j)}
                   key={element.text}
                   component={Link}
