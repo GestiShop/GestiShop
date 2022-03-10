@@ -1,6 +1,7 @@
 import {
   Address,
   Category,
+  Client,
   CURRENCY_LIST,
   DECIMAL_MODES,
   EFact,
@@ -97,6 +98,28 @@ export const EMPTY_WAREHOUSE: Warehouse = {
 export const EMPTY_CATEGORY: Category = {
   reference: '',
   name: '',
+};
+
+/* ----- ----- CLIENT ----- ----- */
+export const EMPTY_CLIENT: Client = {
+  reference: '',
+  contactData: {
+    name: '',
+  },
+  fiscalData: {
+    name: '',
+    nif: '',
+    address: EMPTY_ADDRESS,
+  },
+  postalData: {
+    name: '',
+  },
+  tributationData: {
+    retentionPercentage: 0,
+    personalDiscount: 0,
+  },
+  eFactData: EMPTY_EFACT,
+  bills: [],
 };
 
 /* ----- ----- PLATFORM PARAMETERS ----- ----- */

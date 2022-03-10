@@ -27,7 +27,10 @@ const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
   });
 
   const handleSubmit = async (data: Tax): Promise<void> => {
-    await upsertTax({ ...data, id: initialState });
+    await upsertTax({
+      ...data,
+      id: initialState,
+    });
     closeCallback();
   };
 

@@ -36,7 +36,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
   const handleSubmit = async (data: Category): Promise<void> => {
     await upsertCategory({
       ...data,
-      id: initialState?.id,
+      id: initialState,
     });
     closeCallback();
   };
@@ -52,7 +52,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
         if (initialState) {
           categoriesToDisplay = categoriesToDisplay.filter(
             (category: Category) =>
-              JSON.stringify(category.id) !== JSON.stringify(initialState.id)
+              JSON.stringify(category.id) !== JSON.stringify(initialState)
           );
         }
 

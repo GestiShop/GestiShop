@@ -162,3 +162,27 @@ export const deleteClients = (
       };
     });
 };
+
+export const fetchClientById = (
+  id: Types.ObjectId
+): Promise<DBHelperResponse<Client>> => {
+  return DBClient.findById(id)
+    .exec()
+    .then((data: any) => {
+      const client: Client = decodeClient(data);
+
+      return {
+        error: null,
+        result: client,
+      };
+    })
+    .catch((error: any) => {
+      return {
+        error: {
+          code: -1,
+          message: error,
+        },
+        result: null,
+      };
+    });
+};

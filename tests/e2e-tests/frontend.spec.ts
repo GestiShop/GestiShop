@@ -91,3 +91,12 @@ test('Warehouse list', async () => {
   await page.waitForSelector('#warehouse-list--container');
   await expect(page.locator('#warehouse-list--container')).toBeVisible();
 });
+
+test('Client list', async () => {
+  log('Going to client section...');
+  await page.locator('#clients--link').click();
+
+  log('Checking that the client list container is rendered...');
+  await page.waitForSelector('#client-list--container');
+  await expect(page.locator('#client-list--container')).toBeVisible();
+});
