@@ -59,7 +59,7 @@ test('Launch app and configure database', async () => {
   }
 
   log('Checking that the dashboard page is rendered...');
-  await page.waitForSelector('#dashboard-page--container');
+  await page.waitForSelector('#dashboard-page--container', { timeout: 35_000 });
   await expect(page.locator('#dashboard-page--container')).toBeVisible();
 });
 
