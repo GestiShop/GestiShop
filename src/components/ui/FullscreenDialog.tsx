@@ -21,21 +21,21 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-type Props = {
+type Props<T> = {
   open: boolean;
   title: string;
   closeCallback: () => void;
   childComponent: ReactElement;
-  initialState?: any;
+  initialState?: T;
 };
 
-export const FullScreenDialog = ({
+export const FullScreenDialog = <T,>({
   open,
   title,
   closeCallback,
   childComponent,
   initialState = undefined,
-}: Props): ReactElement => {
+}: Props<T>): ReactElement => {
   const componentToRender = React.cloneElement(childComponent, {
     initialState,
     closeCallback,

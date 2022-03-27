@@ -5,18 +5,18 @@ import { TextField } from '@mui/material';
 import { Autocomplete } from '@mui/lab';
 import { useField, useFormikContext } from 'formik';
 
-type OptionType = {
+type OptionType<T> = {
   displayText: string;
-  value: any;
+  value: T | null;
 };
 
-type Props = {
+type Props<T> = {
   name: string;
   label: string;
   required: boolean;
   acceptNone: boolean;
-  onInput: (arg0: OptionType) => void;
-  options: Array<OptionType>;
+  onInput: (arg0: T | null) => void;
+  options: Array<OptionType<T>>;
 };
 
 type TextFieldProps = {
@@ -31,7 +31,7 @@ type TextFieldProps = {
   helperText: string;
 };
 
-export const AutocompleteSelectWrapper = ({
+export const AutocompleteSelectWrapper = <T,>({
   name,
   label,
   options,
@@ -39,23 +39,20 @@ export const AutocompleteSelectWrapper = ({
   required,
   acceptNone,
   ...otherProps
-}: Props): ReactElement => {
+}: Props<T>): ReactElement => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
   const handleChange = (
-    _event: any,
-    newValue: OptionType | Array<OptionType> | null
+    _event: never,
+    newValue: OptionType<T> | Array<OptionType<T>> | null
   ): void => {
     if (Array.isArray(newValue)) {
       return;
     }
 
     setFieldValue(name, newValue);
-
-    if (onInput && newValue?.value) {
-      onInput(newValue.value);
-    }
+    onInput?.(newValue?.value ?? null);
   };
 
   const configSelect = {
@@ -65,9 +62,9 @@ export const AutocompleteSelectWrapper = ({
     autoComplete: true,
     autoHighlight: true,
     autoSelect: true,
-    groupBy: (option: OptionType) => option.displayText.toUpperCase(),
-    getOptionLabel: (option: OptionType) => option.displayText ?? '',
-    getOptionSelected: (option: OptionType, value: OptionType) =>
+    groupBy: (option: OptionType<T>) => option.displayText.toUpperCase(),
+    getOptionLabel: (option: OptionType<T>) => option.displayText ?? '',
+    getOptionSelected: (option: OptionType<T>, value: OptionType<T>) =>
       option.value === value.value,
     onChange: handleChange,
   };
@@ -89,7 +86,7 @@ export const AutocompleteSelectWrapper = ({
     configTextField.helperText = meta.error;
   }
 
-  const displayedOptions: Array<OptionType> = options.sort(
+  const displayedOptions: Array<OptionType<T>> = options.sort(
     (a, b) =>
       -b.displayText.toUpperCase().localeCompare(a.displayText.toUpperCase())
   );

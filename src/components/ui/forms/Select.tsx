@@ -4,27 +4,27 @@ import React, { ReactElement } from 'react';
 import { MenuItem, TextField } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
-type OptionType = {
-  value: any;
+type OptionType<T> = {
+  value: T;
   displayText: string;
 };
 
-type Props = {
+type Props<T> = {
   name: string;
   label: string;
-  options: Array<OptionType>;
-  onInput?: (arg0: any) => void;
+  options: Array<OptionType<T>>;
+  onInput?: (arg0: T) => void;
   acceptNone?: boolean;
   required?: boolean;
 };
 
-type SelectProps = {
+type SelectProps<T> = {
   name: string;
   label: string;
   select: boolean;
   variant: 'outlined';
   fullWidth: boolean;
-  onChange: (arg0: { target: { value: any } }) => void;
+  onChange: (arg0: { target: { value: T } }) => void;
   InputLabelProps: {
     required: boolean;
   };
@@ -32,7 +32,7 @@ type SelectProps = {
   helperText: string;
 };
 
-export const SelectWrapper = ({
+export const SelectWrapper = <T,>({
   name,
   label,
   options,
@@ -40,18 +40,18 @@ export const SelectWrapper = ({
   acceptNone = false,
   required = false,
   ...otherProps
-}: Props): ReactElement => {
+}: Props<T>): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
-  const handleChange = (event: { target: { value: any } }): void => {
+  const handleChange = (event: { target: { value: T } }): void => {
     setFieldValue(name, event.target.value);
     if (onInput) {
       onInput(event.target.value);
     }
   };
 
-  const configSelect: SelectProps = {
+  const configSelect: SelectProps<T> = {
     ...field,
     ...otherProps,
     label,

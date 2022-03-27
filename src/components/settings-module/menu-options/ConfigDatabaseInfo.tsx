@@ -105,8 +105,8 @@ export const ConfigDatabaseInfo = (): ReactElement => {
                 <Grid item xs={12}>
                   <Checkbox
                     name="isRemote"
-                    label={t('settings.database_config.is_remote')}
-                    legend={t('settings.database_config.is_remote')}
+                    label={t('settings.database_config.is_remote_label')}
+                    legend={t('settings.database_config.is_remote_legend')}
                     onInput={handleChange}
                   />
                 </Grid>

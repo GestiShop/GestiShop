@@ -11,19 +11,19 @@ import {
 } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
-type OptionType = {
-  value: any;
+type OptionType<T> = {
+  value: T;
   displayText: string;
 };
 
-type Props = {
+type Props<T> = {
   name: string;
   label: string;
-  options: Array<OptionType>;
-  initialValue: any;
+  options: Array<OptionType<T>>;
+  initialValue: Array<T>;
 };
 
-type MultiSelectProps = {
+type MultiSelectProps<T> = {
   labelId: string;
   label: string;
   name: string;
@@ -37,7 +37,7 @@ type MultiSelectProps = {
     };
     getContentAnchorEl: () => null;
   };
-  onChange: (arg0: { target: { value: any } }) => void;
+  onChange: (arg0: { target: { value: Array<T> } }) => void;
   error: boolean;
   helperText: string;
 };
@@ -54,25 +54,25 @@ const MenuProps = {
   getContentAnchorEl: () => null,
 };
 
-export const MultiSelectWrapper = ({
+export const MultiSelectWrapper = <T,>({
   name,
   label,
   options,
   initialValue,
   ...otherProps
-}: Props): ReactElement => {
+}: Props<T>): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
   const [value, setValue] = useState(initialValue);
 
-  const handleChange = (event: { target: { value: any } }): void => {
+  const handleChange = (event: { target: { value: Array<T> } }): void => {
     setValue(event.target.value);
     setFieldValue(name, event.target.value);
   };
 
   const labelId = `multi-select-label-${label}`;
 
-  const configMultiSelect: MultiSelectProps = {
+  const configMultiSelect: MultiSelectProps<T> = {
     ...field,
     ...otherProps,
     labelId,
