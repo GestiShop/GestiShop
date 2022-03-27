@@ -6,9 +6,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import translationEN from '../assets/locales/en/translation.json';
 import translationES from '../assets/locales/es/translation.json';
 import translationCA from '../assets/locales/ca/translation.json';
-
-const availableLanguages: Array<string> = ['en', 'es', 'ca'];
-const fallbackLng: Array<string> = [availableLanguages[0]];
+import { DEFAULT_LANGUAGE_CODE, LANGUAGE_LIST } from './model';
 
 const resources = {
   en: {
@@ -28,11 +26,11 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng,
+    fallbackLng: DEFAULT_LANGUAGE_CODE,
 
     debug: false,
 
-    whitelist: availableLanguages,
+    whitelist: LANGUAGE_LIST,
 
     interpolation: {
       escapeValue: false,

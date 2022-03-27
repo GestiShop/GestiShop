@@ -4,6 +4,8 @@ import { render } from '@testing-library/react';
 import { GridColDef } from '@mui/x-data-grid';
 import { Table } from '../../src/components/ui/Table';
 
+jest.useFakeTimers();
+
 describe('Table', () => {
   it('[EMPTY] Should render', () => {
     expect(render(<Table columns={[]} rows={[]} />)).toBeTruthy();
