@@ -64,7 +64,6 @@ test('Launch app and configure database', async () => {
 
     await page.locator('#close-fullscreen-dialog--btn').click();
 
-    await sleep(1_000);
     await page.locator('#retry--btn').click();
   } catch {
     log('Settings are OK. Proceeding...');
