@@ -14,6 +14,5 @@ export const connectDb = (): Promise<Mongoose> => {
   return connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 10_000,
   });
 };

@@ -7,12 +7,17 @@ const { log } = console;
 let electronApp: ElectronApplication;
 let page: Page;
 
+// This groups dependent tests to ensure they will always run together and in order.
+// If one of the tests fails, all subsequent tests are skipped.
+// All tests in the group are retried together.
+test.describe.configure({ mode: 'serial' });
+
 test.beforeAll(async () => {
   log('\nStarting end to end tests...\n');
 
   log('Opening app and redirecting logs...');
   electronApp = await electron.launch({
-    args: ['./src/main.prod.js', '--enable-logging'],
+    args: ['./src/main.prod.js'],
   });
   page = await electronApp.firstWindow();
   page.on('console', (consoleMessage) => log('[CONSOLE]:', consoleMessage));
@@ -32,10 +37,10 @@ test('Launch app and configure database', async () => {
   log('Checking that the loading page is rendered...');
   await expect(page.locator('#loading-page--container')).toBeVisible();
 
-  const goToSettingsBtn: Locator = await page.locator('#go-to-settings--btn');
+  try {
+    const goToSettingsBtn: Locator = await page.locator('#go-to-settings--btn');
+    await expect(goToSettingsBtn).toBeVisible({ timeout: 35_000 });
 
-  // Update settings if needed
-  if (await goToSettingsBtn.isVisible()) {
     log('Updating database settings...');
     await goToSettingsBtn.click();
     await page.locator('#database-config--btn').click();
@@ -49,7 +54,7 @@ test('Launch app and configure database', async () => {
     await page.locator('#close-fullscreen-dialog--btn').click();
 
     await page.locator('#retry--btn').click();
-  } else {
+  } catch {
     log('Settings are OK. Proceeding...');
   }
 
