@@ -10,6 +10,7 @@ const config: PlaywrightTestConfig = {
     screenshot: 'only-on-failure',
   },
   timeout: 5 * 60 * 1000,
+  retries: 0,
 };
 
 export default config;
