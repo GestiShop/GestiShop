@@ -1,23 +1,19 @@
 /* eslint-disable prefer-destructuring */
 import { connect, Mongoose } from 'mongoose';
-import { config } from 'dotenv';
-
-config();
-
-const DATABASE_URL: string | undefined = process.env.DATABASE_URL;
-const DATABASE_PASSWORD: string | undefined = process.env.DATABASE_PASSWORD;
+import { PlatformDatabaseInfo } from '../model';
+import LocalConfiguration from '../utils/local-configuration';
 
 export const connectDb = (): Promise<Mongoose> => {
-  if (DATABASE_URL === undefined) {
-    throw new Error('DATABASE_URL not found');
-  }
+  const localDatabaseInfo: PlatformDatabaseInfo =
+    LocalConfiguration.getLocalDatabaseInfo();
 
-  if (DATABASE_PASSWORD === undefined) {
-    throw new Error('DATABASE_PASSWORD not found');
-  }
+  const url: string = localDatabaseInfo.isRemote
+    ? `mongodb+srv://${localDatabaseInfo.user}:${localDatabaseInfo.password}@${localDatabaseInfo.url}/${localDatabaseInfo.name}?retryWrites=true&w=majority`
+    : `mongodb://${localDatabaseInfo.user}:${localDatabaseInfo.password}@${localDatabaseInfo.url}:${localDatabaseInfo.port}/${localDatabaseInfo.name}?retryWrites=true&w=majority`;
 
-  return connect(DATABASE_URL.replace('<password>', DATABASE_PASSWORD), {
+  return connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10_000,
   });
 };

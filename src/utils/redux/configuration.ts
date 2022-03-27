@@ -1,4 +1,4 @@
-import LocalConfiguration, { LocalStorageType } from '../localConfiguration';
+import LocalConfiguration, { LocalStorageType } from '../local-configuration';
 import {
   PlatformBusinessInfo,
   PlatformCurrencyInfo,

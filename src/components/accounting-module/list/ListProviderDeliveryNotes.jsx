@@ -9,7 +9,7 @@ import {
   fetchProviderDeliveryNotes,
 } from '../../../db/ProviderDeliveryNoteHelper';
 import CreateProviderDeliveryNote from '../create/CreateProviderDeliveryNote';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import deliveryNoteGenerator from '../../../utils/document-generator/deliveryNoteGenerator';
 
 const ListProviderDeliveryNotes = () => {

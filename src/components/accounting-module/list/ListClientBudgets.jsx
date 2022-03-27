@@ -9,7 +9,7 @@ import {
   fetchClientBudgets,
 } from '../../../db/ClientBudgetHelper';
 import CreateClientBudget from '../create/CreateClientBudget';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import budgetGenerator from '../../../utils/document-generator/budgetGenerator';
 
 const ListClientBudgets = () => {

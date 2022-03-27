@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
-import LocalConfiguration from '../../../utils/localConfiguration';
+import LocalConfiguration from '../../../utils/local-configuration';
 import { Select } from '../../ui/forms';
 import {
   LANGUAGE_LIST,

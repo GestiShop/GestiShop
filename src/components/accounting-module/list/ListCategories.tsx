@@ -5,7 +5,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteCategories, fetchCategories } from '../../../db';
 import CreateCategory from '../create/CreateCategory';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { Category } from '../../../model';
 
 const ListCategories = () => {

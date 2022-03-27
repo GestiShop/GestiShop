@@ -9,7 +9,7 @@ import {
   fetchClientDeliveryNotes,
 } from '../../../db/ClientDeliveryNoteHelper';
 import CreateClientDeliveryNote from '../create/CreateClientDeliveryNote';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import deliveryNoteGenerator from '../../../utils/document-generator/deliveryNoteGenerator';
 
 const ListClientDeliveryNotes = () => {

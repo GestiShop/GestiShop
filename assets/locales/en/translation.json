@@ -1,7 +1,9 @@
 {
   "home": {
     "loading": "Connecting, please wait...",
-    "error": "An error occurred while trying to connect to the database. Please restart the application."
+    "error": "An error occurred while trying to connect to the database. Please restart the application or check the settings.",
+    "go_to_settings": "Go to settings",
+    "retry": "Retry"
   },
   "buttons": {
     "back": "Back",
@@ -56,7 +58,9 @@
       "user": "User",
       "enter_user": "Enter user name",
       "password": "Password",
-      "enter_password": "Enter password"
+      "enter_password": "Enter password",
+      "is_remote_legend": "Is the database remote?",
+      "is_remote_label": "Check this if the database is in a remote server."
     },
     "users_config": {
       "users": "Users"

@@ -1,7 +1,9 @@
 {
   "home": {
     "loading": "Conectando, espere por favor...",
-    "error": "Se produjo un error al intentar conectarse a la base de datos. Por favor, reinicie la aplicación."
+    "error": "Se produjo un error al intentar conectarse a la base de datos. Por favor, reinicie la aplicación o compruebe su configuración.",
+    "go_to_settings": "Ir a la configuración",
+    "retry": "Volver a intentar"
   },
   "buttons": {
     "back": "Atrás",
@@ -56,7 +58,9 @@
       "user": "Usuario",
       "enter_user": "Introduzca el nombre de usuario",
       "password": "Contraseña",
-      "enter_password": "Introduzca la contraseña"
+      "enter_password": "Introduzca la contraseña",
+      "is_remote_legend": "¿La base de datos es remota?",
+      "is_remote_label": "Marque esto si la base de datos está en un servidor remoto."
     },
     "users_config": {
       "users": "Usuarios"

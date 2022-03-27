@@ -14,7 +14,7 @@ import {
 } from '../../../utils/form-validations';
 import { Client, EMPTY_CLIENT } from '../../../model';
 import { upsertClient, fetchClientById } from '../../../db';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 
 type Props = {
   closeCallback?: any;

@@ -10,7 +10,7 @@ import {
   fetchCategories,
   fetchCategoryById,
 } from '../../../db';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { Category, EMPTY_CATEGORY } from '../../../model';
 
 type Props = {

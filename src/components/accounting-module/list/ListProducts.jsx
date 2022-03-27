@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import GenericListComponent from './GenericListComponent';
 import { deleteProducts, fetchProducts } from '../../../db/ProductHelper';
 import CreateProduct from '../create/CreateProduct';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 
 const ListProducts = () => {
   const { t } = useTranslation();

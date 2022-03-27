@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
-import LocalConfiguration from '../../../utils/localConfiguration';
+import LocalConfiguration from '../../../utils/local-configuration';
 import { Select } from '../../ui/forms';
 import {
   setStoredCurrencyInfo,
@@ -29,6 +29,23 @@ export const ConfigCurrencyInfo = (): ReactElement => {
   );
 
   const [state, setState] = useState<PlatformCurrencyInfo>(savedCurrencyInfo);
+
+  const handleChange = (
+    name: string,
+    value:
+      | PlatformCurrencyCode
+      | PlatformDecimalModeCode
+      | PlatformFloatingPositionOption
+  ) => {
+    const newState = {
+      ...state,
+      [name]: value,
+    };
+
+    setState(newState);
+    LocalConfiguration.setLocalCurrencyInfo(newState);
+    dispatch(setStoredCurrencyInfo(newState));
+  };
 
   const FORM_VALIDATION = Yup.object().shape({
     currencyCode: Yup.string().required(t('form.errors.required')),
@@ -59,15 +76,9 @@ export const ConfigCurrencyInfo = (): ReactElement => {
                         value: currencyCode,
                       };
                     })}
-                    onInput={(currencyCode: PlatformCurrencyCode) => {
-                      const newState: PlatformCurrencyInfo = {
-                        ...state,
-                        currencyCode,
-                      };
-                      setState(newState);
-                      LocalConfiguration.setLocalCurrencyInfo(newState);
-                      dispatch(setStoredCurrencyInfo(newState));
-                    }}
+                    onInput={(currencyCode: PlatformCurrencyCode) =>
+                      handleChange('currencyCode', currencyCode)
+                    }
                   />
                 </Grid>
 
@@ -81,15 +92,9 @@ export const ConfigCurrencyInfo = (): ReactElement => {
                         value: x,
                       };
                     })}
-                    onInput={(decimalModeCode: PlatformDecimalModeCode) => {
-                      const newState: PlatformCurrencyInfo = {
-                        ...state,
-                        decimalModeCode,
-                      };
-                      setState(newState);
-                      LocalConfiguration.setLocalCurrencyInfo(newState);
-                      dispatch(setStoredCurrencyInfo(newState));
-                    }}
+                    onInput={(decimalModeCode: PlatformDecimalModeCode) =>
+                      handleChange('decimalModeCode', decimalModeCode)
+                    }
                   />
                 </Grid>
 
@@ -105,15 +110,7 @@ export const ConfigCurrencyInfo = (): ReactElement => {
                     })}
                     onInput={(
                       floatingPositions: PlatformFloatingPositionOption
-                    ) => {
-                      const newState: PlatformCurrencyInfo = {
-                        ...state,
-                        floatingPositions,
-                      };
-                      setState(newState);
-                      LocalConfiguration.setLocalCurrencyInfo(newState);
-                      dispatch(setStoredCurrencyInfo(newState));
-                    }}
+                    ) => handleChange('floatingPositions', floatingPositions)}
                   />
                 </Grid>
               </Grid>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import GenericListComponent from './GenericListComponent';
 import { deleteProviders, fetchProviders } from '../../../db/ProviderHelper';
 import CreateProvider from '../create/CreateProvider';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 
 const ListProviders = () => {
   const { t } = useTranslation();

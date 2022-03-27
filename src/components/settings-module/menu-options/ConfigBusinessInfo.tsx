@@ -12,6 +12,7 @@ import { TextField } from '../../ui/forms';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import AddressForm from '../../ui/AddressForm';
 import { PlatformBusinessInfo } from '../../../model';
+import LocalConfiguration from '../../../utils/local-configuration';
 
 export const ConfigBusinessInfo = (): ReactElement => {
   const { t } = useTranslation();
@@ -41,6 +42,7 @@ export const ConfigBusinessInfo = (): ReactElement => {
     }
 
     setState(newState);
+    LocalConfiguration.setLocalBusinessInfo(newState);
     dispatch(setStoredBusinessInfo(newState));
   };
 

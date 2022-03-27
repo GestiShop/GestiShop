@@ -26,7 +26,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^10.0.0",
     "mongoose": "^5.13.7"
   }
 }

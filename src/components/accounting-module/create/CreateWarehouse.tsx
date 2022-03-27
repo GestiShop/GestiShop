@@ -9,7 +9,7 @@ import { fetchWarehouseById, upsertWarehouse } from '../../../db';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import AddressForm from '../../ui/AddressForm';
 import { Warehouse, EMPTY_WAREHOUSE } from '../../../model';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 
 type Props = {
   closeCallback?: any;

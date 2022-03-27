@@ -150,6 +150,7 @@ export const DEFAULT_DATABASE_INFO: PlatformDatabaseInfo = {
   name: 'gestishop',
   user: 'root',
   password: '',
+  isRemote: false,
 };
 
 // Business info:

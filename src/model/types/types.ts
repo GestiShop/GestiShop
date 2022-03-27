@@ -347,6 +347,7 @@ export type PlatformDatabaseInfo = {
   name: string;
   user: string;
   password: string;
+  isRemote: boolean;
 };
 
 // Business info:

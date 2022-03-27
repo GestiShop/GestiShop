@@ -9,7 +9,7 @@ import {
   fetchProviderBills,
 } from '../../../db/ProviderBillHelper';
 import CreateProviderBill from '../create/CreateProviderBill';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import billGenerator from '../../../utils/document-generator/billGenerator';
 
 const ListProviderBills = () => {

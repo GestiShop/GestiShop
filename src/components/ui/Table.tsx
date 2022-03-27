@@ -15,6 +15,7 @@ export const Table = ({ columns, rows }: Props): ReactElement => {
         components={{
           Toolbar: GridToolbar,
         }}
+        density="comfortable"
         rows={rows}
         columns={columns}
         pageSize={10}

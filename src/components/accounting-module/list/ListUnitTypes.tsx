@@ -5,7 +5,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteUnitTypes, fetchUnitTypes } from '../../../db';
 import CreateUnitType from '../create/CreateUnitType';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { UnitType } from '../../../model';
 
 const ListUnitTypes = (): ReactElement => {

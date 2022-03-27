@@ -13,22 +13,26 @@ type Props = {
   name: string;
   label: string;
   legend: string;
+  onInput?: (arg0: string, arg1: boolean) => void;
 };
 
 export const CheckboxWrapper = ({
   name,
   label,
   legend,
+  onInput,
 }: Props): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
   const handleChange = (event: {
     target: {
+      name: string;
       checked: boolean;
     };
   }): void => {
     setFieldValue(name, event.target.checked);
+    onInput?.(event.target.name, event.target.checked);
   };
 
   const configCheckbox = {
@@ -55,4 +59,8 @@ export const CheckboxWrapper = ({
       </FormGroup>
     </FormControl>
   );
+};
+
+CheckboxWrapper.defaultProps = {
+  onInput: undefined,
 };

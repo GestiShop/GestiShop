@@ -45,9 +45,7 @@ export const TextFieldWrapper = ({
     target: { name: string; value: string };
   }): void => {
     setFieldValue(name, event.target.value);
-    if (onInput) {
-      onInput(event.target.name, event.target.value);
-    }
+    onInput?.(event.target.name, event.target.value);
   };
 
   const configTextField: TextFieldProps = {

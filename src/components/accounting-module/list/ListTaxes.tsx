@@ -5,7 +5,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import CreateTax from '../create/CreateTax';
 import { deleteTaxes, fetchTaxes } from '../../../db';
 import GenericListComponent from './GenericListComponent';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { Tax } from '../../../model';
 
 const ListTaxes = (): ReactElement => {

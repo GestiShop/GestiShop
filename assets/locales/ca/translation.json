@@ -1,7 +1,9 @@
 {
   "home": {
     "loading": "Connectant, esperi si us plau...",
-    "error": "S'ha produït un error en intentar connectar-se a la base de dades. Si us plau, reinicieu l'aplicació."
+    "error": "S'ha produït un error en intentar connectar-se a la base de dades. Si us plau, reiniciï l'aplicació o comprovi la seva configuració.",
+    "go_to_settings": "Anar a la configuració",
+    "retry": "Tornar a intentar"
   },
   "buttons": {
     "back": "Enrere",
@@ -56,7 +58,9 @@
       "user": "Usuari",
       "enter_user": "Introdueixi el nombre d'usuari",
       "password": "Contrasenya",
-      "enter_password": "Introdueixi la contrasenya"
+      "enter_password": "Introdueixi la contrasenya",
+      "is_remote_legend": "La base de dades és remota?",
+      "is_remote_label": "Marqui això si la base de dades es troba en un servidor remot."
     },
     "users_config": {
       "users": "Usuaris"

@@ -9,7 +9,7 @@ import {
   fetchProviderBudgets,
 } from '../../../db/ProviderBudgetHelper';
 import CreateProviderBudget from '../create/CreateProviderBudget';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import budgetGenerator from '../../../utils/document-generator/budgetGenerator';
 
 const ListProviderBudgets = () => {

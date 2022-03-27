@@ -5,7 +5,7 @@ import { Types } from 'mongoose';
 import GenericListComponent from './GenericListComponent';
 import { deleteClients, fetchClients } from '../../../db';
 import CreateClient from '../create/CreateClient';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { Client } from '../../../model';
 
 const ListClients = () => {

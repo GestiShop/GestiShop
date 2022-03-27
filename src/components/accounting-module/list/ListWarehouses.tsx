@@ -5,7 +5,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteWarehouses, fetchWarehouses } from '../../../db';
 import CreateWarehouse from '../create/CreateWarehouse';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { Warehouse } from '../../../model';
 
 const ListWarehouses = (): ReactElement => {

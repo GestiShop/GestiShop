@@ -23,7 +23,7 @@ import { addClientBill, updateClientBill } from '../../../db/ClientBillHelper';
 import { fetchClients } from '../../../db/ClientHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BILL } from '../../../model';

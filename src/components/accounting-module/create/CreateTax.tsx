@@ -7,7 +7,7 @@ import { Types } from 'mongoose';
 import { TextField, SubmitButton } from '../../ui/forms';
 import { fetchTaxById, upsertTax } from '../../../db';
 import { Tax, EMPTY_TAX } from '../../../model';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 
 type Props = {
   closeCallback?: any;

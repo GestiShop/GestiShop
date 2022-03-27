@@ -24,7 +24,7 @@ import {
 import { fetchProviders } from '../../../db/ProviderHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_DELIVERY_NOTE } from '../../../model';
 

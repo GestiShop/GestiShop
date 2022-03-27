@@ -21,7 +21,7 @@ import {
   fetchWarehouses,
   fetchCategories,
 } from '../../../db';
-import useIsMounted from '../../../utils/useIsMounted';
+import useIsMounted from '../../../utils/use-is-mounted';
 
 const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();

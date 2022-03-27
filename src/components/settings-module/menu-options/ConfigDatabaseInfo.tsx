@@ -9,7 +9,8 @@ import {
   useAppSelector,
 } from '../../../utils/redux';
 import { PlatformDatabaseInfo } from '../../../model';
-import { TextField } from '../../ui/forms';
+import { Checkbox, TextField } from '../../ui/forms';
+import LocalConfiguration from '../../../utils/local-configuration';
 
 export const ConfigDatabaseInfo = (): ReactElement => {
   const { t } = useTranslation();
@@ -21,13 +22,14 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
   const [state, setState] = useState<PlatformDatabaseInfo>(savedDatabaseInfo);
 
-  const handleChange = (name: string, value: string) => {
+  const handleChange = (name: string, value: string | boolean) => {
     const newState = {
       ...state,
       [name]: value,
     };
 
     setState(newState);
+    LocalConfiguration.setLocalDatabaseInfo(newState);
     dispatch(setStoredDatabaseInfo(newState));
   };
 
@@ -96,6 +98,15 @@ export const ConfigDatabaseInfo = (): ReactElement => {
                     label={t('settings.database_config.password')}
                     required
                     type="password"
+                    onInput={handleChange}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Checkbox
+                    name="isRemote"
+                    label={t('settings.database_config.is_remote')}
+                    legend={t('settings.database_config.is_remote')}
                     onInput={handleChange}
                   />
                 </Grid>
