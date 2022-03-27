@@ -16,9 +16,9 @@ import { Button } from '../../ui/forms';
 import { FullScreenDialog } from '../../ui/FullscreenDialog';
 import { Table } from '../../ui/Table';
 
-type Props = {
+type Props<T> = {
   id: string;
-  rows: Array<any>;
+  rows: Array<T>;
   columns: Array<GridColDef>;
   texts: {
     create: string;
@@ -31,7 +31,7 @@ type Props = {
   deleteCallback?: (arg0: Array<Types.ObjectId>) => void;
 };
 
-const GenericListComponent = ({
+const GenericListComponent = <T,>({
   id,
   rows,
   columns,
@@ -40,7 +40,7 @@ const GenericListComponent = ({
   editCallback,
   deleteCallback,
   printCallback,
-}: Props): ReactElement => {
+}: Props<T>): ReactElement => {
   const { t } = useTranslation();
   const [openCreationDialog, setOpenCreationDialog] = useState(false);
   const [initialState, setInitialState] = useState<Types.ObjectId | undefined>(

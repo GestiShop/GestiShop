@@ -3,12 +3,12 @@ import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { ReactElement } from 'react';
 import { Box } from '@mui/material';
 
-type Props = {
+type Props<T> = {
   columns: Array<GridColDef>;
-  rows: Array<any>;
+  rows: Array<T>;
 };
 
-export const Table = ({ columns, rows }: Props): ReactElement => {
+export const Table = <T,>({ columns, rows }: Props<T>): ReactElement => {
   return (
     <Box component="div" sx={{ width: '100%' }}>
       <DataGrid
