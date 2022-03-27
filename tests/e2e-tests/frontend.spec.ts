@@ -1,6 +1,7 @@
 import { _electron as electron, Locator } from 'playwright';
 import { expect, test } from '@playwright/test';
 import { ElectronApplication, Page } from 'playwright-core';
+import { sleep } from './helpers';
 
 const { log } = console;
 
@@ -63,6 +64,7 @@ test('Launch app and configure database', async () => {
 
     await page.locator('#close-fullscreen-dialog--btn').click();
 
+    await sleep(1_000);
     await page.locator('#retry--btn').click();
   } catch {
     log('Settings are OK. Proceeding...');
