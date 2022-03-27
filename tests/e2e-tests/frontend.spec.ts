@@ -15,10 +15,20 @@ test.describe.configure({ mode: 'serial' });
 test.beforeAll(async () => {
   log('\nStarting end to end tests...\n');
 
-  log('Opening app and redirecting logs...');
+  log('Opening app...');
   electronApp = await electron.launch({
+    locale: 'en-GB',
     args: ['./src/main.prod.js'],
+    recordVideo: {
+      dir: './out/test-results',
+      size: {
+        width: 1920,
+        height: 1080,
+      },
+    },
   });
+
+  log('Redirecting logs...');
   page = await electronApp.firstWindow();
   page.on('console', (consoleMessage) => log('[CONSOLE]:', consoleMessage));
 });
