@@ -12,7 +12,7 @@ test.beforeAll(async () => {
 
   log('Opening app and redirecting logs...');
   electronApp = await electron.launch({
-    args: ['./src/main.prod.js'],
+    args: ['./src/main.prod.js', '--enable-logging'],
   });
   page = await electronApp.firstWindow();
   page.on('console', (consoleMessage) => log('[CONSOLE]:', consoleMessage));
