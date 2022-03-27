@@ -51,6 +51,7 @@ export const FullScreenDialog = <T,>({
       <AppBar sx={{ position: 'sticky' }}>
         <Toolbar>
           <IconButton
+            id="close-fullscreen-dialog--btn"
             edge="start"
             color="inherit"
             onClick={closeCallback}

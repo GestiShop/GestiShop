@@ -18,6 +18,7 @@ type Props = {
   color?: ButtonColor;
   className?: string;
   onClick: () => void;
+  id?: string;
 };
 
 type ButtonProps = {
@@ -33,6 +34,7 @@ export const ButtonWrapper = ({
   color = 'primary',
   className = '',
   onClick,
+  id,
   ...otherProps
 }: Props): ReactElement => {
   const configButton: ButtonProps = {
@@ -42,6 +44,7 @@ export const ButtonWrapper = ({
     onClick,
     fullWidth: true,
     className: `m-auto br-20px ${className}`,
+    ...(id && { id }),
   };
 
   return <Button {...configButton}>{children}</Button>;
@@ -50,4 +53,5 @@ export const ButtonWrapper = ({
 ButtonWrapper.defaultProps = {
   color: 'primary',
   className: '',
+  id: undefined,
 };

@@ -25,12 +25,33 @@ test.afterAll(async () => {
   log('\nFinished end to end tests.\n');
 });
 
-test('Launch app', async () => {
+test('Launch app and configure database', async () => {
   log('Checking app title...');
   expect(await page.title()).toBe('GestiShop');
 
   log('Checking that the loading page is rendered...');
   await expect(page.locator('#loading-page--container')).toBeVisible();
+
+  const goToSettingsBtn: Locator = await page.locator('#go-to-settings--btn');
+
+  // Update settings if needed
+  if (await goToSettingsBtn.isVisible()) {
+    log('Updating database settings...');
+    await goToSettingsBtn.click();
+    await page.locator('#database-config--btn').click();
+
+    await page.fill('#url--input', 'localhost');
+    await page.fill('#port--input', '27017');
+    await page.fill('#name--input', 'gestishop');
+    await page.fill('#user--input', 'test-user');
+    await page.fill('#password--input', 'test-password');
+
+    await page.locator('#close-fullscreen-dialog--btn').click();
+
+    await page.locator('#retry--btn').click();
+  } else {
+    log('Settings are OK. Proceeding...');
+  }
 
   log('Checking that the dashboard page is rendered...');
   await page.waitForSelector('#dashboard-page--container');

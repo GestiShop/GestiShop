@@ -14,6 +14,7 @@ type Props = {
   label: string;
   legend: string;
   onInput?: (arg0: string, arg1: boolean) => void;
+  id?: string;
 };
 
 export const CheckboxWrapper = ({
@@ -21,6 +22,7 @@ export const CheckboxWrapper = ({
   label,
   legend,
   onInput,
+  id,
 }: Props): ReactElement => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
@@ -38,6 +40,7 @@ export const CheckboxWrapper = ({
   const configCheckbox = {
     ...field,
     onChange: handleChange,
+    ...(id && { id }),
   };
 
   const configFormControl = {
@@ -63,4 +66,5 @@ export const CheckboxWrapper = ({
 
 CheckboxWrapper.defaultProps = {
   onInput: undefined,
+  id: undefined,
 };

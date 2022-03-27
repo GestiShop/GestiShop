@@ -67,7 +67,7 @@ const Home = (): ReactElement => {
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button onClick={connectToTheDatabase}>
+                    <Button onClick={connectToTheDatabase} id="retry--btn">
                       {t('home.retry')}
                     </Button>
                   </Grid>

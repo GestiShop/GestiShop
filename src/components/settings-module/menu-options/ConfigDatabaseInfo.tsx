@@ -41,6 +41,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
     name: Yup.string().required(t('form.errors.required')),
     user: Yup.string().required(t('form.errors.required')),
     password: Yup.string(),
+    isRemote: Yup.boolean(),
   });
 
   return (
@@ -56,6 +57,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
               <Grid container spacing={2}>
                 <Grid item xs={9}>
                   <TextField
+                    id="url--input"
                     name="url"
                     label={t('settings.database_config.url')}
                     required
@@ -66,6 +68,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
                 <Grid item xs={3}>
                   <TextField
+                    id="port--input"
                     name="port"
                     label={t('settings.database_config.port')}
                     required
@@ -76,6 +79,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
                 <Grid item xs={12}>
                   <TextField
+                    id="name--input"
                     name="name"
                     label={t('settings.database_config.name')}
                     required
@@ -85,6 +89,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
                 <Grid item xs={12}>
                   <TextField
+                    id="user--input"
                     name="user"
                     label={t('settings.database_config.user')}
                     required
@@ -94,6 +99,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
                 <Grid item xs={12}>
                   <TextField
+                    id="password--input"
                     name="password"
                     label={t('settings.database_config.password')}
                     required
@@ -104,6 +110,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
                 <Grid item xs={12}>
                   <Checkbox
+                    id="is-remote--input"
                     name="isRemote"
                     label={t('settings.database_config.is_remote_label')}
                     legend={t('settings.database_config.is_remote_legend')}

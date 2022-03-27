@@ -10,6 +10,7 @@ type Props = {
   onInput?: (arg0: string, arg1: string) => void;
   required?: boolean;
   disabled?: boolean;
+  id?: string;
 };
 
 type TextFieldVariant = 'outlined';
@@ -36,6 +37,7 @@ export const TextFieldWrapper = ({
   type = 'text',
   required = false,
   disabled = false,
+  id,
   ...otherProps
 }: Props): ReactElement => {
   const { setFieldValue } = useFormikContext();
@@ -61,6 +63,7 @@ export const TextFieldWrapper = ({
     InputLabelProps: { required },
     error: false,
     helperText: '',
+    ...(id && { id }),
   };
 
   if (meta?.touched && meta?.error) {
@@ -76,4 +79,5 @@ TextFieldWrapper.defaultProps = {
   required: false,
   disabled: false,
   onInput: undefined,
+  id: undefined,
 };

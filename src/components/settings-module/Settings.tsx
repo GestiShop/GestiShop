@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactElement, useState } from 'react';
 import { Tabs, Tab, Box, Typography } from '@mui/material';
@@ -37,9 +36,9 @@ const TabPanel = (props: {
   );
 };
 
-const a11yProps = (index: number) => {
+const a11yProps = (id: string, index: number) => {
   return {
-    id: `vertical-tab-${index}`,
+    id,
     'aria-controls': `vertical-tabpanel-${index}`,
   };
 };
@@ -49,38 +48,47 @@ const Settings = (): ReactElement => {
   const [value, setValue] = useState<number>(0);
 
   const SETTINGS_SCREENS: Array<{
+    id: string;
     label: string;
     component: ReactElement;
   }> = [
     {
+      id: 'language-config--btn',
       label: t('settings.language_config.language'),
       component: <ConfigLanguageInfo />,
     },
     {
+      id: 'currency-config--btn',
       label: t('settings.currency_config.currency'),
       component: <ConfigCurrencyInfo />,
     },
     {
+      id: 'business-config--btn',
       label: t('settings.business_config.business'),
       component: <ConfigBusinessInfo />,
     },
     {
+      id: 'database-config--btn',
       label: t('settings.database_config.database'),
       component: <ConfigDatabaseInfo />,
     },
     {
+      id: 'users-config--btn',
       label: t('settings.users_config.users'),
       component: <ConfigUsers />,
     },
     {
+      id: 'input-mode-config--btn',
       label: t('settings.input_mode_config.input_mode'),
       component: <ConfigInputMode />,
     },
     {
+      id: 'module-config--btn',
       label: t('settings.modules_config.modules'),
       component: <ConfigModules />,
     },
     {
+      id: 'advanced-config--btn',
       label: t('settings.advanced_config.advanced'),
       component: <ConfigAdvanced />,
     },
@@ -104,12 +112,12 @@ const Settings = (): ReactElement => {
         onChange={handleChange}
       >
         {SETTINGS_SCREENS.map((x, index) => (
-          <Tab key={index} label={x.label} {...a11yProps(index)} />
+          <Tab key={x.id} label={x.label} {...a11yProps(x.id, index)} />
         ))}
       </Tabs>
 
       {SETTINGS_SCREENS.map((x, index) => (
-        <TabPanel key={index} value={value} index={index}>
+        <TabPanel key={x.id} value={value} index={index}>
           {x.component}
         </TabPanel>
       ))}
