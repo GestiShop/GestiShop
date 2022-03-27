@@ -12,15 +12,30 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [ 16.x ]
+        mongodb-version: [ '5.0' ]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-    - run: yarn install && cd ./src && yarn install && cd ..
-    - run: yarn build
+      - name: Git checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Start MongoDB ${{ matrix.mongodb-version }}
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-username: test-username
+          mongodb-password: test-password
+          mongodb-db: gestishop
+
+      - name: Yarn install
+        run: yarn install && cd ./src && yarn install && cd ..
+
+      - name: Yarn build
+        run: yarn build
 #    - run: yarn test
