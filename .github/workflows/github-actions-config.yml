@@ -9,6 +9,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: test-user
+          MONGO_INITDB_ROOT_PASSWORD: test-password
+          MONGO_INITDB_DATABASE: gestishop
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
 
     strategy:
       matrix:
@@ -24,13 +38,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-
-      - name: Start MongoDB ${{ matrix.mongodb-version }}
-        uses: supercharge/mongodb-github-action@1.7.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
-          mongodb-username: test-username
-          mongodb-password: test-password
 
       - name: Yarn install
         run: yarn install && cd ./src && yarn install && cd ..
