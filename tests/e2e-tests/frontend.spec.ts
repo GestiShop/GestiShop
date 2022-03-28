@@ -1,7 +1,6 @@
 import { _electron as electron, Locator } from 'playwright';
 import { expect, test } from '@playwright/test';
 import { ElectronApplication, Page } from 'playwright-core';
-import { sleep } from './helpers';
 
 const { log } = console;
 
