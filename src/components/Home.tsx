@@ -25,8 +25,7 @@ const Home = (): ReactElement => {
 
         return true;
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setError(true);
         setText(t('home.error'));
 

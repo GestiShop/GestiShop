@@ -31,8 +31,6 @@ jobs:
           mongodb-version: ${{ matrix.mongodb-version }}
           mongodb-username: test-username
           mongodb-password: test-password
-          mongodb-db: gestishop
-          mongodb-port: 27017
 
       - name: Yarn install
         run: yarn install && cd ./src && yarn install && cd ..
