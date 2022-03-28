@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mongodb:
-        image: mongo
+        image: mongo:5.0.6
         env:
           MONGO_INITDB_ROOT_USERNAME: test-user
           MONGO_INITDB_ROOT_PASSWORD: test-password
@@ -27,7 +27,6 @@ jobs:
     strategy:
       matrix:
         node-version: [ 16.x ]
-        mongodb-version: [ '5.0' ]
 
     steps:
       - name: Git checkout
