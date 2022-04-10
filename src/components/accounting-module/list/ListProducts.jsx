@@ -4,13 +4,11 @@ import { useSelector } from 'react-redux';
 import GenericListComponent from './GenericListComponent';
 import { deleteProducts, fetchProducts } from '../../../db/ProductHelper';
 import CreateProduct from '../create/CreateProduct';
-import useIsMounted from '../../../utils/use-is-mounted';
 
 const ListProducts = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const isMounted = useIsMounted();
   const [currency, setCurrency] = useState(
     useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
@@ -51,10 +49,8 @@ const ListProducts = () => {
         console.log('error', error);
       },
       (data) => {
-        if (isMounted.current) {
-          setRows(data);
-          setIsDataLoaded(true);
-        }
+        setRows(data);
+        setIsDataLoaded(true);
       }
     );
   };

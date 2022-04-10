@@ -14,7 +14,6 @@ import {
 } from '../../../utils/form-validations';
 import { Client, EMPTY_CLIENT } from '../../../model';
 import { upsertClient, fetchClientById } from '../../../db';
-import useIsMounted from '../../../utils/use-is-mounted';
 
 type Props = {
   closeCallback?: any;
@@ -23,7 +22,6 @@ type Props = {
 
 const CreateClient = ({ closeCallback, initialState }: Props): ReactElement => {
   const { t } = useTranslation();
-  const isMounted = useIsMounted();
   const [existingClient, setExistingClient] = useState<Client>(EMPTY_CLIENT);
 
   const FORM_VALIDATION = Yup.object().shape({
@@ -66,7 +64,7 @@ const CreateClient = ({ closeCallback, initialState }: Props): ReactElement => {
     const response = await fetchClientById(id);
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setExistingClient(response.result);
       }

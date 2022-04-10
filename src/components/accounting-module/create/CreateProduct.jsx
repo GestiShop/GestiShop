@@ -21,7 +21,6 @@ import {
   fetchWarehouses,
   fetchCategories,
 } from '../../../db';
-import useIsMounted from '../../../utils/use-is-mounted';
 
 const CreateProduct = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
@@ -32,7 +31,6 @@ const CreateProduct = ({ closeCallback, initialState }) => {
   const [unitTypesOptions, setUnitTypesOptions] = useState([]);
   const [warehousesOptions, setWarehousesOptions] = useState([]);
   const [categoriesOptions, setCategoriesOptions] = useState([]);
-  const isMounted = useIsMounted();
   const [buyingInfo, setBuyingInfo] = useState(
     initialState
       ? {
@@ -196,7 +194,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) setTaxesOptions(options);
+        setTaxesOptions(options);
       }
     );
 
@@ -206,7 +204,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) setUnitTypesOptions(options);
+        setUnitTypesOptions(options);
       }
     );
 
@@ -216,7 +214,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) setWarehousesOptions(options);
+        setWarehousesOptions(options);
       }
     );
 
@@ -226,7 +224,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) setCategoriesOptions(options);
+        setCategoriesOptions(options);
       }
     );
   };

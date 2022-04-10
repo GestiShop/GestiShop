@@ -13,7 +13,6 @@ import {
   PhoneSchemaValidator,
 } from '../../../utils/form-validations';
 import { Provider, EMPTY_PROVIDER } from '../../../model';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { upsertProvider, fetchProviderById } from '../../../db';
 
 type Props = {
@@ -26,7 +25,6 @@ const CreateProvider = ({
   initialState,
 }: Props): ReactElement => {
   const { t } = useTranslation();
-  const isMounted = useIsMounted();
   const [existingProvider, setExistingProvider] =
     useState<Provider>(EMPTY_PROVIDER);
 
@@ -70,7 +68,7 @@ const CreateProvider = ({
     const response = await fetchProviderById(id);
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setExistingProvider(response.result);
       }

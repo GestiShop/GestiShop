@@ -24,8 +24,10 @@ const Dashboard = (): ReactElement => {
                 replace
                 id="accounting-module--btn"
               >
-                <FileCopyIcon className="m-2r font-3r" />
-                {t('accounting_module.accounting_module')}
+                <>
+                  <FileCopyIcon className="m-2r font-3r" />
+                  {t('accounting_module.accounting_module')}
+                </>
               </Button>
             </Grid>
           </Grid>

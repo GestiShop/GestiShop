@@ -9,7 +9,6 @@ import { fetchWarehouseById, upsertWarehouse } from '../../../db';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import AddressForm from '../../ui/AddressForm';
 import { Warehouse, EMPTY_WAREHOUSE } from '../../../model';
-import useIsMounted from '../../../utils/use-is-mounted';
 
 type Props = {
   closeCallback?: any;
@@ -21,7 +20,6 @@ const CreateWarehouse = ({
   initialState,
 }: Props): ReactElement => {
   const { t } = useTranslation();
-  const isMounted = useIsMounted();
   const [existingWarehouse, setExistingWarehouse] =
     useState<Warehouse>(EMPTY_WAREHOUSE);
 
@@ -40,7 +38,7 @@ const CreateWarehouse = ({
     const response = await fetchWarehouseById(id);
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setExistingWarehouse(response.result);
       }

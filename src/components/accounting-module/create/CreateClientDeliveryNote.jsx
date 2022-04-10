@@ -24,13 +24,11 @@ import {
 import { fetchClients } from '../../../db/ClientHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_DELIVERY_NOTE } from '../../../model';
 
 const CreateClientDeliveryNote = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
-  const isMounted = useIsMounted();
   const [clientList, setClientList] = useState([]);
   const [clientListOptions, setClientListOptions] = useState([]);
   const [productList, setProductList] = useState([]);
@@ -100,17 +98,15 @@ const CreateClientDeliveryNote = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) {
-          setClientList(options);
-          setClientListOptions(
-            options.map((client) => {
-              return {
-                value: client.id,
-                displayText: `${client.fiscalData.name} [${client.reference}]`,
-              };
-            })
-          );
-        }
+        setClientList(options);
+        setClientListOptions(
+          options.map((client) => {
+            return {
+              value: client.id,
+              displayText: `${client.fiscalData.name} [${client.reference}]`,
+            };
+          })
+        );
       }
     );
 
@@ -120,17 +116,15 @@ const CreateClientDeliveryNote = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) {
-          setProductList(options);
-          setProductListOptions(
-            options.map((product) => {
-              return {
-                value: product.id,
-                displayText: `${product.name} [${product.reference}]`,
-              };
-            })
-          );
-        }
+        setProductList(options);
+        setProductListOptions(
+          options.map((product) => {
+            return {
+              value: product.id,
+              displayText: `${product.name} [${product.reference}]`,
+            };
+          })
+        );
       }
     );
   };

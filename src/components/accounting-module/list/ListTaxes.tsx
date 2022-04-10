@@ -5,13 +5,11 @@ import { GridColDef } from '@mui/x-data-grid';
 import CreateTax from '../create/CreateTax';
 import { deleteTaxes, fetchTaxes } from '../../../db';
 import GenericListComponent from './GenericListComponent';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { Tax } from '../../../model';
 
 const ListTaxes = (): ReactElement => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<Tax>>([]);
-  const isMounted = useIsMounted();
 
   const columns: Array<GridColDef> = [
     {
@@ -31,7 +29,7 @@ const ListTaxes = (): ReactElement => {
     const response = await fetchTaxes();
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setRows(response.result);
       }

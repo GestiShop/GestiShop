@@ -10,7 +10,6 @@ import {
   fetchCategories,
   fetchCategoryById,
 } from '../../../db';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { Category, EMPTY_CATEGORY } from '../../../model';
 
 type Props = {
@@ -23,7 +22,6 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
   const [categoriesOptions, setCategoriesOptions] = useState<Array<Category>>(
     []
   );
-  const isMounted = useIsMounted();
   const [existingCategory, setExistingCategory] =
     useState<Category>(EMPTY_CATEGORY);
 
@@ -45,7 +43,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
     const response = await fetchCategories();
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         let categoriesToDisplay = response.result;
 
@@ -65,7 +63,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
     const response = await fetchCategoryById(id);
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setExistingCategory(response.result);
       }

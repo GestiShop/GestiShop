@@ -9,7 +9,6 @@ import {
   fetchProviderDeliveryNotes,
 } from '../../../db/ProviderDeliveryNoteHelper';
 import CreateProviderDeliveryNote from '../create/CreateProviderDeliveryNote';
-import useIsMounted from '../../../utils/use-is-mounted';
 import deliveryNoteGenerator from '../../../utils/document-generator/deliveryNoteGenerator';
 
 const ListProviderDeliveryNotes = () => {
@@ -19,7 +18,6 @@ const ListProviderDeliveryNotes = () => {
   const [shouldPrint, setShouldPrint] = useState(false);
   const [rows, setRows] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const isMounted = useIsMounted();
   const [currency, setCurrency] = useState(
     useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
@@ -61,10 +59,8 @@ const ListProviderDeliveryNotes = () => {
         console.log('error', error);
       },
       (data) => {
-        if (isMounted.current) {
-          setRows(data);
-          setIsDataLoaded(true);
-        }
+        setRows(data);
+        setIsDataLoaded(true);
       }
     );
   };

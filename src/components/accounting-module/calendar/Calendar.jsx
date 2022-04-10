@@ -11,7 +11,6 @@ import { Box } from '@mui/material';
 import LocalConfiguration from '../../../utils/local-configuration';
 import { FullScreenDialog } from '../../ui/FullscreenDialog';
 import { upsertEvent, fetchEvents } from '../../../db';
-import useIsMounted from '../../../utils/use-is-mounted';
 import CreateCalendarEvent from '../create/CreateCalendarEvent';
 import { DEFAULT_EVENT_COLOR_CODE } from '../../../model';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
@@ -34,13 +33,12 @@ const EventCalendar = () => {
     displayDragItemInCell: true,
   });
   const [openEditDialog, setOpenEditDialog] = useState(false);
-  const isMounted = useIsMounted();
 
   const fetchData = async () => {
     const response = await fetchEvents();
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       setState({
         ...state,
         events: response.result,

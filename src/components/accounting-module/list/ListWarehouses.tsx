@@ -5,13 +5,11 @@ import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteWarehouses, fetchWarehouses } from '../../../db';
 import CreateWarehouse from '../create/CreateWarehouse';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { Warehouse } from '../../../model';
 
 const ListWarehouses = (): ReactElement => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<Warehouse>>([]);
-  const isMounted = useIsMounted();
 
   const columns: Array<GridColDef> = [
     {
@@ -30,7 +28,7 @@ const ListWarehouses = (): ReactElement => {
     const response = await fetchWarehouses();
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setRows(response.result);
       }

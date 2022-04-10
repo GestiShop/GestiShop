@@ -5,13 +5,11 @@ import { Types } from 'mongoose';
 import GenericListComponent from './GenericListComponent';
 import { deleteClients, fetchClients } from '../../../db';
 import CreateClient from '../create/CreateClient';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { Client } from '../../../model';
 
 const ListClients = (): ReactElement => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<Client>>([]);
-  const isMounted = useIsMounted();
 
   const columns: Array<GridColDef> = [
     {
@@ -43,7 +41,7 @@ const ListClients = (): ReactElement => {
     const response = await fetchClients();
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setRows(response.result);
       }

@@ -7,7 +7,6 @@ import { Types } from 'mongoose';
 import { TextField, SubmitButton } from '../../ui/forms';
 import { fetchUnitTypeById, upsertUnitType } from '../../../db';
 import { UnitType, EMPTY_UNIT_TYPE } from '../../../model';
-import useIsMounted from '../../../utils/use-is-mounted';
 
 type Props = {
   closeCallback?: any;
@@ -19,7 +18,6 @@ const CreateUnitType = ({
   initialState,
 }: Props): ReactElement => {
   const { t } = useTranslation();
-  const isMounted = useIsMounted();
   const [existingUnitType, setexistingUnitType] =
     useState<UnitType>(EMPTY_UNIT_TYPE);
 
@@ -37,7 +35,7 @@ const CreateUnitType = ({
     const response = await fetchUnitTypeById(id);
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setexistingUnitType(response.result);
       }

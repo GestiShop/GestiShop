@@ -26,14 +26,12 @@ import {
 import { fetchProviders } from '../../../db/ProviderHelper';
 import { fetchProducts } from '../../../db/ProductHelper';
 import AddressForm from '../../ui/AddressForm';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { AddressSchemaValidator } from '../../../utils/form-validations';
 import PAYMENT_METHODS from '../../../../assets/payment_methods';
 import { EMPTY_ADDRESS, EMPTY_PRODUCT_IN_BILL } from '../../../model';
 
 const CreateProviderBill = ({ closeCallback, initialState }) => {
   const { t } = useTranslation();
-  const isMounted = useIsMounted();
   const [providerList, setProviderList] = useState([]);
   const [providerListOptions, setProviderListOptions] = useState([]);
   const [productList, setProductList] = useState([]);
@@ -105,17 +103,15 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) {
-          setProviderList(options);
-          setProviderListOptions(
-            options.map((provider) => {
-              return {
-                value: provider.id,
-                displayText: `${provider.fiscalData.name} [${provider.reference}]`,
-              };
-            })
-          );
-        }
+        setProviderList(options);
+        setProviderListOptions(
+          options.map((provider) => {
+            return {
+              value: provider.id,
+              displayText: `${provider.fiscalData.name} [${provider.reference}]`,
+            };
+          })
+        );
       }
     );
 
@@ -125,17 +121,15 @@ const CreateProviderBill = ({ closeCallback, initialState }) => {
         closeCallback();
       },
       (options) => {
-        if (isMounted.current) {
-          setProductList(options);
-          setProductListOptions(
-            options.map((product) => {
-              return {
-                value: product.id,
-                displayText: `${product.name} [${product.reference}]`,
-              };
-            })
-          );
-        }
+        setProductList(options);
+        setProductListOptions(
+          options.map((product) => {
+            return {
+              value: product.id,
+              displayText: `${product.name} [${product.reference}]`,
+            };
+          })
+        );
       }
     );
   };

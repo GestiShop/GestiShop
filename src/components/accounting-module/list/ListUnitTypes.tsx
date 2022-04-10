@@ -5,13 +5,11 @@ import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteUnitTypes, fetchUnitTypes } from '../../../db';
 import CreateUnitType from '../create/CreateUnitType';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { UnitType } from '../../../model';
 
 const ListUnitTypes = (): ReactElement => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<UnitType>>([]);
-  const isMounted = useIsMounted();
 
   const columns: Array<GridColDef> = [
     {
@@ -30,7 +28,7 @@ const ListUnitTypes = (): ReactElement => {
     const response = await fetchUnitTypes();
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setRows(response.result);
       }

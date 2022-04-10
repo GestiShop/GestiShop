@@ -7,7 +7,6 @@ import { Types } from 'mongoose';
 import { TextField, SubmitButton } from '../../ui/forms';
 import { fetchTaxById, upsertTax } from '../../../db';
 import { Tax, EMPTY_TAX } from '../../../model';
-import useIsMounted from '../../../utils/use-is-mounted';
 
 type Props = {
   closeCallback?: any;
@@ -16,7 +15,6 @@ type Props = {
 
 const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
   const { t } = useTranslation();
-  const isMounted = useIsMounted();
   const [existingTax, setExistingTax] = useState<Tax>(EMPTY_TAX);
 
   const FORM_VALIDATION = Yup.object().shape({
@@ -38,7 +36,7 @@ const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
     const response = await fetchTaxById(id);
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setExistingTax(response.result);
       }

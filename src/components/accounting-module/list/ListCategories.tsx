@@ -5,13 +5,11 @@ import { GridColDef } from '@mui/x-data-grid';
 import GenericListComponent from './GenericListComponent';
 import { deleteCategories, fetchCategories } from '../../../db';
 import CreateCategory from '../create/CreateCategory';
-import useIsMounted from '../../../utils/use-is-mounted';
 import { Category } from '../../../model';
 
 const ListCategories = () => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<Category>>([]);
-  const isMounted = useIsMounted();
 
   const columns: Array<GridColDef> = [
     {
@@ -35,7 +33,7 @@ const ListCategories = () => {
     const response = await fetchCategories();
     if (response.error !== null) {
       console.log(response.error);
-    } else if (isMounted.current) {
+    } else {
       if (response.result !== null) {
         setRows(response.result);
       }

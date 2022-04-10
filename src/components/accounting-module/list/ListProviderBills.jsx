@@ -9,7 +9,6 @@ import {
   fetchProviderBills,
 } from '../../../db/ProviderBillHelper';
 import CreateProviderBill from '../create/CreateProviderBill';
-import useIsMounted from '../../../utils/use-is-mounted';
 import billGenerator from '../../../utils/document-generator/billGenerator';
 
 const ListProviderBills = () => {
@@ -19,7 +18,6 @@ const ListProviderBills = () => {
   const [shouldPrint, setShouldPrint] = useState(false);
   const [rows, setRows] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const isMounted = useIsMounted();
   const [currency, setCurrency] = useState(
     useSelector((store) => store.configuration.currencyInfo.currency.label)
   );
@@ -63,10 +61,8 @@ const ListProviderBills = () => {
         console.log('error', error);
       },
       (data) => {
-        if (isMounted.current) {
-          setRows(data);
-          setIsDataLoaded(true);
-        }
+        setRows(data);
+        setIsDataLoaded(true);
       }
     );
   };
