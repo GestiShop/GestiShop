@@ -3,10 +3,10 @@ import { Types } from 'mongoose';
 import {
   DBHelperResponse,
   DBProvider,
-  Provider,
-  FullProvider,
-  decodeProvider,
   decodeFullProvider,
+  decodeProvider,
+  FullProvider,
+  Provider,
 } from '../../model';
 
 export const upsertProvider = (
@@ -105,6 +105,30 @@ export const deleteProviders = (
       return {
         error: null,
         result: true,
+      };
+    })
+    .catch((error: any) => {
+      return {
+        error: {
+          code: -1,
+          message: error,
+        },
+        result: null,
+      };
+    });
+};
+
+export const fetchProviderById = (
+  id: Types.ObjectId
+): Promise<DBHelperResponse<Provider>> => {
+  return DBProvider.findById(id)
+    .exec()
+    .then((data: any) => {
+      const provider: Provider = decodeProvider(data);
+
+      return {
+        error: null,
+        result: provider,
       };
     })
     .catch((error: any) => {

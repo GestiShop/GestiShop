@@ -1,62 +1,34 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Types } from 'mongoose';
 import AddressForm from '../../ui/AddressForm';
-import { TextField, SubmitButton } from '../../ui/forms';
-import { addProvider, updateProvider } from '../../../db/ProviderHelper';
+import { SubmitButton, TextField } from '../../ui/forms';
 import {
   AddressSchemaValidator,
+  EFactDataSchemeValidator,
   EmailSchemaValidator,
   PhoneSchemaValidator,
 } from '../../../utils/form-validations';
-import {
-  EMPTY_ADDRESS,
-  EMPTY_EFACT,
-  EMPTY_EMAIL,
-  EMPTY_PHONE,
-} from '../../../model';
+import { Provider, EMPTY_PROVIDER } from '../../../model';
+import useIsMounted from '../../../utils/use-is-mounted';
+import { upsertProvider, fetchProviderById } from '../../../db';
 
-const CreateProvider = ({ closeCallback, initialState }) => {
+type Props = {
+  closeCallback?: any;
+  initialState?: Types.ObjectId;
+};
+
+const CreateProvider = ({
+  closeCallback,
+  initialState,
+}: Props): ReactElement => {
   const { t } = useTranslation();
-
-  let INITIAL_STATE = {
-    reference: '',
-    contactData: {
-      name: '',
-      phone: EMPTY_PHONE,
-      email: EMPTY_EMAIL,
-    },
-    fiscalData: {
-      name: '',
-      nif: '',
-      address: EMPTY_ADDRESS,
-    },
-    postalData: {
-      name: '',
-      email: EMPTY_EMAIL,
-      address: EMPTY_ADDRESS,
-    },
-    tributationData: {
-      retentionPercentage: 0,
-      personalDiscount: 0,
-    },
-    eFactData: EMPTY_EFACT,
-  };
-
-  if (initialState) {
-    INITIAL_STATE = {
-      reference: initialState.reference,
-      contactData: initialState.contactData,
-      fiscalData: initialState.fiscalData,
-      postalData: initialState.postalData,
-      tributationData: initialState.tributationData,
-      eFactData: initialState.eFactData,
-    };
-  }
+  const isMounted = useIsMounted();
+  const [existingProvider, setExistingProvider] =
+    useState<Provider>(EMPTY_PROVIDER);
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -83,51 +55,41 @@ const CreateProvider = ({ closeCallback, initialState }) => {
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
     }),
-    eFactData: Yup.object().shape({
-      accountingOfficeCode: Yup.string(),
-      accountingOfficeName: Yup.string(),
-      managementBodyCode: Yup.string(),
-      managementBodyName: Yup.string(),
-      processingUnitCode: Yup.string(),
-      processingUnitName: Yup.string(),
-      electronicBillingCode: Yup.string(),
-    }),
+    eFactData: EFactDataSchemeValidator(),
   });
 
-  const handleSubmit = (data) => {
-    if (!initialState) {
-      addProvider(
-        data,
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
-    } else {
-      updateProvider(
-        { ...data, _id: initialState._id },
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
+  const handleSubmit = async (data: Provider): Promise<void> => {
+    await upsertProvider({
+      ...data,
+      id: initialState,
+    });
+    closeCallback();
+  };
+
+  const fetchData = async (id: Types.ObjectId): Promise<void> => {
+    const response = await fetchProviderById(id);
+    if (response.error !== null) {
+      console.log(response.error);
+    } else if (isMounted.current) {
+      if (response.result !== null) {
+        setExistingProvider(response.result);
+      }
     }
   };
+
+  useEffect((): void => {
+    if (initialState) {
+      fetchData(initialState);
+    }
+  }, []);
 
   return (
     <Grid container>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
-            initialValues={{ ...INITIAL_STATE }}
+            initialValues={existingProvider}
+            enableReinitialize
             validationSchema={FORM_VALIDATION}
             onSubmit={(values) => handleSubmit(values)}
           >
@@ -363,6 +325,11 @@ const CreateProvider = ({ closeCallback, initialState }) => {
       </Grid>
     </Grid>
   );
+};
+
+CreateProvider.defaultProps = {
+  closeCallback: undefined,
+  initialState: undefined,
 };
 
 export default CreateProvider;

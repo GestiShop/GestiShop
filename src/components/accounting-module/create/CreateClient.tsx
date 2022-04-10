@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid, Typography } from '@mui/material';
@@ -21,7 +21,7 @@ type Props = {
   initialState?: Types.ObjectId;
 };
 
-const CreateClient = ({ closeCallback, initialState }: Props) => {
+const CreateClient = ({ closeCallback, initialState }: Props): ReactElement => {
   const { t } = useTranslation();
   const isMounted = useIsMounted();
   const [existingClient, setExistingClient] = useState<Client>(EMPTY_CLIENT);
