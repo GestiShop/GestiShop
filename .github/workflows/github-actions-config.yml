@@ -47,12 +47,12 @@ jobs:
       - name: Components tests
         run: yarn components-test
 
-      - name: End-to-end tests
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" -- yarn e2e-test
-
-      - name: Upload e2e-test results
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: playwright-results
-          path: ./out/test-results
+#      - name: End-to-end tests
+#        run: xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" -- yarn e2e-test
+#
+#      - name: Upload e2e-test results
+#        if: always()
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: playwright-results
+#          path: ./out/test-results
