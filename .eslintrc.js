@@ -24,4 +24,5 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
   },
+  plugins: ['import'],
 };

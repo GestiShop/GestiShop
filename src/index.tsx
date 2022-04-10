@@ -1,10 +1,10 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 import '@fontsource/roboto';
 import App from './App';
 import './i18n';
 import './styles/App.global.css';
+import { createRoot } from 'react-dom/client';
 
 const theme = createTheme({
   palette: {
@@ -29,9 +29,11 @@ const theme = createTheme({
   },
 });
 
-render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
-  document.getElementById('root')
-);
+const container: HTMLElement | null = document.getElementById('root');
+if (container !== null) {
+  createRoot(container).render(
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  );
+}

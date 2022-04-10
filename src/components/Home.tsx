@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Alert, Box, Container, Grid } from '@mui/material';
 import { connectDb } from '../db';
@@ -10,7 +10,7 @@ import { FullScreenDialog } from './ui/FullscreenDialog';
 
 const Home = (): ReactElement => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [text, setText] = useState<string>(t('home.loading'));
   const [error, setError] = useState<boolean>(false);
   const [openSettingsDialog, setOpenSettingsDialog] = useState<boolean>(false);
@@ -21,7 +21,7 @@ const Home = (): ReactElement => {
 
     connectDb()
       .then(() => {
-        history.replace('/dashboard');
+        navigate('/dashboard');
 
         return true;
       })
@@ -33,7 +33,7 @@ const Home = (): ReactElement => {
       });
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     connectToTheDatabase();
   }, []);
 

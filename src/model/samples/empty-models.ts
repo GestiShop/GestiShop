@@ -20,6 +20,7 @@ import {
   PlatformLanguageCode,
   PlatformLanguageInfo,
   ProductInBill,
+  Provider,
   Tax,
   UnitType,
   Warehouse,
@@ -102,6 +103,28 @@ export const EMPTY_CATEGORY: Category = {
 
 /* ----- ----- CLIENT ----- ----- */
 export const EMPTY_CLIENT: Client = {
+  reference: '',
+  contactData: {
+    name: '',
+  },
+  fiscalData: {
+    name: '',
+    nif: '',
+    address: EMPTY_ADDRESS,
+  },
+  postalData: {
+    name: '',
+  },
+  tributationData: {
+    retentionPercentage: 0,
+    personalDiscount: 0,
+  },
+  eFactData: EMPTY_EFACT,
+  bills: [],
+};
+
+/* ----- ----- PROVIDER ----- ----- */
+export const EMPTY_PROVIDER: Provider = {
   reference: '',
   contactData: {
     name: '',

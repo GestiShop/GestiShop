@@ -16,6 +16,11 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import Store from 'electron-store';
 import url from 'url';
+import 'source-map-support/register';
+import electronDebug from 'electron-debug';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+} from 'electron-devtools-installer';
 
 export default class AppUpdater {
   constructor() {
@@ -27,28 +32,16 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
-  sourceMapSupport.install();
-}
-
 if (
   process.env.NODE_ENV === 'development' ||
   process.env.DEBUG_PROD === 'true'
 ) {
-  require('electron-debug')();
+  electronDebug();
 }
 
 const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
-
-  return installer
-    .default(
-      extensions.map((name) => installer[name]),
-      forceDownload
-    )
+  return installExtension(REACT_DEVELOPER_TOOLS)
+    .then(console.log)
     .catch(console.log);
 };
 

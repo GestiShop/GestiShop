@@ -36,7 +36,7 @@ import {
   AssignmentOutlined as AssignmentOutlinedIcon,
   InsertDriveFile as InsertDriveFileIcon,
 } from '@mui/icons-material';
-import { Link, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Settings from '../settings-module/Settings';
 import { FullScreenDialog } from '../ui/FullscreenDialog';
@@ -129,7 +129,7 @@ const Drawer = styled(MuiDrawer, {
 
 export const AccountingModuleDashboard = (): ReactElement => {
   const { t } = useTranslation();
-  const { path, url } = useRouteMatch();
+  const pathname = 'accounting_module';
 
   const theme = useTheme();
 
@@ -153,7 +153,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
         id: 'calendar--link',
         text: t('accounting_module.menu.schedule'),
         icon: <EventIcon />,
-        linkTo: `${url}/calendar`,
+        linkTo: `${pathname}/calendar`,
       },
     ],
     [
@@ -161,31 +161,31 @@ export const AccountingModuleDashboard = (): ReactElement => {
         id: 'products--link',
         text: t('accounting_module.menu.products'),
         icon: <ShoppingBasketIcon />,
-        linkTo: `${url}/products`,
+        linkTo: `${pathname}/products`,
       },
       {
         id: 'taxes--link',
         text: t('accounting_module.menu.taxes'),
         icon: <AccountBalanceIcon />,
-        linkTo: `${url}/taxes`,
+        linkTo: `${pathname}/taxes`,
       },
       {
         id: 'unit-types--link',
         text: t('accounting_module.menu.unit_types'),
         icon: <TimelineIcon />,
-        linkTo: `${url}/unit_types`,
+        linkTo: `${pathname}/unit_types`,
       },
       {
         id: 'warehouses--link',
         text: t('accounting_module.menu.warehouses'),
         icon: <StoreIcon />,
-        linkTo: `${url}/warehouses`,
+        linkTo: `${pathname}/warehouses`,
       },
       {
         id: 'categories--link',
         text: t('accounting_module.menu.categories'),
         icon: <CategoryIcon />,
-        linkTo: `${url}/categories`,
+        linkTo: `${pathname}/categories`,
       },
     ],
     [
@@ -193,13 +193,13 @@ export const AccountingModuleDashboard = (): ReactElement => {
         id: 'clients--link',
         text: t('accounting_module.menu.clients'),
         icon: <PeopleIcon />,
-        linkTo: `${url}/clients`,
+        linkTo: `${pathname}/clients`,
       },
       {
         id: 'providers--link',
         text: t('accounting_module.menu.providers'),
         icon: <PeopleOutlineOutlinedIcon />,
-        linkTo: `${url}/providers`,
+        linkTo: `${pathname}/providers`,
       },
     ],
     [
@@ -207,37 +207,37 @@ export const AccountingModuleDashboard = (): ReactElement => {
         id: 'client-bills--link',
         text: t('accounting_module.menu.client_bills'),
         icon: <DescriptionIcon />,
-        linkTo: `${url}/client_bills`,
+        linkTo: `${pathname}/client_bills`,
       },
       {
         id: 'provider-bills--link',
         text: t('accounting_module.menu.provider_bills'),
         icon: <DescriptionOutlinedIcon />,
-        linkTo: `${url}/provider_bills`,
+        linkTo: `${pathname}/provider_bills`,
       },
       {
         id: 'client-budgets--link',
         text: t('accounting_module.menu.client_budgets'),
         icon: <ReceiptIcon />,
-        linkTo: `${url}/client_budgets`,
+        linkTo: `${pathname}/client_budgets`,
       },
       {
         id: 'provider-budgets--link',
         text: t('accounting_module.menu.provider_budgets'),
         icon: <ReceiptOutlinedIcon />,
-        linkTo: `${url}/provider_budgets`,
+        linkTo: `${pathname}/provider_budgets`,
       },
       {
         id: 'client-delivery-notes--link',
         text: t('accounting_module.menu.client_delivery_notes'),
         icon: <AssignmentIcon />,
-        linkTo: `${url}/client_delivery_notes`,
+        linkTo: `${pathname}/client_delivery_notes`,
       },
       {
         id: 'provider-delivery-notes--link',
         text: t('accounting_module.menu.provider_delivery_notes'),
         icon: <AssignmentOutlinedIcon />,
-        linkTo: `${url}/provider_delivery_notes`,
+        linkTo: `${pathname}/provider_delivery_notes`,
       },
     ],
     [
@@ -245,7 +245,7 @@ export const AccountingModuleDashboard = (): ReactElement => {
         id: 'documents--link',
         text: t('accounting_module.menu.documents'),
         icon: <InsertDriveFileIcon />,
-        linkTo: `${url}/document_generator`,
+        linkTo: `${pathname}/document_generator`,
       },
     ],
   ];
@@ -372,56 +372,72 @@ export const AccountingModuleDashboard = (): ReactElement => {
           }}
         >
           <DrawerHeader />
-          <Switch>
-            <Route exact path={`${path}/calendar`}>
-              <Calendar />
-            </Route>
-            <Route exact path={`${path}/products`}>
-              <ListProducts />
-            </Route>
-            <Route exact path={`${path}/taxes`}>
-              <ListTaxes />
-            </Route>
-            <Route exact path={`${path}/unit_types`}>
-              <ListUnitTypes />
-            </Route>
-            <Route exact path={`${path}/warehouses`}>
-              <ListWarehouses />
-            </Route>
-            <Route exact path={`${path}/categories`}>
-              <ListCategories />
-            </Route>
-            <Route exact path={`${path}/clients`}>
-              <ListClients />
-            </Route>
-            <Route exact path={`${path}/providers`}>
-              <ListProviders />
-            </Route>
-            <Route exact path={`${path}/client_bills`}>
-              <ListClientBills />
-            </Route>
-            <Route exact path={`${path}/provider_bills`}>
-              <ListProviderBills />
-            </Route>
-            <Route exact path={`${path}/client_budgets`}>
-              <ListClientBudgets />
-            </Route>
-            <Route exact path={`${path}/provider_budgets`}>
-              <ListProviderBudgets />
-            </Route>
-            <Route exact path={`${path}/client_delivery_notes`}>
-              <ListClientDeliveryNotes />
-            </Route>
-            <Route exact path={`${path}/provider_delivery_notes`}>
-              <ListProviderDeliveryNotes />
-            </Route>
-            <Route exact path={`${path}/document_generator`}>
-              <DocumentGenerator />
-            </Route>
-            <Route exact path={`${path}`}>
-              <Redirect to={`${path}/calendar`} />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route //
+              path={`${pathname}/calendar`}
+              element={<Calendar />}
+            />
+            <Route //
+              path={`${pathname}/products`}
+              element={<ListProducts />}
+            />
+            <Route //
+              path={`${pathname}/taxes`}
+              element={<ListTaxes />}
+            />
+            <Route
+              path={`${pathname}/unit_types`}
+              element={<ListUnitTypes />}
+            />
+            <Route
+              path={`${pathname}/warehouses`}
+              element={<ListWarehouses />}
+            />
+            <Route
+              path={`${pathname}/categories`}
+              element={<ListCategories />}
+            />
+            <Route //
+              path={`${pathname}/clients`}
+              element={<ListClients />}
+            />
+            <Route //
+              path={`${pathname}/providers`}
+              element={<ListProviders />}
+            />
+            <Route
+              path={`${pathname}/client_bills`}
+              element={<ListClientBills />}
+            />
+            <Route
+              path={`${pathname}/provider_bills`}
+              element={<ListProviderBills />}
+            />
+            <Route
+              path={`${pathname}/client_budgets`}
+              element={<ListClientBudgets />}
+            />
+            <Route
+              path={`${pathname}/provider_budgets`}
+              element={<ListProviderBudgets />}
+            />
+            <Route
+              path={`${pathname}/client_delivery_notes`}
+              element={<ListClientDeliveryNotes />}
+            />
+            <Route
+              path={`${pathname}/provider_delivery_notes`}
+              element={<ListProviderDeliveryNotes />}
+            />
+            <Route
+              path={`${pathname}/document_generator`}
+              element={<DocumentGenerator />}
+            />
+            <Route
+              path={'*'}
+              element={<Navigate to={`${pathname}/calendar`} replace />}
+            />
+          </Routes>
         </Box>
       </Box>
       <FullScreenDialog

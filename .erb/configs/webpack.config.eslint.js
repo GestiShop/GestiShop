@@ -1,4 +1,5 @@
 /* eslint import/no-unresolved: off, import/no-self-import: off */
-require('@babel/register');
+import '@babel/register';
+import webpackConfig from './webpack.config.renderer.dev.babel';
 
-module.exports = require('./webpack.config.renderer.dev.babel').default;
+module.exports = webpackConfig.default;

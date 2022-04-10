@@ -4,3 +4,4 @@ export * from './unit-type-helper';
 export * from './warehouse-helper';
 export * from './category-helper';
 export * from './client-helper';
+export * from './provider-helper';

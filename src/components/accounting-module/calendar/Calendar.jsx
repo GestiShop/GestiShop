@@ -58,8 +58,8 @@ const EventCalendar = () => {
     await fetchData();
   };
 
-  useEffect(async () => {
-    await fetchData();
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const handleDragStart = (event) => {
