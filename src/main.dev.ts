@@ -29,7 +29,7 @@ export default class AppUpdater {
     autoUpdater //
       .checkForUpdatesAndNotify()
       .then(console.log)
-      .catch(console.log);
+      .catch(console.error);
   }
 }
 
@@ -45,7 +45,7 @@ if (
 const installExtensions = async () => {
   return installExtension(REACT_DEVELOPER_TOOLS)
     .then(console.log)
-    .catch(console.log);
+    .catch(console.error);
 };
 
 const createWindow = async () => {
@@ -86,7 +86,7 @@ const createWindow = async () => {
       })
     )
     .then(console.log)
-    .catch(console.log);
+    .catch(console.error);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -141,7 +141,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.whenReady().then(createWindow).catch(console.log);
+app.whenReady().then(createWindow).catch(console.error);
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
@@ -149,6 +149,6 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow() //
       .then(console.log)
-      .catch(console.log);
+      .catch(console.error);
   }
 });

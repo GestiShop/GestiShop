@@ -27,12 +27,15 @@ i18n
   .init({
     resources,
     fallbackLng: DEFAULT_LANGUAGE_CODE,
+    lng: DEFAULT_LANGUAGE_CODE,
 
     debug: false,
 
-    whitelist: LANGUAGE_LIST,
+    supportedLngs: LANGUAGE_LIST,
 
     interpolation: {
       escapeValue: false,
     },
-  });
+  })
+  .then(console.log)
+  .catch(console.error);
