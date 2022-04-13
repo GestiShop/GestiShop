@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { store } from './utils/redux';
@@ -7,7 +7,7 @@ import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import { AccountingModuleDashboard } from './components/accounting-module/AccountingModuleDashboard';
 
-const App = () => {
+const App = (): ReactElement => {
   return (
     <Provider store={store}>
       <HashRouter>

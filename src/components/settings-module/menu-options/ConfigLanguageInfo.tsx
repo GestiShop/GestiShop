@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import * as Yup from 'yup';
 import { Container, Grid } from '@mui/material';
 import { Formik, Form } from 'formik';
@@ -16,7 +16,7 @@ import {
   useAppSelector,
 } from '../../../utils/redux';
 
-export const ConfigLanguageInfo = () => {
+export const ConfigLanguageInfo = (): ReactElement => {
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
 
