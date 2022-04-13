@@ -202,52 +202,52 @@ export const AccountingModuleDashboard = (): ReactElement => {
         linkTo: `${pathname}/providers`,
       },
     ],
-    [
-      {
-        id: 'client-bills--link',
-        text: t('accounting_module.menu.client_bills'),
-        icon: <DescriptionIcon />,
-        linkTo: `${pathname}/client_bills`,
-      },
-      {
-        id: 'provider-bills--link',
-        text: t('accounting_module.menu.provider_bills'),
-        icon: <DescriptionOutlinedIcon />,
-        linkTo: `${pathname}/provider_bills`,
-      },
-      {
-        id: 'client-budgets--link',
-        text: t('accounting_module.menu.client_budgets'),
-        icon: <ReceiptIcon />,
-        linkTo: `${pathname}/client_budgets`,
-      },
-      {
-        id: 'provider-budgets--link',
-        text: t('accounting_module.menu.provider_budgets'),
-        icon: <ReceiptOutlinedIcon />,
-        linkTo: `${pathname}/provider_budgets`,
-      },
-      {
-        id: 'client-delivery-notes--link',
-        text: t('accounting_module.menu.client_delivery_notes'),
-        icon: <AssignmentIcon />,
-        linkTo: `${pathname}/client_delivery_notes`,
-      },
-      {
-        id: 'provider-delivery-notes--link',
-        text: t('accounting_module.menu.provider_delivery_notes'),
-        icon: <AssignmentOutlinedIcon />,
-        linkTo: `${pathname}/provider_delivery_notes`,
-      },
-    ],
-    [
-      {
-        id: 'documents--link',
-        text: t('accounting_module.menu.documents'),
-        icon: <InsertDriveFileIcon />,
-        linkTo: `${pathname}/document_generator`,
-      },
-    ],
+    // [
+    //   {
+    //     id: 'client-bills--link',
+    //     text: t('accounting_module.menu.client_bills'),
+    //     icon: <DescriptionIcon />,
+    //     linkTo: `${pathname}/client_bills`,
+    //   },
+    //   {
+    //     id: 'provider-bills--link',
+    //     text: t('accounting_module.menu.provider_bills'),
+    //     icon: <DescriptionOutlinedIcon />,
+    //     linkTo: `${pathname}/provider_bills`,
+    //   },
+    //   {
+    //     id: 'client-budgets--link',
+    //     text: t('accounting_module.menu.client_budgets'),
+    //     icon: <ReceiptIcon />,
+    //     linkTo: `${pathname}/client_budgets`,
+    //   },
+    //   {
+    //     id: 'provider-budgets--link',
+    //     text: t('accounting_module.menu.provider_budgets'),
+    //     icon: <ReceiptOutlinedIcon />,
+    //     linkTo: `${pathname}/provider_budgets`,
+    //   },
+    //   {
+    //     id: 'client-delivery-notes--link',
+    //     text: t('accounting_module.menu.client_delivery_notes'),
+    //     icon: <AssignmentIcon />,
+    //     linkTo: `${pathname}/client_delivery_notes`,
+    //   },
+    //   {
+    //     id: 'provider-delivery-notes--link',
+    //     text: t('accounting_module.menu.provider_delivery_notes'),
+    //     icon: <AssignmentOutlinedIcon />,
+    //     linkTo: `${pathname}/provider_delivery_notes`,
+    //   },
+    // ],
+    // [
+    //   {
+    //     id: 'documents--link',
+    //     text: t('accounting_module.menu.documents'),
+    //     icon: <InsertDriveFileIcon />,
+    //     linkTo: `${pathname}/document_generator`,
+    //   },
+    // ],
   ];
 
   const handleDrawerOpen = () => {
