@@ -89,7 +89,7 @@ const CreateProvider = ({
             initialValues={existingProvider}
             enableReinitialize
             validationSchema={FORM_VALIDATION}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={handleSubmit}
           >
             <Form>
               <Grid container spacing={2}>

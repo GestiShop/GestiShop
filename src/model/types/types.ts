@@ -217,16 +217,16 @@ export type Product = {
   buyingInfo: {
     basePrice: number;
     discountPercentage: number;
-    taxPercentage: Types.ObjectId;
+    taxPercentage: Types.ObjectId | null;
   };
   sellingInfo: {
     basePrice: number;
     discountPercentage: number;
-    taxPercentage: Types.ObjectId;
+    taxPercentage: Types.ObjectId | null;
   };
-  unitType: Types.ObjectId;
+  unitType: Types.ObjectId | null;
   stock: number;
-  warehouse: Types.ObjectId;
+  warehouse: Types.ObjectId | null;
   categories?: Array<Types.ObjectId>;
   minStock?: number;
   stockAlert: boolean;

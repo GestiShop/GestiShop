@@ -8,8 +8,10 @@ type Props = {
   label: string;
   type?: string;
   onInput?: (arg0: string, arg1: string) => void;
+  multiline?: boolean;
   required?: boolean;
   disabled?: boolean;
+  rows?: number;
   id?: string;
 };
 
@@ -19,6 +21,8 @@ type TextFieldProps = {
   name: string;
   label: string;
   type: string;
+  multiline: boolean;
+  rows?: number;
   fullWidth: boolean;
   variant: TextFieldVariant;
   InputLabelProps: {
@@ -35,6 +39,8 @@ export const TextFieldWrapper = ({
   label,
   onInput,
   type = 'text',
+  multiline = false,
+  rows = undefined,
   required = false,
   disabled = false,
   id,
@@ -56,6 +62,7 @@ export const TextFieldWrapper = ({
     name,
     label,
     type,
+    multiline,
     disabled,
     onChange: handleChange,
     fullWidth: true,
@@ -64,6 +71,7 @@ export const TextFieldWrapper = ({
     error: false,
     helperText: '',
     ...(id && { id }),
+    ...(rows && { rows }),
   };
 
   if (meta?.touched && meta?.error) {
@@ -76,6 +84,7 @@ export const TextFieldWrapper = ({
 
 TextFieldWrapper.defaultProps = {
   type: 'text',
+  multiline: false,
   required: false,
   disabled: false,
   onInput: undefined,

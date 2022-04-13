@@ -57,7 +57,7 @@ const ListProviders = (): ReactElement => {
     fetchData();
   }, []);
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     fetchData();
   };
 

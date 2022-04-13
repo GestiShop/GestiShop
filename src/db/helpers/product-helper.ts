@@ -3,8 +3,10 @@ import { Types } from 'mongoose';
 import {
   DBHelperResponse,
   DBProduct,
-  Product,
   decodeFullProduct,
+  decodeProduct,
+  FullProduct,
+  Product,
 } from '../../model';
 
 export const upsertProduct = (
@@ -42,7 +44,7 @@ export const upsertProduct = (
 };
 
 export const fetchFullProducts = (): Promise<
-  DBHelperResponse<Array<Product>>
+  DBHelperResponse<Array<FullProduct>>
 > => {
   return DBProduct.find({})
     .populate('buyingInfo.taxPercentage')
@@ -52,9 +54,7 @@ export const fetchFullProducts = (): Promise<
     .populate('categories')
     .exec()
     .then((data: any) => {
-      const productList: Array<Product> = data.map((x: any) =>
-        decodeFullProduct(x)
-      );
+      const productList: Array<FullProduct> = data.map(decodeFullProduct);
 
       return {
         error: null,
@@ -108,6 +108,30 @@ export const updateStock = (
       return {
         error: null,
         result: true,
+      };
+    })
+    .catch((error: any) => {
+      return {
+        error: {
+          code: -1,
+          message: error,
+        },
+        result: null,
+      };
+    });
+};
+
+export const fetchProductById = (
+  id: Types.ObjectId
+): Promise<DBHelperResponse<Product>> => {
+  return DBProduct.findById(id)
+    .exec()
+    .then((data: any) => {
+      const product: Product = decodeProduct(data);
+
+      return {
+        error: null,
+        result: product,
       };
     })
     .catch((error: any) => {

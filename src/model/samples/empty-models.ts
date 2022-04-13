@@ -19,6 +19,7 @@ import {
   PlatformFloatingPositionOption,
   PlatformLanguageCode,
   PlatformLanguageInfo,
+  Product,
   ProductInBill,
   Provider,
   Tax,
@@ -143,6 +144,26 @@ export const EMPTY_PROVIDER: Provider = {
   },
   eFactData: EMPTY_EFACT,
   bills: [],
+};
+
+/* ----- ----- PROVIDER ----- ----- */
+export const EMPTY_PRODUCT: Product = {
+  reference: '',
+  name: '',
+  buyingInfo: {
+    basePrice: 0,
+    discountPercentage: 0,
+    taxPercentage: null,
+  },
+  sellingInfo: {
+    basePrice: 0,
+    discountPercentage: 0,
+    taxPercentage: null,
+  },
+  unitType: null,
+  stock: 0,
+  warehouse: null,
+  stockAlert: false,
 };
 
 /* ----- ----- PLATFORM PARAMETERS ----- ----- */

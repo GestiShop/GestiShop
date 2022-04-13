@@ -1,124 +1,44 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import {
-  TextField,
-  SubmitButton,
-  Select,
   MultiSelect,
+  Select,
+  SubmitButton,
   Switch,
+  TextField,
 } from '../../ui/forms';
-import { addProduct, updateProduct } from '../../../db/ProductHelper';
-import {
-  fetchTaxes,
-  fetchUnitTypes,
-  fetchWarehouses,
-  fetchCategories,
-} from '../../../db';
+import { upsertProduct, fetchProductById } from '../../../db';
+import { Types } from 'mongoose';
+import { EMPTY_PRODUCT, Product } from '../../../model';
+import { useAppSelector } from '../../../utils/redux';
 
-const CreateProduct = ({ closeCallback, initialState }) => {
+type Props = {
+  closeCallback?: any;
+  initialState?: Types.ObjectId;
+};
+
+const CreateProduct = ({
+  closeCallback,
+  initialState,
+}: Props): ReactElement => {
   const { t } = useTranslation();
+  const [existingProduct, setExistingProduct] =
+    useState<Product>(EMPTY_PRODUCT);
+
   const [stockAlert, setStockAlert] = useState(
-    initialState ? initialState.stockAlert : false
+    existingProduct?.stockAlert ?? false
   );
-  const [taxesOptions, setTaxesOptions] = useState([]);
-  const [unitTypesOptions, setUnitTypesOptions] = useState([]);
-  const [warehousesOptions, setWarehousesOptions] = useState([]);
-  const [categoriesOptions, setCategoriesOptions] = useState([]);
-  const [buyingInfo, setBuyingInfo] = useState(
-    initialState
-      ? {
-          basePrice: initialState.buyingInfo.basePrice,
-          discountPercentage: initialState.buyingInfo.discountPercentage,
-          taxPercentage: initialState.buyingInfo.taxPercentage.percentage,
-        }
-      : {
-          basePrice: 0,
-          discountPercentage: 0,
-          taxPercentage: 0,
-        }
-  );
-  const [sellingInfo, setSellingInfo] = useState(
-    initialState
-      ? {
-          basePrice: initialState.sellingInfo.basePrice,
-          discountPercentage: initialState.sellingInfo.discountPercentage,
-          taxPercentage: initialState.sellingInfo.taxPercentage.percentage,
-        }
-      : {
-          basePrice: 0,
-          discountPercentage: 0,
-          taxPercentage: 0,
-        }
-  );
-  const [currency, setCurrency] = useState(
-    useSelector((store) => store.configuration.currencyInfo.currency.label)
-  );
-  const [numberOfDecimals, setNumberOfDecimals] = useState(
-    useSelector((store) => store.configuration.currencyInfo.floatingPositions)
-  );
+  const [taxesOptions] = useState([]);
+  const [unitTypesOptions] = useState([]);
+  const [warehousesOptions] = useState([]);
+  const [categoriesOptions] = useState([]);
 
-  let INITIAL_STATE = {
-    reference: '',
-    name: '',
-    description: '',
-    buyingInfo: {
-      basePrice: 0.0,
-      discountPercentage: 0.0,
-      taxPercentage: '',
-      pvp: 0.0,
-    },
-    sellingInfo: {
-      basePrice: 0.0,
-      discountPercentage: 0.0,
-      taxPercentage: '',
-      pvp: 0.0,
-    },
-    stock: 0.0,
-    unitType: '',
-    warehouse: '',
-    categories: [],
-    stockAlert: false,
-    minStock: 0.0,
-  };
-
-  if (initialState) {
-    INITIAL_STATE = {
-      reference: initialState.reference,
-      name: initialState.name,
-      description: initialState.description,
-      buyingInfo: {
-        basePrice: initialState.buyingInfo.basePrice,
-        discountPercentage: initialState.buyingInfo.discountPercentage,
-        taxPercentage: initialState.buyingInfo.taxPercentage.id,
-        pvp:
-          initialState.buyingInfo.basePrice *
-          (1 - initialState.buyingInfo.discountPercentage / 100) *
-          (1 + initialState.buyingInfo.taxPercentage.percentage / 100),
-      },
-      sellingInfo: {
-        basePrice: initialState.sellingInfo.basePrice,
-        discountPercentage: initialState.sellingInfo.discountPercentage,
-        taxPercentage: initialState.sellingInfo.taxPercentage.id,
-        pvp:
-          initialState.sellingInfo.basePrice *
-          (1 - initialState.sellingInfo.discountPercentage / 100) *
-          (1 + initialState.sellingInfo.taxPercentage.percentage / 100),
-      },
-      stock: initialState.stock,
-      unitType: initialState.unitType.id,
-      warehouse: initialState.warehouse.id,
-      categories: Array.from(initialState.categories.map((x) => x.id)),
-      stockAlert: initialState.stockAlert,
-      minStock: initialState.minStock,
-    };
-  }
+  const [currency] = useState(
+    useAppSelector((store) => store.configuration.currencyInfo.currencyCode)
+  );
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -159,78 +79,29 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       .required(t('form.errors.required')),
   });
 
-  const handleSubmit = (data) => {
-    if (!initialState) {
-      addProduct(
-        data,
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
+  const handleSubmit = async (data: Product): Promise<void> => {
+    await upsertProduct({
+      ...data,
+      id: initialState,
+    });
+    closeCallback();
+  };
+
+  const fetchData = async (id: Types.ObjectId): Promise<void> => {
+    const response = await fetchProductById(id);
+    if (response.error !== null) {
+      console.log(response.error);
     } else {
-      updateProduct(
-        { ...data, _id: initialState._id },
-        (error) => {
-          console.log('error', error);
-          closeCallback();
-        },
-        () => {
-          console.log('NO ERROR');
-          closeCallback();
-        }
-      );
+      if (response.result !== null) {
+        setExistingProduct(response.result);
+      }
     }
   };
 
-  const fetchData = () => {
-    fetchTaxes(
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      (options) => {
-        setTaxesOptions(options);
-      }
-    );
-
-    fetchUnitTypes(
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      (options) => {
-        setUnitTypesOptions(options);
-      }
-    );
-
-    fetchWarehouses(
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      (options) => {
-        setWarehousesOptions(options);
-      }
-    );
-
-    fetchCategories(
-      (error) => {
-        console.log('error', error);
-        closeCallback();
-      },
-      (options) => {
-        setCategoriesOptions(options);
-      }
-    );
-  };
-
-  useEffect(() => {
-    fetchData();
+  useEffect((): void => {
+    if (initialState) {
+      fetchData(initialState);
+    }
   }, []);
 
   return (
@@ -238,16 +109,10 @@ const CreateProduct = ({ closeCallback, initialState }) => {
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
+            initialValues={existingProduct}
             enableReinitialize
-            initialValues={{
-              ...INITIAL_STATE,
-            }}
             validationSchema={FORM_VALIDATION}
-            onSubmit={(values) => {
-              delete values.sellingInfo.pvp;
-              delete values.buyingInfo.pvp;
-              handleSubmit(values);
-            }}
+            onSubmit={handleSubmit}
           >
             <Form>
               <Grid container spacing={2}>
@@ -287,12 +152,10 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     required
                     name="unitType"
                     label={t('accounting_module.product.structure.unit_type')}
-                    options={unitTypesOptions.map((x) => {
-                      return {
-                        displayText: `[${x.reference}] ${x.unit}`,
-                        value: x.id,
-                      };
-                    })}
+                    options={unitTypesOptions.map((x) => ({
+                      displayText: `[${x.reference}] ${x.unit}`,
+                      value: x.id,
+                    }))}
                     acceptNone
                   />
                 </Grid>
@@ -302,12 +165,10 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     required
                     name="warehouse"
                     label={t('accounting_module.product.structure.warehouse')}
-                    options={warehousesOptions.map((x) => {
-                      return {
-                        displayText: `[${x.reference}] ${x.description}`,
-                        value: x.id,
-                      };
-                    })}
+                    options={warehousesOptions.map((x) => ({
+                      displayText: `[${x.reference}] ${x.description}`,
+                      value: x.id,
+                    }))}
                     acceptNone
                   />
                 </Grid>
@@ -316,13 +177,11 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <MultiSelect
                     name="categories"
                     label={t('accounting_module.product.structure.categories')}
-                    initialValue={INITIAL_STATE.categories}
-                    options={categoriesOptions.map((x) => {
-                      return {
-                        displayText: `[${x.reference}] ${x.name}`,
-                        value: x.id,
-                      };
-                    })}
+                    initialValue={existingProduct.categories ?? []}
+                    options={categoriesOptions.map((x) => ({
+                      displayText: `[${x.reference}] ${x.name}`,
+                      value: x.id,
+                    }))}
                   />
                 </Grid>
 
@@ -354,7 +213,7 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                   <Switch
                     name="stockAlert"
                     label={t('accounting_module.product.structure.stock_alert')}
-                    initialState={INITIAL_STATE.stockAlert}
+                    initialState={existingProduct.stockAlert}
                     setValue={setStockAlert}
                   />
                 </Grid>
@@ -374,9 +233,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     })}
                     type="number"
                     onInput={(event) =>
-                      setBuyingInfo({
-                        ...buyingInfo,
-                        basePrice: parseFloat(event.target.value),
+                      setExistingProduct({
+                        ...existingProduct,
+                        buyingInfo: {
+                          ...existingProduct.buyingInfo,
+                          discountPercentage: parseFloat(event),
+                        },
                       })
                     }
                   />
@@ -391,9 +253,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     )}
                     type="number"
                     onInput={(event) =>
-                      setBuyingInfo({
-                        ...buyingInfo,
-                        discountPercentage: parseFloat(event.target.value),
+                      setExistingProduct({
+                        ...existingProduct,
+                        buyingInfo: {
+                          ...existingProduct.buyingInfo,
+                          discountPercentage: parseFloat(event),
+                        },
                       })
                     }
                   />
@@ -412,12 +277,13 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
-                    onInput={(event) =>
-                      setBuyingInfo({
-                        ...buyingInfo,
-                        taxPercentage: taxesOptions.filter(
-                          (x) => x.id === event.target.value
-                        )[0].percentage,
+                    onInput={(event: Types.ObjectId) =>
+                      setExistingProduct({
+                        ...existingProduct,
+                        buyingInfo: {
+                          ...existingProduct.buyingInfo,
+                          taxPercentage: event,
+                        },
                       })
                     }
                     acceptNone
@@ -426,11 +292,10 @@ const CreateProduct = ({ closeCallback, initialState }) => {
 
                 <Grid item xs={3}>
                   <TextField
-                    value={parseFloat(
-                      buyingInfo.basePrice *
-                        (1 - buyingInfo.discountPercentage / 100) *
-                        (1 + buyingInfo.taxPercentage / 100)
-                    ).toFixed(numberOfDecimals)}
+                    value={
+                      existingProduct.buyingInfo.basePrice *
+                      (1 - existingProduct.buyingInfo.discountPercentage / 100)
+                    }
                     disabled
                     name="buyingInfo.pvp"
                     label={t('accounting_module.product.structure.pvp', {
@@ -457,9 +322,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     })}
                     type="number"
                     onInput={(event) =>
-                      setSellingInfo({
-                        ...sellingInfo,
-                        basePrice: parseFloat(event.target.value),
+                      setExistingProduct({
+                        ...existingProduct,
+                        sellingInfo: {
+                          ...existingProduct.sellingInfo,
+                          basePrice: parseFloat(event),
+                        },
                       })
                     }
                   />
@@ -474,9 +342,12 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                     )}
                     type="number"
                     onInput={(event) =>
-                      setSellingInfo({
-                        ...sellingInfo,
-                        discountPercentage: parseFloat(event.target.value),
+                      setExistingProduct({
+                        ...existingProduct,
+                        sellingInfo: {
+                          ...existingProduct.sellingInfo,
+                          discountPercentage: event,
+                        },
                       })
                     }
                   />
@@ -495,12 +366,13 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                         value: x.id,
                       };
                     })}
-                    onInput={(event) =>
-                      setSellingInfo({
-                        ...sellingInfo,
-                        taxPercentage: taxesOptions.filter(
-                          (x) => x.id === event.target.value
-                        )[0].percentage,
+                    onInput={(newTaxPercentage: Types.ObjectId) =>
+                      setExistingProduct({
+                        ...existingProduct,
+                        sellingInfo: {
+                          ...existingProduct.sellingInfo,
+                          taxPercentage: newTaxPercentage,
+                        },
                       })
                     }
                     acceptNone
@@ -510,11 +382,10 @@ const CreateProduct = ({ closeCallback, initialState }) => {
                 <Grid item xs={3}>
                   <TextField
                     disabled
-                    value={parseFloat(
-                      sellingInfo.basePrice *
-                        (1 - sellingInfo.discountPercentage / 100) *
-                        (1 + sellingInfo.taxPercentage / 100)
-                    ).toFixed(numberOfDecimals)}
+                    value={
+                      existingProduct.sellingInfo.basePrice *
+                      (1 - existingProduct.sellingInfo.discountPercentage / 100)
+                    }
                     name="sellingInfo.pvp"
                     label={t('accounting_module.product.structure.pvp', {
                       currency,

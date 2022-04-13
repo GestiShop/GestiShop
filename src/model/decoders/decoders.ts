@@ -8,6 +8,7 @@ import {
   FullClient,
   FullProduct,
   FullProvider,
+  Product,
   ProductInBill,
   Provider,
   Tax,
@@ -74,6 +75,31 @@ export const decodeCategory = (dbCategory: any): Category => {
     reference: dbCategory.reference,
     name: dbCategory.name,
     parent: dbCategory.parent,
+  };
+};
+
+export const decodeProduct = (dbProduct: any): Product => {
+  return {
+    id: dbProduct._id,
+    reference: dbProduct.reference,
+    name: dbProduct.name,
+    description: dbProduct.description,
+    buyingInfo: {
+      basePrice: dbProduct.buyingInfo.basePrice,
+      discountPercentage: dbProduct.buyingInfo.discountPercentage,
+      taxPercentage: dbProduct.buyingInfo.taxPercentage,
+    },
+    sellingInfo: {
+      basePrice: dbProduct.sellingInfo.basePrice,
+      discountPercentage: dbProduct.sellingInfo.discountPercentage,
+      taxPercentage: dbProduct.sellingInfo.taxPercentage,
+    },
+    unitType: dbProduct.unitType,
+    stock: dbProduct.stock,
+    warehouse: dbProduct.warehouse,
+    categories: dbProduct.categories,
+    minStock: dbProduct.minStock,
+    stockAlert: dbProduct.stockAlert,
   };
 };
 
