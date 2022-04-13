@@ -26,7 +26,10 @@ export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater //
+      .checkForUpdatesAndNotify()
+      .then(console.log)
+      .catch(console.log);
   }
 }
 
@@ -65,8 +68,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1920,
+    height: 1080,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
@@ -74,13 +77,16 @@ const createWindow = async () => {
     },
   });
 
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, '/index.html'),
-      protocol: 'file',
-      slashes: true,
-    })
-  );
+  mainWindow
+    .loadURL(
+      url.format({
+        pathname: path.join(__dirname, '/index.html'),
+        protocol: 'file',
+        slashes: true,
+      })
+    )
+    .then(console.log)
+    .catch(console.log);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -140,5 +146,9 @@ app.whenReady().then(createWindow).catch(console.log);
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow();
+  if (mainWindow === null) {
+    createWindow() //
+      .then(console.log)
+      .catch(console.log);
+  }
 });
