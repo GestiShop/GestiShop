@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Types } from 'mongoose';
 import { GridColDef } from '@mui/x-data-grid';
@@ -7,7 +7,7 @@ import { deleteCategories, fetchCategories } from '../../../db';
 import CreateCategory from '../create/CreateCategory';
 import { Category } from '../../../model';
 
-const ListCategories = () => {
+const ListCategories = (): ReactElement => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<Category>>([]);
 
