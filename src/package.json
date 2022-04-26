@@ -1,7 +1,6 @@
 {
   "name": "gestishop",
   "productName": "GestiShop",
-  "version": "1.0.0",
   "description": "GestiShop, the open-source multi-platform business management tool.",
   "main": "./main.prod.js",
   "author": {
