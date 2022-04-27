@@ -44,6 +44,9 @@ jobs:
       - name: Yarn build
         run: yarn build
 
+      - name: Database tests
+        run: yarn db-test
+
       - name: Components tests
         run: yarn components-test
 
