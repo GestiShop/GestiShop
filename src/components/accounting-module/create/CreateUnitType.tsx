@@ -34,7 +34,7 @@ const CreateUnitType = ({
   const fetchData = async (id: Types.ObjectId): Promise<void> => {
     const response = await fetchUnitTypeById(id);
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         setexistingUnitType(response.result);

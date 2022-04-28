@@ -90,7 +90,7 @@ const CreateProduct = ({
   const fetchData = async (id: Types.ObjectId): Promise<void> => {
     const response = await fetchProductById(id);
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         setExistingProduct(response.result);

@@ -77,8 +77,9 @@ const GenericListComponent = <T,>({
     sortable: false,
     filterable: false,
     disableExport: true,
-    flex: 1,
+    flex: 0.5,
     align: 'right',
+    headerAlign: 'right',
     renderCell: (params) => (
       <Box
         component="div"

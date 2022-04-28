@@ -37,7 +37,7 @@ const EventCalendar = () => {
   const fetchData = async () => {
     const response = await fetchEvents();
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       setState({
         ...state,

@@ -45,6 +45,7 @@ export const fetchCategories = (): Promise<
   DBHelperResponse<Array<Category>>
 > => {
   return DBCategory.find({})
+    .populate('parent')
     .exec()
     .then((data: any) => {
       const categoryList: Array<Category> = data.map((x: any) =>

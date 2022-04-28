@@ -49,7 +49,7 @@ const ListProducts = (): ReactElement => {
   const fetchData = async (): Promise<void> => {
     const response = await fetchFullProducts();
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         setRows(response.result);

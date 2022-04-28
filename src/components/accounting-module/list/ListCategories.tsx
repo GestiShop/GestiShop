@@ -26,13 +26,17 @@ const ListCategories = (): ReactElement => {
       field: 'parent',
       headerName: t('accounting_module.category.structure.parent'),
       flex: 1,
+      valueGetter: (params) =>
+        params.row?.parent !== undefined
+          ? `[${params.row?.parent?.reference}] ${params.row?.parent?.name}`
+          : '-',
     },
   ];
 
   const fetchData = async (): Promise<void> => {
     const response = await fetchCategories();
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         setRows(response.result);

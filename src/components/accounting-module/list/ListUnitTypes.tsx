@@ -27,7 +27,7 @@ const ListUnitTypes = (): ReactElement => {
   const fetchData = async (): Promise<void> => {
     const response = await fetchUnitTypes();
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         setRows(response.result);

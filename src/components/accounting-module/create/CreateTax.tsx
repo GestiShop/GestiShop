@@ -35,7 +35,7 @@ const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
   const fetchData = async (id: Types.ObjectId): Promise<void> => {
     const response = await fetchTaxById(id);
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         setExistingTax(response.result);

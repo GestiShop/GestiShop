@@ -74,7 +74,10 @@ export const decodeCategory = (dbCategory: any): Category => {
     id: dbCategory._id,
     reference: dbCategory.reference,
     name: dbCategory.name,
-    parent: dbCategory.parent,
+    parent:
+      dbCategory.parent != null //
+        ? decodeCategory(dbCategory.parent)
+        : undefined,
   };
 };
 

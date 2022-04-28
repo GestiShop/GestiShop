@@ -42,7 +42,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
   const fetchAllCategories = async (): Promise<void> => {
     const response = await fetchCategories();
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         let categoriesToDisplay = response.result;
@@ -62,7 +62,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
   const fetchData = async (id: Types.ObjectId): Promise<void> => {
     const response = await fetchCategoryById(id);
     if (response.error !== null) {
-      console.log(response.error);
+      console.error(response.error);
     } else {
       if (response.result !== null) {
         setExistingCategory(response.result);
