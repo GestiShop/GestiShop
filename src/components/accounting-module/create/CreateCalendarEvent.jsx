@@ -34,6 +34,9 @@ const CreateCalendarEvent = ({ closeCallback, initialState }) => {
     await upsertEvent({
       ...data,
       id: initialState.id,
+      colorCode:
+        EVENT_COLOR_LIST.find((color) => color.background === data.colorCode) ??
+        undefined,
     });
 
     closeCallback();

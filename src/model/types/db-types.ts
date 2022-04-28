@@ -59,8 +59,11 @@ const calendarEventSchema = new Schema<CalendarEvent>({
   description: String,
   allDay: Boolean,
   colorCode: {
-    background: { type: String, required: true },
-    text: { type: String, required: true },
+    type: {
+      background: { type: String, required: true },
+      text: { type: String, required: true },
+    },
+    required: false,
   },
 });
 

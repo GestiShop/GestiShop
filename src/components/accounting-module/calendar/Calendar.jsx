@@ -136,8 +136,8 @@ const EventCalendar = () => {
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
       backgroundColor:
-        event.colorCode.background ?? DEFAULT_EVENT_COLOR_CODE.background,
-      color: event.colorCode.text ?? DEFAULT_EVENT_COLOR_CODE.text,
+        event.colorCode?.background ?? DEFAULT_EVENT_COLOR_CODE.background,
+      color: event.colorCode?.text ?? DEFAULT_EVENT_COLOR_CODE.text,
     };
     return {
       style,
