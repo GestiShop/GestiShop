@@ -47,10 +47,10 @@ jobs:
         run: yarn build
 
       - name: Configure mongodb
-        run: python ./.github/scripts/mongo-init.py
+        run: pip install pymongo && python ./.github/scripts/mongo-init.py
 
       - name: MONGO TEST (TODELETE)
-        run: pip install pymongo && python ./tests/db-tests.py
+        run: python ./tests/db-tests.py
 
       - name: Database tests
         run: yarn db-test
