@@ -36,8 +36,11 @@ const CreateProduct = ({
   const [warehousesOptions] = useState([]);
   const [categoriesOptions] = useState([]);
 
-  const [currency] = useState(
-    useAppSelector((store) => store.configuration.currencyInfo.currencyCode)
+  const currencyCode = useAppSelector(
+    (store) => store.configuration.currencyInfo.currencyCode
+  );
+  const currencyLabel: string = t(
+    `settings.currency_config.currency_list.${currencyCode}`
   );
 
   const FORM_VALIDATION = Yup.object().shape({
@@ -229,7 +232,7 @@ const CreateProduct = ({
                     required
                     name="buyingInfo.basePrice"
                     label={t('accounting_module.product.structure.base_price', {
-                      currency,
+                      currency: currencyLabel,
                     })}
                     type="number"
                     onInput={(event) =>
@@ -299,7 +302,7 @@ const CreateProduct = ({
                     disabled
                     name="buyingInfo.pvp"
                     label={t('accounting_module.product.structure.pvp', {
-                      currency,
+                      currency: currencyLabel,
                     })}
                     type="number"
                   />
@@ -318,7 +321,7 @@ const CreateProduct = ({
                     required
                     name="sellingInfo.basePrice"
                     label={t('accounting_module.product.structure.base_price', {
-                      currency,
+                      currency: currencyLabel,
                     })}
                     type="number"
                     onInput={(event) =>
@@ -388,7 +391,7 @@ const CreateProduct = ({
                     }
                     name="sellingInfo.pvp"
                     label={t('accounting_module.product.structure.pvp', {
-                      currency,
+                      currency: currencyLabel,
                     })}
                     type="number"
                   />
