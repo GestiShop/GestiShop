@@ -10,9 +10,23 @@ import {
   Switch,
   TextField,
 } from '../../ui/forms';
-import { upsertProduct, fetchProductById } from '../../../db';
+import {
+  fetchCategories,
+  fetchProductById,
+  fetchTaxes,
+  fetchUnitTypes,
+  fetchWarehouses,
+  upsertProduct,
+} from '../../../db';
 import { Types } from 'mongoose';
-import { EMPTY_PRODUCT, Product } from '../../../model';
+import {
+  Category,
+  EMPTY_PRODUCT,
+  Product,
+  Tax,
+  UnitType,
+  Warehouse,
+} from '../../../model';
 import { useAppSelector } from '../../../utils/redux';
 
 type Props = {
@@ -31,10 +45,17 @@ const CreateProduct = ({
   const [stockAlert, setStockAlert] = useState(
     existingProduct?.stockAlert ?? false
   );
-  const [taxesOptions] = useState([]);
-  const [unitTypesOptions] = useState([]);
-  const [warehousesOptions] = useState([]);
-  const [categoriesOptions] = useState([]);
+  const [taxesOptions, setTaxesOptions] = useState<Array<Tax>>([]);
+  const [unitTypesOptions, setUnitTypesOptions] = useState<Array<UnitType>>([]);
+  const [warehousesOptions, setWarehousesOptions] = useState<Array<Warehouse>>(
+    []
+  );
+  const [categoriesOptions, setCategoriesOptions] = useState<Array<Category>>(
+    []
+  );
+
+  const [buyingTaxPercentage, setBuyingTaxPercentage] = useState<number>(0);
+  const [sellingTaxPercentage, setSellingTaxPercentage] = useState<number>(0);
 
   const currencyCode = useAppSelector(
     (store) => store.configuration.currencyInfo.currencyCode
@@ -90,21 +111,71 @@ const CreateProduct = ({
     closeCallback();
   };
 
-  const fetchData = async (id: Types.ObjectId): Promise<void> => {
-    const response = await fetchProductById(id);
-    if (response.error !== null) {
-      console.error(response.error);
+  const fetchData = async (id?: Types.ObjectId): Promise<void> => {
+    const fetchTaxesResponse = await fetchTaxes();
+    if (fetchTaxesResponse.error !== null) {
+      console.error(fetchTaxesResponse.error);
     } else {
-      if (response.result !== null) {
-        setExistingProduct(response.result);
+      if (fetchTaxesResponse.result !== null) {
+        setTaxesOptions(fetchTaxesResponse.result);
+      }
+    }
+
+    const fetchUnitTypesResponse = await fetchUnitTypes();
+    if (fetchUnitTypesResponse.error !== null) {
+      console.error(fetchUnitTypesResponse.error);
+    } else {
+      if (fetchUnitTypesResponse.result !== null) {
+        setUnitTypesOptions(fetchUnitTypesResponse.result);
+      }
+    }
+
+    const fetchWarehousesResponse = await fetchWarehouses();
+    if (fetchWarehousesResponse.error !== null) {
+      console.error(fetchWarehousesResponse.error);
+    } else {
+      if (fetchWarehousesResponse.result !== null) {
+        setWarehousesOptions(fetchWarehousesResponse.result);
+      }
+    }
+
+    const fetchCategoriesResponse = await fetchCategories();
+    if (fetchCategoriesResponse.error !== null) {
+      console.error(fetchCategoriesResponse.error);
+    } else {
+      if (fetchCategoriesResponse.result !== null) {
+        setCategoriesOptions(fetchCategoriesResponse.result);
+      }
+    }
+
+    if (id !== undefined) {
+      const fetchProductByIdResponse = await fetchProductById(id);
+      if (fetchProductByIdResponse.error !== null) {
+        console.error(fetchProductByIdResponse.error);
+      } else {
+        if (fetchProductByIdResponse.result !== null) {
+          setExistingProduct(fetchProductByIdResponse.result);
+          setBuyingTaxPercentage(
+            taxesOptions.find(
+              (tax) =>
+                tax.id ===
+                fetchProductByIdResponse.result?.buyingInfo.taxPercentage
+            )?.percentage ?? 0
+          );
+          setSellingTaxPercentage(
+            taxesOptions.find(
+              (tax) =>
+                tax.id ===
+                fetchProductByIdResponse.result?.sellingInfo.taxPercentage
+            )?.percentage ?? 0
+          );
+        }
       }
     }
   };
 
   useEffect((): void => {
-    if (initialState) {
-      fetchData(initialState);
-    }
+    fetchData(initialState);
   }, []);
 
   return (
@@ -235,12 +306,12 @@ const CreateProduct = ({
                       currency: currencyLabel,
                     })}
                     type="number"
-                    onInput={(event) =>
+                    onInput={(_, eventValue) =>
                       setExistingProduct({
                         ...existingProduct,
                         buyingInfo: {
                           ...existingProduct.buyingInfo,
-                          discountPercentage: parseFloat(event),
+                          basePrice: parseFloat(eventValue),
                         },
                       })
                     }
@@ -255,12 +326,12 @@ const CreateProduct = ({
                       'accounting_module.product.structure.discount_percentage'
                     )}
                     type="number"
-                    onInput={(event) =>
+                    onInput={(_, eventValue) =>
                       setExistingProduct({
                         ...existingProduct,
                         buyingInfo: {
                           ...existingProduct.buyingInfo,
-                          discountPercentage: parseFloat(event),
+                          discountPercentage: parseFloat(eventValue),
                         },
                       })
                     }
@@ -280,15 +351,20 @@ const CreateProduct = ({
                         value: x.id,
                       };
                     })}
-                    onInput={(event: Types.ObjectId) =>
+                    onInput={(newBuyingTaxId: Types.ObjectId) => {
                       setExistingProduct({
                         ...existingProduct,
                         buyingInfo: {
                           ...existingProduct.buyingInfo,
-                          taxPercentage: event,
+                          taxPercentage: newBuyingTaxId,
                         },
-                      })
-                    }
+                      });
+
+                      setBuyingTaxPercentage(
+                        taxesOptions.find((tax) => tax.id === newBuyingTaxId)
+                          ?.percentage ?? 0
+                      );
+                    }}
                     acceptNone
                   />
                 </Grid>
@@ -297,6 +373,7 @@ const CreateProduct = ({
                   <TextField
                     value={
                       existingProduct.buyingInfo.basePrice *
+                      (1 + buyingTaxPercentage / 100) *
                       (1 - existingProduct.buyingInfo.discountPercentage / 100)
                     }
                     disabled
@@ -324,12 +401,12 @@ const CreateProduct = ({
                       currency: currencyLabel,
                     })}
                     type="number"
-                    onInput={(event) =>
+                    onInput={(_, eventValue) =>
                       setExistingProduct({
                         ...existingProduct,
                         sellingInfo: {
                           ...existingProduct.sellingInfo,
-                          basePrice: parseFloat(event),
+                          basePrice: parseFloat(eventValue),
                         },
                       })
                     }
@@ -344,12 +421,12 @@ const CreateProduct = ({
                       'accounting_module.product.structure.discount_percentage'
                     )}
                     type="number"
-                    onInput={(event) =>
+                    onInput={(_, eventValue) =>
                       setExistingProduct({
                         ...existingProduct,
                         sellingInfo: {
                           ...existingProduct.sellingInfo,
-                          discountPercentage: event,
+                          discountPercentage: parseFloat(eventValue),
                         },
                       })
                     }
@@ -369,15 +446,20 @@ const CreateProduct = ({
                         value: x.id,
                       };
                     })}
-                    onInput={(newTaxPercentage: Types.ObjectId) =>
+                    onInput={(newSellingTaxId: Types.ObjectId) => {
                       setExistingProduct({
                         ...existingProduct,
                         sellingInfo: {
                           ...existingProduct.sellingInfo,
-                          taxPercentage: newTaxPercentage,
+                          taxPercentage: newSellingTaxId,
                         },
-                      })
-                    }
+                      });
+
+                      setSellingTaxPercentage(
+                        taxesOptions.find((tax) => tax.id === newSellingTaxId)
+                          ?.percentage ?? 0
+                      );
+                    }}
                     acceptNone
                   />
                 </Grid>
@@ -387,6 +469,7 @@ const CreateProduct = ({
                     disabled
                     value={
                       existingProduct.sellingInfo.basePrice *
+                      (1 + sellingTaxPercentage / 100) *
                       (1 - existingProduct.sellingInfo.discountPercentage / 100)
                     }
                     name="sellingInfo.pvp"
