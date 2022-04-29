@@ -39,10 +39,13 @@ jobs:
           cache: 'yarn'
 
       - name: Yarn install
-        run: yarn install && cd ./src && yarn install && cd ..
+        run: yarn
 
       - name: Yarn build
         run: yarn build
+
+      - name: MONGO TEST (TODELETE)
+        run: pip install pymongo && python ./tests/db-tests.py
 
       - name: Database tests
         run: yarn db-test
