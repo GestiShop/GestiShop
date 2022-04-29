@@ -46,8 +46,11 @@ jobs:
       - name: Yarn build
         run: yarn build
 
+      - name: Configure mongodb
+        run: python ./.github/scripts/mongo-init.py
+
       - name: MONGO TEST (TODELETE)
-        run: docker ps && pip install pymongo && python ./tests/db-tests.py
+        run: pip install pymongo && python ./tests/db-tests.py
 
       - name: Database tests
         run: yarn db-test
