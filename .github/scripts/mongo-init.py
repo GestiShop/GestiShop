@@ -1,4 +1,6 @@
-from os import system
+from pymongo import MongoClient
 
-container_id = system('docker ps -q')
-print(container_id)
+client = MongoClient("mongodb://test-user:test-password@localhost:27017/?retryWrites=true&w=majority")
+print(client.server_info())
+collection = client['gestishop']['testCollection']
+print(collection.find_one())
