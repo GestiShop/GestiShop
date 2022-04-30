@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import GenericListComponent from './GenericListComponent';
 import { deleteProducts, fetchFullProducts } from '../../../db';
 import CreateProduct from '../create/CreateProduct';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { useAppSelector } from '../../../utils/redux';
 import { Types } from 'mongoose';
 import { FullProduct } from '../../../model';
@@ -34,19 +34,30 @@ const ListProducts = (): ReactElement => {
       headerName: t('accounting_module.product.structure.base_price', {
         currency: currencyLabel,
       }),
+      type: 'number',
       flex: 1,
       valueGetter: (params) => params.row?.sellingInfo?.basePrice ?? '-',
     },
     {
       field: 'stock',
       headerName: t('accounting_module.product.structure.stock'),
+      type: 'number',
       flex: 1,
+      cellClassName: (params: GridCellParams<number>) =>
+        params.row.minStock != null && params.row.stock < params.row.minStock
+          ? 'table--row-error'
+          : '',
     },
     {
       field: 'minStock',
       headerName: t('accounting_module.product.structure.min_stock'),
+      type: 'number',
       flex: 1,
       valueGetter: (params) => params.row?.minStock ?? '-',
+      cellClassName: (params: GridCellParams<number>) =>
+        params.row.minStock != null && params.row.stock < params.row.minStock
+          ? 'table--row-error'
+          : '',
     },
   ];
 

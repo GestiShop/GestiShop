@@ -22,6 +22,11 @@ export const Table = <T,>({ columns, rows }: Props<T>): ReactElement => {
         rowsPerPageOptions={[10, 50, 100]}
         checkboxSelection
         autoHeight
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 === 0
+            ? 'table--row-even'
+            : 'table--row-odd'
+        }
       />
     </Box>
   );

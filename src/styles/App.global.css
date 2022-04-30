@@ -60,6 +60,20 @@ body {
   font-weight: bold !important;
 }
 
+/* ----- ----- TABLE ----- ----- */
+.table--row-even {
+  background-color: white;
+}
+
+.table--row-odd {
+  background-color: #fafafa;
+}
+
+.table--row-error {
+  background-color: #c45757;
+  color: white;
+}
+
 /* ----- ----- PDF ----- ----- */
 @media print {
   /* Basic styling */
