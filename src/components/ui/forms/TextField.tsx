@@ -1,19 +1,26 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactElement } from 'react';
 import { TextField } from '@mui/material';
 import { useField, useFormikContext } from 'formik';
 
-type Props = {
+type BaseProps = {
   name: string;
   label: string;
-  type?: 'number' | 'text';
-  onInput?: <T>(eventName: string, eventValue: T) => void;
   multiline?: boolean;
   required?: boolean;
   disabled?: boolean;
   rows?: number;
   id?: string;
 };
+
+type Props =
+  | (BaseProps & {
+      type?: 'number';
+      onInput?: (eventName: string, eventValue: number) => void;
+    })
+  | (BaseProps & {
+      type?: 'text';
+      onInput?: (eventName: string, eventValue: string) => void;
+    });
 
 type TextFieldVariant = 'outlined';
 
@@ -31,7 +38,7 @@ type TextFieldProps = {
   disabled: boolean;
   error: boolean;
   helperText: string;
-  onChange: (arg0: { target: { name: string; value: string } }) => void;
+  onChange: (event: { target: { name: string; value: string } }) => void;
 };
 
 export const TextFieldWrapper = ({
@@ -52,20 +59,13 @@ export const TextFieldWrapper = ({
   const handleChange = (event: {
     target: { name: string; value: string };
   }): void => {
-    switch (type) {
-      case 'number': {
-        const newValue: number = parseFloat(event.target.value);
-        setFieldValue(name, newValue);
-        onInput?.(event.target.name, newValue);
-        break;
-      }
-      case 'text': {
-        const newValue: string = event.target.value;
-        setFieldValue(name, newValue);
-        onInput?.(event.target.name, newValue);
-        break;
-      }
-    }
+    const newValue: number | string =
+      type === 'number' //
+        ? parseFloat(event.target.value)
+        : event.target.value;
+
+    setFieldValue(name, newValue);
+    onInput?.(event.target.name, newValue as never);
   };
 
   const configTextField: TextFieldProps = {
