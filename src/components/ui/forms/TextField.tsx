@@ -6,8 +6,8 @@ import { useField, useFormikContext } from 'formik';
 type Props = {
   name: string;
   label: string;
-  type?: string;
-  onInput?: (arg0: string, arg1: string) => void;
+  type?: 'number' | 'text';
+  onInput?: <T>(eventName: string, eventValue: T) => void;
   multiline?: boolean;
   required?: boolean;
   disabled?: boolean;
@@ -52,8 +52,20 @@ export const TextFieldWrapper = ({
   const handleChange = (event: {
     target: { name: string; value: string };
   }): void => {
-    setFieldValue(name, event.target.value);
-    onInput?.(event.target.name, event.target.value);
+    switch (type) {
+      case 'number': {
+        const newValue: number = parseFloat(event.target.value);
+        setFieldValue(name, newValue);
+        onInput?.(event.target.name, newValue);
+        break;
+      }
+      case 'text': {
+        const newValue: string = event.target.value;
+        setFieldValue(name, newValue);
+        onInput?.(event.target.name, newValue);
+        break;
+      }
+    }
   };
 
   const configTextField: TextFieldProps = {

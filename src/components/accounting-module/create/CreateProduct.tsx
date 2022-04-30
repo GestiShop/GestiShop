@@ -54,8 +54,24 @@ const CreateProduct = ({
     []
   );
 
-  const [buyingTaxPercentage, setBuyingTaxPercentage] = useState<number>(0);
-  const [sellingTaxPercentage, setSellingTaxPercentage] = useState<number>(0);
+  const [buyingInfo, setBuyingInfo] = useState<{
+    basePrice: number;
+    taxPercentage: number;
+    discountPercentage: number;
+  }>({
+    basePrice: 0,
+    taxPercentage: 0,
+    discountPercentage: 0,
+  });
+  const [sellingInfo, setSellingInfo] = useState<{
+    basePrice: number;
+    taxPercentage: number;
+    discountPercentage: number;
+  }>({
+    basePrice: 0,
+    taxPercentage: 0,
+    discountPercentage: 0,
+  });
 
   const currencyCode = useAppSelector(
     (store) => store.configuration.currencyInfo.currencyCode
@@ -75,9 +91,6 @@ const CreateProduct = ({
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
       taxPercentage: Yup.string().required(t('form.errors.required')),
-      pvp: Yup.number()
-        .typeError(t('form.errors.invalid_number'))
-        .required(t('form.errors.required')),
     }),
     sellingInfo: Yup.object().shape({
       basePrice: Yup.number()
@@ -87,9 +100,6 @@ const CreateProduct = ({
         .typeError(t('form.errors.invalid_number'))
         .required(t('form.errors.required')),
       taxPercentage: Yup.string().required(t('form.errors.required')),
-      pvp: Yup.number()
-        .typeError(t('form.errors.invalid_number'))
-        .required(t('form.errors.required')),
     }),
     stock: Yup.number()
       .typeError(t('form.errors.invalid_number'))
@@ -104,11 +114,16 @@ const CreateProduct = ({
   });
 
   const handleSubmit = async (data: Product): Promise<void> => {
-    await upsertProduct({
+    const response = await upsertProduct({
       ...data,
       id: initialState,
     });
-    closeCallback();
+
+    if (response.error === null) {
+      closeCallback();
+    } else {
+      console.error(response.error.code, response.error.message);
+    }
   };
 
   const fetchData = async (id?: Types.ObjectId): Promise<void> => {
@@ -155,20 +170,28 @@ const CreateProduct = ({
       } else {
         if (fetchProductByIdResponse.result !== null) {
           setExistingProduct(fetchProductByIdResponse.result);
-          setBuyingTaxPercentage(
-            taxesOptions.find(
-              (tax) =>
-                tax.id ===
-                fetchProductByIdResponse.result?.buyingInfo.taxPercentage
-            )?.percentage ?? 0
-          );
-          setSellingTaxPercentage(
-            taxesOptions.find(
-              (tax) =>
-                tax.id ===
-                fetchProductByIdResponse.result?.sellingInfo.taxPercentage
-            )?.percentage ?? 0
-          );
+          setBuyingInfo({
+            basePrice: fetchProductByIdResponse.result.buyingInfo.basePrice,
+            discountPercentage:
+              fetchProductByIdResponse.result.buyingInfo.discountPercentage,
+            taxPercentage:
+              taxesOptions.find(
+                (tax) =>
+                  tax.id ===
+                  fetchProductByIdResponse.result?.buyingInfo.taxPercentage
+              )?.percentage ?? 0,
+          });
+          setSellingInfo({
+            basePrice: fetchProductByIdResponse.result.sellingInfo.basePrice,
+            discountPercentage:
+              fetchProductByIdResponse.result.sellingInfo.discountPercentage,
+            taxPercentage:
+              taxesOptions.find(
+                (tax) =>
+                  tax.id ===
+                  fetchProductByIdResponse.result?.sellingInfo.taxPercentage
+              )?.percentage ?? 0,
+          });
         }
       }
     }
@@ -230,7 +253,6 @@ const CreateProduct = ({
                       displayText: `[${x.reference}] ${x.unit}`,
                       value: x.id,
                     }))}
-                    acceptNone
                   />
                 </Grid>
 
@@ -243,7 +265,6 @@ const CreateProduct = ({
                       displayText: `[${x.reference}] ${x.description}`,
                       value: x.id,
                     }))}
-                    acceptNone
                   />
                 </Grid>
 
@@ -307,12 +328,9 @@ const CreateProduct = ({
                     })}
                     type="number"
                     onInput={(_, eventValue) =>
-                      setExistingProduct({
-                        ...existingProduct,
-                        buyingInfo: {
-                          ...existingProduct.buyingInfo,
-                          basePrice: parseFloat(eventValue),
-                        },
+                      setBuyingInfo({
+                        ...buyingInfo,
+                        basePrice: eventValue,
                       })
                     }
                   />
@@ -327,12 +345,9 @@ const CreateProduct = ({
                     )}
                     type="number"
                     onInput={(_, eventValue) =>
-                      setExistingProduct({
-                        ...existingProduct,
-                        buyingInfo: {
-                          ...existingProduct.buyingInfo,
-                          discountPercentage: parseFloat(eventValue),
-                        },
+                      setBuyingInfo({
+                        ...buyingInfo,
+                        discountPercentage: eventValue,
                       })
                     }
                   />
@@ -351,30 +366,23 @@ const CreateProduct = ({
                         value: x.id,
                       };
                     })}
-                    onInput={(newBuyingTaxId: Types.ObjectId) => {
-                      setExistingProduct({
-                        ...existingProduct,
-                        buyingInfo: {
-                          ...existingProduct.buyingInfo,
-                          taxPercentage: newBuyingTaxId,
-                        },
-                      });
-
-                      setBuyingTaxPercentage(
-                        taxesOptions.find((tax) => tax.id === newBuyingTaxId)
-                          ?.percentage ?? 0
-                      );
-                    }}
-                    acceptNone
+                    onInput={(newBuyingTaxId: Types.ObjectId) =>
+                      setBuyingInfo({
+                        ...buyingInfo,
+                        taxPercentage:
+                          taxesOptions.find((tax) => tax.id === newBuyingTaxId)
+                            ?.percentage ?? 0,
+                      })
+                    }
                   />
                 </Grid>
 
                 <Grid item xs={3}>
                   <TextField
                     value={
-                      existingProduct.buyingInfo.basePrice *
-                      (1 + buyingTaxPercentage / 100) *
-                      (1 - existingProduct.buyingInfo.discountPercentage / 100)
+                      buyingInfo.basePrice *
+                      (1 + buyingInfo.taxPercentage / 100) *
+                      (1 - buyingInfo.discountPercentage / 100)
                     }
                     disabled
                     name="buyingInfo.pvp"
@@ -402,12 +410,9 @@ const CreateProduct = ({
                     })}
                     type="number"
                     onInput={(_, eventValue) =>
-                      setExistingProduct({
-                        ...existingProduct,
-                        sellingInfo: {
-                          ...existingProduct.sellingInfo,
-                          basePrice: parseFloat(eventValue),
-                        },
+                      setSellingInfo({
+                        ...sellingInfo,
+                        basePrice: eventValue,
                       })
                     }
                   />
@@ -422,12 +427,9 @@ const CreateProduct = ({
                     )}
                     type="number"
                     onInput={(_, eventValue) =>
-                      setExistingProduct({
-                        ...existingProduct,
-                        sellingInfo: {
-                          ...existingProduct.sellingInfo,
-                          discountPercentage: parseFloat(eventValue),
-                        },
+                      setSellingInfo({
+                        ...sellingInfo,
+                        discountPercentage: eventValue,
                       })
                     }
                   />
@@ -446,21 +448,14 @@ const CreateProduct = ({
                         value: x.id,
                       };
                     })}
-                    onInput={(newSellingTaxId: Types.ObjectId) => {
-                      setExistingProduct({
-                        ...existingProduct,
-                        sellingInfo: {
-                          ...existingProduct.sellingInfo,
-                          taxPercentage: newSellingTaxId,
-                        },
-                      });
-
-                      setSellingTaxPercentage(
-                        taxesOptions.find((tax) => tax.id === newSellingTaxId)
-                          ?.percentage ?? 0
-                      );
-                    }}
-                    acceptNone
+                    onInput={(newSellingTaxId: Types.ObjectId) =>
+                      setSellingInfo({
+                        ...sellingInfo,
+                        taxPercentage:
+                          taxesOptions.find((tax) => tax.id === newSellingTaxId)
+                            ?.percentage ?? 0,
+                      })
+                    }
                   />
                 </Grid>
 
@@ -468,9 +463,9 @@ const CreateProduct = ({
                   <TextField
                     disabled
                     value={
-                      existingProduct.sellingInfo.basePrice *
-                      (1 + sellingTaxPercentage / 100) *
-                      (1 - existingProduct.sellingInfo.discountPercentage / 100)
+                      sellingInfo.basePrice *
+                      (1 + sellingInfo.taxPercentage / 100) *
+                      (1 - sellingInfo.discountPercentage / 100)
                     }
                     name="sellingInfo.pvp"
                     label={t('accounting_module.product.structure.pvp', {
