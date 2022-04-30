@@ -5,17 +5,15 @@ let mongo: MongoMemoryServer | undefined;
 
 export const connectDatabase = async () => {
   mongo = await MongoMemoryServer.create();
-  const uri = mongo.getUri();
+  const uri: string = mongo.getUri();
 
-  const mongooseOpts = {
+  await connect(uri, {
     useNewUrlParser: true,
     autoReconnect: true,
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 1000,
     poolSize: 10,
-  };
-
-  await connect(uri, mongooseOpts);
+  });
 };
 
 export const closeDatabase = async () => {
@@ -25,10 +23,7 @@ export const closeDatabase = async () => {
 };
 
 export const clearDatabase = async () => {
-  const collections = connection.collections;
-
-  for (const key in collections) {
-    const collection = collections[key];
-    await collection?.deleteMany({});
+  for (const key in connection.collections) {
+    await connection.collections[key]?.deleteMany({});
   }
 };
