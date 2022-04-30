@@ -43,6 +43,7 @@ const ListProducts = (): ReactElement => {
       field: 'minStock',
       headerName: t('accounting_module.product.structure.min_stock'),
       flex: 1,
+      valueGetter: (params) => params.row?.minStock ?? '-',
     },
   ];
 

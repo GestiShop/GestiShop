@@ -107,10 +107,10 @@ const CreateProduct = ({
     unitType: Yup.string().required(t('form.errors.required')),
     warehouse: Yup.string().required(t('form.errors.required')),
     categories: Yup.array(),
-    stockAlert: Yup.bool(),
+    stockAlert: Yup.bool().default(false),
     minStock: Yup.number()
       .typeError(t('form.errors.invalid_number'))
-      .required(t('form.errors.required')),
+      .default(0),
   });
 
   const handleSubmit = async (data: Product): Promise<void> => {
