@@ -11,8 +11,11 @@ import { FullProduct } from '../../../model';
 const ListProducts = (): ReactElement => {
   const { t } = useTranslation();
   const [rows, setRows] = useState<Array<FullProduct>>([]);
-  const [currency] = useState(
-    useAppSelector((store) => store.configuration.currencyInfo.currencyCode)
+  const currencyCode = useAppSelector(
+    (store) => store.configuration.currencyInfo.currencyCode
+  );
+  const currencyLabel: string = t(
+    `settings.currency_config.currency_list.${currencyCode}`
   );
 
   const columns: Array<GridColDef> = [
@@ -29,7 +32,7 @@ const ListProducts = (): ReactElement => {
     {
       field: 'basePrice',
       headerName: t('accounting_module.product.structure.base_price', {
-        currency,
+        currency: currencyLabel,
       }),
       flex: 1,
       valueGetter: (params) => params.row?.sellingInfo?.basePrice ?? '-',

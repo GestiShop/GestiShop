@@ -107,9 +107,10 @@ const CreateProduct = ({
     unitType: Yup.string().required(t('form.errors.required')),
     warehouse: Yup.string().required(t('form.errors.required')),
     categories: Yup.array(),
-    stockAlert: Yup.bool().default(false),
+    stockAlert: Yup.bool().required().default(false),
     minStock: Yup.number()
       .typeError(t('form.errors.invalid_number'))
+      .required()
       .default(0),
   });
 
