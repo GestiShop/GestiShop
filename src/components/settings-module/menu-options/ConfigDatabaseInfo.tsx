@@ -22,7 +22,7 @@ export const ConfigDatabaseInfo = (): ReactElement => {
 
   const [state, setState] = useState<PlatformDatabaseInfo>(savedDatabaseInfo);
 
-  const handleChange = (name: string, value: string | boolean) => {
+  const handleChange = (name: string, value: string | number | boolean) => {
     const newState = {
       ...state,
       [name]: value,
