@@ -49,7 +49,6 @@ export const fetchFullProducts = (): Promise<
     .populate('categories')
     .exec()
     .then((data: any) => {
-      console.log(data);
       const productList: Array<FullProduct> = data.map(decodeFullProduct);
 
       return {
