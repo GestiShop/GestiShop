@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
 import {
   DBHelperResponse,
@@ -10,11 +9,15 @@ import {
 export const upsertUnitType = (
   unitType: UnitType
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBUnitType.findOneAndUpdate({ _id: unitType.id }, unitType, {
-    new: true,
-    upsert: true,
-    useFindAndModify: false,
-  })
+  return DBUnitType.findOneAndUpdate(
+    unitType.id !== undefined ? { _id: unitType.id } : undefined,
+    unitType,
+    {
+      new: true,
+      upsert: true,
+      useFindAndModify: false,
+    }
+  )
     .exec()
     .then((_: any) => {
       return {

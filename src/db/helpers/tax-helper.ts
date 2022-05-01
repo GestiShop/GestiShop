@@ -1,13 +1,16 @@
-/* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
 import { decodeTax, DBHelperResponse, DBTax, Tax } from '../../model';
 
 export const upsertTax = (tax: Tax): Promise<DBHelperResponse<boolean>> => {
-  return DBTax.findOneAndUpdate({ _id: tax.id }, tax, {
-    new: true,
-    upsert: true,
-    useFindAndModify: false,
-  })
+  return DBTax.findOneAndUpdate(
+    tax.id !== undefined ? { _id: tax.id } : undefined,
+    tax,
+    {
+      new: true,
+      upsert: true,
+      useFindAndModify: false,
+    }
+  )
     .exec()
     .then((_: any) => {
       return {

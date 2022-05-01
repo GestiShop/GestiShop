@@ -4,11 +4,12 @@
 
 import '@testing-library/jest-dom';
 import sinon from 'sinon';
-import * as time from './time';
+import * as time from './utils/time';
 import { fetchTaxById, fetchTaxes, upsertTax } from '../../src/db';
-import { closeDatabase, connectDatabase } from './database-config';
+import { closeDatabase, connectDatabase } from './utils/database-config';
 import { DBHelperResponse, Tax } from '../../src/model';
-import { Types } from 'mongoose';
+import { SampleTax00, SampleTax01 } from './samples';
+import * as _ from 'lodash';
 
 sinon.stub(time, 'setTimeout');
 jest.setTimeout(35000);
@@ -31,7 +32,7 @@ describe('Tax helper', () => {
     };
     const response = await fetchTaxes();
 
-    expect(response).toEqual(sampleResponse);
+    expect(_.isMatch(response, sampleResponse)).toEqual(true);
   });
 
   it('Insert (one)', async () => {
@@ -42,28 +43,19 @@ describe('Tax helper', () => {
         error: null,
       };
 
-      const tax: Tax = {
-        reference: 'IVA00',
-        percentage: 0,
-      };
-      const response = await upsertTax(tax);
+      const response = await upsertTax(SampleTax00);
 
-      expect(response).toEqual(sampleResponse);
+      expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
     {
       const sampleResponse: DBHelperResponse<Array<Tax>> = {
-        result: [
-          {
-            reference: 'IVA00',
-            percentage: 0,
-          },
-        ],
+        result: [SampleTax00],
         error: null,
       };
 
       const response = await fetchTaxes();
 
-      expect(response).toMatchObject(sampleResponse);
+      expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
   });
 
@@ -75,29 +67,22 @@ describe('Tax helper', () => {
         error: null,
       };
 
-      const tax: Tax = {
-        id: (await fetchTaxes()).result?.[0]?.id,
-        reference: 'IVA10',
-        percentage: 10,
-      };
+      const tax: Tax = SampleTax01;
+      tax.id = (await fetchTaxes()).result?.[0]?.id;
+
       const response = await upsertTax(tax);
 
-      expect(response).toEqual(sampleResponse);
+      expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
     {
       const sampleResponse: DBHelperResponse<Array<Tax>> = {
-        result: [
-          {
-            reference: 'IVA10',
-            percentage: 10,
-          },
-        ],
+        result: [SampleTax01],
         error: null,
       };
 
       const response = await fetchTaxes();
 
-      expect(response).toMatchObject(sampleResponse);
+      expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
   });
 
@@ -105,34 +90,32 @@ describe('Tax helper', () => {
     expect.assertions(1);
 
     const sampleResponse: DBHelperResponse<Array<Tax>> = {
-      result: [
-        {
-          reference: 'IVA10',
-          percentage: 10,
-        },
-      ],
+      result: [SampleTax01],
       error: null,
     };
     const response = await fetchTaxes();
 
-    expect(response).toMatchObject(sampleResponse);
+    expect(_.isMatch(response, sampleResponse)).toEqual(true);
   });
 
   it('Fetch by id', async () => {
     expect.assertions(1);
 
-    const id: Types.ObjectId | undefined = (await fetchTaxes()).result?.[0]?.id;
+    const tax: Tax = SampleTax01;
+    tax.id = (await fetchTaxes()).result?.[0]?.id;
+
     const sampleResponse: DBHelperResponse<Tax> = {
-      result: {
-        id,
-        reference: 'IVA10',
-        percentage: 10,
-      },
+      result: tax,
       error: null,
     };
 
-    const response = id !== undefined ? await fetchTaxById(id) : undefined;
+    const response =
+      tax.id !== undefined ? await fetchTaxById(tax.id) : undefined;
 
-    expect(response).toEqual(sampleResponse);
+    expect(
+      response === undefined //
+        ? false
+        : _.isMatch(response, sampleResponse)
+    ).toEqual(true);
   });
 });

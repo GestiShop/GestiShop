@@ -6,13 +6,13 @@ import '@testing-library/jest-dom';
 import sinon from 'sinon';
 import * as time from './utils/time';
 import {
-  fetchUnitTypeById,
-  fetchUnitTypes,
-  upsertUnitType,
+  fetchProviderById,
+  fetchProviders,
+  upsertProvider,
 } from '../../src/db';
 import { closeDatabase, connectDatabase } from './utils/database-config';
-import { DBHelperResponse, UnitType } from '../../src/model';
-import { SampleUnitType00, SampleUnitType01 } from './samples';
+import { DBHelperResponse, Provider } from '../../src/model';
+import { SampleProvider00, SampleProvider01 } from './samples';
 import * as _ from 'lodash';
 
 sinon.stub(time, 'setTimeout');
@@ -26,17 +26,17 @@ afterAll(async () => {
   await closeDatabase();
 });
 
-describe('UnitType helper', () => {
+describe('Provider helper', () => {
   it('Fetch all (empty)', async () => {
     expect.assertions(1);
 
-    const sampleResponse: DBHelperResponse<Array<UnitType>> = {
+    const sampleResponse: DBHelperResponse<Array<Provider>> = {
       result: [],
       error: null,
     };
-    const response = await fetchUnitTypes();
+    const response = await fetchProviders();
 
-    expect(_.isMatch(response, sampleResponse)).toEqual(true);
+    expect(response).toEqual(sampleResponse);
   });
 
   it('Insert (one)', async () => {
@@ -47,17 +47,17 @@ describe('UnitType helper', () => {
         error: null,
       };
 
-      const response = await upsertUnitType(SampleUnitType00);
+      const response = await upsertProvider(SampleProvider00);
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response).toEqual(sampleResponse);
     }
     {
-      const sampleResponse: DBHelperResponse<Array<UnitType>> = {
-        result: [SampleUnitType00],
+      const sampleResponse: DBHelperResponse<Array<Provider>> = {
+        result: [SampleProvider00],
         error: null,
       };
 
-      const response = await fetchUnitTypes();
+      const response = await fetchProviders();
 
       expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
@@ -71,20 +71,20 @@ describe('UnitType helper', () => {
         error: null,
       };
 
-      const unitType: UnitType = SampleUnitType01;
-      unitType.id = (await fetchUnitTypes()).result?.[0]?.id;
+      const provider: Provider = SampleProvider01;
+      provider.id = (await fetchProviders()).result?.[0]?.id;
 
-      const response = await upsertUnitType(unitType);
+      const response = await upsertProvider(provider);
 
       expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
     {
-      const sampleResponse: DBHelperResponse<Array<UnitType>> = {
-        result: [SampleUnitType01],
+      const sampleResponse: DBHelperResponse<Array<Provider>> = {
+        result: [SampleProvider01],
         error: null,
       };
 
-      const response = await fetchUnitTypes();
+      const response = await fetchProviders();
 
       expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
@@ -93,11 +93,11 @@ describe('UnitType helper', () => {
   it('Fetch all (with results)', async () => {
     expect.assertions(1);
 
-    const sampleResponse: DBHelperResponse<Array<UnitType>> = {
-      result: [SampleUnitType01],
+    const sampleResponse: DBHelperResponse<Array<Provider>> = {
+      result: [SampleProvider01],
       error: null,
     };
-    const response = await fetchUnitTypes();
+    const response = await fetchProviders();
 
     expect(_.isMatch(response, sampleResponse)).toEqual(true);
   });
@@ -105,17 +105,17 @@ describe('UnitType helper', () => {
   it('Fetch by id', async () => {
     expect.assertions(1);
 
-    const unitType: UnitType = SampleUnitType01;
-    unitType.id = (await fetchUnitTypes()).result?.[0]?.id;
+    const provider: Provider = SampleProvider01;
+    provider.id = (await fetchProviders()).result?.[0]?.id;
 
-    const sampleResponse: DBHelperResponse<UnitType> = {
-      result: unitType,
+    const sampleResponse: DBHelperResponse<Provider> = {
+      result: provider,
       error: null,
     };
 
     const response =
-      unitType.id !== undefined
-        ? await fetchUnitTypeById(unitType.id)
+      provider.id !== undefined
+        ? await fetchProviderById(provider.id)
         : undefined;
 
     expect(
