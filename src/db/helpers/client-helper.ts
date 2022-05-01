@@ -12,17 +12,16 @@ import {
 export const upsertClient = (
   client: Client
 ): Promise<DBHelperResponse<boolean>> => {
-  let queryPromise;
-  if (client.id == null) {
-    // Insert
-    const dbClient = new DBClient(client);
-    queryPromise = dbClient.save();
-  } else {
-    // Update
-    queryPromise = DBClient.findOneAndUpdate({ _id: client.id }, client).exec();
-  }
-
-  return queryPromise
+  return DBClient.findOneAndUpdate(
+    client.id !== undefined ? { _id: client.id } : undefined,
+    client,
+    {
+      new: true,
+      upsert: true,
+      useFindAndModify: false,
+    }
+  )
+    .exec()
     .then((_: any) => {
       return {
         error: null,

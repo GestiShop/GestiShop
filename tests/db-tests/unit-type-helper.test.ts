@@ -10,7 +10,11 @@ import {
   fetchUnitTypes,
   upsertUnitType,
 } from '../../src/db';
-import { closeDatabase, connectDatabase } from './utils/database-config';
+import {
+  clearDatabase,
+  closeDatabase,
+  connectDatabase,
+} from './utils/database-config';
 import { DBHelperResponse, UnitType } from '../../src/model';
 import { SampleUnitType00, SampleUnitType01 } from './samples';
 import * as _ from 'lodash';
@@ -23,6 +27,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await clearDatabase();
   await closeDatabase();
 });
 

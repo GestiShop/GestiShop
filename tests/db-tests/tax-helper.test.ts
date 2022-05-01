@@ -6,7 +6,11 @@ import '@testing-library/jest-dom';
 import sinon from 'sinon';
 import * as time from './utils/time';
 import { fetchTaxById, fetchTaxes, upsertTax } from '../../src/db';
-import { closeDatabase, connectDatabase } from './utils/database-config';
+import {
+  clearDatabase,
+  closeDatabase,
+  connectDatabase,
+} from './utils/database-config';
 import { DBHelperResponse, Tax } from '../../src/model';
 import { SampleTax00, SampleTax01 } from './samples';
 import * as _ from 'lodash';
@@ -19,6 +23,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await clearDatabase();
   await closeDatabase();
 });
 

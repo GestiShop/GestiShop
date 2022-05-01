@@ -5,18 +5,14 @@
 import '@testing-library/jest-dom';
 import sinon from 'sinon';
 import * as time from './utils/time';
-import {
-  fetchProviderById,
-  fetchProviders,
-  upsertProvider,
-} from '../../src/db';
+import { fetchClientById, fetchClients, upsertClient } from '../../src/db';
 import {
   clearDatabase,
   closeDatabase,
   connectDatabase,
 } from './utils/database-config';
-import { DBHelperResponse, Provider } from '../../src/model';
-import { SampleProvider00, SampleProvider01 } from './samples';
+import { Client, DBHelperResponse } from '../../src/model';
+import { SampleClient00, SampleClient01 } from './samples';
 import * as _ from 'lodash';
 
 sinon.stub(time, 'setTimeout');
@@ -31,15 +27,15 @@ afterAll(async () => {
   await closeDatabase();
 });
 
-describe('Provider helper', () => {
+describe('Client helper', () => {
   it('Fetch all (empty)', async () => {
     expect.assertions(1);
 
-    const sampleResponse: DBHelperResponse<Array<Provider>> = {
+    const sampleResponse: DBHelperResponse<Array<Client>> = {
       result: [],
       error: null,
     };
-    const response = await fetchProviders();
+    const response = await fetchClients();
 
     expect(response).toEqual(sampleResponse);
   });
@@ -52,17 +48,17 @@ describe('Provider helper', () => {
         error: null,
       };
 
-      const response = await upsertProvider(SampleProvider00);
+      const response = await upsertClient(SampleClient00);
 
       expect(response).toEqual(sampleResponse);
     }
     {
-      const sampleResponse: DBHelperResponse<Array<Provider>> = {
-        result: [SampleProvider00],
+      const sampleResponse: DBHelperResponse<Array<Client>> = {
+        result: [SampleClient00],
         error: null,
       };
 
-      const response = await fetchProviders();
+      const response = await fetchClients();
 
       expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
@@ -76,20 +72,20 @@ describe('Provider helper', () => {
         error: null,
       };
 
-      const provider: Provider = SampleProvider01;
-      provider.id = (await fetchProviders()).result?.[0]?.id;
+      const client: Client = SampleClient01;
+      client.id = (await fetchClients()).result?.[0]?.id;
 
-      const response = await upsertProvider(provider);
+      const response = await upsertClient(client);
 
       expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
     {
-      const sampleResponse: DBHelperResponse<Array<Provider>> = {
-        result: [SampleProvider01],
+      const sampleResponse: DBHelperResponse<Array<Client>> = {
+        result: [SampleClient01],
         error: null,
       };
 
-      const response = await fetchProviders();
+      const response = await fetchClients();
 
       expect(_.isMatch(response, sampleResponse)).toEqual(true);
     }
@@ -98,11 +94,11 @@ describe('Provider helper', () => {
   it('Fetch all (with results)', async () => {
     expect.assertions(1);
 
-    const sampleResponse: DBHelperResponse<Array<Provider>> = {
-      result: [SampleProvider01],
+    const sampleResponse: DBHelperResponse<Array<Client>> = {
+      result: [SampleClient01],
       error: null,
     };
-    const response = await fetchProviders();
+    const response = await fetchClients();
 
     expect(_.isMatch(response, sampleResponse)).toEqual(true);
   });
@@ -110,18 +106,16 @@ describe('Provider helper', () => {
   it('Fetch by id', async () => {
     expect.assertions(1);
 
-    const provider: Provider = SampleProvider01;
-    provider.id = (await fetchProviders()).result?.[0]?.id;
+    const client: Client = SampleClient01;
+    client.id = (await fetchClients()).result?.[0]?.id;
 
-    const sampleResponse: DBHelperResponse<Provider> = {
-      result: provider,
+    const sampleResponse: DBHelperResponse<Client> = {
+      result: client,
       error: null,
     };
 
     const response =
-      provider.id !== undefined
-        ? await fetchProviderById(provider.id)
-        : undefined;
+      client.id !== undefined ? await fetchClientById(client.id) : undefined;
 
     expect(
       response === undefined //
