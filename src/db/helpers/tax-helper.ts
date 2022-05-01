@@ -3,17 +3,12 @@ import { Types } from 'mongoose';
 import { decodeTax, DBHelperResponse, DBTax, Tax } from '../../model';
 
 export const upsertTax = (tax: Tax): Promise<DBHelperResponse<boolean>> => {
-  let queryPromise;
-  if (tax.id == null) {
-    // Insert
-    const dbTax = new DBTax(tax);
-    queryPromise = dbTax.save();
-  } else {
-    // Update
-    queryPromise = DBTax.findOneAndUpdate({ _id: tax.id }, tax).exec();
-  }
-
-  return queryPromise
+  return DBTax.findOneAndUpdate({ _id: tax.id }, tax, {
+    new: true,
+    upsert: true,
+    useFindAndModify: false,
+  })
+    .exec()
     .then((_: any) => {
       return {
         error: null,
