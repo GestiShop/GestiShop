@@ -10,20 +10,16 @@ import {
 export const upsertCategory = (
   category: Category
 ): Promise<DBHelperResponse<boolean>> => {
-  let queryPromise;
-  if (category.id == null) {
-    // Insert
-    const dbCategory = new DBCategory(category);
-    queryPromise = dbCategory.save();
-  } else {
-    // Update
-    queryPromise = DBCategory.findOneAndUpdate(
-      { _id: category.id },
-      category
-    ).exec();
-  }
-
-  return queryPromise
+  return DBCategory.findOneAndUpdate(
+    category.id !== undefined ? { _id: category.id } : category,
+    category,
+    {
+      new: true,
+      upsert: true,
+      useFindAndModify: false,
+    }
+  )
+    .exec()
     .then((_: any) => {
       return {
         error: null,

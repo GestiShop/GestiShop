@@ -147,7 +147,7 @@ export type Category = {
   id?: Types.ObjectId;
   reference: string;
   name: string;
-  parent?: Category;
+  parent?: Category | Types.ObjectId;
 };
 
 /* ----- ----- CLIENT ----- ----- */

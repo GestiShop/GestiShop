@@ -11,7 +11,7 @@ export const upsertWarehouse = (
   warehouse: Warehouse
 ): Promise<DBHelperResponse<boolean>> => {
   return DBWarehouse.findOneAndUpdate(
-    warehouse.id !== undefined ? { _id: warehouse.id } : undefined,
+    warehouse.id !== undefined ? { _id: warehouse.id } : warehouse,
     warehouse,
     {
       new: true,

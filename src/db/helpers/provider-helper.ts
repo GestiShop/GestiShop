@@ -10,7 +10,7 @@ export const upsertProvider = (
   provider: Provider
 ): Promise<DBHelperResponse<boolean>> => {
   return DBProvider.findOneAndUpdate(
-    provider.id !== undefined ? { _id: provider.id } : undefined,
+    provider.id !== undefined ? { _id: provider.id } : provider,
     provider,
     {
       new: true,

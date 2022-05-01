@@ -11,7 +11,7 @@ export const upsertEvent = (
   event: CalendarEvent
 ): Promise<DBHelperResponse<boolean>> => {
   return DBCalendarEvent.findOneAndUpdate(
-    event.id !== undefined ? { _id: event.id } : undefined,
+    event.id !== undefined ? { _id: event.id } : event,
     event,
     {
       new: true,

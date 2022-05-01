@@ -10,7 +10,7 @@ export const upsertUnitType = (
   unitType: UnitType
 ): Promise<DBHelperResponse<boolean>> => {
   return DBUnitType.findOneAndUpdate(
-    unitType.id !== undefined ? { _id: unitType.id } : undefined,
+    unitType.id !== undefined ? { _id: unitType.id } : unitType,
     unitType,
     {
       new: true,

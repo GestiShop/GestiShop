@@ -13,7 +13,7 @@ export const upsertClient = (
   client: Client
 ): Promise<DBHelperResponse<boolean>> => {
   return DBClient.findOneAndUpdate(
-    client.id !== undefined ? { _id: client.id } : undefined,
+    client.id !== undefined ? { _id: client.id } : client,
     client,
     {
       new: true,
