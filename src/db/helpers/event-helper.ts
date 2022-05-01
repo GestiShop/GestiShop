@@ -10,20 +10,16 @@ import {
 export const upsertEvent = (
   event: CalendarEvent
 ): Promise<DBHelperResponse<boolean>> => {
-  let queryPromise;
-  if (event.id == null) {
-    // Insert
-    const dbEvent = new DBCalendarEvent(event);
-    queryPromise = dbEvent.save();
-  } else {
-    // Update
-    queryPromise = DBCalendarEvent.findOneAndUpdate(
-      { _id: event.id },
-      event
-    ).exec();
-  }
-
-  return queryPromise
+  return DBCalendarEvent.findOneAndUpdate(
+    event.id !== undefined ? { _id: event.id } : undefined,
+    event,
+    {
+      new: true,
+      upsert: true,
+      useFindAndModify: false,
+    }
+  )
+    .exec()
     .then((_: any) => {
       return {
         error: null,
