@@ -10,20 +10,12 @@ import {
 export const upsertUnitType = (
   unitType: UnitType
 ): Promise<DBHelperResponse<boolean>> => {
-  let queryPromise;
-  if (unitType.id == null) {
-    // Insert
-    const dbUnitType = new DBUnitType(unitType);
-    queryPromise = dbUnitType.save();
-  } else {
-    // Update
-    queryPromise = DBUnitType.findOneAndUpdate(
-      { _id: unitType.id },
-      unitType
-    ).exec();
-  }
-
-  return queryPromise
+  return DBUnitType.findOneAndUpdate({ _id: unitType.id }, unitType, {
+    new: true,
+    upsert: true,
+    useFindAndModify: false,
+  })
+    .exec()
     .then((_: any) => {
       return {
         error: null,

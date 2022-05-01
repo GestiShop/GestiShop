@@ -5,9 +5,13 @@
 import '@testing-library/jest-dom';
 import sinon from 'sinon';
 import * as time from './time';
-import { fetchTaxById, fetchTaxes, upsertTax } from '../../src/db';
+import {
+  fetchUnitTypeById,
+  fetchUnitTypes,
+  upsertUnitType,
+} from '../../src/db';
 import { closeDatabase, connectDatabase } from './database-config';
-import { DBHelperResponse, Tax } from '../../src/model';
+import { DBHelperResponse, UnitType } from '../../src/model';
 import { Types } from 'mongoose';
 
 sinon.stub(time, 'setTimeout');
@@ -21,15 +25,15 @@ afterAll(async () => {
   await closeDatabase();
 });
 
-describe('Tax helper', () => {
+describe('UnitType helper', () => {
   it('Fetch all (empty)', async () => {
     expect.assertions(1);
 
-    const sampleResponse: DBHelperResponse<Array<Tax>> = {
+    const sampleResponse: DBHelperResponse<Array<UnitType>> = {
       result: [],
       error: null,
     };
-    const response = await fetchTaxes();
+    const response = await fetchUnitTypes();
 
     expect(response).toEqual(sampleResponse);
   });
@@ -42,26 +46,26 @@ describe('Tax helper', () => {
         error: null,
       };
 
-      const tax: Tax = {
-        reference: 'IVA00',
-        percentage: 0,
+      const unitType: UnitType = {
+        reference: 'UNIT',
+        unit: 'u',
       };
-      const response = await upsertTax(tax);
+      const response = await upsertUnitType(unitType);
 
       expect(response).toEqual(sampleResponse);
     }
     {
-      const sampleResponse: DBHelperResponse<Array<Tax>> = {
+      const sampleResponse: DBHelperResponse<Array<UnitType>> = {
         result: [
           {
-            reference: 'IVA00',
-            percentage: 0,
+            reference: 'UNIT',
+            unit: 'u',
           },
         ],
         error: null,
       };
 
-      const response = await fetchTaxes();
+      const response = await fetchUnitTypes();
 
       expect(response).toMatchObject(sampleResponse);
     }
@@ -75,27 +79,27 @@ describe('Tax helper', () => {
         error: null,
       };
 
-      const tax: Tax = {
-        id: (await fetchTaxes()).result?.[0]?.id,
-        reference: 'IVA10',
-        percentage: 10,
+      const unitType: UnitType = {
+        id: (await fetchUnitTypes()).result?.[0]?.id,
+        reference: 'KILO',
+        unit: 'k',
       };
-      const response = await upsertTax(tax);
+      const response = await upsertUnitType(unitType);
 
       expect(response).toEqual(sampleResponse);
     }
     {
-      const sampleResponse: DBHelperResponse<Array<Tax>> = {
+      const sampleResponse: DBHelperResponse<Array<UnitType>> = {
         result: [
           {
-            reference: 'IVA10',
-            percentage: 10,
+            reference: 'KILO',
+            unit: 'k',
           },
         ],
         error: null,
       };
 
-      const response = await fetchTaxes();
+      const response = await fetchUnitTypes();
 
       expect(response).toMatchObject(sampleResponse);
     }
@@ -104,16 +108,16 @@ describe('Tax helper', () => {
   it('Fetch all (with results)', async () => {
     expect.assertions(1);
 
-    const sampleResponse: DBHelperResponse<Array<Tax>> = {
+    const sampleResponse: DBHelperResponse<Array<UnitType>> = {
       result: [
         {
-          reference: 'IVA10',
-          percentage: 10,
+          reference: 'KILO',
+          unit: 'k',
         },
       ],
       error: null,
     };
-    const response = await fetchTaxes();
+    const response = await fetchUnitTypes();
 
     expect(response).toMatchObject(sampleResponse);
   });
@@ -121,17 +125,18 @@ describe('Tax helper', () => {
   it('Fetch by id', async () => {
     expect.assertions(1);
 
-    const id: Types.ObjectId | undefined = (await fetchTaxes()).result?.[0]?.id;
-    const sampleResponse: DBHelperResponse<Tax> = {
+    const id: Types.ObjectId | undefined = (await fetchUnitTypes()).result?.[0]
+      ?.id;
+    const sampleResponse: DBHelperResponse<UnitType> = {
       result: {
         id,
-        reference: 'IVA10',
-        percentage: 10,
+        reference: 'KILO',
+        unit: 'k',
       },
       error: null,
     };
 
-    const response = id !== undefined ? await fetchTaxById(id) : undefined;
+    const response = id !== undefined ? await fetchUnitTypeById(id) : undefined;
 
     expect(response).toEqual(sampleResponse);
   });
