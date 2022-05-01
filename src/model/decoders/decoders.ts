@@ -20,7 +20,7 @@ export const decodeAddress = (data: any): Address => {
   return {
     roadType: data.roadType,
     street: data.street,
-    number: data.nuber,
+    number: data.number,
     floor: data.floor,
     door: data.door,
     extra: data.extra,

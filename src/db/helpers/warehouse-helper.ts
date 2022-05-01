@@ -10,20 +10,16 @@ import {
 export const upsertWarehouse = (
   warehouse: Warehouse
 ): Promise<DBHelperResponse<boolean>> => {
-  let queryPromise;
-  if (warehouse.id == null) {
-    // Insert
-    const dbWarehouse = new DBWarehouse(warehouse);
-    queryPromise = dbWarehouse.save();
-  } else {
-    // Update
-    queryPromise = DBWarehouse.findOneAndUpdate(
-      { _id: warehouse.id },
-      warehouse
-    ).exec();
-  }
-
-  return queryPromise
+  return DBWarehouse.findOneAndUpdate(
+    warehouse.id !== undefined ? { _id: warehouse.id } : undefined,
+    warehouse,
+    {
+      new: true,
+      upsert: true,
+      useFindAndModify: false,
+    }
+  )
+    .exec()
     .then((_: any) => {
       return {
         error: null,
