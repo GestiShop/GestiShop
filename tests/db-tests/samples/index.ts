@@ -5,3 +5,4 @@ export * from './client';
 export * from './warehouse';
 export * from './calendar-event';
 export * from './category';
+export * from './product';

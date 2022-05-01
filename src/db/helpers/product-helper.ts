@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { Types } from 'mongoose';
 import {
   DBHelperResponse,
@@ -12,20 +11,16 @@ import {
 export const upsertProduct = (
   product: Product
 ): Promise<DBHelperResponse<boolean>> => {
-  let queryPromise;
-  if (product.id == null) {
-    // Insert
-    const dbProduct = new DBProduct(product);
-    queryPromise = dbProduct.save();
-  } else {
-    // Update
-    queryPromise = DBProduct.findOneAndUpdate(
-      { _id: product.id },
-      product
-    ).exec();
-  }
-
-  return queryPromise
+  return DBProduct.findOneAndUpdate(
+    product.id !== undefined ? { _id: product.id } : product,
+    product,
+    {
+      new: true,
+      upsert: true,
+      useFindAndModify: false,
+    }
+  )
+    .exec()
     .then((_: any) => {
       return {
         error: null,
@@ -54,6 +49,7 @@ export const fetchFullProducts = (): Promise<
     .populate('categories')
     .exec()
     .then((data: any) => {
+      console.log(data);
       const productList: Array<FullProduct> = data.map(decodeFullProduct);
 
       return {
