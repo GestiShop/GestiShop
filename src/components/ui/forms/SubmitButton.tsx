@@ -22,5 +22,9 @@ export const SubmitButtonWrapper = ({
     onClick: handleSubmit,
   };
 
-  return <Button {...configButton}>{children}</Button>;
+  return (
+    <Button id="submit--btn" {...configButton}>
+      {children}
+    </Button>
+  );
 };

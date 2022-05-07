@@ -125,6 +125,7 @@ const GenericListComponent = <T,>({
 
               <Grid item xs={3} className="d-flex">
                 <Button
+                  id="add-new--btn"
                   onClick={() => {
                     setInitialState(undefined);
                     setOpenCreationDialog(true);
