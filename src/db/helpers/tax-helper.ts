@@ -1,9 +1,9 @@
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import { decodeTax, DBHelperResponse, DBTax, Tax } from '../../model';
 
 export const upsertTax = (tax: Tax): Promise<DBHelperResponse<boolean>> => {
-  return DBTax.findOneAndUpdate(
-    tax.id !== undefined ? { _id: tax.id } : tax,
+  return DBTax.findByIdAndUpdate(
+    tax.id ?? new mongo.ObjectId(), //
     tax,
     {
       new: true,

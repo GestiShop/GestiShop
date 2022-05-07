@@ -1,11 +1,11 @@
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import { DBHelperResponse, DBClient, Client, decodeClient } from '../../model';
 
 export const upsertClient = (
   client: Client
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBClient.findOneAndUpdate(
-    client.id !== undefined ? { _id: client.id } : client,
+  return DBClient.findByIdAndUpdate(
+    client.id ?? new mongo.ObjectId(), //
     client,
     {
       new: true,
@@ -40,58 +40,6 @@ export const fetchClients = (): Promise<DBHelperResponse<Array<Client>>> => {
       return {
         error: null,
         result: clientList,
-      };
-    })
-    .catch((error: any) => {
-      return {
-        error: {
-          code: -1,
-          message: error,
-        },
-        result: null,
-      };
-    });
-};
-
-export const addBill = (
-  clientId: Types.ObjectId,
-  billId: Types.ObjectId
-): Promise<DBHelperResponse<boolean>> => {
-  return DBClient.findOneAndUpdate(
-    { _id: clientId },
-    { $push: { bills: billId } }
-  )
-    .exec()
-    .then((_: any) => {
-      return {
-        error: null,
-        result: true,
-      };
-    })
-    .catch((error: any) => {
-      return {
-        error: {
-          code: -1,
-          message: error,
-        },
-        result: null,
-      };
-    });
-};
-
-export const removeBill = (
-  clientId: Types.ObjectId,
-  billId: Types.ObjectId
-): Promise<DBHelperResponse<boolean>> => {
-  return DBClient.findOneAndUpdate(
-    { _id: clientId },
-    { $pullAll: { bills: [billId] } }
-  )
-    .exec()
-    .then((_: any) => {
-      return {
-        error: null,
-        result: true,
       };
     })
     .catch((error: any) => {

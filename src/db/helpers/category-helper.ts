@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import {
   Category,
   DBCategory,
@@ -9,8 +9,8 @@ import {
 export const upsertCategory = (
   category: Category
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBCategory.findOneAndUpdate(
-    category.id !== undefined ? { _id: category.id } : category,
+  return DBCategory.findByIdAndUpdate(
+    category.id ?? new mongo.ObjectId(), //
     category,
     {
       new: true,

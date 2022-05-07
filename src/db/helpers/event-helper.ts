@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import {
   CalendarEvent,
   DBCalendarEvent,
@@ -9,8 +9,8 @@ import {
 export const upsertEvent = (
   event: CalendarEvent
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBCalendarEvent.findOneAndUpdate(
-    event.id !== undefined ? { _id: event.id } : event,
+  return DBCalendarEvent.findByIdAndUpdate(
+    event.id ?? new mongo.ObjectId(), //
     event,
     {
       new: true,

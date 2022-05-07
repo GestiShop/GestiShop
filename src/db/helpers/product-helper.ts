@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import {
   DBHelperResponse,
   DBProduct,
@@ -11,8 +11,8 @@ import {
 export const upsertProduct = (
   product: Product
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBProduct.findOneAndUpdate(
-    product.id !== undefined ? { _id: product.id } : product,
+  return DBProduct.findByIdAndUpdate(
+    product.id ?? new mongo.ObjectId(), //
     product,
     {
       new: true,

@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import {
   DBHelperResponse,
   DBProvider,
@@ -9,8 +9,8 @@ import {
 export const upsertProvider = (
   provider: Provider
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBProvider.findOneAndUpdate(
-    provider.id !== undefined ? { _id: provider.id } : provider,
+  return DBProvider.findByIdAndUpdate(
+    provider.id ?? new mongo.ObjectId(), //
     provider,
     {
       new: true,

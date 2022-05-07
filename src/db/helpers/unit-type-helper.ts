@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import {
   DBHelperResponse,
   DBUnitType,
@@ -9,8 +9,8 @@ import {
 export const upsertUnitType = (
   unitType: UnitType
 ): Promise<DBHelperResponse<boolean>> => {
-  return DBUnitType.findOneAndUpdate(
-    unitType.id !== undefined ? { _id: unitType.id } : unitType,
+  return DBUnitType.findByIdAndUpdate(
+    unitType.id ?? new mongo.ObjectId(), //
     unitType,
     {
       new: true,
