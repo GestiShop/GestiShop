@@ -11,6 +11,10 @@ export const SampleWarehouse00: Warehouse = {
     city: 'City name',
     province: 'Province name',
     country: 'Country name',
+    door: undefined,
+    extra: undefined,
+    floor: undefined,
+    state: undefined,
   },
 };
 
@@ -25,5 +29,9 @@ export const SampleWarehouse01: Warehouse = {
     city: 'City name',
     province: 'Province name',
     country: 'Country name',
+    door: undefined,
+    extra: undefined,
+    floor: undefined,
+    state: undefined,
   },
 };
