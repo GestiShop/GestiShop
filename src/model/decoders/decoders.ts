@@ -9,9 +9,7 @@ import {
   EFactData,
   Email,
   FiscalData,
-  FullClient,
   FullProduct,
-  FullProvider,
   Phone,
   PostalData,
   Product,
@@ -132,9 +130,7 @@ export const decodeFullProduct = (dbProduct: any): FullProduct => {
     unitType: decodeUnitType(dbProduct.unitType),
     stock: dbProduct.stock,
     warehouse: decodeWarehouse(dbProduct.warehouse),
-    categories: dbProduct.categories.map((category: any) =>
-      decodeCategory(category)
-    ),
+    categories: dbProduct.categories.map(decodeCategory) ?? undefined,
     minStock: dbProduct.minStock,
     stockAlert: dbProduct.stockAlert,
   };
@@ -252,41 +248,15 @@ export const decodeClient = (dbClient: any): Client => {
   };
 };
 
-export const decodeFullClient = (dbClient: any): FullClient => {
-  return {
-    id: dbClient._id,
-    reference: dbClient.reference,
-    contactData: decodeContactData(dbClient.contactData),
-    fiscalData: decodeFiscalData(dbClient.fiscalData),
-    postalData: decodePostalData(dbClient.postalData),
-    tributationData: decodeTributationData(dbClient.tributationData),
-    eFactData: decodeEFactData(dbClient.eFactData),
-    bills: dbClient.bills.map(decodeBill),
-  };
-};
-
 export const decodeProvider = (dbProvider: any): Provider => {
   return {
     id: dbProvider._id,
     reference: dbProvider.reference,
-    contactData: dbProvider.contactData,
-    fiscalData: dbProvider.fiscalData,
-    postalData: dbProvider.postalData,
-    tributationData: dbProvider.tributationData,
-    eFactData: dbProvider.eFactData,
+    contactData: decodeContactData(dbProvider.contactData),
+    fiscalData: decodeFiscalData(dbProvider.fiscalData),
+    postalData: decodePostalData(dbProvider.postalData),
+    tributationData: decodeTributationData(dbProvider.tributationData),
+    eFactData: decodeEFactData(dbProvider.eFactData),
     bills: dbProvider.bills,
-  };
-};
-
-export const decodeFullProvider = (dbProvider: any): FullProvider => {
-  return {
-    id: dbProvider._id,
-    reference: dbProvider.reference,
-    contactData: dbProvider.contactData,
-    fiscalData: dbProvider.fiscalData,
-    postalData: dbProvider.postalData,
-    tributationData: dbProvider.tributationData,
-    eFactData: dbProvider.eFactData,
-    bills: dbProvider.bills.map((bill: any) => decodeBill(bill)),
   };
 };

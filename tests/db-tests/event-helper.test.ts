@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 
-import '@testing-library/jest-dom';
 import sinon from 'sinon';
 import * as time from './utils/time';
 import { fetchEvents, upsertEvent } from '../../src/db';

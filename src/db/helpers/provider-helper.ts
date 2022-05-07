@@ -42,10 +42,7 @@ export const fetchProviders = (): Promise<
   return DBProvider.find({})
     .exec()
     .then((data: any) => {
-      const providerList: Array<Provider> = data.map((x: any) =>
-        decodeProvider(x)
-      );
-
+      const providerList: Array<Provider> = data.map(decodeProvider);
       return {
         error: null,
         result: providerList,

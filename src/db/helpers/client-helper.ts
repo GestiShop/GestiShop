@@ -1,12 +1,5 @@
 import { Types } from 'mongoose';
-import {
-  DBHelperResponse,
-  DBClient,
-  Client,
-  FullClient,
-  decodeClient,
-  decodeFullClient,
-} from '../../model';
+import { DBHelperResponse, DBClient, Client, decodeClient } from '../../model';
 
 export const upsertClient = (
   client: Client
@@ -43,33 +36,6 @@ export const fetchClients = (): Promise<DBHelperResponse<Array<Client>>> => {
     .exec()
     .then((data: any) => {
       const clientList: Array<Client> = data.map(decodeClient);
-
-      return {
-        error: null,
-        result: clientList,
-      };
-    })
-    .catch((error: any) => {
-      return {
-        error: {
-          code: -1,
-          message: error,
-        },
-        result: null,
-      };
-    });
-};
-
-export const fetchFullClients = (): Promise<
-  DBHelperResponse<Array<FullClient>>
-> => {
-  return DBClient.find({})
-    .populate('bills')
-    .exec()
-    .then((data: any) => {
-      const clientList: Array<FullClient> = data.map((x: any) =>
-        decodeFullClient(x)
-      );
 
       return {
         error: null,
