@@ -13,10 +13,18 @@ import {
 } from './utils/database-config';
 import { CalendarEvent, DBHelperResponse } from '../../src/model';
 import { SampleCalendarEvent00, SampleCalendarEvent01 } from './samples';
-import * as _ from 'lodash';
+import * as chai from 'chai';
+import chaiExclude from 'chai-exclude';
 
+// Config needed because of mongoose
 sinon.stub(time, 'setTimeout');
+
+// Configure timeout of each test
 jest.setTimeout(35000);
+
+// Configure chai and chai-exclude
+chai.use(chaiExclude);
+const expect: Chai.ExpectStatic = chai.expect;
 
 beforeAll(async () => {
   await connectDatabase();
@@ -29,19 +37,17 @@ afterAll(async () => {
 
 describe('Calendar event helper', () => {
   it('Fetch all (empty)', async () => {
-    expect.assertions(1);
-
     const sampleResponse: DBHelperResponse<Array<CalendarEvent>> = {
       result: [],
       error: null,
     };
     const response = await fetchEvents();
 
-    expect(response).toEqual(sampleResponse);
+    expect(response) //
+      .to.deep.equal(sampleResponse);
   });
 
   it('Insert (one)', async () => {
-    expect.assertions(2);
     {
       const sampleResponse: DBHelperResponse<boolean> = {
         result: true,
@@ -50,7 +56,8 @@ describe('Calendar event helper', () => {
 
       const response = await upsertEvent(SampleCalendarEvent00);
 
-      expect(response).toEqual(sampleResponse);
+      expect(response) //
+        .to.deep.equal(sampleResponse);
     }
     {
       const sampleResponse: DBHelperResponse<Array<CalendarEvent>> = {
@@ -60,12 +67,13 @@ describe('Calendar event helper', () => {
 
       const response = await fetchEvents();
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .excludingEvery(['id'])
+        .to.deep.equal(sampleResponse);
     }
   });
 
   it('Update (one)', async () => {
-    expect.assertions(2);
     {
       const sampleResponse: DBHelperResponse<boolean> = {
         result: true,
@@ -77,7 +85,8 @@ describe('Calendar event helper', () => {
 
       const response = await upsertEvent(calendarEvent);
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .to.deep.equal(sampleResponse);
     }
     {
       const sampleResponse: DBHelperResponse<Array<CalendarEvent>> = {
@@ -87,19 +96,21 @@ describe('Calendar event helper', () => {
 
       const response = await fetchEvents();
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .excludingEvery(['id'])
+        .to.deep.equal(sampleResponse);
     }
   });
 
   it('Fetch all (with results)', async () => {
-    expect.assertions(1);
-
     const sampleResponse: DBHelperResponse<Array<CalendarEvent>> = {
       result: [SampleCalendarEvent01],
       error: null,
     };
     const response = await fetchEvents();
 
-    expect(_.isMatch(response, sampleResponse)).toEqual(true);
+    expect(response) //
+      .excludingEvery(['id'])
+      .to.deep.equal(sampleResponse);
   });
 });

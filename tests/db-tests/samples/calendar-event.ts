@@ -5,6 +5,8 @@ export const SampleCalendarEvent00: CalendarEvent = {
   end: new Date(2022, 10, 26, 10, 30, 0, 0),
   title: 'Sample event 00 title',
   description: 'Sample event 00 description.',
+  allDay: false,
+  colorCode: undefined,
 };
 
 export const SampleCalendarEvent01: CalendarEvent = {
@@ -12,4 +14,6 @@ export const SampleCalendarEvent01: CalendarEvent = {
   end: new Date(2022, 10, 26, 12, 0, 0, 0),
   title: 'Sample event 01 title',
   description: 'Sample event 01 description.',
+  allDay: false,
+  colorCode: undefined,
 };

@@ -42,9 +42,7 @@ export const fetchEvents = (): Promise<
   return DBCalendarEvent.find({})
     .exec()
     .then((data: any) => {
-      const eventList: Array<CalendarEvent> = data.map((x: any) =>
-        decodeCalendarEvent(x)
-      );
+      const eventList: Array<CalendarEvent> = data.map(decodeCalendarEvent);
 
       return {
         error: null,

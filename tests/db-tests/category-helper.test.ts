@@ -74,8 +74,8 @@ describe('Category helper', () => {
 
       const response = await fetchCategories();
 
-      expect(response)
-        .excludingEvery(['id']) //
+      expect(response) //
+        .excludingEvery(['id'])
         .to.deep.equal(sampleResponse);
     }
   });

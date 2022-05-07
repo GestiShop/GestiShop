@@ -47,7 +47,7 @@ export const decodeCalendarEvent = (dbEvent: any): CalendarEvent => {
     title: dbEvent.title,
     description: dbEvent.description,
     allDay: dbEvent.allDay,
-    colorCode: dbEvent.colorCode,
+    colorCode: dbEvent.colorCode ?? undefined,
   };
 };
 
