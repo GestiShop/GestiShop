@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 
-import '@testing-library/jest-dom';
 import sinon from 'sinon';
 import * as time from './utils/time';
 import { fetchTaxById, fetchTaxes, upsertTax } from '../../src/db';
@@ -13,10 +12,18 @@ import {
 } from './utils/database-config';
 import { DBHelperResponse, Tax } from '../../src/model';
 import { SampleTax00, SampleTax01 } from './samples';
-import * as _ from 'lodash';
+import * as chai from 'chai';
+import chaiExclude from 'chai-exclude';
 
+// Config needed because of mongoose
 sinon.stub(time, 'setTimeout');
+
+// Configure timeout of each test
 jest.setTimeout(35000);
+
+// Configure chai and chai-exclude
+chai.use(chaiExclude);
+const expect: Chai.ExpectStatic = chai.expect;
 
 beforeAll(async () => {
   await connectDatabase();
@@ -29,19 +36,17 @@ afterAll(async () => {
 
 describe('Tax helper', () => {
   it('Fetch all (empty)', async () => {
-    expect.assertions(1);
-
     const sampleResponse: DBHelperResponse<Array<Tax>> = {
       result: [],
       error: null,
     };
     const response = await fetchTaxes();
 
-    expect(_.isMatch(response, sampleResponse)).toEqual(true);
+    expect(response) //
+      .to.deep.equal(sampleResponse);
   });
 
   it('Insert (one)', async () => {
-    expect.assertions(2);
     {
       const sampleResponse: DBHelperResponse<boolean> = {
         result: true,
@@ -50,7 +55,8 @@ describe('Tax helper', () => {
 
       const response = await upsertTax(SampleTax00);
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .to.deep.equal(sampleResponse);
     }
     {
       const sampleResponse: DBHelperResponse<Array<Tax>> = {
@@ -60,12 +66,13 @@ describe('Tax helper', () => {
 
       const response = await fetchTaxes();
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .excludingEvery(['id'])
+        .to.deep.equal(sampleResponse);
     }
   });
 
   it('Update (one)', async () => {
-    expect.assertions(2);
     {
       const sampleResponse: DBHelperResponse<boolean> = {
         result: true,
@@ -77,7 +84,8 @@ describe('Tax helper', () => {
 
       const response = await upsertTax(tax);
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .to.deep.equal(sampleResponse);
     }
     {
       const sampleResponse: DBHelperResponse<Array<Tax>> = {
@@ -87,25 +95,25 @@ describe('Tax helper', () => {
 
       const response = await fetchTaxes();
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .excludingEvery(['id'])
+        .to.deep.equal(sampleResponse);
     }
   });
 
   it('Fetch all (with results)', async () => {
-    expect.assertions(1);
-
     const sampleResponse: DBHelperResponse<Array<Tax>> = {
       result: [SampleTax01],
       error: null,
     };
     const response = await fetchTaxes();
 
-    expect(_.isMatch(response, sampleResponse)).toEqual(true);
+    expect(response) //
+      .excludingEvery(['id'])
+      .to.deep.equal(sampleResponse);
   });
 
   it('Fetch by id', async () => {
-    expect.assertions(1);
-
     const tax: Tax = SampleTax01;
     tax.id = (await fetchTaxes()).result?.[0]?.id;
 
@@ -117,10 +125,8 @@ describe('Tax helper', () => {
     const response =
       tax.id !== undefined ? await fetchTaxById(tax.id) : undefined;
 
-    expect(
-      response === undefined //
-        ? false
-        : _.isMatch(response, sampleResponse)
-    ).toEqual(true);
+    expect(response) //
+      .excludingEvery(['id'])
+      .to.deep.equal(sampleResponse);
   });
 });
