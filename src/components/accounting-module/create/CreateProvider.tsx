@@ -57,11 +57,16 @@ const CreateProvider = ({
   });
 
   const handleSubmit = async (data: Provider): Promise<void> => {
-    await upsertProvider({
+    const response = await upsertProvider({
       ...data,
       id: initialState,
     });
-    closeCallback();
+
+    if (response.error) {
+      console.error(response.error);
+    } else {
+      closeCallback();
+    }
   };
 
   const fetchData = async (id: Types.ObjectId): Promise<void> => {

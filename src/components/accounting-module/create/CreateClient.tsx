@@ -53,11 +53,16 @@ const CreateClient = ({ closeCallback, initialState }: Props): ReactElement => {
   });
 
   const handleSubmit = async (data: Client): Promise<void> => {
-    await upsertClient({
+    const response = await upsertClient({
       ...data,
       id: initialState,
     });
-    closeCallback();
+
+    if (response.error) {
+      console.error(response.error);
+    } else {
+      closeCallback();
+    }
   };
 
   const fetchData = async (id: Types.ObjectId): Promise<void> => {

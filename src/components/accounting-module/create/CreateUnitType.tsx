@@ -27,8 +27,13 @@ const CreateUnitType = ({
   });
 
   const handleSubmit = async (data: UnitType): Promise<void> => {
-    await upsertUnitType({ ...data, id: initialState });
-    closeCallback();
+    const response = await upsertUnitType({ ...data, id: initialState });
+
+    if (response.error) {
+      console.error(response.error);
+    } else {
+      closeCallback();
+    }
   };
 
   const fetchData = async (id: Types.ObjectId): Promise<void> => {

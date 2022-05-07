@@ -120,10 +120,10 @@ const CreateProduct = ({
       id: initialState,
     });
 
-    if (response.error === null) {
-      closeCallback();
+    if (response.error) {
+      console.error(response.error);
     } else {
-      console.error(response.error.code, response.error.message);
+      closeCallback();
     }
   };
 

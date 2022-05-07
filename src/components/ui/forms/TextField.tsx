@@ -18,7 +18,7 @@ type Props =
       onInput?: (eventName: string, eventValue: number) => void;
     })
   | (BaseProps & {
-      type?: 'text' | 'password' | 'url';
+      type?: 'text' | 'password' | 'url' | 'email';
       onInput?: (eventName: string, eventValue: string) => void;
     });
 

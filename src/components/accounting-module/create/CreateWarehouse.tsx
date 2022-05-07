@@ -30,8 +30,13 @@ const CreateWarehouse = ({
   });
 
   const handleSubmit = async (data: Warehouse): Promise<void> => {
-    await upsertWarehouse({ ...data, id: initialState });
-    closeCallback();
+    const response = await upsertWarehouse({ ...data, id: initialState });
+
+    if (response.error) {
+      console.error(response.error);
+    } else {
+      closeCallback();
+    }
   };
 
   const fetchData = async (id: Types.ObjectId): Promise<void> => {

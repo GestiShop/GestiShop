@@ -32,11 +32,16 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
   });
 
   const handleSubmit = async (data: Category): Promise<void> => {
-    await upsertCategory({
+    const response = await upsertCategory({
       ...data,
       id: initialState,
     });
-    closeCallback();
+
+    if (response.error) {
+      console.error(response.error);
+    } else {
+      closeCallback();
+    }
   };
 
   const fetchAllCategories = async (): Promise<void> => {

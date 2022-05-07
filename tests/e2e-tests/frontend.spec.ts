@@ -100,10 +100,12 @@ test('Category list', async () => {
   await expect(page.locator("text='FOOD'")).toBeVisible();
   log('New category added');
 
-  log('Adding new category...');
+  log('Adding new category with parent...');
   await page.locator('#add-new--btn').click();
   await page.fill("//input[@name='reference']", 'VEG');
   await page.fill("//input[@name='name']", 'Vegetables');
+  await page.locator("//input[@name='parent']/..").click();
+  await page.locator("//li[contains(text(), 'FOOD')]").click();
   await page.locator('#submit--btn').click();
   await expect(page.locator("text='VEG'")).toBeVisible();
   log('New category added');
