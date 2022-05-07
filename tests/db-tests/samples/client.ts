@@ -4,6 +4,8 @@ export const SampleClient00: Client = {
   reference: 'CLI00',
   contactData: {
     name: 'Client 00 contact name',
+    email: undefined,
+    phone: undefined,
   },
   fiscalData: {
     name: 'Client 00 fiscal name',
@@ -16,10 +18,16 @@ export const SampleClient00: Client = {
       city: 'City name',
       province: 'Province name',
       country: 'Country name',
+      door: undefined,
+      extra: undefined,
+      floor: undefined,
+      state: undefined,
     },
   },
   postalData: {
     name: 'Client 00 postal name',
+    address: undefined,
+    email: undefined,
   },
   tributationData: {
     retentionPercentage: 0,
@@ -33,6 +41,8 @@ export const SampleClient01: Client = {
   reference: 'PROV01',
   contactData: {
     name: 'Client 01 contact name',
+    email: undefined,
+    phone: undefined,
   },
   fiscalData: {
     name: 'Client 01 fiscal name',
@@ -45,10 +55,16 @@ export const SampleClient01: Client = {
       city: 'City name',
       province: 'Province name',
       country: 'Country name',
+      door: undefined,
+      extra: undefined,
+      floor: undefined,
+      state: undefined,
     },
   },
   postalData: {
     name: 'Client 01 postal name',
+    address: undefined,
+    email: undefined,
   },
   tributationData: {
     retentionPercentage: 0,

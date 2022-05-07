@@ -5,13 +5,20 @@ import {
   CalendarEvent,
   Category,
   Client,
+  ContactData,
+  EFactData,
+  Email,
+  FiscalData,
   FullClient,
   FullProduct,
   FullProvider,
+  Phone,
+  PostalData,
   Product,
   ProductInBill,
   Provider,
   Tax,
+  TributationData,
   UnitType,
   Warehouse,
 } from '../types';
@@ -133,7 +140,7 @@ export const decodeFullProduct = (dbProduct: any): FullProduct => {
   };
 };
 
-const productInBillDecoder = (dbProduct: any): ProductInBill => {
+const decodeProductInBill = (dbProduct: any): ProductInBill => {
   return {
     product: dbProduct.product,
     reference: dbProduct.reference,
@@ -153,9 +160,7 @@ export const decodeBill = (dbBill: any): Bill => {
     billNumber: dbBill.billNumber,
     date: dbBill.date,
     entityData: dbBill.entityData,
-    products: dbBill.products.map((product: any) =>
-      productInBillDecoder(product)
-    ),
+    products: dbBill.products.map(decodeProductInBill),
     notes: dbBill.notes,
     basePrice: dbBill.basePrice,
     generalDiscount: dbBill.generalDiscount,
@@ -165,15 +170,84 @@ export const decodeBill = (dbBill: any): Bill => {
   };
 };
 
+const decodePhone = (phoneData: any): Phone => {
+  return {
+    phone: phoneData.phone,
+    description: phoneData.description,
+  };
+};
+
+const decodeEmail = (emailData: any): Email => {
+  return {
+    email: emailData.email,
+    description: emailData.description,
+  };
+};
+
+const decodeContactData = (contactData: any): ContactData => {
+  return {
+    name: contactData.name,
+    phone:
+      contactData?.phone != null //
+        ? decodePhone(contactData.phone)
+        : undefined,
+    email:
+      contactData?.email != null //
+        ? decodeEmail(contactData.email)
+        : undefined,
+  };
+};
+
+const decodeFiscalData = (fiscalData: any): FiscalData => {
+  return {
+    name: fiscalData.name,
+    nif: fiscalData.nif,
+    address: decodeAddress(fiscalData.address),
+  };
+};
+
+const decodePostalData = (postalData: any): PostalData => {
+  return {
+    name: postalData.name,
+    email:
+      postalData?.email != null //
+        ? decodeEmail(postalData.email)
+        : undefined,
+    address:
+      postalData?.address != null //
+        ? decodeAddress(postalData.address)
+        : undefined,
+  };
+};
+
+const decodeTributationData = (tributationData: any): TributationData => {
+  return {
+    retentionPercentage: tributationData.retentionPercentage,
+    personalDiscount: tributationData.personalDiscount,
+  };
+};
+
+const decodeEFactData = (eFactData: any): EFactData => {
+  return {
+    accountingOfficeCode: eFactData.accountingOfficeCode,
+    accountingOfficeName: eFactData.accountingOfficeName,
+    managementBodyCode: eFactData.managementBodyCode,
+    managementBodyName: eFactData.managementBodyName,
+    processingUnitCode: eFactData.processingUnitCode,
+    processingUnitName: eFactData.processingUnitName,
+    electronicBillingCode: eFactData.electronicBillingCode,
+  };
+};
+
 export const decodeClient = (dbClient: any): Client => {
   return {
     id: dbClient._id,
     reference: dbClient.reference,
-    contactData: dbClient.contactData,
-    fiscalData: dbClient.fiscalData,
-    postalData: dbClient.postalData,
-    tributationData: dbClient.tributationData,
-    eFactData: dbClient.eFactData,
+    contactData: decodeContactData(dbClient.contactData),
+    fiscalData: decodeFiscalData(dbClient.fiscalData),
+    postalData: decodePostalData(dbClient.postalData),
+    tributationData: decodeTributationData(dbClient.tributationData),
+    eFactData: decodeEFactData(dbClient.eFactData),
     bills: dbClient.bills,
   };
 };
@@ -182,12 +256,12 @@ export const decodeFullClient = (dbClient: any): FullClient => {
   return {
     id: dbClient._id,
     reference: dbClient.reference,
-    contactData: dbClient.contactData,
-    fiscalData: dbClient.fiscalData,
-    postalData: dbClient.postalData,
-    tributationData: dbClient.tributationData,
-    eFactData: dbClient.eFactData,
-    bills: dbClient.bills.map((bill: any) => decodeBill(bill)),
+    contactData: decodeContactData(dbClient.contactData),
+    fiscalData: decodeFiscalData(dbClient.fiscalData),
+    postalData: decodePostalData(dbClient.postalData),
+    tributationData: decodeTributationData(dbClient.tributationData),
+    eFactData: decodeEFactData(dbClient.eFactData),
+    bills: dbClient.bills.map(decodeBill),
   };
 };
 

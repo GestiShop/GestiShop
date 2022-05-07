@@ -42,7 +42,7 @@ export const fetchClients = (): Promise<DBHelperResponse<Array<Client>>> => {
   return DBClient.find({})
     .exec()
     .then((data: any) => {
-      const clientList: Array<Client> = data.map((x: any) => decodeClient(x));
+      const clientList: Array<Client> = data.map(decodeClient);
 
       return {
         error: null,

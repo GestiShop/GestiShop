@@ -4,7 +4,7 @@ import {
   Client,
   CURRENCY_LIST,
   DECIMAL_MODES,
-  EFact,
+  EFactData,
   Email,
   EVENT_COLOR_LIST,
   FLOATING_POSITION_OPTIONS,
@@ -67,7 +67,7 @@ export const EMPTY_PRODUCT_IN_BUDGET: ProductInBill = EMPTY_PRODUCT_IN_BILL;
 export const EMPTY_PRODUCT_IN_DELIVERY_NOTE: ProductInBill =
   EMPTY_PRODUCT_IN_BILL;
 
-export const EMPTY_EFACT: EFact = {
+export const EMPTY_EFACT: EFactData = {
   accountingOfficeCode: '',
   accountingOfficeName: '',
   managementBodyCode: '',

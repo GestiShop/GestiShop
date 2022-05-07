@@ -62,7 +62,12 @@ export type PostalData = {
   address?: Address;
 };
 
-export type EFact = {
+export type TributationData = {
+  retentionPercentage: number;
+  personalDiscount: number;
+};
+
+export type EFactData = {
   accountingOfficeCode: string;
   accountingOfficeName: string;
   managementBodyCode: string;
@@ -157,11 +162,8 @@ export type Client = {
   contactData: ContactData;
   fiscalData: FiscalData;
   postalData: PostalData;
-  tributationData: {
-    retentionPercentage: number;
-    personalDiscount: number;
-  };
-  eFactData: EFact;
+  tributationData: TributationData;
+  eFactData: EFactData;
   bills: Array<Types.ObjectId>;
 };
 
@@ -171,11 +173,8 @@ export type FullClient = {
   contactData: ContactData;
   fiscalData: FiscalData;
   postalData: PostalData;
-  tributationData: {
-    retentionPercentage: number;
-    personalDiscount: number;
-  };
-  eFactData: EFact;
+  tributationData: TributationData;
+  eFactData: EFactData;
   bills: Array<Bill>;
 };
 
@@ -190,7 +189,7 @@ export type Provider = {
     retentionPercentage: number;
     personalDiscount: number;
   };
-  eFactData: EFact;
+  eFactData: EFactData;
   bills: Array<Types.ObjectId>;
 };
 
@@ -204,7 +203,7 @@ export type FullProvider = {
     retentionPercentage: number;
     personalDiscount: number;
   };
-  eFactData: EFact;
+  eFactData: EFactData;
   bills: Array<Bill>;
 };
 

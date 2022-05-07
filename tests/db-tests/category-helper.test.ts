@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 
-import '@testing-library/jest-dom';
 import sinon from 'sinon';
 import * as time from './utils/time';
 import {
@@ -21,10 +20,18 @@ import {
   SampleCategory01,
   SampleCategory02,
 } from './samples';
-import * as _ from 'lodash';
+import * as chai from 'chai';
+import chaiExclude from 'chai-exclude';
 
+// Config needed because of mongoose
 sinon.stub(time, 'setTimeout');
+
+// Configure timeout of each test
 jest.setTimeout(35000);
+
+// Configure chai and chai-exclude
+chai.use(chaiExclude);
+const expect: Chai.ExpectStatic = chai.expect;
 
 beforeAll(async () => {
   await connectDatabase();
@@ -37,19 +44,17 @@ afterAll(async () => {
 
 describe('Category helper', () => {
   it('Fetch all (empty)', async () => {
-    expect.assertions(1);
-
     const sampleResponse: DBHelperResponse<Array<Category>> = {
       result: [],
       error: null,
     };
     const response = await fetchCategories();
 
-    expect(response).toEqual(sampleResponse);
+    expect(response) //
+      .to.deep.equal(sampleResponse);
   });
 
   it('Insert (one)', async () => {
-    expect.assertions(2);
     {
       const sampleResponse: DBHelperResponse<boolean> = {
         result: true,
@@ -58,7 +63,8 @@ describe('Category helper', () => {
 
       const response = await upsertCategory(SampleCategory00);
 
-      expect(response).toEqual(sampleResponse);
+      expect(response) //
+        .to.deep.equal(sampleResponse);
     }
     {
       const sampleResponse: DBHelperResponse<Array<Category>> = {
@@ -68,12 +74,13 @@ describe('Category helper', () => {
 
       const response = await fetchCategories();
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response)
+        .excludingEvery(['id']) //
+        .to.deep.equal(sampleResponse);
     }
   });
 
   it('Update (one)', async () => {
-    expect.assertions(2);
     {
       const sampleResponse: DBHelperResponse<boolean> = {
         result: true,
@@ -85,7 +92,8 @@ describe('Category helper', () => {
 
       const response = await upsertCategory(category);
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .to.deep.equal(sampleResponse);
     }
     {
       const sampleResponse: DBHelperResponse<Array<Category>> = {
@@ -95,25 +103,25 @@ describe('Category helper', () => {
 
       const response = await fetchCategories();
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .excludingEvery(['id'])
+        .to.deep.equal(sampleResponse);
     }
   });
 
   it('Fetch all (with results)', async () => {
-    expect.assertions(1);
-
     const sampleResponse: DBHelperResponse<Array<Category>> = {
       result: [SampleCategory01],
       error: null,
     };
     const response = await fetchCategories();
 
-    expect(_.isMatch(response, sampleResponse)).toEqual(true);
+    expect(response) //
+      .excludingEvery(['id'])
+      .to.deep.equal(sampleResponse);
   });
 
   it('Fetch by id', async () => {
-    expect.assertions(1);
-
     const category: Category = SampleCategory01;
     category.id = (await fetchCategories()).result?.[0]?.id;
 
@@ -127,15 +135,12 @@ describe('Category helper', () => {
         ? await fetchCategoryById(category.id)
         : undefined;
 
-    expect(
-      response === undefined //
-        ? false
-        : _.isMatch(response, sampleResponse)
-    ).toEqual(true);
+    expect(response) //
+      .excludingEvery(['id'])
+      .to.deep.equal(sampleResponse);
   });
 
   it('Insert (one with parent)', async () => {
-    expect.assertions(2);
     const parent: Category | undefined = (await fetchCategories()).result?.[0];
 
     {
@@ -148,7 +153,8 @@ describe('Category helper', () => {
 
       const response = await upsertCategory(category);
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .to.deep.equal(sampleResponse);
     }
     {
       const sampleResponse: DBHelperResponse<Array<Category>> = {
@@ -158,7 +164,9 @@ describe('Category helper', () => {
 
       const response = await fetchCategories();
 
-      expect(_.isMatch(response, sampleResponse)).toEqual(true);
+      expect(response) //
+        .excludingEvery(['id'])
+        .to.deep.equal(sampleResponse);
     }
   });
 });
