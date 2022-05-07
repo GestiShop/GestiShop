@@ -164,6 +164,7 @@ export const EMPTY_PRODUCT: Product = {
   stock: 0,
   warehouse: null,
   stockAlert: false,
+  categories: [],
 };
 
 /* ----- ----- PLATFORM PARAMETERS ----- ----- */

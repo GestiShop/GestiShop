@@ -226,7 +226,7 @@ export type Product = {
   unitType: Types.ObjectId | null;
   stock: number;
   warehouse: Types.ObjectId | null;
-  categories?: Array<Types.ObjectId>;
+  categories: Array<Types.ObjectId>;
   minStock?: number;
   stockAlert: boolean;
 };

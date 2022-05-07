@@ -130,7 +130,7 @@ export const decodeFullProduct = (dbProduct: any): FullProduct => {
     unitType: decodeUnitType(dbProduct.unitType),
     stock: dbProduct.stock,
     warehouse: decodeWarehouse(dbProduct.warehouse),
-    categories: dbProduct.categories.map(decodeCategory) ?? undefined,
+    categories: dbProduct.categories.map(decodeCategory),
     minStock: dbProduct.minStock,
     stockAlert: dbProduct.stockAlert,
   };
