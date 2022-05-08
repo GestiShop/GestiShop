@@ -129,7 +129,7 @@ test('Tax dashboard', async () => {
   log('Adding new tax...');
   await page.locator('#add-new--btn').click();
   await page.fill("//input[@name='reference']", 'IVA21');
-  await page.fill("//input[@name='name']", '21');
+  await page.fill("//input[@name='percentage']", '21');
   await page.locator('#submit--btn').click();
   await expect(page.locator("text='IVA21'")).toBeVisible();
   log('New tax added');
