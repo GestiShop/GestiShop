@@ -29,7 +29,7 @@ export const upsertUnitType = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -55,7 +55,7 @@ export const fetchUnitTypes = (): Promise<
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -79,7 +79,7 @@ export const fetchUnitTypeById = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -101,7 +101,7 @@ export const deleteUnitTypes = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };

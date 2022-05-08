@@ -22,7 +22,7 @@ export const upsertTax = (tax: Tax): Promise<DBHelperResponse<boolean>> => {
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -44,7 +44,7 @@ export const fetchTaxes = (): Promise<DBHelperResponse<Array<Tax>>> => {
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -68,7 +68,7 @@ export const fetchTaxById = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -90,7 +90,7 @@ export const deleteTaxes = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };

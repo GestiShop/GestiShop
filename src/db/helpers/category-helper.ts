@@ -29,7 +29,7 @@ export const upsertCategory = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -56,7 +56,7 @@ export const fetchCategories = (): Promise<
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -80,7 +80,7 @@ export const fetchCategoryById = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -102,7 +102,7 @@ export const deleteCategories = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };

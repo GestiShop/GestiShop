@@ -29,7 +29,7 @@ export const upsertEvent = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -53,7 +53,7 @@ export const fetchEvents = (): Promise<
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -75,7 +75,7 @@ export const deleteEvent = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };

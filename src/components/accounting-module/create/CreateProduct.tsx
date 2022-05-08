@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { Container, Grid, Typography } from '@mui/material';
+import { Alert, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import {
   MultiSelect,
@@ -41,6 +41,9 @@ const CreateProduct = ({
   const { t } = useTranslation();
   const [existingProduct, setExistingProduct] =
     useState<Product>(EMPTY_PRODUCT);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const [stockAlert, setStockAlert] = useState(
     existingProduct?.stockAlert ?? false
@@ -121,7 +124,7 @@ const CreateProduct = ({
     });
 
     if (response.error) {
-      console.error(response.error);
+      setErrorMessage(response.error.message);
     } else {
       closeCallback();
     }
@@ -203,7 +206,7 @@ const CreateProduct = ({
   }, []);
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
@@ -486,6 +489,14 @@ const CreateProduct = ({
           </Formik>
         </Container>
       </Grid>
+
+      {errorMessage !== undefined && (
+        <Grid item xs={12}>
+          <Alert severity="error" id="error-message--alert">
+            {errorMessage}
+          </Alert>
+        </Grid>
+      )}
     </Grid>
   );
 };

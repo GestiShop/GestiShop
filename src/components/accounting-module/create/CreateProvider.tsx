@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { Container, Grid, Typography } from '@mui/material';
+import { Alert, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Types } from 'mongoose';
 import AddressForm from '../../ui/AddressForm';
@@ -27,6 +27,9 @@ const CreateProvider = ({
   const { t } = useTranslation();
   const [existingProvider, setExistingProvider] =
     useState<Provider>(EMPTY_PROVIDER);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -63,7 +66,7 @@ const CreateProvider = ({
     });
 
     if (response.error) {
-      console.error(response.error);
+      setErrorMessage(response.error.message);
     } else {
       closeCallback();
     }
@@ -87,7 +90,7 @@ const CreateProvider = ({
   }, []);
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
@@ -326,6 +329,14 @@ const CreateProvider = ({
           </Formik>
         </Container>
       </Grid>
+
+      {errorMessage !== undefined && (
+        <Grid item xs={12}>
+          <Alert severity="error" id="error-message--alert">
+            {errorMessage}
+          </Alert>
+        </Grid>
+      )}
     </Grid>
   );
 };

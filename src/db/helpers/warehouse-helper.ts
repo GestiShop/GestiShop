@@ -29,7 +29,7 @@ export const upsertWarehouse = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -55,7 +55,7 @@ export const fetchWarehouses = (): Promise<
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -79,7 +79,7 @@ export const fetchWarehouseById = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -101,7 +101,7 @@ export const deleteWarehouses = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };

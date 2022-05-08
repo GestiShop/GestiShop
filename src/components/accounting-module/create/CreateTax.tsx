@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { Container, Grid } from '@mui/material';
+import { Alert, Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Types } from 'mongoose';
 import { TextField, SubmitButton } from '../../ui/forms';
@@ -16,6 +16,9 @@ type Props = {
 const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
   const { t } = useTranslation();
   const [existingTax, setExistingTax] = useState<Tax>(EMPTY_TAX);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -31,7 +34,7 @@ const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
     });
 
     if (response.error) {
-      console.error(response.error);
+      setErrorMessage(response.error.message);
     } else {
       closeCallback();
     }
@@ -55,7 +58,7 @@ const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
   }, []);
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
@@ -95,6 +98,14 @@ const CreateTax = ({ closeCallback, initialState }: Props): ReactElement => {
           </Formik>
         </Container>
       </Grid>
+
+      {errorMessage !== undefined && (
+        <Grid item xs={12}>
+          <Alert severity="error" id="error-message--alert">
+            {errorMessage}
+          </Alert>
+        </Grid>
+      )}
     </Grid>
   );
 };

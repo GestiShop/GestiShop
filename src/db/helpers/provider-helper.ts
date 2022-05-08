@@ -29,7 +29,7 @@ export const upsertProvider = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -52,7 +52,7 @@ export const fetchProviders = (): Promise<
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -74,7 +74,7 @@ export const deleteProviders = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -98,7 +98,7 @@ export const fetchProviderById = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };

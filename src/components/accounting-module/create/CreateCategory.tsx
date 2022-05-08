@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
-import { Container, Grid } from '@mui/material';
+import { Alert, Container, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Types } from 'mongoose';
 import { TextField, SubmitButton, Select } from '../../ui/forms';
@@ -24,6 +24,9 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
   );
   const [existingCategory, setExistingCategory] =
     useState<Category>(EMPTY_CATEGORY);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const FORM_VALIDATION = Yup.object().shape({
     reference: Yup.string().required(t('form.errors.required')),
@@ -38,7 +41,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
     });
 
     if (response.error) {
-      console.error(response.error);
+      setErrorMessage(response.error.message);
     } else {
       closeCallback();
     }
@@ -83,7 +86,7 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
   }, []);
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Container maxWidth="md">
           <Formik
@@ -134,6 +137,14 @@ const CreateCategory = ({ closeCallback, initialState }: Props) => {
           </Formik>
         </Container>
       </Grid>
+
+      {errorMessage !== undefined && (
+        <Grid item xs={12}>
+          <Alert severity="error" id="error-message--alert">
+            {errorMessage}
+          </Alert>
+        </Grid>
+      )}
     </Grid>
   );
 };

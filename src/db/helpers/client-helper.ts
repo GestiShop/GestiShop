@@ -24,7 +24,7 @@ export const upsertClient = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -46,7 +46,7 @@ export const fetchClients = (): Promise<DBHelperResponse<Array<Client>>> => {
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -68,7 +68,7 @@ export const deleteClients = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
@@ -92,7 +92,7 @@ export const fetchClientById = (
       return {
         error: {
           code: -1,
-          message: error,
+          message: error.toString(),
         },
         result: null,
       };
