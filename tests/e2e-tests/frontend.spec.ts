@@ -97,7 +97,9 @@ test('Category dashboard', async () => {
   await page.fill("//input[@name='reference']", 'FOOD');
   await page.fill("//input[@name='name']", 'Food');
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='FOOD'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='FOOD']")
+  ).toBeVisible();
   log('New category added');
 
   log('Adding new category with parent...');
@@ -107,7 +109,9 @@ test('Category dashboard', async () => {
   await page.locator("//input[@name='parent']/..").click();
   await page.locator("//li[contains(text(), 'FOOD')]").click();
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='VEG'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='VEG']")
+  ).toBeVisible();
   log('New category added');
 });
 
@@ -123,7 +127,9 @@ test('Tax dashboard', async () => {
   await page.fill("//input[@name='reference']", 'IVA10');
   await page.fill("//input[@name='percentage']", '10');
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='IVA10'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='IVA10']")
+  ).toBeVisible();
   log('New tax added');
 
   log('Adding new tax...');
@@ -131,7 +137,9 @@ test('Tax dashboard', async () => {
   await page.fill("//input[@name='reference']", 'IVA21');
   await page.fill("//input[@name='percentage']", '21');
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='IVA21'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='IVA21']")
+  ).toBeVisible();
   log('New tax added');
 });
 
@@ -147,7 +155,9 @@ test('Unit type dashboard', async () => {
   await page.fill("//input[@name='reference']", 'UNIT');
   await page.fill("//input[@name='unit']", 'u');
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='UNIT'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='UNIT']")
+  ).toBeVisible();
   log('New unit type added');
 
   log('Adding new unit type...');
@@ -155,7 +165,9 @@ test('Unit type dashboard', async () => {
   await page.fill("//input[@name='reference']", 'KILO');
   await page.fill("//input[@name='unit']", 'k');
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='KILO'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='KILO']")
+  ).toBeVisible();
   log('New unit type added');
 });
 
@@ -178,7 +190,9 @@ test('Warehouse dashboard', async () => {
   await page.fill("//input[@name='address.province']", 'Barcelona');
   await page.fill("//input[@name='address.country']", 'Spain');
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='BCN00'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='BCN00']")
+  ).toBeVisible();
   log('New warehouse added');
 
   log('Adding new warehouse...');
@@ -193,7 +207,9 @@ test('Warehouse dashboard', async () => {
   await page.fill("//input[@name='address.province']", 'Madrid');
   await page.fill("//input[@name='address.country']", 'Spain');
   await page.locator('#submit--btn').click();
-  await expect(page.locator("text='MAD00'")).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='MAD00']")
+  ).toBeVisible();
   log('New warehouse added');
 });
 
