@@ -1,41 +1,34 @@
 import {
   Address,
-  Bill,
   CalendarEvent,
   Category,
   Client,
   ContactData,
   EFactData,
-  Email,
   FiscalData,
   FullProduct,
-  Phone,
   PostalData,
   Product,
-  ProductInBill,
   Provider,
   Tax,
   TributationData,
   UnitType,
   Warehouse,
 } from '../types';
-import { DecoderError } from 'schemawax';
-import { taxDecoder } from './decoders';
+import {
+  addressDecoder,
+  contactDataDecoder,
+  eFactDataDecoder,
+  fiscalDataDecoder,
+  postalDataDecoder,
+  taxDecoder,
+  tributationDataDecoder,
+  unitTypeDecoder,
+  warehouseDecoder,
+} from './decoders';
 
-export const decodeAddress = (data: any): Address => {
-  return {
-    roadType: data.roadType,
-    street: data.street,
-    number: data.number,
-    floor: data.floor,
-    door: data.door,
-    extra: data.extra,
-    zipCode: data.zipCode,
-    city: data.city,
-    province: data.province,
-    state: data.state,
-    country: data.country,
-  };
+export const decodeAddress = (address: any): Address => {
+  return addressDecoder.forceDecode(address);
 };
 
 export const decodeCalendarEvent = (dbEvent: any): CalendarEvent => {
@@ -50,31 +43,16 @@ export const decodeCalendarEvent = (dbEvent: any): CalendarEvent => {
   };
 };
 
-export const decodeTax = (dbTax: any): Tax => {
-  const decodedTax: Tax | null = taxDecoder.decode(dbTax);
-
-  if (decodedTax !== null) {
-    return decodedTax;
-  }
-
-  throw new DecoderError('Error decoding tax.');
+export const decodeTax = (tax: any): Tax => {
+  return taxDecoder.forceDecode(tax);
 };
 
-export const decodeUnitType = (dbUnitType: any): UnitType => {
-  return {
-    id: dbUnitType._id,
-    reference: dbUnitType.reference,
-    unit: dbUnitType.unit,
-  };
+export const decodeUnitType = (unitType: any): UnitType => {
+  return unitTypeDecoder.forceDecode(unitType);
 };
 
-export const decodeWarehouse = (dbWarehouse: any): Warehouse => {
-  return {
-    id: dbWarehouse._id,
-    reference: dbWarehouse.reference,
-    description: dbWarehouse.description,
-    address: decodeAddress(dbWarehouse.address),
-  };
+export const decodeWarehouse = (warehouse: any): Warehouse => {
+  return warehouseDecoder.forceDecode(warehouse);
 };
 
 export const decodeCategory = (dbCategory: any): Category => {
@@ -139,103 +117,24 @@ export const decodeFullProduct = (dbProduct: any): FullProduct => {
   };
 };
 
-const decodeProductInBill = (dbProduct: any): ProductInBill => {
-  return {
-    product: dbProduct.product,
-    reference: dbProduct.reference,
-    name: dbProduct.name,
-    basePricePerUnit: dbProduct.basePricePerUnit,
-    unitType: dbProduct.unitType,
-    discountPercentage: dbProduct.discountPercentage,
-    taxPercentage: dbProduct.taxPercentage,
-    quantity: dbProduct.quantity,
-  };
-};
-
-export const decodeBill = (dbBill: any): Bill => {
-  return {
-    id: dbBill._id,
-    billNumberPreamble: dbBill.billNumberPreamble,
-    billNumber: dbBill.billNumber,
-    date: dbBill.date,
-    entityData: dbBill.entityData,
-    products: dbBill.products.map(decodeProductInBill),
-    notes: dbBill.notes,
-    basePrice: dbBill.basePrice,
-    generalDiscount: dbBill.generalDiscount,
-    pvp: dbBill.pvp,
-    paymentData: dbBill.paymentData,
-    isPaid: dbBill.isPaid,
-  };
-};
-
-const decodePhone = (phoneData: any): Phone => {
-  return {
-    phone: phoneData.phone,
-    description: phoneData.description,
-  };
-};
-
-const decodeEmail = (emailData: any): Email => {
-  return {
-    email: emailData.email,
-    description: emailData.description,
-  };
-};
-
 const decodeContactData = (contactData: any): ContactData => {
-  return {
-    name: contactData.name,
-    phone:
-      contactData?.phone != null //
-        ? decodePhone(contactData.phone)
-        : undefined,
-    email:
-      contactData?.email != null //
-        ? decodeEmail(contactData.email)
-        : undefined,
-  };
+  return contactDataDecoder.forceDecode(contactData);
 };
 
 const decodeFiscalData = (fiscalData: any): FiscalData => {
-  return {
-    name: fiscalData.name,
-    nif: fiscalData.nif,
-    address: decodeAddress(fiscalData.address),
-  };
+  return fiscalDataDecoder.forceDecode(fiscalData);
 };
 
 const decodePostalData = (postalData: any): PostalData => {
-  return {
-    name: postalData.name,
-    email:
-      postalData?.email != null //
-        ? decodeEmail(postalData.email)
-        : undefined,
-    address:
-      postalData?.address != null //
-        ? decodeAddress(postalData.address)
-        : undefined,
-  };
+  return postalDataDecoder.forceDecode(postalData);
 };
 
 const decodeTributationData = (tributationData: any): TributationData => {
-  return {
-    retentionPercentage: tributationData.retentionPercentage,
-    personalDiscount: tributationData.personalDiscount,
-  };
+  return tributationDataDecoder.forceDecode(tributationData);
 };
 
 const decodeEFactData = (eFactData: any): EFactData => {
-  return {
-    accountingOfficeCode: eFactData.accountingOfficeCode,
-    accountingOfficeName: eFactData.accountingOfficeName,
-    managementBodyCode: eFactData.managementBodyCode,
-    managementBodyName: eFactData.managementBodyName,
-    processingUnitCode: eFactData.processingUnitCode,
-    processingUnitName: eFactData.processingUnitName,
-    electronicBillingCode: eFactData.electronicBillingCode,
-  };
+  return eFactDataDecoder.forceDecode(eFactData);
 };
 
 export const decodeClient = (dbClient: any): Client => {

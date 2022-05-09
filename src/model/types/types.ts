@@ -1,6 +1,18 @@
-import { Types } from 'mongoose';
 import * as D from 'schemawax';
-import { taxDecoder } from '..';
+import { Types } from 'mongoose';
+import {
+  addressDecoder,
+  contactDataDecoder,
+  eFactDataDecoder,
+  emailDecoder,
+  fiscalDataDecoder,
+  phoneDecoder,
+  postalDataDecoder,
+  taxDecoder,
+  tributationDataDecoder,
+  unitTypeDecoder,
+  warehouseDecoder,
+} from '..';
 
 export type DBHelperResponse<T> = {
   error: {
@@ -11,29 +23,14 @@ export type DBHelperResponse<T> = {
 };
 
 /* ----- ----- AUXILIAR TYPES ----- ----- */
-export type Phone = {
-  phone: string;
-  description?: string;
-};
-
-export type Email = {
-  email: string;
-  description?: string;
-};
-
-export type Address = {
-  roadType: string;
-  street: string;
-  number: string;
-  floor?: string;
-  door?: string;
-  extra?: string;
-  zipCode: string;
-  city: string;
-  province: string;
-  state?: string;
-  country: string;
-};
+export type Phone = D.Output<typeof phoneDecoder>;
+export type Email = D.Output<typeof emailDecoder>;
+export type Address = D.Output<typeof addressDecoder>;
+export type FiscalData = D.Output<typeof fiscalDataDecoder>;
+export type ContactData = D.Output<typeof contactDataDecoder>;
+export type PostalData = D.Output<typeof postalDataDecoder>;
+export type TributationData = D.Output<typeof tributationDataDecoder>;
+export type EFactData = D.Output<typeof eFactDataDecoder>;
 
 export type ProductInBill = {
   product?: Types.ObjectId;
@@ -44,39 +41,6 @@ export type ProductInBill = {
   discountPercentage: number;
   taxPercentage: number;
   quantity: number;
-};
-
-export type FiscalData = {
-  name: string;
-  nif: string;
-  address: Address;
-};
-
-export type ContactData = {
-  name: string;
-  phone?: Phone;
-  email?: Email;
-};
-
-export type PostalData = {
-  name: string;
-  email?: Email;
-  address?: Address;
-};
-
-export type TributationData = {
-  retentionPercentage: number;
-  personalDiscount: number;
-};
-
-export type EFactData = {
-  accountingOfficeCode: string;
-  accountingOfficeName: string;
-  managementBodyCode: string;
-  managementBodyName: string;
-  processingUnitCode: string;
-  processingUnitName: string;
-  electronicBillingCode: string;
 };
 
 /* ----- ----- CALENDAR EVENT ----- ----- */
@@ -150,6 +114,7 @@ export type DeliveryNote = {
 };
 
 /* ----- ----- CATEGORY ----- ----- */
+// TODO: SPLIT INTO CATEGORY AND FULLCATEGORY
 export type Category = {
   id?: Types.ObjectId;
   reference: string;
@@ -169,17 +134,6 @@ export type Client = {
   bills: Array<Types.ObjectId>;
 };
 
-export type FullClient = {
-  id?: Types.ObjectId;
-  reference: string;
-  contactData: ContactData;
-  fiscalData: FiscalData;
-  postalData: PostalData;
-  tributationData: TributationData;
-  eFactData: EFactData;
-  bills: Array<Bill>;
-};
-
 /* ----- ----- PROVIDER ----- ----- */
 export type Provider = {
   id?: Types.ObjectId;
@@ -193,20 +147,6 @@ export type Provider = {
   };
   eFactData: EFactData;
   bills: Array<Types.ObjectId>;
-};
-
-export type FullProvider = {
-  id?: Types.ObjectId;
-  reference: string;
-  contactData: ContactData;
-  fiscalData: FiscalData;
-  postalData: PostalData;
-  tributationData: {
-    retentionPercentage: number;
-    personalDiscount: number;
-  };
-  eFactData: EFactData;
-  bills: Array<Bill>;
 };
 
 /* ----- ----- PRODUCT ----- ----- */
@@ -260,19 +200,10 @@ export type FullProduct = {
 export type Tax = D.Output<typeof taxDecoder>;
 
 /* ----- ----- UNIT TYPE ----- ----- */
-export type UnitType = {
-  id?: Types.ObjectId;
-  reference: string;
-  unit: string;
-};
+export type UnitType = D.Output<typeof unitTypeDecoder>;
 
 /* ----- ----- WAREHOUSE ----- ----- */
-export type Warehouse = {
-  id?: Types.ObjectId;
-  reference: string;
-  description: string;
-  address: Address;
-};
+export type Warehouse = D.Output<typeof warehouseDecoder>;
 
 /* ----- ----- PLATFORM PARAMETERS ----- ----- */
 export const LANGUAGE_LIST = ['en', 'es', 'ca'] as const;
