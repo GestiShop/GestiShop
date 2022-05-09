@@ -4,8 +4,6 @@ export const SampleProvider00: Provider = {
   reference: 'PROV00',
   contactData: {
     name: 'Provider 00 contact name',
-    email: undefined,
-    phone: undefined,
   },
   fiscalData: {
     name: 'Provider 00 fiscal name',
@@ -18,16 +16,10 @@ export const SampleProvider00: Provider = {
       city: 'City name',
       province: 'Province name',
       country: 'Country name',
-      door: undefined,
-      extra: undefined,
-      floor: undefined,
-      state: undefined,
     },
   },
   postalData: {
     name: 'Provider 00 postal name',
-    address: undefined,
-    email: undefined,
   },
   tributationData: {
     retentionPercentage: 0,
@@ -41,8 +33,6 @@ export const SampleProvider01: Provider = {
   reference: 'PROV01',
   contactData: {
     name: 'Provider 01 contact name',
-    email: undefined,
-    phone: undefined,
   },
   fiscalData: {
     name: 'Provider 01 fiscal name',
@@ -55,16 +45,10 @@ export const SampleProvider01: Provider = {
       city: 'City name',
       province: 'Province name',
       country: 'Country name',
-      door: undefined,
-      extra: undefined,
-      floor: undefined,
-      state: undefined,
     },
   },
   postalData: {
     name: 'Provider 01 postal name',
-    address: undefined,
-    email: undefined,
   },
   tributationData: {
     retentionPercentage: 0,

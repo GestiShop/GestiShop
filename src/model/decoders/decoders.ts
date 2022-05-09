@@ -102,7 +102,7 @@ export const taxDecoder = D.object({
   },
 }).andThen((decodedTax) => {
   return {
-    id: decodedTax._id,
+    ...(decodedTax._id && { id: decodedTax._id }),
     reference: decodedTax.reference,
     percentage: decodedTax.percentage,
   };
@@ -118,7 +118,7 @@ export const unitTypeDecoder = D.object({
   },
 }).andThen((decodedUnitType) => {
   return {
-    id: decodedUnitType._id,
+    ...(decodedUnitType._id && { id: decodedUnitType._id }),
     reference: decodedUnitType.reference,
     unit: decodedUnitType.unit,
   };
@@ -135,7 +135,7 @@ export const warehouseDecoder = D.object({
   },
 }).andThen((decodedWarehouse) => {
   return {
-    id: decodedWarehouse._id,
+    ...(decodedWarehouse._id && { id: decodedWarehouse._id }),
     reference: decodedWarehouse.reference,
     description: decodedWarehouse.description,
     address: decodedWarehouse.address,
