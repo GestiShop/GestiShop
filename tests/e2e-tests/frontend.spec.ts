@@ -110,6 +110,9 @@ test('Category dashboard', async () => {
   await page.locator("//li[contains(text(), 'FOOD')]").click();
   await page.locator('#submit--btn').click();
   await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='FOOD']")
+  ).toBeVisible();
+  await expect(
     page.locator("//div[@data-field='reference' and ./div/text()='VEG']")
   ).toBeVisible();
   log('New category added');
@@ -138,6 +141,9 @@ test('Tax dashboard', async () => {
   await page.fill("//input[@name='percentage']", '21');
   await page.locator('#submit--btn').click();
   await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='IVA10']")
+  ).toBeVisible();
+  await expect(
     page.locator("//div[@data-field='reference' and ./div/text()='IVA21']")
   ).toBeVisible();
   log('New tax added');
@@ -165,6 +171,9 @@ test('Unit type dashboard', async () => {
   await page.fill("//input[@name='reference']", 'KILO');
   await page.fill("//input[@name='unit']", 'k');
   await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='UNIT']")
+  ).toBeVisible();
   await expect(
     page.locator("//div[@data-field='reference' and ./div/text()='KILO']")
   ).toBeVisible();
@@ -207,6 +216,9 @@ test('Warehouse dashboard', async () => {
   await page.fill("//input[@name='address.province']", 'Madrid');
   await page.fill("//input[@name='address.country']", 'Spain');
   await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='BCN00']")
+  ).toBeVisible();
   await expect(
     page.locator("//div[@data-field='reference' and ./div/text()='MAD00']")
   ).toBeVisible();
