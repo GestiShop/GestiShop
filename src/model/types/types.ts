@@ -1,4 +1,6 @@
 import { Types } from 'mongoose';
+import * as D from 'schemawax';
+import { taxDecoder } from '..';
 
 export type DBHelperResponse<T> = {
   error: {
@@ -255,11 +257,7 @@ export type FullProduct = {
 };
 
 /* ----- ----- TAX ----- ----- */
-export type Tax = {
-  id?: Types.ObjectId;
-  reference: string;
-  percentage: number;
-};
+export type Tax = D.Output<typeof taxDecoder>;
 
 /* ----- ----- UNIT TYPE ----- ----- */
 export type UnitType = {

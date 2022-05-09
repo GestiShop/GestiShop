@@ -286,6 +286,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.9",
+    "schemawax": "^1.0.10",
     "sinon": "^14.0.0",
     "source-map-support": "^0.5.21",
     "yup": "^0.32.9"

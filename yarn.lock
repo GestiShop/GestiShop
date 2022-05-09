@@ -10605,6 +10605,11 @@ schema-utils@^4.0.0:
     ajv-formats "^2.1.1"
     ajv-keywords "^5.0.0"
 
+schemawax@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/schemawax/-/schemawax-1.0.10.tgz#9c018895f04030dac723460caf9914741140c975"
+  integrity sha512-Mvkw1PRSShQpMzr3uKra9rgUw98AzwS4zPQK7WoyUyrd5nCIt1hH54zrN5kjyW0kt3u1TCVJADSS3H9vSpjkvw==
+
 scss-tokenizer@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/scss-tokenizer/-/scss-tokenizer-0.3.0.tgz#ef7edc3bc438b25cd6ffacf1aa5b9ad5813bf260"
