@@ -1,6 +1,10 @@
 import { _electron as electron, Locator } from 'playwright';
 import { expect, test } from '@playwright/test';
 import { ElectronApplication, Page } from 'playwright-core';
+import {
+  selectByPartialTextFromSelect,
+  selectByPartialTextsFromMultiSelect,
+} from './utils';
 
 const { log } = console;
 
@@ -106,8 +110,7 @@ test('Category dashboard', async () => {
   await page.locator('#add-new--btn').click();
   await page.fill("//input[@name='reference']", 'VEG');
   await page.fill("//input[@name='name']", 'Vegetables');
-  await page.locator("//input[@name='parent']/..").click();
-  await page.locator("//li[contains(text(), 'FOOD')]").click();
+  await selectByPartialTextFromSelect(page, 'parent', 'FOOD');
   await page.locator('#submit--btn').click();
   await expect(
     page.locator("//div[@data-field='reference' and ./div/text()='FOOD']")
@@ -244,6 +247,44 @@ test('Provider dashboard', async () => {
 test('Product dashboard', async () => {
   log('Going to product section...');
   await page.locator('#products--link').click();
+
+  log('Adding new product...');
+  // Basic info
+  await page.locator('#add-new--btn').click();
+  await page.fill("//input[@name='reference']", 'APPLE00');
+  await page.fill("//input[@name='name']", 'Red apple');
+  await page.fill(
+    "//textarea[@name='description']",
+    'Delicious red apple from Lleida.'
+  );
+  await selectByPartialTextFromSelect(page, 'unitType', 'UNIT');
+  await selectByPartialTextFromSelect(page, 'warehouse', 'BCN00');
+  await selectByPartialTextsFromMultiSelect(page, 'categories', ['FOOD']);
+
+  // Stock info
+  await page.fill("//input[@name='stock']", '120');
+
+  // Buying info
+  await page.fill("//input[@name='buyingInfo.basePrice']", '0.80');
+  await selectByPartialTextFromSelect(
+    page,
+    'buyingInfo.taxPercentage',
+    'IVA10'
+  );
+
+  // Selling info
+  await page.fill("//input[@name='sellingInfo.basePrice']", '1');
+  await selectByPartialTextFromSelect(
+    page,
+    'sellingInfo.taxPercentage',
+    'IVA10'
+  );
+
+  await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='APPLE00']")
+  ).toBeVisible();
+  log('New product added');
 
   log('Checking that the product list container is rendered...');
   await expect(page.locator('#product-list--container')).toBeVisible();
