@@ -335,15 +335,18 @@ test('Client dashboard', async () => {
   await page.fill("//input[@name='fiscalData.address.country']", 'Spain');
 
   // Postal data
-  await page.fill("//input[@name='fiscalData.name']", 'Client00');
-  await page.fill("//input[@name='fiscalData.email']", 'postal@client00.com');
-  await page.fill("//input[@name='fiscalData.address.roadType']", 'Street');
-  await page.fill("//input[@name='fiscalData.address.street']", 'de Bailén');
-  await page.fill("//input[@name='fiscalData.address.number']", '10');
-  await page.fill("//input[@name='fiscalData.address.zipCode']", '28012');
-  await page.fill("//input[@name='fiscalData.address.city']", 'Madrid');
-  await page.fill("//input[@name='fiscalData.address.province']", 'Madrid');
-  await page.fill("//input[@name='fiscalData.address.country']", 'Spain');
+  await page.fill("//input[@name='postalData.name']", 'Client00');
+  await page.fill(
+    "//input[@name='postalData.email.email']",
+    'postal@client00.com'
+  );
+  await page.fill("//input[@name='postalData.address.roadType']", 'Street');
+  await page.fill("//input[@name='postalData.address.street']", 'de Bailén');
+  await page.fill("//input[@name='postalData.address.number']", '10');
+  await page.fill("//input[@name='postalData.address.zipCode']", '28012');
+  await page.fill("//input[@name='postalData.address.city']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.province']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.country']", 'Spain');
 
   await page.locator('#submit--btn').click();
   await expect(
@@ -382,15 +385,18 @@ test('Client dashboard', async () => {
   await page.fill("//input[@name='fiscalData.address.country']", 'Spain');
 
   // Postal data
-  await page.fill("//input[@name='fiscalData.name']", 'Client01');
-  await page.fill("//input[@name='fiscalData.email']", 'postal@client01.com');
-  await page.fill("//input[@name='fiscalData.address.roadType']", 'Street');
-  await page.fill("//input[@name='fiscalData.address.street']", 'de Bailén');
-  await page.fill("//input[@name='fiscalData.address.number']", '10');
-  await page.fill("//input[@name='fiscalData.address.zipCode']", '28012');
-  await page.fill("//input[@name='fiscalData.address.city']", 'Madrid');
-  await page.fill("//input[@name='fiscalData.address.province']", 'Madrid');
-  await page.fill("//input[@name='fiscalData.address.country']", 'Spain');
+  await page.fill("//input[@name='postalData.name']", 'Client01');
+  await page.fill(
+    "//input[@name='postalData.email.email']",
+    'postal@client01.com'
+  );
+  await page.fill("//input[@name='postalData.address.roadType']", 'Street');
+  await page.fill("//input[@name='postalData.address.street']", 'de Bailén');
+  await page.fill("//input[@name='postalData.address.number']", '10');
+  await page.fill("//input[@name='postalData.address.zipCode']", '28012');
+  await page.fill("//input[@name='postalData.address.city']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.province']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.country']", 'Spain');
 
   await page.locator('#submit--btn').click();
   await expect(
