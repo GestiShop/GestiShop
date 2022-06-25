@@ -119,6 +119,15 @@ test('Category dashboard', async () => {
     page.locator("//div[@data-field='reference' and ./div/text()='VEG']")
   ).toBeVisible();
   log('New category added');
+
+  log('Trying to add an empty category...');
+  await page.locator('#add-new--btn').click();
+  await page.locator('#submit--btn').click();
+  const errorLocator = page.locator("//p[text()='This field is required.']");
+  await expect(errorLocator).toHaveCount(1);
+  await expect(errorLocator).toBeVisible();
+  await page.locator('#close-fullscreen-dialog--btn').click();
+  log('Errors were displayed on the page as expected');
 });
 
 test('Tax dashboard', async () => {
