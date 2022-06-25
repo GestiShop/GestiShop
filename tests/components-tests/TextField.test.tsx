@@ -15,9 +15,9 @@ describe('TextField', () => {
   it('[ONLY REQUIRED FIELDS] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
-            <TextField id="" name="" label="" onInput={() => {}} />
+            <TextField id="" name="test" label="" onInput={() => {}} />
           </Form>
         </Formik>
       )
@@ -27,11 +27,11 @@ describe('TextField', () => {
   it('[ALL FIELDS] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
             <TextField
               id=""
-              name=""
+              name="test"
               label=""
               onInput={() => {}}
               type="text"

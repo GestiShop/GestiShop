@@ -15,10 +15,10 @@ describe('AutocompleteSelect', () => {
   it('[EMPTY] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
             <AutocompleteSelect
-              name=""
+              name="test"
               label=""
               onInput={() => {}}
               required={true}
@@ -34,10 +34,10 @@ describe('AutocompleteSelect', () => {
   it('[WITH DATA] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
             <AutocompleteSelect
-              name=""
+              name="test"
               label=""
               onInput={() => {}}
               required={true}

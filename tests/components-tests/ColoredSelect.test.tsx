@@ -15,9 +15,9 @@ describe('AutocompleteSelect', () => {
   it('[EMPTY] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
-            <ColoredSelect name="" options={[]} />
+            <ColoredSelect name="test" options={[]} />
           </Form>
         </Formik>
       )
@@ -27,9 +27,9 @@ describe('AutocompleteSelect', () => {
   it('[WITH DATA] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
-            <ColoredSelect name="" options={['test0', 'test1']} />
+            <ColoredSelect name="test" options={['test0', 'test1']} />
           </Form>
         </Formik>
       )

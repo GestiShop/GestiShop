@@ -15,9 +15,9 @@ describe('DateTimePicker', () => {
   it('Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
-            <DateTimePicker name="" required={false} />
+            <DateTimePicker name="test" required={false} />
           </Form>
         </Formik>
       )

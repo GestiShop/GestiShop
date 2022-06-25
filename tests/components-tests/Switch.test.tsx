@@ -15,9 +15,14 @@ describe('Switch', () => {
   it('Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
-            <Switch name="" label="" initialState={false} setValue={() => {}} />
+            <Switch
+              name="test"
+              label=""
+              initialState={false}
+              setValue={() => {}}
+            />
           </Form>
         </Formik>
       )

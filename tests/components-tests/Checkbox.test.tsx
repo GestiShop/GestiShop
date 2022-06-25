@@ -15,9 +15,9 @@ describe('Checkbox', () => {
   it('Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
-            <Checkbox id="" name="" label="" legend="" onInput={() => {}} />
+            <Checkbox id="" name="test" label="" legend="" onInput={() => {}} />
           </Form>
         </Formik>
       )

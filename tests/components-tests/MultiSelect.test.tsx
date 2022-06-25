@@ -15,9 +15,9 @@ describe('MultiSelect', () => {
   it('[EMPTY] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
-            <MultiSelect name="" label="" options={[]} initialValue={[]} />
+            <MultiSelect name="test" label="" options={[]} initialValue={[]} />
           </Form>
         </Formik>
       )
@@ -27,10 +27,10 @@ describe('MultiSelect', () => {
   it('[WITH DATA] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
             <MultiSelect
-              name=""
+              name="test"
               label=""
               options={[
                 { displayText: 'test0', value: 0 },
@@ -47,10 +47,10 @@ describe('MultiSelect', () => {
   it('[WITH DATA AND INITIAL VALUE] Should render', () => {
     expect(
       render(
-        <Formik initialValues={{}} onSubmit={() => {}}>
+        <Formik initialValues={{ test: '' }} onSubmit={() => {}}>
           <Form>
             <MultiSelect
-              name=""
+              name="test"
               label=""
               options={[
                 { displayText: 'test0', value: 0 },
