@@ -399,16 +399,16 @@ test('Client dashboard', async () => {
   await page.fill("//input[@name='postalData.address.country']", 'Spain');
 
   await page.locator('#submit--btn').click();
+  log('New client added');
+
+  log('Checking that the client list container is rendered...');
+  await expect(page.locator('#client-list--container')).toBeVisible();
   await expect(
     page.locator("//div[@data-field='reference' and ./div/text()='CLI00']")
   ).toBeVisible();
   await expect(
     page.locator("//div[@data-field='reference' and ./div/text()='CLI01']")
   ).toBeVisible();
-  log('New client added');
-
-  log('Checking that the client list container is rendered...');
-  await expect(page.locator('#client-list--container')).toBeVisible();
 
   log('Trying to add an empty client...');
   await page.locator('#add-new--btn').click();
@@ -426,6 +426,121 @@ test('Client dashboard', async () => {
 test('Provider dashboard', async () => {
   log('Going to provider section...');
   await page.locator('#providers--link').click();
+
+  log('Checking that the provider list container is rendered...');
+  await expect(page.locator('#provider-list--container')).toBeVisible();
+
+  log('Adding new provider...');
+  await page.locator('#add-new--btn').click();
+  // Basic info
+  await page.fill("//input[@name='reference']", 'PRO00');
+
+  // Contact data
+  await page.fill("//input[@name='contactData.name']", 'Provider 00');
+  await page.fill(
+    "//input[@name='contactData.phone.phone']",
+    '+34 666 66 66 66'
+  );
+  await page.fill(
+    "//input[@name='contactData.email.email']",
+    'contact@provider00.com'
+  );
+
+  // Fiscal data
+  await page.fill("//input[@name='fiscalData.name']", 'Provider00');
+  await page.fill("//input[@name='fiscalData.nif']", '10000000A');
+  await page.fill("//input[@name='fiscalData.address.roadType']", 'Street');
+  await page.fill("//input[@name='fiscalData.address.street']", 'de Bailén');
+  await page.fill("//input[@name='fiscalData.address.number']", '10');
+  await page.fill("//input[@name='fiscalData.address.zipCode']", '28012');
+  await page.fill("//input[@name='fiscalData.address.city']", 'Madrid');
+  await page.fill("//input[@name='fiscalData.address.province']", 'Madrid');
+  await page.fill("//input[@name='fiscalData.address.country']", 'Spain');
+
+  // Postal data
+  await page.fill("//input[@name='postalData.name']", 'Provider00');
+  await page.fill(
+    "//input[@name='postalData.email.email']",
+    'postal@provider00.com'
+  );
+  await page.fill("//input[@name='postalData.address.roadType']", 'Street');
+  await page.fill("//input[@name='postalData.address.street']", 'de Bailén');
+  await page.fill("//input[@name='postalData.address.number']", '10');
+  await page.fill("//input[@name='postalData.address.zipCode']", '28012');
+  await page.fill("//input[@name='postalData.address.city']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.province']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.country']", 'Spain');
+
+  await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='PRO00']")
+  ).toBeVisible();
+  log('New provider added');
+
+  log('Checking that the provider list container is rendered...');
+  await expect(page.locator('#provider-list--container')).toBeVisible();
+
+  log('Adding new provider...');
+  await page.locator('#add-new--btn').click();
+  // Basic info
+  await page.fill("//input[@name='reference']", 'PRO01');
+
+  // Contact data
+  await page.fill("//input[@name='contactData.name']", 'Provider 01');
+  await page.fill(
+    "//input[@name='contactData.phone.phone']",
+    '+34 666 66 66 66'
+  );
+  await page.fill(
+    "//input[@name='contactData.email.email']",
+    'contact@provider01.com'
+  );
+
+  // Fiscal data
+  await page.fill("//input[@name='fiscalData.name']", 'Provider01');
+  await page.fill("//input[@name='fiscalData.nif']", '10000001B');
+  await page.fill("//input[@name='fiscalData.address.roadType']", 'Street');
+  await page.fill("//input[@name='fiscalData.address.street']", 'de Bailén');
+  await page.fill("//input[@name='fiscalData.address.number']", '10');
+  await page.fill("//input[@name='fiscalData.address.zipCode']", '28012');
+  await page.fill("//input[@name='fiscalData.address.city']", 'Madrid');
+  await page.fill("//input[@name='fiscalData.address.province']", 'Madrid');
+  await page.fill("//input[@name='fiscalData.address.country']", 'Spain');
+
+  // Postal data
+  await page.fill("//input[@name='postalData.name']", 'Provider01');
+  await page.fill(
+    "//input[@name='postalData.email.email']",
+    'postal@provider01.com'
+  );
+  await page.fill("//input[@name='postalData.address.roadType']", 'Street');
+  await page.fill("//input[@name='postalData.address.street']", 'de Bailén');
+  await page.fill("//input[@name='postalData.address.number']", '10');
+  await page.fill("//input[@name='postalData.address.zipCode']", '28012');
+  await page.fill("//input[@name='postalData.address.city']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.province']", 'Madrid');
+  await page.fill("//input[@name='postalData.address.country']", 'Spain');
+
+  await page.locator('#submit--btn').click();
+  log('New provider added');
+
+  log('Checking that the provider list container is rendered...');
+  await expect(page.locator('#provider-list--container')).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='PRO00']")
+  ).toBeVisible();
+  await expect(
+    page.locator("//div[@data-field='reference' and ./div/text()='PRO01']")
+  ).toBeVisible();
+
+  log('Trying to add an empty provider...');
+  await page.locator('#add-new--btn').click();
+  await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//p[text()='This field is required.']")
+  ).toHaveCount(12);
+  await page.locator('#close-fullscreen-dialog--btn').click();
+  log('Errors were displayed on the page as expected');
 
   log('Checking that the provider list container is rendered...');
   await expect(page.locator('#provider-list--container')).toBeVisible();
