@@ -123,11 +123,9 @@ test('Category dashboard', async () => {
   log('Trying to add an empty category...');
   await page.locator('#add-new--btn').click();
   await page.locator('#submit--btn').click();
-  const errorLocator: Locator = page.locator(
-    "//p[text()='This field is required.']"
-  );
-  await expect(errorLocator).toHaveCount(2);
-  await expect(errorLocator).toBeVisible();
+  await expect(
+    page.locator("//p[text()='This field is required.']")
+  ).toHaveCount(2);
   await page.locator('#close-fullscreen-dialog--btn').click();
   log('Errors were displayed on the page as expected');
 });
