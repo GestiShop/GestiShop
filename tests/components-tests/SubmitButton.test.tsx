@@ -10,7 +10,7 @@ import { SubmitButton } from '../../src/components/ui/forms';
 
 jest.useFakeTimers();
 
-describe('Button', () => {
+describe('SubmitButton', () => {
   it('Should render', () => {
     expect(render(<SubmitButton>Test</SubmitButton>)).toBeTruthy();
   });
