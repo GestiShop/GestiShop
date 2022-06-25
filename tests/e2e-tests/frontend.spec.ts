@@ -106,6 +106,9 @@ test('Category dashboard', async () => {
   ).toBeVisible();
   log('New category added');
 
+  log('Checking that the category list container is rendered...');
+  await expect(page.locator('#category-list--container')).toBeVisible();
+
   log('Adding new category with parent...');
   await page.locator('#add-new--btn').click();
   await page.fill("//input[@name='reference']", 'VEG');
@@ -120,6 +123,9 @@ test('Category dashboard', async () => {
   ).toBeVisible();
   log('New category added');
 
+  log('Checking that the category list container is rendered...');
+  await expect(page.locator('#category-list--container')).toBeVisible();
+
   log('Trying to add an empty category...');
   await page.locator('#add-new--btn').click();
   await page.locator('#submit--btn').click();
@@ -128,6 +134,9 @@ test('Category dashboard', async () => {
   ).toHaveCount(2);
   await page.locator('#close-fullscreen-dialog--btn').click();
   log('Errors were displayed on the page as expected');
+
+  log('Checking that the category list container is rendered...');
+  await expect(page.locator('#category-list--container')).toBeVisible();
 });
 
 test('Tax dashboard', async () => {
