@@ -261,6 +261,9 @@ test('Warehouse dashboard', async () => {
   ).toBeVisible();
   log('New warehouse added');
 
+  log('Checking that the warehouse list container is rendered...');
+  await expect(page.locator('#warehouse-list--container')).toBeVisible();
+
   log('Adding new warehouse...');
   await page.locator('#add-new--btn').click();
   await page.fill("//input[@name='reference']", 'MAD00');
@@ -280,6 +283,21 @@ test('Warehouse dashboard', async () => {
     page.locator("//div[@data-field='reference' and ./div/text()='MAD00']")
   ).toBeVisible();
   log('New warehouse added');
+
+  log('Checking that the warehouse list container is rendered...');
+  await expect(page.locator('#warehouse-list--container')).toBeVisible();
+
+  log('Trying to add an empty warehouse...');
+  await page.locator('#add-new--btn').click();
+  await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//p[text()='This field is required.']")
+  ).toHaveCount(9);
+  await page.locator('#close-fullscreen-dialog--btn').click();
+  log('Errors were displayed on the page as expected');
+
+  log('Checking that the warehouse list container is rendered...');
+  await expect(page.locator('#warehouse-list--container')).toBeVisible();
 });
 
 test('Client dashboard', async () => {
