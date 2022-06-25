@@ -156,6 +156,9 @@ test('Tax dashboard', async () => {
   ).toBeVisible();
   log('New tax added');
 
+  log('Checking that the tax list container is rendered...');
+  await expect(page.locator('#tax-list--container')).toBeVisible();
+
   log('Adding new tax...');
   await page.locator('#add-new--btn').click();
   await page.fill("//input[@name='reference']", 'IVA21');
@@ -168,6 +171,21 @@ test('Tax dashboard', async () => {
     page.locator("//div[@data-field='reference' and ./div/text()='IVA21']")
   ).toBeVisible();
   log('New tax added');
+
+  log('Checking that the tax list container is rendered...');
+  await expect(page.locator('#tax-list--container')).toBeVisible();
+
+  log('Trying to add an empty tax...');
+  await page.locator('#add-new--btn').click();
+  await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//p[text()='This field is required.']")
+  ).toHaveCount(1);
+  await page.locator('#close-fullscreen-dialog--btn').click();
+  log('Errors were displayed on the page as expected');
+
+  log('Checking that the tax list container is rendered...');
+  await expect(page.locator('#tax-list--container')).toBeVisible();
 });
 
 test('Unit type dashboard', async () => {
