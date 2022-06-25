@@ -205,6 +205,9 @@ test('Unit type dashboard', async () => {
   ).toBeVisible();
   log('New unit type added');
 
+  log('Checking that the unit type list container is rendered...');
+  await expect(page.locator('#unit-type-list--container')).toBeVisible();
+
   log('Adding new unit type...');
   await page.locator('#add-new--btn').click();
   await page.fill("//input[@name='reference']", 'KILO');
@@ -217,6 +220,21 @@ test('Unit type dashboard', async () => {
     page.locator("//div[@data-field='reference' and ./div/text()='KILO']")
   ).toBeVisible();
   log('New unit type added');
+
+  log('Checking that the unit type list container is rendered...');
+  await expect(page.locator('#unit-type-list--container')).toBeVisible();
+
+  log('Trying to add an empty unit type...');
+  await page.locator('#add-new--btn').click();
+  await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//p[text()='This field is required.']")
+  ).toHaveCount(2);
+  await page.locator('#close-fullscreen-dialog--btn').click();
+  log('Errors were displayed on the page as expected');
+
+  log('Checking that the unit type list container is rendered...');
+  await expect(page.locator('#unit-type-list--container')).toBeVisible();
 });
 
 test('Warehouse dashboard', async () => {
