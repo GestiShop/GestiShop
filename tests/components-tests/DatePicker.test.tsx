@@ -7,11 +7,20 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { DatePicker } from '../../src/components/ui/forms';
+import { Form, Formik } from 'formik';
 
 jest.useFakeTimers();
 
 describe('DatePicker', () => {
   it('Should render', () => {
-    expect(render(<DatePicker name="" required={false} />)).toBeTruthy();
+    expect(
+      render(
+        <Formik initialValues={{}} onSubmit={() => {}}>
+          <Form>
+            <DatePicker name="" required={false} />
+          </Form>
+        </Formik>
+      )
+    ).toBeTruthy();
   });
 });

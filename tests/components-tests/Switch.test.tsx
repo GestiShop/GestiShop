@@ -7,6 +7,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { Switch } from '../../src/components/ui/forms';
+import { Form, Formik } from 'formik';
 
 jest.useFakeTimers();
 
@@ -14,7 +15,11 @@ describe('Switch', () => {
   it('Should render', () => {
     expect(
       render(
-        <Switch name="" label="" initialState={false} setValue={() => {}} />
+        <Formik initialValues={{}} onSubmit={() => {}}>
+          <Form>
+            <Switch name="" label="" initialState={false} setValue={() => {}} />
+          </Form>
+        </Formik>
       )
     ).toBeTruthy();
   });
