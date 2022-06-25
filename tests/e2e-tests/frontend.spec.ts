@@ -320,6 +320,9 @@ test('Product dashboard', async () => {
   log('Going to product section...');
   await page.locator('#products--link').click();
 
+  log('Checking that the product list container is rendered...');
+  await expect(page.locator('#product-list--container')).toBeVisible();
+
   log('Adding new product...');
   // Basic info
   await page.locator('#add-new--btn').click();
@@ -357,6 +360,18 @@ test('Product dashboard', async () => {
     page.locator("//div[@data-field='reference' and ./div/text()='APPLE00']")
   ).toBeVisible();
   log('New product added');
+
+  log('Checking that the product list container is rendered...');
+  await expect(page.locator('#product-list--container')).toBeVisible();
+
+  log('Trying to add an empty product...');
+  await page.locator('#add-new--btn').click();
+  await page.locator('#submit--btn').click();
+  await expect(
+    page.locator("//p[text()='This field is required.']")
+  ).toHaveCount(2);
+  await page.locator('#close-fullscreen-dialog--btn').click();
+  log('Errors were displayed on the page as expected');
 
   log('Checking that the product list container is rendered...');
   await expect(page.locator('#product-list--container')).toBeVisible();
